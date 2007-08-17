@@ -1,0 +1,60 @@
+#
+# Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 
+# ------------------------------------------------------
+# Project : scleaner
+# ------------------------------------------------------
+# $Date: 2007-08-13 21:09:03 +0200 (lun, 13 aoû 2007) $
+# $Rev: 14 $
+# $Author: snoogie_sf $
+# ------------------------------------------------------
+
+PROJECT(scleaner)
+
+INCLUDE(FindDoxygen)
+INCLUDE(FindLATEX)
+INCLUDE(FindUnixCommands)
+
+ADD_DEFINITIONS(-Wall -g -MD)
+ADD_DEFINITIONS(-g -DLEAK_DETECTOR -DDEBUG -Wall -MD `wx-config --cxxflags`)
+
+INCLUDE_DIRECTORIES(AFTER SYSTEM . ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR})
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
+
+SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+
+SET(folder interface leak log plugins tools)
+FOREACH(fold ${folder})
+	ADD_SUBDIRECTORY(${fold})
+ENDFOREACH(fold ${folder})
+
+SET(scleaner_src sclean_wx.cpp)
+
+ADD_EXECUTABLE(scleaner ${scleaner_src})
+TARGET_LINK_LIBRARIES(scleaner dl interface leaks log plugins tools `wx-config --libs`)
+
+## Generate documentation
+IF(DOXYGEN_EXECUTABLE)
+	MESSAGE(STATUS "[INFO] I will be able to compile doxygen documentation.")
+	ADD_CUSTOM_TARGET(doc COMMAND ${DOXYGEN_EXECUTABLE} scleaner.dox)
+ELSE(DOXYGEN_EXECUTABLE)
+	MESSAGE(STATUS "[INFO] Please install doxygen for automatic generation of documentation.")
+ENDIF(DOXYGEN_EXECUTABLE)
+
+#INSTALL(TARGETS testsapi
+#DESTINATION /usr/bin
+#PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+
