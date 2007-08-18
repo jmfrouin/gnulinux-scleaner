@@ -1,7 +1,5 @@
 /*
 Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
-*/
-/*
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,8 +14,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-------------------------------------------------------
-Project : scleaner
 ------------------------------------------------------
 $Date: 2007-08-13 21:07:17 +0200 (lun, 13 aoû 2007) $
 $Rev: 13 $
