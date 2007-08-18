@@ -1,7 +1,6 @@
 /*
-Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
-*/
-/*
+	Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
+
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,7 +30,7 @@ $Author: snoogie_sf $
  * $Date: 2007-08-13 21:07:17 +0200 (lun, 13 aoû 2007) $
  * $Rev: 13 $
  * Documentation homepage : http://www.scleaner.net
- * Project homepage : http://www.sf.net/projects/scleaner
+ * Project homepage : https://savannah.nongnu.org/projects/scleaner/
  *
  * @section intro_history Version history (what's new)
  * v0.1:
@@ -39,6 +38,13 @@ $Author: snoogie_sf $
  *
  * @section intro_whatis What is scleaner ?
  *
+ * scleaner will be able to clean your GNU/Linux desktop (developped under Ubuntu 7.04 Feisty) by removing for example all unwanted log, orphan or duplicate files ...
+ *
+ * It support plugins to allow developpers to add there own plugins. It is able to minimize in Tray.
+ * 
+ * It use wxWidgets for frontend.
+ * 
+ * It used this https://wiki.ubuntu.com/SystemCleanUpTool as guidelines for developpement and add some others ideas.
  * @section install Installation
  *
  * Not yet implemented @n
