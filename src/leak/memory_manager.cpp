@@ -15,6 +15,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -------------------------------------------------------------------------
+
+This file is based on file from Laurent Gomilla : 
+http://loulou.developpez.com/tutoriels/moteur3d/
+
+-------------------------------------------------------------------------
 $Date: 2007-08-13 21:07:17 +0200 (lun, 13 aoû 2007) $
 $Rev: 13 $
 $Author: snoogie_sf $
