@@ -26,7 +26,7 @@ $Author$
 
 */
 
-/*! @mainpage scleaner homepage
+/*! @mainpage Simple Cleaner homepage
  *
  * $Date$
  *
