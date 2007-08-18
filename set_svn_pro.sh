@@ -15,6 +15,6 @@
 
 for i in `find . -name "*.h" -o -name "*.cpp"`
 do
-	svn propset svn::keywords "Id Rev Date Author" ${i}
+	svn propset svn:keywords "Id Rev Date Author" ${i}
 done;
 

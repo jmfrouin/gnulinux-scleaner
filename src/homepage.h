@@ -19,18 +19,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date: 2007-08-13 21:07:17 +0200 (lun, 13 aoû 2007) $
-$Rev: 13 $
-$Author: snoogie_sf $
+$Date$
+$Rev$
+$Author$
 ------------------------------------------------------
 
 */
 
 /*! @mainpage scleaner homepage
  *
- * $Date: 2007-08-13 21:07:17 +0200 (lun, 13 aoû 2007) $
+ * $Date$
  *
- * $Rev: 13 $
+ * $Rev$
  *
  * Documentation homepage : http://www.scleaner.net
  *

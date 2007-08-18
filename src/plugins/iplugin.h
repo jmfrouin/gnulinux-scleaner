@@ -19,9 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date: 2007-08-13 21:07:17 +0200 (lun, 13 aoû 2007) $
-$Rev: 13 $
-$Author: snoogie_sf $
+$Date$
+$Rev$
+$Author$
 ------------------------------------------------------
 
 */
@@ -32,9 +32,9 @@ Project : sclean
 -------------------------------------------------------------------------
 Creator : Frouin Jean-Michel
 -------------------------------------------------------------------------
-$Date: 2007-08-13 21:07:17 +0200 (lun, 13 aoû 2007) $
-$Rev: 13 $
-$Author: snoogie_sf $
+$Date$
+$Rev$
+$Author$
 -------------------------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
