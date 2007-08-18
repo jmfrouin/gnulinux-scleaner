@@ -15,8 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 # ------------------------------------------------------
-# Project : scleaner
-# ------------------------------------------------------
 # $Date: 2007-08-13 21:09:03 +0200 (lun, 13 aoû 2007) $
 # $Rev: 14 $
 # $Author: snoogie_sf $
