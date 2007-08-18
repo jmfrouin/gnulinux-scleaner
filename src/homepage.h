@@ -1,4 +1,5 @@
 /*
+
 	Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
 
 ------------------------------------------------------
@@ -28,8 +29,11 @@ $Author: snoogie_sf $
 /*! @mainpage scleaner homepage
  *
  * $Date: 2007-08-13 21:07:17 +0200 (lun, 13 aoû 2007) $
+ *
  * $Rev: 13 $
+ *
  * Documentation homepage : http://www.scleaner.net
+ *
  * Project homepage : https://savannah.nongnu.org/projects/scleaner/
  *
  * @section intro_history Version history (what's new)
