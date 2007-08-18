@@ -51,9 +51,15 @@ $Author$
  * It used this https://wiki.ubuntu.com/SystemCleanUpTool as guidelines for developpement and add some others ideas.
  * @section install Installation
  *
- * Not yet implemented @n
+ * Not yet implemented
  *
  * @section screenshots Screenshots
+ *
+ * Not yet 
+ *
+ *
+ *
+ *
  *
  *  \image html gfx/gpl.png
  *
