@@ -31,7 +31,7 @@ $Author$
 #include <leak/memory_manager.h>
 
 #include <interface/maininterface.h>
-#include "sclean_wx.h"
+#include "scleaner_wx.h"
 
 CMemoryManager g_mm;
 
