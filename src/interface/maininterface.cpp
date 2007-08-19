@@ -1,15 +1,29 @@
-/////////////////////////////////////////////////////////////////////////////
-// Name:        maininterface.cpp
-// Purpose:     
-// Author:      Frouin Jean-Michel
-// Modified by: 
-// Created:     Fri 17 Aug 2007 23:52:34 CEST
-// RCS-ID:      
-// Copyright:   Project are under GNU GPL v3
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
+/*
+Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
+------------------------------------------------------
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
 
-// For compilers that support precompilation, includes "wx/wx.h".
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+------------------------------------------------------
+Project : scleaner
+------------------------------------------------------
+$Date$
+$Rev$
+$Author$
+------------------------------------------------------
+
+*/
+
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
@@ -20,37 +34,12 @@
 #include "wx/wx.h"
 #endif
 
-////@begin includes
-////@end includes
-
 #include "maininterface.h"
-
-////@begin XPM images
-////@end XPM images
-
-
-/*!
- * MainInterface type definition
- */
 
 IMPLEMENT_CLASS( MainInterface, wxFrame )
 
-
-/*!
- * MainInterface event table definition
- */
-
 BEGIN_EVENT_TABLE( MainInterface, wxFrame )
-
-////@begin MainInterface event table entries
-////@end MainInterface event table entries
-
 END_EVENT_TABLE()
-
-
-/*!
- * MainInterface constructors
- */
 
 MainInterface::MainInterface()
 {
@@ -63,48 +52,22 @@ MainInterface::MainInterface( wxWindow* parent, wxWindowID id, const wxString& c
     Create( parent, id, caption, pos, size, style );
 }
 
-
-/*!
- * MainInterface creator
- */
-
 bool MainInterface::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
-////@begin MainInterface creation
     wxFrame::Create( parent, id, caption, pos, size, style );
 
     CreateControls();
     Centre();
-////@end MainInterface creation
     return true;
 }
 
-
-/*!
- * MainInterface destructor
- */
-
 MainInterface::~MainInterface()
 {
-////@begin MainInterface destruction
-////@end MainInterface destruction
 }
-
-
-/*!
- * Member initialisation
- */
 
 void MainInterface::Init()
 {
-////@begin MainInterface member initialisation
-////@end MainInterface member initialisation
 }
-
-
-/*!
- * Control creation for MainInterface
- */
 
 void MainInterface::CreateControls()
 {    
@@ -136,7 +99,8 @@ void MainInterface::CreateControls()
     wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemFrame1, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
     itemSplitterWindow10->SetMinimumPaneSize(0);
 
-    wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
+    //wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
+    wxCheckTreeCtrl* itemTreeCtrl11 = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
 
     wxArrayString itemCheckListBox12Strings;
     itemCheckListBox12Strings.Add(_("dzdz"));
@@ -152,42 +116,21 @@ void MainInterface::CreateControls()
     wxStatusBar* itemStatusBar13 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
     itemStatusBar13->SetFieldsCount(2);
     itemFrame1->SetStatusBar(itemStatusBar13);
-
-////@end MainInterface content construction
 }
-
-
-/*!
- * Should we show tooltips?
- */
 
 bool MainInterface::ShowToolTips()
 {
     return true;
 }
 
-/*!
- * Get bitmap resources
- */
-
 wxBitmap MainInterface::GetBitmapResource( const wxString& name )
 {
-    // Bitmap retrieval
-////@begin MainInterface bitmap retrieval
     wxUnusedVar(name);
     return wxNullBitmap;
-////@end MainInterface bitmap retrieval
 }
-
-/*!
- * Get icon resources
- */
 
 wxIcon MainInterface::GetIconResource( const wxString& name )
 {
-    // Icon retrieval
-////@begin MainInterface icon retrieval
     wxUnusedVar(name);
     return wxNullIcon;
-////@end MainInterface icon retrieval
 }

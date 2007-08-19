@@ -46,7 +46,7 @@ $Author$
 #define t(u) #u
 #define VERSION(M,m,b) t(M) "." t(m) "." t(b)
 #define VER VERSION(MAJOR,MINOR,BUG)
-#define NAME "sclean v"VER
+#define NAME "scleaner v"VER
 
 ////@begin control identifiers
 #define ID_TEST 10000
@@ -62,6 +62,21 @@ $Author$
 #define SYMBOL_TEST_IDNAME ID_TEST
 #define SYMBOL_TEST_SIZE wxSize(400, 300)
 #define SYMBOL_TEST_POSITION wxDefaultPosition
+#define ID_MAININTERFACE 10000
+#define ID_TOOLBAR1 10002
+#define ID_TOOL1 10003
+#define ID_TOOL2 10004
+#define ID_TOOL3 10005
+#define ID_TOOL4 10006
+#define ID_SPLITTERWINDOW1 10007
+#define ID_TREECTRL1 10009
+#define ID_CHECKLISTBOX1 10010
+#define ID_STATUSBAR1 10008
+#define SYMBOL_MAININTERFACE_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
+#define SYMBOL_MAININTERFACE_TITLE _("MainInterface")
+#define SYMBOL_MAININTERFACE_IDNAME ID_MAININTERFACE
+#define SYMBOL_MAININTERFACE_SIZE wxSize(400, 300)
+#define SYMBOL_MAININTERFACE_POSITION wxDefaultPosition
 
 #endif                           // _DEF_H_
 /* vi:set ts=4: */

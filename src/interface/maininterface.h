@@ -1,58 +1,41 @@
-/////////////////////////////////////////////////////////////////////////////
-// Name:        maininterface.h
-// Purpose:     
-// Author:      Frouin Jean-Michel
-// Modified by: 
-// Created:     Fri 17 Aug 2007 23:52:34 CEST
-// RCS-ID:      
-// Copyright:   Project are under GNU GPL v3
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
+/*
+Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
+
+------------------------------------------------------
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+------------------------------------------------------
+Project : scleaner
+------------------------------------------------------
+$Date$
+$Rev$
+$Author$
+------------------------------------------------------
+
+*/
 
 #ifndef _MAININTERFACE_H_
 #define _MAININTERFACE_H_
 
-/*!
- * Includes
- */
-
-////@begin includes
-#include "wx/frame.h"
-#include "wx/toolbar.h"
-#include "wx/splitter.h"
-#include "wx/treectrl.h"
-#include "wx/statusbr.h"
-////@end includes
-
-/*!
- * Forward declarations
- */
-
-////@begin forward declarations
-////@end forward declarations
-
-/*!
- * Control identifiers
- */
-
-////@begin control identifiers
-#define ID_MAININTERFACE 10000
-#define ID_TOOLBAR1 10002
-#define ID_TOOL1 10003
-#define ID_TOOL2 10004
-#define ID_TOOL3 10005
-#define ID_TOOL4 10006
-#define ID_SPLITTERWINDOW1 10007
-#define ID_TREECTRL1 10009
-#define ID_CHECKLISTBOX1 10010
-#define ID_STATUSBAR1 10008
-#define SYMBOL_MAININTERFACE_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_MAININTERFACE_TITLE _("MainInterface")
-#define SYMBOL_MAININTERFACE_IDNAME ID_MAININTERFACE
-#define SYMBOL_MAININTERFACE_SIZE wxSize(400, 300)
-#define SYMBOL_MAININTERFACE_POSITION wxDefaultPosition
-////@end control identifiers
-
+#include <config.h>
+#include <wx/frame.h>
+#include <wx/toolbar.h>
+#include <wx/splitter.h>
+//#include <wx/treectrl.h>
+#include "checktreectrl.h"
+#include <wx/statusbr.h>
+#include "tray.h"
 
 /*!
  * MainInterface class declaration

@@ -30,7 +30,7 @@ $Author$
 #include <plugins/plugin_manager.h>
 #include <leak/memory_manager.h>
 
-#include <interface/main.h>
+#include <interface/maininterface.h>
 #include "sclean_wx.h"
 
 CMemoryManager g_mm;
@@ -50,8 +50,10 @@ bool CSClean::OnInit(void)
     l_ret = m_pfm->loadPlugins("plugs");
     m_pfm->SpaceUsed();
 
-	CMainDialog* l_Dialog = new CMainDialog(NULL, wxID_ANY, wxT("wxTaskBarIcon Test Dialog"), wxDefaultPosition, wxSize(365, 290));
-    l_Dialog->Show(true);
+	//CMainDialog* l_Dialog = new CMainDialog(NULL, wxID_ANY, wxT("wxTaskBarIcon Test Dialog"), wxDefaultPosition, wxSize(365, 290));
+	MainInterface* l_Main = new MainInterface(NULL, wxID_ANY, wxT(NAME), wxDefaultPosition, wxSize(365, 290));
+    //l_Dialog->Show(true);
+    l_Main->Show(true);
     return true;
 }
 

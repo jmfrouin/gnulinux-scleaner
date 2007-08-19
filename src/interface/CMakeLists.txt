@@ -22,5 +22,5 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-SET(interface_src main.cpp tray.cpp)
+SET(interface_src main.cpp tray.cpp maininterface.cpp checktreectrl.cpp)
 ADD_LIBRARY(interface ${interface_src})
