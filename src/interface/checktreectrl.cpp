@@ -27,10 +27,10 @@ $Author: snoogie $
 #include "wx/imaglist.h"
 
 // Include XPM icons
-#include "bitmaps/checked.xpm"
-#include "bitmaps/checked_dis.xpm"
-#include "bitmaps/unchecked.xpm"
-#include "bitmaps/unchecked_dis.xpm"
+#include "../gfx/checked.xpm"
+#include "../gfx/checked_dis.xpm"
+#include "../gfx/unchecked.xpm"
+#include "../gfx/unchecked_dis.xpm"
 
 #include "checktreectrl.h"
 

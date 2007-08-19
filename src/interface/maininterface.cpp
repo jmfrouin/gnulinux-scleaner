@@ -101,6 +101,11 @@ void MainInterface::CreateControls()
 
     //wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
     wxCheckTreeCtrl* itemTreeCtrl11 = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
+	wxString l_text;
+	l_text = _("dpkg");
+    itemTreeCtrl11->AppendItem(itemTreeCtrl11->GetRootItem(),
+                           l_text /*,
+                           MyTreeCtrl::TreeCtrlIcon_File */ );
 
     wxArrayString itemCheckListBox12Strings;
     itemCheckListBox12Strings.Add(_("dzdz"));
