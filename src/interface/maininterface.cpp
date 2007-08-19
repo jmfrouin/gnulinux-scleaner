@@ -73,6 +73,10 @@ bool CMainInterface::Create( wxWindow* parent, wxWindowID id, const wxString& ca
 
 CMainInterface::~CMainInterface()
 {
+    delete m_Icon;
+#if defined(__WXCOCOA__)
+    delete m_DockIcon;
+#endif
 }
 
 void CMainInterface::Init()
