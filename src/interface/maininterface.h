@@ -29,6 +29,7 @@ $Author$
 #define _MAININTERFACE_H_
 
 #include <config.h>
+#include <map>
 #include <wx/frame.h>
 #include <wx/toolbar.h>
 #include <wx/splitter.h>
@@ -37,49 +38,37 @@ $Author$
 #include <wx/statusbr.h>
 #include "tray.h"
 
-/*!
- * MainInterface class declaration
- */
+class IPlugin;
 
-class MainInterface: public wxFrame
+/*!
+ * CMainInterface class declaration
+ */
+class CMainInterface: public wxFrame
 {    
-    DECLARE_CLASS( MainInterface )
+    DECLARE_CLASS( CMainInterface )
     DECLARE_EVENT_TABLE()
 
 public:
     /// Constructors
-    MainInterface();
-    MainInterface( wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE );
+    CMainInterface();
+    CMainInterface( wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE );
 
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE );
 
-    /// Destructor
-    ~MainInterface();
+    ~CMainInterface();
 
-    /// Initialises member variables
     void Init();
-
-    /// Creates the controls and sizers
     void CreateControls();
-
-////@begin MainInterface event handler declarations
-
-////@end MainInterface event handler declarations
-
-////@begin MainInterface member function declarations
-
-    /// Retrieves bitmap resources
     wxBitmap GetBitmapResource( const wxString& name );
-
-    /// Retrieves icon resources
     wxIcon GetIconResource( const wxString& name );
-////@end MainInterface member function declarations
-
-    /// Should we show tooltips?
     static bool ShowToolTips();
 
-////@begin MainInterface member variables
-////@end MainInterface member variables
+protected:
+    CTrayIcon*	m_Icon;
+#if defined(__WXCOCOA__)
+    CTrayIcon*	m_DockIcon;
+#endif
+	std::map<std::string, IPlugin*>* 	m_PluginsList;
 };
 
 #endif

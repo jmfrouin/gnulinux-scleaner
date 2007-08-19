@@ -41,7 +41,7 @@ FOREACH(fold ${folder})
 	ADD_SUBDIRECTORY(${fold})
 ENDFOREACH(fold ${folder})
 
-SET(scleaner_src sclean_wx.cpp)
+SET(scleaner_src scleaner_wx.cpp)
 
 ADD_EXECUTABLE(scleaner ${scleaner_src})
 TARGET_LINK_LIBRARIES(scleaner dl interface leaks log plugins tools `wx-config --libs`)

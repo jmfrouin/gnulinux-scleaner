@@ -24,13 +24,13 @@ $Author$
 
 */
 
-#include "wx/imaglist.h"
+#include <wx/imaglist.h>
 
 // Include XPM icons
-#include "../gfx/checked.xpm"
-#include "../gfx/checked_dis.xpm"
-#include "../gfx/unchecked.xpm"
-#include "../gfx/unchecked_dis.xpm"
+#include <gfx/checked.xpm>
+#include <gfx/checked_dis.xpm>
+#include <gfx/unchecked.xpm>
+#include <gfx/unchecked_dis.xpm>
 
 #include "checktreectrl.h"
 

@@ -32,7 +32,7 @@ $Author$
 #include <wx/taskbar.h>
 #include <tools/smart_pointer.h>
 
-class CMainDialog;
+class CMainInterface;
 
 class CTrayIcon: public wxTaskBarIcon, public CSmartCpt
 {
@@ -58,7 +58,7 @@ class CTrayIcon: public wxTaskBarIcon, public CSmartCpt
 #endif
     	{}
 
-		void setParent(CMainDialog* _parent);
+		void setParent(CMainInterface* _parent);
     	void OnLeftButtonDClick(wxTaskBarIconEvent&);
     	void OnMenuRestore(wxCommandEvent&);
     	void OnMenuExit(wxCommandEvent&);
@@ -70,7 +70,7 @@ class CTrayIcon: public wxTaskBarIcon, public CSmartCpt
     	virtual wxMenu *CreatePopupMenu();
 
 	public: 
-		CMainDialog*	m_Parent;
+		CMainInterface*	m_Parent;
 
 	DECLARE_EVENT_TABLE()
 };

@@ -34,25 +34,35 @@ $Author$
 #include "wx/wx.h"
 #endif
 
+#include <config.h>
+#include <string>
+#include <plugins/plugin_manager.h>
+#include <plugins/iplugin.h>
+#include "main.h"
 #include "maininterface.h"
 
-IMPLEMENT_CLASS( MainInterface, wxFrame )
+//GFX Elements
+#include <gfx/empty.xpm>
+#include <gfx/full.xpm>
+#include <gfx/smile.xpm>
 
-BEGIN_EVENT_TABLE( MainInterface, wxFrame )
+IMPLEMENT_CLASS( CMainInterface, wxFrame )
+
+BEGIN_EVENT_TABLE( CMainInterface, wxFrame )
 END_EVENT_TABLE()
 
-MainInterface::MainInterface()
+CMainInterface::CMainInterface()
 {
     Init();
 }
 
-MainInterface::MainInterface( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+CMainInterface::CMainInterface( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
     Init();
     Create( parent, id, caption, pos, size, style );
 }
 
-bool MainInterface::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+bool CMainInterface::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
     wxFrame::Create( parent, id, caption, pos, size, style );
 
@@ -61,18 +71,37 @@ bool MainInterface::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     return true;
 }
 
-MainInterface::~MainInterface()
+CMainInterface::~CMainInterface()
 {
 }
 
-void MainInterface::Init()
+void CMainInterface::Init()
 {
+	//Initialisation
+	m_PluginsList = CPluginManager::Instance()->getPluginsListPtr();
+	if(m_PluginsList == 0)
+	{
+		return;
+	}
+
+	//Tray icon !!
+	m_Icon = new CTrayIcon();
+#if defined(__WXCOCOA__)
+  	m_DockIcon = new CTrayIcon(wxTaskBarIcon::DOCK);
+#endif
+
+	m_Icon->setParent(this);
+
+  	if (!m_Icon->SetIcon(full_xpm, wxT(NAME)))
+    {
+		std::cout << "Could not set icon.";
+	}
 }
 
-void MainInterface::CreateControls()
+void CMainInterface::CreateControls()
 {    
-////@begin MainInterface content construction
-    MainInterface* itemFrame1 = this;
+////@begin CMainInterface content construction
+    CMainInterface* itemFrame1 = this;
 
     wxMenuBar* menuBar = new wxMenuBar;
     wxMenu* itemMenu3 = new wxMenu;
@@ -123,18 +152,18 @@ void MainInterface::CreateControls()
     itemFrame1->SetStatusBar(itemStatusBar13);
 }
 
-bool MainInterface::ShowToolTips()
+bool CMainInterface::ShowToolTips()
 {
     return true;
 }
 
-wxBitmap MainInterface::GetBitmapResource( const wxString& name )
+wxBitmap CMainInterface::GetBitmapResource( const wxString& name )
 {
     wxUnusedVar(name);
     return wxNullBitmap;
 }
 
-wxIcon MainInterface::GetIconResource( const wxString& name )
+wxIcon CMainInterface::GetIconResource( const wxString& name )
 {
     wxUnusedVar(name);
     return wxNullIcon;

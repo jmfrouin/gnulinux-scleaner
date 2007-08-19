@@ -51,7 +51,7 @@ bool CSClean::OnInit(void)
     m_pfm->SpaceUsed();
 
 	//CMainDialog* l_Dialog = new CMainDialog(NULL, wxID_ANY, wxT("wxTaskBarIcon Test Dialog"), wxDefaultPosition, wxSize(365, 290));
-	MainInterface* l_Main = new MainInterface(NULL, wxID_ANY, wxT(NAME), wxDefaultPosition, wxSize(365, 290));
+	CMainInterface* l_Main = new CMainInterface(NULL, wxID_ANY, wxT(NAME), wxDefaultPosition, wxSize(365, 290));
     //l_Dialog->Show(true);
     l_Main->Show(true);
     return true;

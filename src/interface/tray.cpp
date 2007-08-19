@@ -32,7 +32,7 @@ $Author$
 #include <wx/wx.h>
 #endif
 
-#include "main.h"
+#include "maininterface.h"
 #include "tray.h"
 
 BEGIN_EVENT_TABLE(CTrayIcon, wxTaskBarIcon)
@@ -47,7 +47,7 @@ BEGIN_EVENT_TABLE(CTrayIcon, wxTaskBarIcon)
     EVT_MENU(PU_SUB2, CTrayIcon::OnMenuSub)
 END_EVENT_TABLE()
 
-void CTrayIcon::setParent(CMainDialog* _parent)
+void CTrayIcon::setParent(CMainInterface* _parent)
 {
 	m_Parent = _parent;
 }
