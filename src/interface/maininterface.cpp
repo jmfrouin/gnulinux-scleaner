@@ -133,12 +133,19 @@ void CMainInterface::CreateControls()
     itemSplitterWindow10->SetMinimumPaneSize(0);
 
     //wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
-    wxCheckTreeCtrl* itemTreeCtrl11 = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
-	wxString l_text;
-	l_text = _("dpkg");
-    itemTreeCtrl11->AppendItem(itemTreeCtrl11->GetRootItem(),
-                           l_text /*,
-                           MyTreeCtrl::TreeCtrlIcon_File */ );
+    wxCheckTreeCtrl* itemTreeCtrl11 = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
+
+	/* Happend plugins' name available */
+
+	//wxTreeItemId l_root = itemTreeCtrl11->AddRoot(wxT("Input plugins"), wxTreeItemIcon_Expanded, wxTreeItemIcon_Expanded);
+	wxTreeItemId l_root = itemTreeCtrl11->AddRoot(wxT("Input plugins :"));
+    std::map<std::string, IPlugin*>::iterator _it;
+    for(_it = m_PluginsList->begin(); _it != m_PluginsList->end(); ++_it)
+    {
+		std::cout << ":" << ((*_it).second)->getName() << '\n';
+    	//itemTreeCtrl11->AppendItem(l_root, _(((*_it).second)->getName().c_str()), 2, 2/*, MyTreeCtrl::TreeCtrlIcon_File */ );
+    	itemTreeCtrl11->AddCheckedItem(l_root, _(((*_it).second)->getName().c_str()), false /*, MyTreeCtrl::TreeCtrlIcon_File */ );
+    }
 
     wxArrayString itemCheckListBox12Strings;
     itemCheckListBox12Strings.Add(_("dzdz"));
@@ -149,7 +156,7 @@ void CMainInterface::CreateControls()
     itemCheckListBox12Strings.Add(_("dz"));
     wxCheckListBox* itemCheckListBox12 = new wxCheckListBox( itemSplitterWindow10, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, itemCheckListBox12Strings, wxLB_SINGLE );
 
-    itemSplitterWindow10->SplitVertically(itemTreeCtrl11, itemCheckListBox12, 50);
+    itemSplitterWindow10->SplitVertically(itemTreeCtrl11, itemCheckListBox12, 200);
 
     wxStatusBar* itemStatusBar13 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
     itemStatusBar13->SetFieldsCount(2);
