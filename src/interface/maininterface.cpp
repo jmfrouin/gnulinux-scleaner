@@ -56,13 +56,14 @@ CMainInterface::CMainInterface()
     Init();
 }
 
-CMainInterface::CMainInterface( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
+m_TreeList(0)
 {
     Init();
-    Create( parent, id, caption, pos, size, style );
+    Create(parent, id, caption, pos, size, style);
 }
 
-bool CMainInterface::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+bool CMainInterface::Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
 {
     wxFrame::Create( parent, id, caption, pos, size, style );
 
@@ -133,18 +134,28 @@ void CMainInterface::CreateControls()
     itemSplitterWindow10->SetMinimumPaneSize(0);
 
     //wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
-    wxCheckTreeCtrl* itemTreeCtrl11 = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
+    m_TreeList = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
+	//wxTreeItemId l_root = m_TreeList->AddRoot(wxT("Input plugins :"));
 
 	/* Happend plugins' name available */
 
-	//wxTreeItemId l_root = itemTreeCtrl11->AddRoot(wxT("Input plugins"), wxTreeItemIcon_Expanded, wxTreeItemIcon_Expanded);
-	wxTreeItemId l_root = itemTreeCtrl11->AddRoot(wxT("Input plugins :"));
+	wxTreeItemId l_root = m_TreeList->AddRoot(wxT("Input plugins"), wxTreeItemIcon_Expanded, wxTreeItemIcon_Expanded);
     std::map<std::string, IPlugin*>::iterator _it;
     for(_it = m_PluginsList->begin(); _it != m_PluginsList->end(); ++_it)
     {
 		std::cout << ":" << ((*_it).second)->getName() << '\n';
     	//itemTreeCtrl11->AppendItem(l_root, _(((*_it).second)->getName().c_str()), 2, 2/*, MyTreeCtrl::TreeCtrlIcon_File */ );
-    	itemTreeCtrl11->AddCheckedItem(l_root, _(((*_it).second)->getName().c_str()), false /*, MyTreeCtrl::TreeCtrlIcon_File */ );
+    	wxTreeItemId l_plug = m_TreeList->AddCheckedItem(l_root, _(((*_it).second)->getName().c_str()), false /*, MyTreeCtrl::TreeCtrlIcon_File */ );
+
+		std::list<std::string> l_list;
+		((*_it).second)->getFileList(l_list);
+		std::list<std::string>::iterator _it2;
+		std::cout << "Taille : " << l_list.size() << '\n';
+
+		for(_it2 = l_list.begin(); _it2 != l_list.end(); ++_it2)
+		{
+			m_TreeList->AddCheckedItem(l_plug, _((*_it2).c_str()), true /*, MyTreeCtrl::TreeCtrlIcon_File */ );
+		}
     }
 
     wxArrayString itemCheckListBox12Strings;
@@ -156,7 +167,7 @@ void CMainInterface::CreateControls()
     itemCheckListBox12Strings.Add(_("dz"));
     wxCheckListBox* itemCheckListBox12 = new wxCheckListBox( itemSplitterWindow10, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, itemCheckListBox12Strings, wxLB_SINGLE );
 
-    itemSplitterWindow10->SplitVertically(itemTreeCtrl11, itemCheckListBox12, 200);
+    itemSplitterWindow10->SplitVertically(m_TreeList, itemCheckListBox12, 200);
 
     wxStatusBar* itemStatusBar13 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
     itemStatusBar13->SetFieldsCount(2);
@@ -179,3 +190,5 @@ wxIcon CMainInterface::GetIconResource( const wxString& name )
     wxUnusedVar(name);
     return wxNullIcon;
 }
+
+// --

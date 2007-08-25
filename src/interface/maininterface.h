@@ -30,6 +30,8 @@ $Author$
 
 #include <config.h>
 #include <map>
+#include <list>
+#include <string>
 #include <wx/frame.h>
 #include <wx/toolbar.h>
 #include <wx/splitter.h>
@@ -51,9 +53,9 @@ class CMainInterface: public wxFrame
 public:
     /// Constructors
     CMainInterface();
-    CMainInterface( wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE );
+    CMainInterface(wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE);
 
-    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE );
+    bool Create(wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE );
 
     ~CMainInterface();
 
@@ -69,6 +71,7 @@ protected:
     CTrayIcon*	m_DockIcon;
 #endif
 	std::map<std::string, IPlugin*>* 	m_PluginsList;
+	wxCheckTreeCtrl* m_TreeList;
 };
 
 #endif

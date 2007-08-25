@@ -49,25 +49,15 @@ CSClean::CSClean()
 bool CSClean::OnInit(void)
 {
     bool l_ret = false;
-	std::list<std::string> l_list;
+
 	//Plugins manager
 	m_pfm = CPluginManager::Instance();
     l_ret = m_pfm->loadPlugins("plugs");
-    m_pfm->getFileList(l_list);
 
-	std::cout << "Liste des fichiers : " << '\n';
-    std::list<std::string>::iterator _it;
-    for(_it = l_list.begin(); _it != l_list.end(); ++_it)
-	{
-		std::cout << (*_it) << '\n';
-	}
-	
 	//Engine
 	m_engine = CEngine::Instance();
 
-	//CMainDialog* l_Dialog = new CMainDialog(NULL, wxID_ANY, wxT("wxTaskBarIcon Test Dialog"), wxDefaultPosition, wxSize(365, 290));
 	CMainInterface* l_Main = new CMainInterface(NULL, wxID_ANY, wxT(NAME), wxDefaultPosition, wxSize(365, 290));
-    //l_Dialog->Show(true);
     l_Main->Show(true);
     return true;
 }

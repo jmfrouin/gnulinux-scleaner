@@ -80,7 +80,9 @@ void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 		//	std::cout << "[ERR] : " __FILE__ << "@" << __LINE__ << ": Cannot stat " << l_filename.c_str() << '\n';
 		//}
 		//l_size += l_info.st_size;
-		_fl.push_back(l_filename.c_str());
+		std::string l_tmp = l_path;
+		l_tmp += l_filename.c_str();
+		_fl.push_back(l_tmp);
    	    cont = l_dir.GetNext(&l_filename);
    	}
 	std::cout << "Logs plugin : " << l_size << " bytes" << '\n';
