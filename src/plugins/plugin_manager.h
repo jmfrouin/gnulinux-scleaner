@@ -31,6 +31,7 @@ $Author$
 
 #include <config.h>
 #include <map>
+#include <list>
 #include <string>
 #include <tools/singleton.h>
 #include <tools/smart_pointer.h>
@@ -62,10 +63,9 @@ class CPluginManager: public CSmartCpt, public TSingleton<CPluginManager>
 		std::map<std::string, IPlugin*>* getPluginsListPtr();
 
         /*!
-         *@brief Return space used for all available plugins.
-		 *@return Size in bytes.
+         *@brief Retrieve list found of ALL plugins.
          */
-        int SpaceUsed();
+		void getFileList(std::list<std::string>& _fl);
 
         /*!
          * @brief ctor.
@@ -74,6 +74,7 @@ class CPluginManager: public CSmartCpt, public TSingleton<CPluginManager>
 
         /*!
          * @brief dtor.
+		 * @todo Fix the leak on plugins loaded.
          */
         ~CPluginManager();
 

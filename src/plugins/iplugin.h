@@ -1,7 +1,5 @@
 /*
 Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
-*/
-/*
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,28 +21,6 @@ $Date$
 $Rev$
 $Author$
 ------------------------------------------------------
-
-*/
-
-/*
--------------------------------------------------------------------------
-Project : sclean
--------------------------------------------------------------------------
-Creator : Frouin Jean-Michel
--------------------------------------------------------------------------
-$Date$
-$Rev$
-$Author$
--------------------------------------------------------------------------
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; version 2 of the License.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
--------------------------------------------------------------------------
 */
 
 #ifndef _IPLUGIN_H_
@@ -52,6 +28,7 @@ GNU General Public License for more details.
 
 #include <config.h>
 #include <string>
+#include <list>
 #include <tools/name.h>
 
 /**
@@ -67,6 +44,11 @@ class IPlugin : public CName
 		};
 
     public:
+		/*!
+		 * @brief ctor
+		 */
+		IPlugin(){}
+
     	/*!
     	 * @brief dtor.
     	 */
@@ -75,7 +57,12 @@ class IPlugin : public CName
 		/*!
 		*@brief Return location of file to delete.
 		*/
-		virtual const std::string location() = 0;
+		//virtual const std::string location() = 0;
+
+		/*!
+		*@brief Return a std::list of files targeted by plugin.
+		*/
+		virtual void getFileList(std::list<std::string>& _fl) = 0;
 
 		/*!
 		*@brief Give a description of current plugin.

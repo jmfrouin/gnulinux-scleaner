@@ -19,32 +19,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date$
-$Rev$
-$Author$
+$Date: 2007-08-18 11:39:53 +0200 (sam, 18 aoû 2007) $
+$Rev: 8 $
+$Author: snoogie $
 ------------------------------------------------------
 
 */
 
-#ifndef _DPKG_H_
-#define _DPKG_H_
+/*! @page page0 Plugins documentations.
+* - @subpage logs
+*/
+/*! @page logs logs plugin.
+* @section desc Description
+* @section param Parameters
+* @section pb Knows bugs
+* @section todo Todo
+*/
+
+#ifndef _LOGS_H_
+#define _LOGS_H_
 
 #include <config.h>
 #include <plugins/iplugin.h>
 
-class CdpkgPlugin : public IPlugin
+class ClogsPlugin : public IPlugin
 {
     public:
-        CdpkgPlugin();
-        ~CdpkgPlugin();
+        ClogsPlugin();
+        ~ClogsPlugin();
 
 		/*!
 		*@brief From IPlugin.
 		*/
-		const std::string location();
+		//const std::string location();
+		void getFileList(std::list<std::string>& _fl);
 		const std::string description();
 		eType Type();
 
 };
-#endif                           //_DPKG_H_
+#endif                           //_LOGS_H_
 /* vi:set ts=4: */

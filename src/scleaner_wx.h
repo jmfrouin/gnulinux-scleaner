@@ -34,6 +34,7 @@ $Author$
 #endif
 
 #include <tools/smart_pointer.h>
+#include <engine/engine.h>
 
 // Define a new application
 class CSClean: public wxApp
@@ -43,7 +44,8 @@ class CSClean: public wxApp
     	bool OnInit(void);
 	
 	private:
-		TSmartPtr<CPluginManager> m_pfm;
+		TSmartPtr<CPluginManager> 	m_pfm;
+		TSmartPtr<CEngine> 			m_engine;
 };
 
 #endif // _APP_H_

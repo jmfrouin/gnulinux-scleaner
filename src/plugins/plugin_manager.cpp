@@ -28,12 +28,10 @@ $Author$
 
 #include <dlfcn.h>               ///In order to load dyn lib.
 #include <dirent.h>              ///For path manipulation.
-#include <sys/stat.h>            ///Get file size.
 #include <iostream>
 #include <string>
 #include "plugin_manager.h"
 #include <leak/leak_detector.h>
-#include <wx/dir.h>
 
 CPluginManager::~CPluginManager()
 {
@@ -51,7 +49,7 @@ CPluginManager::~CPluginManager()
     for(_it = m_PluginsList.begin(); _it != m_PluginsList.end(); ++_it)
     {
         std::cout << (*_it).first << ": ";
-        std::cout << ((*_it).second)->description() ;
+        std::cout << ((*_it).second)->description();
         bool l_threadable = ((*_it).second)->isThreadable();
 		if(l_threadable)
 		{
@@ -105,51 +103,57 @@ std::map<std::string, IPlugin*>* CPluginManager::getPluginsListPtr()
 	return l_ret;
 }
 
-int CPluginManager::SpaceUsed()
+void CPluginManager::getFileList(std::list<std::string>& _fl)
 {
-    int l_ret = 0;
-    int l_size = 0;
-
-    std::map<std::string, IPlugin*>::iterator l_it;
-    for(l_it = m_PluginsList.begin(); l_it != m_PluginsList.end(); ++l_it)
-    {
-		std::string l_file = ((*l_it).second)->location();
-		std::string l_path = l_file.substr(0, l_file.find_last_of("/"));
-		std::string l_mask = l_file.substr(l_file.find_last_of("/") + 1, l_file.length());
-
-    	wxDir l_dir(l_path);
-		l_size = 0;
-		
-		//We get all files as well archived one.
-		l_mask += "*";
-
-    	if ( !l_dir.IsOpened() )
-    	{
-			std::cout << "[ERR] Cannot open folder : " << l_path << '\n';
-    	    return 0;
-    	}
-
-    	wxString l_filename;
-
-    	bool cont = l_dir.GetFirst(&l_filename, l_mask, wxDIR_DEFAULT);
-    	while(cont)
-    	{
-			struct stat l_info;
-			std::string l_name(l_path);
-			l_name += "/";
-			l_name += l_filename.c_str();
-			if(stat(l_name.c_str(), &l_info) == -1)
-			{
-				std::cout << "[ERR] : " __FILE__ << "@" << __LINE__ << ": Cannot stat " << l_filename.c_str() << '\n';
-			}
-			l_size += l_info.st_size;
-    	    cont = l_dir.GetNext(&l_filename);
-    	}
-		l_ret += l_size;
-		std::cout << ((*l_it).second)->getName() << " : " << l_size << " bytes" << '\n';
+    std::map<std::string, IPlugin*>::iterator _it;
+    for(_it = m_PluginsList.begin(); _it != m_PluginsList.end(); ++_it)
+	{
+		((*_it).second)->getFileList(_fl);
 	}
-
-	std::cout << "Total : " << l_ret << '\n';
-    return l_ret;
 }
+    //int l_ret = 0;
+    //int l_size = 0;
+
+    //std::map<std::string, IPlugin*>::iterator l_it;
+    //for(l_it = m_PluginsList.begin(); l_it != m_PluginsList.end(); ++l_it)
+    //{
+	//	std::string l_file = ((*l_it).second)->location();
+	//	std::string l_path = l_file.substr(0, l_file.find_last_of("/"));
+	//	std::string l_mask = l_file.substr(l_file.find_last_of("/") + 1, l_file.length());
+
+    //	wxDir l_dir(l_path);
+	//	l_size = 0;
+	//	
+	//	//We get all files as well archived one.
+	//	l_mask += "*";
+
+    //	if ( !l_dir.IsOpened() )
+    //	{
+	//		std::cout << "[ERR] Cannot open folder : " << l_path << '\n';
+    //	    return 0;
+    //	}
+
+    //	wxString l_filename;
+
+    //	bool cont = l_dir.GetFirst(&l_filename, l_mask, wxDIR_DEFAULT);
+    //	while(cont)
+    //	{
+	//		struct stat l_info;
+	//		std::string l_name(l_path);
+	//		l_name += "/";
+	//		l_name += l_filename.c_str();
+	//		if(stat(l_name.c_str(), &l_info) == -1)
+	//		{
+	//			std::cout << "[ERR] : " __FILE__ << "@" << __LINE__ << ": Cannot stat " << l_filename.c_str() << '\n';
+	//		}
+	//		l_size += l_info.st_size;
+    //	    cont = l_dir.GetNext(&l_filename);
+    //	}
+	//	l_ret += l_size;
+	//	std::cout << ((*l_it).second)->getName() << " : " << l_size << " bytes" << '\n';
+	//}
+
+	//std::cout << "Total : " << l_ret << '\n';
+    //return l_ret;
+//}
 /* vi:set ts=4: */

@@ -22,11 +22,6 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-SET(folder logs)
-
-FOREACH(fold ${folder})
-	ADD_SUBDIRECTORY(${fold})
-ENDFOREACH(fold ${folder})
-
-set(plugin_src plugin_manager.cpp)
-add_library(plugins ${plugin_src})
+set(logs_src logs.cpp)
+add_library(logs SHARED ${logs_src}) 
+target_link_libraries(logs plugins tools)

@@ -36,7 +36,7 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
 
 SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
-SET(folder interface leak log plugins tools)
+SET(folder engine interface leak log plugins tools)
 FOREACH(fold ${folder})
 	ADD_SUBDIRECTORY(${fold})
 ENDFOREACH(fold ${folder})
@@ -44,15 +44,7 @@ ENDFOREACH(fold ${folder})
 SET(scleaner_src scleaner_wx.cpp)
 
 ADD_EXECUTABLE(scleaner ${scleaner_src})
-TARGET_LINK_LIBRARIES(scleaner dl interface leaks log plugins tools `wx-config --libs`)
-
-## Generate documentation
-IF(DOXYGEN_EXECUTABLE)
-	MESSAGE(STATUS "[INFO] I will be able to compile doxygen documentation.")
-	ADD_CUSTOM_TARGET(doc COMMAND ${DOXYGEN_EXECUTABLE} scleaner.dox)
-ELSE(DOXYGEN_EXECUTABLE)
-	MESSAGE(STATUS "[INFO] Please install doxygen for automatic generation of documentation.")
-ENDIF(DOXYGEN_EXECUTABLE)
+TARGET_LINK_LIBRARIES(scleaner dl engine interface leaks log plugins tools `wx-config --libs`)
 
 #INSTALL(TARGETS testsapi
 #DESTINATION /usr/bin

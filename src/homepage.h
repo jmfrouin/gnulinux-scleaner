@@ -65,6 +65,10 @@ $Author$
  *
  */
 
+ /*! @page page0 Plugins documentations
+ * Here you can find all plugins documentations.
+ */
+
  /*! @page page1 Improvement
  *
  * @section error Error code

@@ -15,18 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 # ------------------------------------------------------
-# Project : scleaner
-# ------------------------------------------------------
 # $Date: 2007-08-13 21:09:03 +0200 (lun, 13 aoû 2007) $
 # $Rev: 14 $
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-SET(folder logs)
-
-FOREACH(fold ${folder})
-	ADD_SUBDIRECTORY(${fold})
-ENDFOREACH(fold ${folder})
-
-set(plugin_src plugin_manager.cpp)
-add_library(plugins ${plugin_src})
+SET(engine_src engine.cpp)
+ADD_LIBRARY(engine ${engine_src})
