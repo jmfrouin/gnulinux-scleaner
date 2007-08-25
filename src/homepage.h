@@ -65,7 +65,7 @@ $Author$
  *
  */
 
- /*! @page page0 Plugins documentations
+ /*! @page page3 Plugins documentations
  * Here you can find all plugins documentations.
  */
 

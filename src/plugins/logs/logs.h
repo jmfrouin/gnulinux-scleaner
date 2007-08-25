@@ -26,7 +26,7 @@ $Author$
 
 */
 
-/*! @page page0 Plugins documentations.
+/*! @page page3 Plugins documentations.
 * - @subpage logs
 */
 /*! @page logs logs plugin.
