@@ -30,7 +30,7 @@ $Author$
 
 /*! @page logs logs plugin.
 * @section desc Description
-* This plugin allow to clean <b>logs</b> files.
+* This plugin allow user to clean <b>logs</b> files.
 * <br>
 * In fact it just scan <b>/var/log/</b> and its subfolders.
 * @section param Parameters
