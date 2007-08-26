@@ -55,12 +55,12 @@ $Author$
  *
  * @section screenshots Screenshots
  *
- *  \image html gfx/scleaner0.1.0.png
+ *  @image html gfx/scleaner0.1.0.png width=10cm
  *
  *
  *
  *
- *  \image html gfx/gpl.png
+ *  @image html gfx/gpl.png
  *
  */
 
