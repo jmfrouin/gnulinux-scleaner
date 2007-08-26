@@ -38,7 +38,6 @@ $Author$
 #include <string>
 #include <plugins/plugin_manager.h>
 #include <plugins/iplugin.h>
-#include "main.h"
 #include "maininterface.h"
 
 //GFX Elements
@@ -69,6 +68,12 @@ bool CMainInterface::Create(wxWindow* parent, wxWindowID id, const wxString& cap
 
     CreateControls();
     Centre();
+
+    if (FindWindow(ID_SPLITTERWINDOW1))
+        ((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW1))->SetSashPosition(200);
+    if (FindWindow(ID_SPLITTERWINDOW2))
+        ((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW2))->SetSashPosition(200);
+
     return true;
 }
 
@@ -105,7 +110,6 @@ void CMainInterface::Init()
 
 void CMainInterface::CreateControls()
 {    
-////@begin CMainInterface content construction
     CMainInterface* itemFrame1 = this;
 
     wxMenuBar* menuBar = new wxMenuBar;
@@ -135,17 +139,16 @@ void CMainInterface::CreateControls()
 
     //wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
     m_TreeList = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
-	//wxTreeItemId l_root = m_TreeList->AddRoot(wxT("Input plugins :"));
 
-	/* Happend plugins' name available */
+	// Happend plugins' name available
 
 	wxTreeItemId l_root = m_TreeList->AddRoot(wxT("Input plugins"), wxTreeItemIcon_Expanded, wxTreeItemIcon_Expanded);
     std::map<std::string, IPlugin*>::iterator _it;
     for(_it = m_PluginsList->begin(); _it != m_PluginsList->end(); ++_it)
     {
 		std::cout << ":" << ((*_it).second)->getName() << '\n';
-    	//itemTreeCtrl11->AppendItem(l_root, _(((*_it).second)->getName().c_str()), 2, 2/*, MyTreeCtrl::TreeCtrlIcon_File */ );
-    	wxTreeItemId l_plug = m_TreeList->AddCheckedItem(l_root, _(((*_it).second)->getName().c_str()), false /*, MyTreeCtrl::TreeCtrlIcon_File */ );
+    	//itemTreeCtrl11->AppendItem(l_root, _(((*_it).second)->getName().c_str()), 2, 2 );
+    	wxTreeItemId l_plug = m_TreeList->AddCheckedItem(l_root, _(((*_it).second)->getName().c_str()), false );
 
 		std::list<std::string> l_list;
 		((*_it).second)->getFileList(l_list);
@@ -154,10 +157,82 @@ void CMainInterface::CreateControls()
 
 		for(_it2 = l_list.begin(); _it2 != l_list.end(); ++_it2)
 		{
-			m_TreeList->AddCheckedItem(l_plug, _((*_it2).c_str()), true /*, MyTreeCtrl::TreeCtrlIcon_File */ );
+			m_TreeList->AddCheckedItem(l_plug, _((*_it2).c_str()), true );
 		}
     }
 
+
+    wxSplitterWindow* itemSplitterWindow12 = new wxSplitterWindow( itemSplitterWindow10, ID_SPLITTERWINDOW2, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+    itemSplitterWindow12->SetMinimumPaneSize(0);
+
+    wxArrayString itemCheckListBox13Strings;
+    wxCheckListBox* itemCheckListBox13 = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, itemCheckListBox13Strings, wxLB_SINGLE );
+
+    wxPanel* itemPanel14 = new wxPanel( itemSplitterWindow12, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizer15 = new wxBoxSizer(wxVERTICAL);
+    itemPanel14->SetSizer(itemBoxSizer15);
+
+    wxStaticText* itemStaticText16 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer15->Add(itemStaticText16, 0, wxALIGN_LEFT|wxALL, 5);
+
+    wxStaticText* itemStaticText17 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer15->Add(itemStaticText17, 0, wxALIGN_RIGHT|wxALL, 5);
+
+    wxStaticText* itemStaticText18 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer15->Add(itemStaticText18, 0, wxALIGN_RIGHT|wxALL, 5);
+
+    wxStaticText* itemStaticText19 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer15->Add(itemStaticText19, 0, wxALIGN_RIGHT|wxALL, 5);
+
+    itemBoxSizer15->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxStdDialogButtonSizer* itemStdDialogButtonSizer21 = new wxStdDialogButtonSizer;
+
+    itemBoxSizer15->Add(itemStdDialogButtonSizer21, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxButton* itemButton22 = new wxButton( itemPanel14, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStdDialogButtonSizer21->AddButton(itemButton22);
+
+    wxButton* itemButton23 = new wxButton( itemPanel14, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStdDialogButtonSizer21->AddButton(itemButton23);
+
+    itemStdDialogButtonSizer21->Realize();
+
+    itemSplitterWindow12->SplitHorizontally(itemCheckListBox13, itemPanel14, 50);
+    itemSplitterWindow10->SplitVertically(m_TreeList, itemSplitterWindow12, 200);
+
+    wxStatusBar* itemStatusBar24 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar24->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar24);
+////@begin CMainInterface content construction
+    /*CMainInterface* itemFrame1 = this;
+
+    wxMenuBar* menuBar = new wxMenuBar;
+    wxMenu* itemMenu3 = new wxMenu;
+    menuBar->Append(itemMenu3, _("Menu"));
+    itemFrame1->SetMenuBar(menuBar);
+
+    wxToolBar* itemToolBar4 = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
+    wxBitmap itemtool5Bitmap(wxNullBitmap);
+    wxBitmap itemtool5BitmapDisabled;
+    itemToolBar4->AddTool(ID_TOOL1, _T(""), itemtool5Bitmap, itemtool5BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
+    wxBitmap itemtool6Bitmap(wxNullBitmap);
+    wxBitmap itemtool6BitmapDisabled;
+    itemToolBar4->AddTool(ID_TOOL2, _T(""), itemtool6Bitmap, itemtool6BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
+    itemToolBar4->AddSeparator();
+    wxBitmap itemtool8Bitmap(wxNullBitmap);
+    wxBitmap itemtool8BitmapDisabled;
+    itemToolBar4->AddTool(ID_TOOL3, _T(""), itemtool8Bitmap, itemtool8BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
+    wxBitmap itemtool9Bitmap(wxNullBitmap);
+    wxBitmap itemtool9BitmapDisabled;
+    itemToolBar4->AddTool(ID_TOOL4, _T(""), itemtool9Bitmap, itemtool9BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
+    itemToolBar4->Realize();
+    itemFrame1->SetToolBar(itemToolBar4);
+
+    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemFrame1, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+    itemSplitterWindow10->SetMinimumPaneSize(0);
+
+    //wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
+	//wxTreeItemId l_root = m_TreeList->AddRoot(wxT("Input plugins :"));
     wxArrayString itemCheckListBox12Strings;
     itemCheckListBox12Strings.Add(_("dzdz"));
     itemCheckListBox12Strings.Add(_("dz"));
@@ -172,6 +247,7 @@ void CMainInterface::CreateControls()
     wxStatusBar* itemStatusBar13 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
     itemStatusBar13->SetFieldsCount(2);
     itemFrame1->SetStatusBar(itemStatusBar13);
+	*/
 }
 
 bool CMainInterface::ShowToolTips()

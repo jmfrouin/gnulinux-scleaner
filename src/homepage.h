@@ -55,8 +55,7 @@ $Author$
  *
  * @section screenshots Screenshots
  *
- * Not yet 
- *
+ *  \image html gfx/scleaner0.1.0.png
  *
  *
  *
