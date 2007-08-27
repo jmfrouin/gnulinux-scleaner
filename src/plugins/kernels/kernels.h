@@ -32,16 +32,20 @@ $Author$
 #include <config.h>
 #include <plugins/iplugin.h>
 
-class CkernPlugin : public IPlugin
+/*!
+*@brief Find unused kernels.
+*/
+class CkernelsPlugin : public IPlugin
 {
     public:
-        CkernPlugin();
-        ~CkernPlugin();
+        CkernelsPlugin();
+        ~CkernelsPlugin();
 
 	/*!
 	*@brief From IPlugin.
 	*/
-	const std::string location();
+	//const std::string location();
+	void getFileList(std::list<std::string>& _fl);
 	const std::string description();
 	eType Type();
 

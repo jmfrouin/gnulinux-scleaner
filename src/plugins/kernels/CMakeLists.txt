@@ -22,6 +22,6 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-set(kern_src kern.cpp)
-add_library(kern SHARED ${kern_src}) 
-target_link_libraries(kern plugins tools)
+set(kernels_src kernels.cpp)
+add_library(kernels SHARED ${kernels_src}) 
+target_link_libraries(kernels plugins tools)
