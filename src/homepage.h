@@ -108,7 +108,7 @@ $Author$
 
 /*! @page page4 Build & Installation
 * 
-* @include ../INSTALL
+* Please check INSTALL file for test scleaner 0.2.0.
 *
 */
 
