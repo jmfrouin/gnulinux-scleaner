@@ -59,7 +59,7 @@ $Author$
  *
  * @section screenshots Screenshots
  *
- *  @image html gfx/scleaner0.1.0.png
+ *  @image html gfx/scleaner0.2.0.png
  *
  *
  *
