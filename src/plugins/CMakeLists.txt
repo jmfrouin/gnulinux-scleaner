@@ -22,7 +22,7 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-SET(folder logs)
+SET(folder logs kernels)
 
 FOREACH(fold ${folder})
 	ADD_SUBDIRECTORY(${fold})
