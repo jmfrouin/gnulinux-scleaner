@@ -48,7 +48,7 @@ bool CSClean::OnInit(void)
 	//Retrieve CEngine instance pointer.
 	m_engine = CEngine::Instance();
 	//Load plugins
-	m_engine->loadPlugins("plugs");
+	m_engine->loadPlugins("in");
 	//Load GFX interface
 	l_ret = m_engine->loadInterface();
 
