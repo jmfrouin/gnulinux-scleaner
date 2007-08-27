@@ -48,6 +48,7 @@ $Author$
 IMPLEMENT_CLASS( CMainInterface, wxFrame )
 
 BEGIN_EVENT_TABLE( CMainInterface, wxFrame )
+EVT_TREE_SEL_CHANGED(ID_TREECTRL1, CMainInterface::OnSelChanged)
 END_EVENT_TABLE()
 
 CMainInterface::CMainInterface()
@@ -56,7 +57,7 @@ CMainInterface::CMainInterface()
 }
 
 CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-m_TreeList(0)
+m_TreeList(0), m_Title(0)
 {
     Init();
     Create(parent, id, caption, pos, size, style);
@@ -172,17 +173,17 @@ void CMainInterface::CreateControls()
     wxBoxSizer* itemBoxSizer15 = new wxBoxSizer(wxVERTICAL);
     itemPanel14->SetSizer(itemBoxSizer15);
 
-    wxStaticText* itemStaticText16 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer15->Add(itemStaticText16, 0, wxALIGN_LEFT|wxALL, 5);
+    m_Title = new wxStaticText( itemPanel14, ID_TITLE, _(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer15->Add(m_Title, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxStaticText* itemStaticText17 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer15->Add(itemStaticText17, 0, wxALIGN_RIGHT|wxALL, 5);
+    m_Line1 = new wxStaticText( itemPanel14, wxID_STATIC, _(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer15->Add(m_Line1, 0, wxALIGN_CENTER|wxALL, 5);
 
-    wxStaticText* itemStaticText18 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer15->Add(itemStaticText18, 0, wxALIGN_RIGHT|wxALL, 5);
+    m_Line2 = new wxStaticText( itemPanel14, wxID_STATIC, _(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer15->Add(m_Line2, 0, wxALIGN_CENTER|wxALL, 5);
 
-    wxStaticText* itemStaticText19 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer15->Add(itemStaticText19, 0, wxALIGN_RIGHT|wxALL, 5);
+    m_Line3 = new wxStaticText( itemPanel14, wxID_STATIC, _(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer15->Add(m_Line3, 0, wxALIGN_CENTER|wxALL, 5);
 
     itemBoxSizer15->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -203,51 +204,6 @@ void CMainInterface::CreateControls()
     wxStatusBar* itemStatusBar24 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
     itemStatusBar24->SetFieldsCount(2);
     itemFrame1->SetStatusBar(itemStatusBar24);
-////@begin CMainInterface content construction
-    /*CMainInterface* itemFrame1 = this;
-
-    wxMenuBar* menuBar = new wxMenuBar;
-    wxMenu* itemMenu3 = new wxMenu;
-    menuBar->Append(itemMenu3, _("Menu"));
-    itemFrame1->SetMenuBar(menuBar);
-
-    wxToolBar* itemToolBar4 = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-    wxBitmap itemtool5Bitmap(wxNullBitmap);
-    wxBitmap itemtool5BitmapDisabled;
-    itemToolBar4->AddTool(ID_TOOL1, _T(""), itemtool5Bitmap, itemtool5BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
-    wxBitmap itemtool6Bitmap(wxNullBitmap);
-    wxBitmap itemtool6BitmapDisabled;
-    itemToolBar4->AddTool(ID_TOOL2, _T(""), itemtool6Bitmap, itemtool6BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
-    itemToolBar4->AddSeparator();
-    wxBitmap itemtool8Bitmap(wxNullBitmap);
-    wxBitmap itemtool8BitmapDisabled;
-    itemToolBar4->AddTool(ID_TOOL3, _T(""), itemtool8Bitmap, itemtool8BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
-    wxBitmap itemtool9Bitmap(wxNullBitmap);
-    wxBitmap itemtool9BitmapDisabled;
-    itemToolBar4->AddTool(ID_TOOL4, _T(""), itemtool9Bitmap, itemtool9BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
-    itemToolBar4->Realize();
-    itemFrame1->SetToolBar(itemToolBar4);
-
-    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemFrame1, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
-    itemSplitterWindow10->SetMinimumPaneSize(0);
-
-    //wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
-	//wxTreeItemId l_root = m_TreeList->AddRoot(wxT("Input plugins :"));
-    wxArrayString itemCheckListBox12Strings;
-    itemCheckListBox12Strings.Add(_("dzdz"));
-    itemCheckListBox12Strings.Add(_("dz"));
-    itemCheckListBox12Strings.Add(_("dzdz"));
-    itemCheckListBox12Strings.Add(_("d"));
-    itemCheckListBox12Strings.Add(_("zd"));
-    itemCheckListBox12Strings.Add(_("dz"));
-    wxCheckListBox* itemCheckListBox12 = new wxCheckListBox( itemSplitterWindow10, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, itemCheckListBox12Strings, wxLB_SINGLE );
-
-    itemSplitterWindow10->SplitVertically(m_TreeList, itemCheckListBox12, 200);
-
-    wxStatusBar* itemStatusBar13 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar13->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar13);
-	*/
 }
 
 bool CMainInterface::ShowToolTips()
@@ -267,4 +223,35 @@ wxIcon CMainInterface::GetIconResource( const wxString& name )
     return wxNullIcon;
 }
 
-// --
+//Callbacks
+void CMainInterface::OnSelChanged(wxTreeEvent& event)
+{
+    wxTreeItemId l_item = m_TreeList->GetSelection();
+	
+	if(l_item.IsOk())
+	{
+		wxString l_text = m_TreeList->GetItemText(l_item);
+		if(l_item != m_TreeList->GetRootItem())
+		{
+
+			if(l_text.Contains(_("/")))
+			{
+				l_text += " informations :";
+				m_Title->SetLabel(l_text);
+			}
+			else
+			{
+				std::map<std::string, IPlugin*>::iterator l_it;
+				l_it = m_PluginsList->find(l_text.c_str());
+				wxString l_description = (l_it->second)->description();
+				wxString l_author = (l_it->second)->author();
+				wxString l_version = (l_it->second)->version();
+				l_text += " plugin informations :";
+				m_Title->SetLabel(l_text);
+				m_Line1->SetLabel(l_description);
+				m_Line2->SetLabel(l_author);
+				m_Line3->SetLabel(l_version);
+			}
+		}
+	}
+}

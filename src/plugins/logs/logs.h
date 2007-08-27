@@ -57,6 +57,8 @@ class ClogsPlugin : public IPlugin
 		//const std::string location();
 		void getFileList(std::list<std::string>& _fl);
 		const std::string description();
+		const std::string author();
+		const std::string version();
 		eType Type();
 
 };

@@ -88,7 +88,17 @@ void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 
 const std::string ClogsPlugin::description()
 {
-	return "logs log cleaner";
+	return "This plugin allow user to clean all logs, located in /var/log.";
+}
+
+const std::string ClogsPlugin::author()
+{
+	return "Frouin Jean-Michel";
+}
+
+const std::string ClogsPlugin::version()
+{
+	return "0.3";
 }
 
 IPlugin::eType ClogsPlugin::Type()

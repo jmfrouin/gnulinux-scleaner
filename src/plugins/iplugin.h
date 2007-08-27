@@ -33,6 +33,7 @@ $Author$
 
 /**
  * @brief Plugin Interface
+ *@todo Write output plugin: del plugin.
  */
 class IPlugin : public CName
 {
@@ -68,6 +69,16 @@ class IPlugin : public CName
 		*@brief Give a description of current plugin.
 		*/
 		virtual const std::string description() = 0;
+
+		/*!
+		*@brief Provide author information.
+		*/
+		virtual const std::string author() = 0;
+
+		/*!
+		*@brief Provide author information.
+		*/
+		virtual const std::string version() = 0;
 
 		/*!
 		*@brief This plugin is threadable ?

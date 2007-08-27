@@ -38,6 +38,7 @@ $Author$
 //#include <wx/treectrl.h>
 #include "checktreectrl.h"
 #include <wx/statusbr.h>
+#include <wx/stattext.h>
 #include "tray.h"
 
 class IPlugin;
@@ -65,13 +66,20 @@ public:
     wxIcon GetIconResource( const wxString& name );
     static bool ShowToolTips();
 
+	//Callbacks
+	void OnSelChanged(wxTreeEvent& event);
+
 protected:
     CTrayIcon*	m_Icon;
 #if defined(__WXCOCOA__)
     CTrayIcon*	m_DockIcon;
 #endif
 	std::map<std::string, IPlugin*>* 	m_PluginsList;
-	wxCheckTreeCtrl* m_TreeList;
+	wxCheckTreeCtrl* 					m_TreeList;
+	wxStaticText* 						m_Title;
+	wxStaticText* 						m_Line1;
+	wxStaticText* 						m_Line2;
+	wxStaticText* 						m_Line3;
 };
 
 #endif

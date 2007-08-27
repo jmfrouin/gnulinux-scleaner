@@ -116,7 +116,17 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
 
 const std::string CkernelsPlugin::description()
 {
-	return "Kernel log cleaner";
+	return "This plugins allow user to removed all unused kernels.";
+}
+
+const std::string CkernelsPlugin::author()
+{
+	return "Frouin Jean-Michel";
+}
+
+const std::string CkernelsPlugin::version()
+{
+	return "0.1";
 }
 
 IPlugin::eType CkernelsPlugin::Type()
