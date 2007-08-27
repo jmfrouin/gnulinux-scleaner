@@ -37,6 +37,10 @@ $Author$
  * Project homepage : https://savannah.nongnu.org/projects/scleaner/
  *
  * @section intro_history Version history (what's new)
+ * v0.2:
+ * @li Adding GFX interface.
+ * @li Adding CEngine which will deals with CLI and GUI.
+ *
  * v0.1:
  * @li Initial version.
  *

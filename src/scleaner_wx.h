@@ -44,7 +44,6 @@ class CSClean: public wxApp
     	bool OnInit(void);
 	
 	private:
-		TSmartPtr<CPluginManager> 	m_pfm;
 		TSmartPtr<CEngine> 			m_engine;
 };
 

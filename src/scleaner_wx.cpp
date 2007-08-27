@@ -27,12 +27,7 @@ $Author$
 */
 
 #include <config.h>
-#include <list>
-#include <string>
-#include <plugins/plugin_manager.h>
 #include <leak/memory_manager.h>
-
-#include <interface/maininterface.h>
 #include "scleaner_wx.h"
 #include <engine/engine.h>
 
@@ -50,16 +45,14 @@ bool CSClean::OnInit(void)
 {
     bool l_ret = false;
 
-	//Plugins manager
-	m_pfm = CPluginManager::Instance();
-    l_ret = m_pfm->loadPlugins("plugs");
-
-	//Engine
+	//Retrieve CEngine instance pointer.
 	m_engine = CEngine::Instance();
+	//Load plugins
+	m_engine->loadPlugins("plugs");
+	//Load GFX interface
+	l_ret = m_engine->loadInterface();
 
-	CMainInterface* l_Main = new CMainInterface(NULL, wxID_ANY, wxT(NAME), wxDefaultPosition, wxSize(365, 290));
-    l_Main->Show(true);
-    return true;
+    return l_ret;
 }
 
 /* vi:set ts=4: */
