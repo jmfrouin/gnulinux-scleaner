@@ -108,19 +108,7 @@ $Author$
 
 /*! @page page4 Build & Installation
 * 
-* To build, enter the build folder, then type cmake /path_to_source/
-*
-* Then type make.
-*
-* Now the binary is ready, you can launch it : ./scleaner
-*
-*
-* Don't forget to create folders : <b>in out</b>
-*
-* For the moment you have to link input plugins in <b>in</b> : cd in; ln -s ../liblogs.so (Fix soon)
-*
-*
-* For the moment you have to link outpud plugins in <b>out</b> : cd out; ln -s ../libdelete.so (Fix soon)
+* @include ../INSTALL
 *
 */
 

@@ -1,0 +1,18 @@
+This folder contain source code of all plugins.
+
+ _______________________________________________
+|												|
+|				Input plugins					|
+|_______________________________________________|
+|												|
+|	- kernels plugin : libkernels.so			|
+|			kernels.cpp/.h						|
+|	- logs plugin : liblogs.so					|
+|			logs.cpp/.h							|
+|_______________________________________________|
+|												|
+|				Output plugins					|
+|_______________________________________________|
+|	- delete plugin : libdelete					|
+|_______________________________________________|
+

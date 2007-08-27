@@ -34,6 +34,7 @@ $Author$
 /**
  * @brief Plugin Interface
  *@todo Write output plugin: del plugin.
+ *@todo Add a method to detect input/output plugin.
  */
 class IPlugin : public CName
 {
