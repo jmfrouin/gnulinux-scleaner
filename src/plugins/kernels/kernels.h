@@ -26,6 +26,19 @@ $Author$
 
 */
 
+/*! @page page3 Plugins documentations.
+* - @subpage kernels
+*/
+
+/*! @page kernels kernels plugin.
+* @section desc Description
+* This plugin allow user to remove all <b>kernels</b> unused, automatically installed on system.
+* <br>
+* @section param Parameters
+* @section pb Knows bugs
+* @section todo Todo
+*/
+
 #ifndef _KERN_H_
 #define _KERN_H_
 
