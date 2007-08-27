@@ -31,7 +31,7 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 
 		/*!
 		*@brief Load GFX interface build on wxWidgets
-		*@return true is everything is OK, dalse otherwise.
+		*@return true is everything is OK, false otherwise.
 		*/
 		bool loadInterface();
 	
