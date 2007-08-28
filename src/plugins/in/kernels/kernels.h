@@ -43,12 +43,12 @@ $Author$
 #define _KERN_H_
 
 #include <config.h>
-#include <plugins/iplugin.h>
+#include <plugins/in_plugin.h>
 
 /*!
 *@brief Find unused kernels.
 */
-class CkernelsPlugin : public IPlugin
+class CkernelsPlugin : public IInPlugin
 {
     public:
         CkernelsPlugin();

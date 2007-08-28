@@ -57,7 +57,7 @@ CMainInterface::CMainInterface()
 }
 
 CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-m_TreeList(0), m_Title(0)
+m_Input(0), m_Title(0), m_Output(0)
 {
     Init();
     Create(parent, id, caption, pos, size, style);
@@ -139,17 +139,17 @@ void CMainInterface::CreateControls()
     itemSplitterWindow10->SetMinimumPaneSize(0);
 
     //wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
-    m_TreeList = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
+    m_Input = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
 
 	// Happend plugins' name available
 
-	wxTreeItemId l_root = m_TreeList->AddRoot(wxT("Input plugins"), wxTreeItemIcon_Expanded, wxTreeItemIcon_Expanded);
-    std::map<std::string, IPlugin*>::iterator _it;
+	wxTreeItemId l_root = m_Input->AddRoot(wxT("Input plugins"), wxTreeItemIcon_Expanded, wxTreeItemIcon_Expanded);
+    std::map<std::string, IInPlugin*>::iterator _it;
     for(_it = m_PluginsList->begin(); _it != m_PluginsList->end(); ++_it)
     {
 		std::cout << ":" << ((*_it).second)->getName() << '\n';
     	//itemTreeCtrl11->AppendItem(l_root, _(((*_it).second)->getName().c_str()), 2, 2 );
-    	wxTreeItemId l_plug = m_TreeList->AddCheckedItem(l_root, _(((*_it).second)->getName().c_str()), false );
+    	wxTreeItemId l_plug = m_Input->AddCheckedItem(l_root, _(((*_it).second)->getName().c_str()), false );
 
 		std::list<std::string> l_list;
 		((*_it).second)->getFileList(l_list);
@@ -158,7 +158,7 @@ void CMainInterface::CreateControls()
 
 		for(_it2 = l_list.begin(); _it2 != l_list.end(); ++_it2)
 		{
-			m_TreeList->AddCheckedItem(l_plug, _((*_it2).c_str()), true );
+			m_Input->AddCheckedItem(l_plug, _((*_it2).c_str()), true );
 		}
     }
 
@@ -167,7 +167,7 @@ void CMainInterface::CreateControls()
     itemSplitterWindow12->SetMinimumPaneSize(0);
 
     wxArrayString itemCheckListBox13Strings;
-    wxCheckListBox* itemCheckListBox13 = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, itemCheckListBox13Strings, wxLB_SINGLE );
+    m_Output = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, itemCheckListBox13Strings, wxLB_SINGLE );
 
     wxPanel* itemPanel14 = new wxPanel( itemSplitterWindow12, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer15 = new wxBoxSizer(wxVERTICAL);
@@ -198,8 +198,8 @@ void CMainInterface::CreateControls()
 
     itemStdDialogButtonSizer21->Realize();
 
-    itemSplitterWindow12->SplitHorizontally(itemCheckListBox13, itemPanel14, 50);
-    itemSplitterWindow10->SplitVertically(m_TreeList, itemSplitterWindow12, 200);
+    itemSplitterWindow12->SplitHorizontally(m_Output, itemPanel14, 50);
+    itemSplitterWindow10->SplitVertically(m_Input, itemSplitterWindow12, 200);
 
     wxStatusBar* itemStatusBar24 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
     itemStatusBar24->SetFieldsCount(2);
@@ -226,12 +226,12 @@ wxIcon CMainInterface::GetIconResource( const wxString& name )
 //Callbacks
 void CMainInterface::OnSelChanged(wxTreeEvent& event)
 {
-    wxTreeItemId l_item = m_TreeList->GetSelection();
+    wxTreeItemId l_item = m_Input->GetSelection();
 	
 	if(l_item.IsOk())
 	{
-		wxString l_text = m_TreeList->GetItemText(l_item);
-		if(l_item != m_TreeList->GetRootItem())
+		wxString l_text = m_Input->GetItemText(l_item);
+		if(l_item != m_Input->GetRootItem())
 		{
 
 			if(l_text.Contains(_("/")))
@@ -241,7 +241,7 @@ void CMainInterface::OnSelChanged(wxTreeEvent& event)
 			}
 			else
 			{
-				std::map<std::string, IPlugin*>::iterator l_it;
+				std::map<std::string, IInPlugin*>::iterator l_it;
 				l_it = m_PluginsList->find(l_text.c_str());
 				wxString l_description = (l_it->second)->description();
 				wxString l_author = (l_it->second)->author();

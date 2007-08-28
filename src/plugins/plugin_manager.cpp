@@ -45,7 +45,7 @@ CPluginManager::~CPluginManager()
 	{
     	std::cout << l_size << " plugin : " << '\n';
 	}
-    std::map<std::string, IPlugin*>::iterator _it;
+    std::map<std::string, IInPlugin*>::iterator _it;
     for(_it = m_PluginsList.begin(); _it != m_PluginsList.end(); ++_it)
     {
         std::cout << (*_it).first << ": ";
@@ -91,21 +91,21 @@ int CPluginManager::loadPlugins(const std::string& path)
     return l_res;
 }
 
-void CPluginManager::add(IPlugin* _toadd)
+void CPluginManager::add(IInPlugin* _toadd)
 {
     m_PluginsList.insert(make_pair(_toadd->getName(), _toadd));
 }
 
-std::map<std::string, IPlugin*>* CPluginManager::getPluginsListPtr()
+std::map<std::string, IInPlugin*>* CPluginManager::getPluginsListPtr()
 {
-	std::map<std::string, IPlugin*>* l_ret;
+	std::map<std::string, IInPlugin*>* l_ret;
 	l_ret = &m_PluginsList;
 	return l_ret;
 }
 
 void CPluginManager::getFileList(std::list<std::string>& _fl)
 {
-    std::map<std::string, IPlugin*>::iterator _it;
+    std::map<std::string, IInPlugin*>::iterator _it;
     for(_it = m_PluginsList.begin(); _it != m_PluginsList.end(); ++_it)
 	{
 		((*_it).second)->getFileList(_fl);
@@ -114,7 +114,7 @@ void CPluginManager::getFileList(std::list<std::string>& _fl)
     //int l_ret = 0;
     //int l_size = 0;
 
-    //std::map<std::string, IPlugin*>::iterator l_it;
+    //std::map<std::string, IInPlugin*>::iterator l_it;
     //for(l_it = m_PluginsList.begin(); l_it != m_PluginsList.end(); ++l_it)
     //{
 	//	std::string l_file = ((*l_it).second)->location();

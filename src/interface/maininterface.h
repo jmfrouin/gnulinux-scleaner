@@ -41,7 +41,8 @@ $Author$
 #include <wx/stattext.h>
 #include "tray.h"
 
-class IPlugin;
+class IInPlugin;
+class wxCheckListBox;
 
 /*!
  * CMainInterface class declaration
@@ -74,12 +75,17 @@ protected:
 #if defined(__WXCOCOA__)
     CTrayIcon*	m_DockIcon;
 #endif
-	std::map<std::string, IPlugin*>* 	m_PluginsList;
-	wxCheckTreeCtrl* 					m_TreeList;
+	//Input plugins
+	std::map<std::string, IInPlugin*>* 	m_PluginsList;
+	//GUI tree list which display input plugins and file list.
+	wxCheckTreeCtrl* 					m_Input;
+	//Informations GUI panel
 	wxStaticText* 						m_Title;
 	wxStaticText* 						m_Line1;
 	wxStaticText* 						m_Line2;
 	wxStaticText* 						m_Line3;
+	//GUI checkbox which display output plugins
+	wxCheckListBox*						m_Output;
 };
 
 #endif

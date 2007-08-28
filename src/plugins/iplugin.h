@@ -57,16 +57,6 @@ class IPlugin : public CName
     	virtual ~IPlugin(){}
 
 		/*!
-		*@brief Return location of file to delete.
-		*/
-		//virtual const std::string location() = 0;
-
-		/*!
-		*@brief Return a std::list of files targeted by plugin.
-		*/
-		virtual void getFileList(std::list<std::string>& _fl) = 0;
-
-		/*!
 		*@brief Give a description of current plugin.
 		*/
 		virtual const std::string description() = 0;

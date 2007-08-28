@@ -22,11 +22,8 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-SET(folder in out)
+SET(folder logs kernels)
 
 FOREACH(fold ${folder})
 	ADD_SUBDIRECTORY(${fold})
 ENDFOREACH(fold ${folder})
-
-set(plugin_src plugin_manager.cpp)
-add_library(plugins ${plugin_src})

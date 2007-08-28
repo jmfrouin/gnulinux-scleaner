@@ -35,7 +35,7 @@ $Author$
 #include <string>
 #include <tools/singleton.h>
 #include <tools/smart_pointer.h>
-#include "iplugin.h"
+#include "in_plugin.h"
 
 /*!
  *@brief Common source code of all plugins.
@@ -55,12 +55,12 @@ class CPluginManager: public CSmartCpt, public TSingleton<CPluginManager>
          *@brief Add a new plugin to the list of available plugins.
          *@param _toadd Plugin to add.
          */
-        void add(IPlugin* _toadd);
+        void add(IInPlugin* _toadd);
 
 		/*!
 		*@brief Pointer on plugins list
 		*/
-		std::map<std::string, IPlugin*>* getPluginsListPtr();
+		std::map<std::string, IInPlugin*>* getPluginsListPtr();
 
         /*!
          *@brief Retrieve list found of ALL plugins.
@@ -79,7 +79,7 @@ class CPluginManager: public CSmartCpt, public TSingleton<CPluginManager>
         ~CPluginManager();
 
     private:
-        std::map<std::string, IPlugin*> m_PluginsList;	///< List of available plugins.
+        std::map<std::string, IInPlugin*> m_PluginsList;	///< List of available plugins.
 };
 #endif                           //_PLUGIN_MANAGER_H_
 /* vi:set ts=4: */

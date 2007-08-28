@@ -1,3 +1,4 @@
+
 /*
 Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
 ------------------------------------------------------
@@ -17,50 +18,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date$
-$Rev$
-$Author$
+$Date: 2007-08-27 22:52:34 +0200 (lun, 27 aoû 2007) $
+$Rev: 42 $
+$Author: snoogie $
 ------------------------------------------------------
-
 */
 
-/*! @page page3 Plugins documentations.
-* - @subpage logs
-*/
-
-/*! @page logs logs plugin.
-* @section desc Description
-* This plugin allow user to clean <b>logs</b> files.
-* <br>
-* In fact it just scan <b>/var/log/</b> and its subfolders.
-* @section param Parameters
-* @section pb Knows bugs
-* @section todo Todo
-* Put folder scannings code in CEngine.
-*/
-
-#ifndef _LOGS_H_
-#define _LOGS_H_
+#ifndef _IN_PLUGIN_H_
+#define _IN_PLUGIN_H_
 
 #include <config.h>
-#include <plugins/in_plugin.h>
+#include "iplugin.h"
 
-class ClogsPlugin : public IInPlugin
+/*!
+*@brief Input plugin interface.
+*/
+class IInPlugin : public IPlugin
 {
-    public:
-        ClogsPlugin();
-        ~ClogsPlugin();
+		public:
+			/*!
+			*@brief ctor
+			*/
+			IInPlugin() {}
+			/*!
+			*@brief dtor
+			*/
+			virtual ~IInPlugin() {}
 
-		/*!
-		*@brief From IPlugin.
-		*/
-		//const std::string location();
-		void getFileList(std::list<std::string>& _fl);
-		const std::string description();
-		const std::string author();
-		const std::string version();
-		eType Type();
-
+			/*!
+			*@brief Return a std::list of files targeted by plugin.
+			*/
+			virtual void getFileList(std::list<std::string>& _fl) = 0;
 };
-#endif                           //_LOGS_H_
-/* vi:set ts=4: */
+
+#endif // _IN_PLUGIN_H_
