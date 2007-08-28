@@ -33,7 +33,6 @@ $Author$
 
 /**
  * @brief Plugin Interface
- *@todo Write output plugin: del plugin.
  */
 class IPlugin : public CName
 {
