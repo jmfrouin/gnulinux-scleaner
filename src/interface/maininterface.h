@@ -42,6 +42,7 @@ $Author$
 #include "tray.h"
 
 class IInPlugin;
+class IOutPlugin;
 class wxCheckListBox;
 
 /*!
@@ -76,7 +77,10 @@ protected:
     CTrayIcon*	m_DockIcon;
 #endif
 	//Input plugins
-	std::map<std::string, IInPlugin*>* 	m_PluginsList;
+	std::map<std::string, IInPlugin*>* 	m_InputPlugs;
+	//Output plugins
+	std::map<std::string, IOutPlugin*>* m_OutputPlugs;
+
 	//GUI tree list which display input plugins and file list.
 	wxCheckTreeCtrl* 					m_Input;
 	//Informations GUI panel

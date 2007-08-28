@@ -17,72 +17,47 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date$
-$Rev$
-$Author$
+$Date: 2007-08-28 14:00:13 +0200 (mar, 28 aoû 2007) $
+$Rev: 45 $
+$Author: snoogie $
 ------------------------------------------------------
+
 */
 
-#ifndef _IPLUGIN_H_
-#define _IPLUGIN_H_
+/*! @page page3 Plugins documentations.
+* - @subpage tar
+*/
+
+/*! @page tar tar plugin.
+* @section desc Description
+* This plugin allow user to create a <b>tarball</b> with all selected files from input plugins.
+* <br>
+* @section param Parameters
+* @section pb Knows bugs
+* @section todo Todo
+*/
+
+#ifndef _TAR_H_
+#define _TAR_H_
 
 #include <config.h>
-#include <string>
-#include <list>
-#include <tools/name.h>
+#include <plugins/out_plugin.h>
 
-/**
- * @brief Plugin Interface
- *@todo Write output plugin: del plugin.
- */
-class IPlugin : public CName
+class CtarPlugin : public IOutPlugin
 {
-	public:
-		enum eType
-		{
-			eInput,
-			eOutput
-		};
-
     public:
-		/*!
-		 * @brief ctor
-		 */
-		IPlugin(){}
-
-    	/*!
-    	 * @brief dtor.
-    	 */
-    	virtual ~IPlugin(){}
+        CtarPlugin();
+        ~CtarPlugin();
 
 		/*!
-		*@brief Give a description of current plugin.
+		*@brief From IPlugin.
 		*/
-		virtual const std::string description() = 0;
+		void processFileList(std::list<std::string>& _fl);
+		const std::string description();
+		const std::string author();
+		const std::string version();
+		eType Type();
 
-		/*!
-		*@brief Provide author information.
-		*/
-		virtual const std::string author() = 0;
-
-		/*!
-		*@brief Provide author information.
-		*/
-		virtual const std::string version() = 0;
-
-		/*!
-		*@brief This plugin is threadable ?
-		*/
-		virtual bool isThreadable()
-		{
-			bool l_ret = false;
-			return l_ret;
-		}
-
-		/*!
-		*@brief Input or output plugin ?
-		*/
-		virtual eType Type() = 0;
 };
-#endif                           //_IPLUGIN_H_
+#endif                           //_TAR_H_
 /* vi:set ts=4: */

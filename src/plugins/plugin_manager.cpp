@@ -35,22 +35,50 @@ $Author$
 
 CPluginManager::~CPluginManager()
 {
-	int l_size = m_PluginsList.size();
+	//Input plugins
+	int l_size = m_InputPlugins.size();
 	std::cout << "I founded ";
 	if(l_size > 2)
 	{
-    	 std::cout << l_size << " plugins : " << '\n';
+    	 std::cout << l_size << " input plugins : " << '\n';
 	}
 	else
 	{
-    	std::cout << l_size << " plugin : " << '\n';
+    	std::cout << l_size << " input plugin : " << '\n';
 	}
     std::map<std::string, IInPlugin*>::iterator _it;
-    for(_it = m_PluginsList.begin(); _it != m_PluginsList.end(); ++_it)
+    for(_it = m_InputPlugins.begin(); _it != m_InputPlugins.end(); ++_it)
     {
         std::cout << (*_it).first << ": ";
         std::cout << ((*_it).second)->description();
         bool l_threadable = ((*_it).second)->isThreadable();
+		if(l_threadable)
+		{
+			std::cout << "[Threadable]" << '\n';
+		}
+		else
+		{
+			std::cout << "[Standard]" << '\n';
+		}
+    }
+
+	//Output plugins
+	l_size = m_OutputPlugins.size();
+	std::cout << "I founded ";
+	if(l_size > 2)
+	{
+    	 std::cout << l_size << " output plugins : " << '\n';
+	}
+	else
+	{
+    	std::cout << l_size << " output plugin : " << '\n';
+	}
+    std::map<std::string, IOutPlugin*>::iterator _it2;
+    for(_it2 = m_OutputPlugins.begin(); _it2 != m_OutputPlugins.end(); ++_it2)
+    {
+        std::cout << (*_it2).first << ": ";
+        std::cout << ((*_it2).second)->description();
+        bool l_threadable = ((*_it2).second)->isThreadable();
 		if(l_threadable)
 		{
 			std::cout << "[Threadable]" << '\n';
@@ -93,29 +121,44 @@ int CPluginManager::loadPlugins(const std::string& path)
 
 void CPluginManager::add(IInPlugin* _toadd)
 {
-    m_PluginsList.insert(make_pair(_toadd->getName(), _toadd));
+    m_InputPlugins.insert(make_pair(_toadd->getName(), _toadd));
 }
 
-std::map<std::string, IInPlugin*>* CPluginManager::getPluginsListPtr()
+void CPluginManager::add(IOutPlugin* _toadd)
+{
+    m_OutputPlugins.insert(make_pair(_toadd->getName(), _toadd));
+}
+
+std::map<std::string, IInPlugin*>* CPluginManager::getInputListPtr()
 {
 	std::map<std::string, IInPlugin*>* l_ret;
-	l_ret = &m_PluginsList;
+	l_ret = &m_InputPlugins;
+	return l_ret;
+}
+
+std::map<std::string, IOutPlugin*>* CPluginManager::getOutputListPtr()
+{
+	std::map<std::string, IOutPlugin*>* l_ret;
+	l_ret = &m_OutputPlugins;
 	return l_ret;
 }
 
 void CPluginManager::getFileList(std::list<std::string>& _fl)
 {
     std::map<std::string, IInPlugin*>::iterator _it;
-    for(_it = m_PluginsList.begin(); _it != m_PluginsList.end(); ++_it)
+    for(_it = m_InputPlugins.begin(); _it != m_InputPlugins.end(); ++_it)
 	{
 		((*_it).second)->getFileList(_fl);
 	}
 }
+
+
+//FIXME : Trash code, to clean on day
     //int l_ret = 0;
     //int l_size = 0;
 
     //std::map<std::string, IInPlugin*>::iterator l_it;
-    //for(l_it = m_PluginsList.begin(); l_it != m_PluginsList.end(); ++l_it)
+    //for(l_it = m_InputPlugins.begin(); l_it != m_InputPlugins.end(); ++l_it)
     //{
 	//	std::string l_file = ((*l_it).second)->location();
 	//	std::string l_path = l_file.substr(0, l_file.find_last_of("/"));

@@ -36,6 +36,7 @@ $Author$
 #include <tools/singleton.h>
 #include <tools/smart_pointer.h>
 #include "in_plugin.h"
+#include "out_plugin.h"
 
 /*!
  *@brief Common source code of all plugins.
@@ -52,15 +53,26 @@ class CPluginManager: public CSmartCpt, public TSingleton<CPluginManager>
         int loadPlugins (const std::string& path);
 
         /*!
-         *@brief Add a new plugin to the list of available plugins.
+         *@brief Add a new input plugin to the list of available plugins.
          *@param _toadd Plugin to add.
          */
         void add(IInPlugin* _toadd);
 
+        /*!
+         *@brief Add a new output plugin to the list of available plugins.
+         *@param _toadd Plugin to add.
+         */
+        void add(IOutPlugin* _toadd);
+
 		/*!
-		*@brief Pointer on plugins list
+		*@brief Pointer on input plugins list
 		*/
-		std::map<std::string, IInPlugin*>* getPluginsListPtr();
+		std::map<std::string, IInPlugin*>* getInputListPtr();
+
+		/*!
+		*@brief Pointer on output plugins list
+		*/
+		std::map<std::string, IOutPlugin*>* getOutputListPtr();
 
         /*!
          *@brief Retrieve list found of ALL plugins.
@@ -79,7 +91,8 @@ class CPluginManager: public CSmartCpt, public TSingleton<CPluginManager>
         ~CPluginManager();
 
     private:
-        std::map<std::string, IInPlugin*> m_PluginsList;	///< List of available plugins.
+        std::map<std::string, IInPlugin*> 	m_InputPlugins;		///< List of available input plugins.
+        std::map<std::string, IOutPlugin*> 	m_OutputPlugins;	///< List of available output plugins.
 };
 #endif                           //_PLUGIN_MANAGER_H_
 /* vi:set ts=4: */

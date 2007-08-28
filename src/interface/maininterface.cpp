@@ -89,8 +89,9 @@ CMainInterface::~CMainInterface()
 void CMainInterface::Init()
 {
 	//Initialisation
-	m_PluginsList = CPluginManager::Instance()->getPluginsListPtr();
-	if(m_PluginsList == 0)
+	m_InputPlugs = CPluginManager::Instance()->getInputListPtr();
+	m_OutputPlugs = CPluginManager::Instance()->getOutputListPtr();
+	if(!m_InputPlugs || !m_OutputPlugs)
 	{
 		return;
 	}
@@ -138,14 +139,14 @@ void CMainInterface::CreateControls()
     wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemFrame1, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
     itemSplitterWindow10->SetMinimumPaneSize(0);
 
+	//Input plugins
     //wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
     m_Input = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
 
 	// Happend plugins' name available
-
 	wxTreeItemId l_root = m_Input->AddRoot(wxT("Input plugins"), wxTreeItemIcon_Expanded, wxTreeItemIcon_Expanded);
     std::map<std::string, IInPlugin*>::iterator _it;
-    for(_it = m_PluginsList->begin(); _it != m_PluginsList->end(); ++_it)
+    for(_it = m_InputPlugs->begin(); _it != m_InputPlugs->end(); ++_it)
     {
 		std::cout << ":" << ((*_it).second)->getName() << '\n';
     	//itemTreeCtrl11->AppendItem(l_root, _(((*_it).second)->getName().c_str()), 2, 2 );
@@ -161,13 +162,21 @@ void CMainInterface::CreateControls()
 			m_Input->AddCheckedItem(l_plug, _((*_it2).c_str()), true );
 		}
     }
-
+	//
 
     wxSplitterWindow* itemSplitterWindow12 = new wxSplitterWindow( itemSplitterWindow10, ID_SPLITTERWINDOW2, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
     itemSplitterWindow12->SetMinimumPaneSize(0);
 
-    wxArrayString itemCheckListBox13Strings;
-    m_Output = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, itemCheckListBox13Strings, wxLB_SINGLE );
+	//Output plugins
+    wxArrayString l_out;
+    std::map<std::string, IOutPlugin*>::iterator _it2;
+    for(_it2 = m_OutputPlugs->begin(); _it2 != m_OutputPlugs->end(); ++_it2)
+    {
+    	l_out.Add(((*_it2).second)->getName());
+	}
+    m_Output = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, l_out, wxLB_SINGLE );
+    //m_Output->InsertItems(l_out, m_Output->GetCount());
+	//
 
     wxPanel* itemPanel14 = new wxPanel( itemSplitterWindow12, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer15 = new wxBoxSizer(wxVERTICAL);
@@ -242,7 +251,7 @@ void CMainInterface::OnSelChanged(wxTreeEvent& event)
 			else
 			{
 				std::map<std::string, IInPlugin*>::iterator l_it;
-				l_it = m_PluginsList->find(l_text.c_str());
+				l_it = m_InputPlugs->find(l_text.c_str());
 				wxString l_description = (l_it->second)->description();
 				wxString l_author = (l_it->second)->author();
 				wxString l_version = (l_it->second)->version();

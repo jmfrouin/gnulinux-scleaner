@@ -1,7 +1,5 @@
 /*
 Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
-*/
-/*
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,40 +17,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date$
-$Rev$
-$Author$
+$Date: 2007-08-28 13:37:21 +0200 (mar, 28 aoû 2007) $
+$Rev: 44 $
+$Author: snoogie $
 ------------------------------------------------------
 
 */
 
-#include <config.h>
-#include <leak/memory_manager.h>
-#include "scleaner_wx.h"
-#include <engine/engine.h>
-
-CMemoryManager g_mm;
-
+#include <iostream>
+#include <plugins/plugin_initializer.h>
+#include "tar.h"
+#include <wx/dir.h>
+#include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
 
-IMPLEMENT_APP(CSClean)
+CPluginInitializer<CtarPlugin> g_tar;
 
-CSClean::CSClean()
+CtarPlugin::CtarPlugin()
+{
+    setName("tar");
+}
+
+CtarPlugin::~CtarPlugin()
 {
 }
 
-bool CSClean::OnInit(void)
+//const std::string CtarPlugin::location()
+//{
+//	return "/var/log/tar.log";
+//}
+//
+
+void CtarPlugin::processFileList(std::list<std::string>& _fl)
 {
-    bool l_ret = false;
-
-	//Retrieve CEngine instance pointer.
-	m_engine = CEngine::Instance();
-	//Load plugins
-	m_engine->loadPlugins("plugs");
-	//Load GFX interface
-	l_ret = m_engine->loadInterface();
-
-    return l_ret;
+	std::cout << "tar output plugins" << '\n';
 }
 
+const std::string CtarPlugin::description()
+{
+	return "This plugin allow user to create a tarball";
+}
+
+const std::string CtarPlugin::author()
+{
+	return "Frouin Jean-Michel";
+}
+
+const std::string CtarPlugin::version()
+{
+	return "0.1";
+}
+
+IPlugin::eType CtarPlugin::Type()
+{
+	eType l_ret;
+	l_ret = eInput;
+	return l_ret;
+}
 /* vi:set ts=4: */

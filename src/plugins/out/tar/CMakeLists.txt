@@ -21,8 +21,7 @@
 # $Rev: 14 $
 # $Author: snoogie_sf $
 # ------------------------------------------------------
-SET(folder tar)
 
-FOREACH(fold ${folder})
-	ADD_SUBDIRECTORY(${fold})
-ENDFOREACH(fold ${folder})
+set(tar_src tar.cpp)
+add_library(tar SHARED ${tar_src}) 
+target_link_libraries(tar plugins tools)
