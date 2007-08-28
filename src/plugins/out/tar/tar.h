@@ -28,7 +28,7 @@ $Author$
 * - @subpage tar
 */
 
-/*! @page tar tar plugin.
+/*! @page tar tar: output plugin.
 * @section desc Description
 * This plugin allow user to create a <b>tarball</b> with all selected files from input plugins.
 * <br>

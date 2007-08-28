@@ -30,7 +30,7 @@ $Author$
 * - @subpage kernels
 */
 
-/*! @page kernels kernels plugin.
+/*! @page kernels kernels: input plugin.
 * @section desc Description
 * This plugin allow user to remove all <b>kernels</b> unused, automatically installed on system.
 * <br>

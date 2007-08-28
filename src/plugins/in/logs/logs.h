@@ -28,7 +28,7 @@ $Author$
 * - @subpage logs
 */
 
-/*! @page logs logs plugin.
+/*! @page logs logs: input plugin.
 * @section desc Description
 * This plugin allow user to clean <b>logs</b> files.
 * <br>
