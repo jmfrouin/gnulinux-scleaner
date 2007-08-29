@@ -42,12 +42,6 @@ CtbzPlugin::~CtbzPlugin()
 {
 }
 
-//const std::string CtbzPlugin::location()
-//{
-//	return "/var/log/tbz.log";
-//}
-//
-
 void CtbzPlugin::processFileList(std::list<std::string>& _fl)
 {
 	std::cout << "tbz output plugins" << '\n';
@@ -55,7 +49,7 @@ void CtbzPlugin::processFileList(std::list<std::string>& _fl)
 
 const std::string CtbzPlugin::description()
 {
-	return "This plugin allow user to create a tbzball";
+	return "This plugin allow user to create a tarball then compress it using bzip2.";
 }
 
 const std::string CtbzPlugin::author()

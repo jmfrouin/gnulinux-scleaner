@@ -30,7 +30,7 @@ $Author$
 
 /*! @page tbz tbz: output plugin.
 * @section desc Description
-* This plugin allow user to create a <b>tbzball</b> with all selected files from input plugins.
+* This plugin allow user to create a <b>tarball</b> with all selected files from input plugins. Then it will compress it using <b>bzip2</b>.
 * <br>
 * @section param Parameters
 * @section pb Knows bugs
