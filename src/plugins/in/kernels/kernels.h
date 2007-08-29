@@ -54,16 +54,19 @@ class CkernelsPlugin : public IInPlugin
         CkernelsPlugin();
         ~CkernelsPlugin();
 
-	/*!
-	*@brief From IPlugin.
-	*/
-	//const std::string location();
-	void getFileList(std::list<std::string>& _fl);
-	const std::string description();
-	const std::string author();
-	const std::string version();
-	eType Type();
+		/*!
+		*@brief From IPlugin.
+		*/
+		const std::string description();
+		const std::string author();
+		const std::string version();
+		eType Type();
 
+		/*!
+		*@brief From IInPlugin
+		*/
+		void getFileList(std::list<std::string>& _fl);
+		bool needRoot();
 };
 #endif                           //_KERN_H_
 /* vi:set ts=4: */

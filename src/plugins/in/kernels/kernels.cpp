@@ -43,12 +43,29 @@ CkernelsPlugin::~CkernelsPlugin()
 {
 }
 
-//const std::string CkernelsPlugin::location()
-//{
-//	return "/var/log/kernels.log";
-//}
-//
+const std::string CkernelsPlugin::description()
+{
+	return "This plugins allow user to removed all unused kernels.";
+}
 
+const std::string CkernelsPlugin::author()
+{
+	return "Frouin Jean-Michel";
+}
+
+const std::string CkernelsPlugin::version()
+{
+	return "0.1";
+}
+
+IPlugin::eType CkernelsPlugin::Type()
+{
+	eType l_ret;
+	l_ret = eInput;
+	return l_ret;
+}
+
+//From IInPlugin
 void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
 {
 	std::string l_path = "/boot/";
@@ -112,27 +129,10 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
 
 	//std::cout << "kernels plugin : " << l_size << " bytes" << '\n';
 }
-
-
-const std::string CkernelsPlugin::description()
+bool CkernelsPlugin::needRoot()
 {
-	return "This plugins allow user to removed all unused kernels.";
-}
-
-const std::string CkernelsPlugin::author()
-{
-	return "Frouin Jean-Michel";
-}
-
-const std::string CkernelsPlugin::version()
-{
-	return "0.1";
-}
-
-IPlugin::eType CkernelsPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
+	bool l_ret = false;
+	l_ret = true; // /boot/ cannot be access by simple user
 	return l_ret;
 }
 /* vi:set ts=4: */

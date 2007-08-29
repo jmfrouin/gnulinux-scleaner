@@ -46,6 +46,11 @@ class IInPlugin : public IPlugin
 			virtual ~IInPlugin() {}
 
 			/*!
+			*@brief Does it need to be run as root (sudo) ?
+			*/
+			virtual bool needRoot() = 0;
+
+			/*!
 			*@brief Return a std::list of files targeted by plugin.
 			*/
 			virtual void getFileList(std::list<std::string>& _fl) = 0;

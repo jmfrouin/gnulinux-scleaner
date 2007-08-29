@@ -42,12 +42,29 @@ ClogsPlugin::~ClogsPlugin()
 {
 }
 
-//const std::string ClogsPlugin::location()
-//{
-//	return "/var/log/logs.log";
-//}
-//
+const std::string ClogsPlugin::description()
+{
+	return "This plugin allow user to clean all logs, located in /var/log.";
+}
 
+const std::string ClogsPlugin::author()
+{
+	return "Frouin Jean-Michel";
+}
+
+const std::string ClogsPlugin::version()
+{
+	return "0.3";
+}
+
+IPlugin::eType ClogsPlugin::Type()
+{
+	eType l_ret;
+	l_ret = eInput;
+	return l_ret;
+}
+
+//From IInPlugin
 void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 {
 	std::string l_path = "/var/log/";
@@ -86,25 +103,11 @@ void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 	std::cout << "Logs plugin : " << l_size << " bytes" << '\n';
 }
 
-const std::string ClogsPlugin::description()
+bool ClogsPlugin::needRoot()
 {
-	return "This plugin allow user to clean all logs, located in /var/log.";
-}
-
-const std::string ClogsPlugin::author()
-{
-	return "Frouin Jean-Michel";
-}
-
-const std::string ClogsPlugin::version()
-{
-	return "0.3";
-}
-
-IPlugin::eType ClogsPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
+	bool l_ret;
+	l_ret = true; // In order to access /var/log/ we nned root access.
 	return l_ret;
 }
+
 /* vi:set ts=4: */
