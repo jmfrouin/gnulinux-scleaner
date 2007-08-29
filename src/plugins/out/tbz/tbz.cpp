@@ -26,49 +26,49 @@ $Author$
 
 #include <iostream>
 #include <plugins/plugin_initializer.h>
-#include "tar.h"
+#include "tbz.h"
 #include <wx/dir.h>
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
 
-CPluginInitializer<CtarPlugin> g_tar;
+CPluginInitializer<CtbzPlugin> g_tbz;
 
-CtarPlugin::CtarPlugin()
+CtbzPlugin::CtbzPlugin()
 {
-    setName("tar");
+    setName("tbz");
 }
 
-CtarPlugin::~CtarPlugin()
+CtbzPlugin::~CtbzPlugin()
 {
 }
 
-//const std::string CtarPlugin::location()
+//const std::string CtbzPlugin::location()
 //{
-//	return "/var/log/tar.log";
+//	return "/var/log/tbz.log";
 //}
 //
 
-void CtarPlugin::processFileList(std::list<std::string>& _fl)
+void CtbzPlugin::processFileList(std::list<std::string>& _fl)
 {
-	std::cout << "tar output plugins" << '\n';
+	std::cout << "tbz output plugins" << '\n';
 }
 
-const std::string CtarPlugin::description()
+const std::string CtbzPlugin::description()
 {
-	return "This plugin allow user to create a tarball";
+	return "This plugin allow user to create a tbzball";
 }
 
-const std::string CtarPlugin::author()
+const std::string CtbzPlugin::author()
 {
 	return "Frouin Jean-Michel";
 }
 
-const std::string CtarPlugin::version()
+const std::string CtbzPlugin::version()
 {
 	return "0.1";
 }
 
-IPlugin::eType CtarPlugin::Type()
+IPlugin::eType CtbzPlugin::Type()
 {
 	eType l_ret;
 	l_ret = eInput;

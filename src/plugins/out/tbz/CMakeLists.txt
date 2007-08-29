@@ -22,6 +22,6 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-set(tar_src tar.cpp)
-add_library(tar SHARED ${tar_src}) 
-target_link_libraries(tar plugins tools)
+set(tbz_src tbz.cpp)
+add_library(tbz SHARED ${tbz_src}) 
+target_link_libraries(tbz plugins tools)

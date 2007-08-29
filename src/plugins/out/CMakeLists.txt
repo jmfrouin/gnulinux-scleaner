@@ -21,7 +21,7 @@
 # $Rev: 14 $
 # $Author: snoogie_sf $
 # ------------------------------------------------------
-SET(folder tar)
+SET(folder tbz)
 
 FOREACH(fold ${folder})
 	ADD_SUBDIRECTORY(${fold})

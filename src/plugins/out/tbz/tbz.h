@@ -24,54 +24,40 @@ $Author$
 
 */
 
-#include <iostream>
-#include <plugins/plugin_initializer.h>
-#include "tar.h"
-#include <wx/dir.h>
-#include <sys/stat.h>            ///Get file size.
-#include <leak/leak_detector.h>
+/*! @page page3 Plugins documentations.
+* - @subpage tbz
+*/
 
-CPluginInitializer<CtarPlugin> g_tar;
+/*! @page tbz tbz: output plugin.
+* @section desc Description
+* This plugin allow user to create a <b>tbzball</b> with all selected files from input plugins.
+* <br>
+* @section param Parameters
+* @section pb Knows bugs
+* @section todo Todo
+*/
 
-CtarPlugin::CtarPlugin()
+#ifndef _TBZ_H_
+#define _TBZ_H_
+
+#include <config.h>
+#include <plugins/out_plugin.h>
+
+class CtbzPlugin : public IOutPlugin
 {
-    setName("tar");
-}
+    public:
+        CtbzPlugin();
+        ~CtbzPlugin();
 
-CtarPlugin::~CtarPlugin()
-{
-}
+		/*!
+		*@brief From IPlugin.
+		*/
+		void processFileList(std::list<std::string>& _fl);
+		const std::string description();
+		const std::string author();
+		const std::string version();
+		eType Type();
 
-//const std::string CtarPlugin::location()
-//{
-//	return "/var/log/tar.log";
-//}
-//
-
-void CtarPlugin::processFileList(std::list<std::string>& _fl)
-{
-	std::cout << "tar output plugins" << '\n';
-}
-
-const std::string CtarPlugin::description()
-{
-	return "This plugin allow user to create a tarball";
-}
-
-const std::string CtarPlugin::author()
-{
-	return "Frouin Jean-Michel";
-}
-
-const std::string CtarPlugin::version()
-{
-	return "0.1";
-}
-
-IPlugin::eType CtarPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
-}
+};
+#endif                           //_TBZ_H_
 /* vi:set ts=4: */
