@@ -44,7 +44,7 @@ ClogsPlugin::~ClogsPlugin()
 
 const std::string ClogsPlugin::description()
 {
-	return "This plugin allow user to clean all logs, located in /var/log.";
+	return "This plugin allow user to clean all logs, located in /var/log. This plugin needs root access !!";
 }
 
 const std::string ClogsPlugin::author()

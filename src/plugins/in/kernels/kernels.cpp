@@ -27,6 +27,7 @@ $Author$
 */
 
 #include <iostream>
+#include <sys/utsname.h>
 #include <plugins/plugin_initializer.h>
 #include "kernels.h"
 #include <wx/dir.h>
@@ -45,7 +46,7 @@ CkernelsPlugin::~CkernelsPlugin()
 
 const std::string CkernelsPlugin::description()
 {
-	return "This plugins allow user to removed all unused kernels.";
+	return "This plugins allow user to removed all unused kernels. This plugin need root access !!";
 }
 
 const std::string CkernelsPlugin::author()
@@ -68,11 +69,23 @@ IPlugin::eType CkernelsPlugin::Type()
 //From IInPlugin
 void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
 {
+	//First get current kernel version
+	std::string l_kernel;
+	utsname l_temp;
+
+	if(uname(&l_temp) != 0)
+	{
+		std::cerr << "[CEngine::getKernelVersion] Error !\n";
+	}
+	else
+	{
+		l_kernel = l_temp.release;
+		std::cout << l_kernel << '\n';
+	}
+
 	std::string l_path = "/boot/";
 
     wxDir l_dir(l_path);
-	int l_size = 0;
-		
    	if ( !l_dir.IsOpened() )
    	{
 		std::cout << "[ERR] Cannot open folder : " << l_path << '\n';
@@ -87,7 +100,11 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
    	{
 		std::string l_tmp = l_path;
 		l_tmp += l_filename.c_str();
-		_fl.push_back(l_tmp);
+		//If this isn't a current kernel file
+		if(l_tmp.find(l_kernel) == std::string::npos)
+		{
+			_fl.push_back(l_tmp);
+		}
    	    cont = l_dir.GetNext(&l_filename);
    	}
 	l_mask = "config*";
@@ -96,7 +113,11 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
    	{
 		std::string l_tmp = l_path;
 		l_tmp += l_filename.c_str();
-		_fl.push_back(l_tmp);
+		//If this isn't a current kernel file
+		if(l_tmp.find(l_kernel) == std::string::npos)
+		{
+			_fl.push_back(l_tmp);
+		}
    	    cont = l_dir.GetNext(&l_filename);
    	}
 	l_mask = "initrd*";
@@ -105,7 +126,11 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
    	{
 		std::string l_tmp = l_path;
 		l_tmp += l_filename.c_str();
-		_fl.push_back(l_tmp);
+		//If this isn't a current kernel file
+		if(l_tmp.find(l_kernel) == std::string::npos)
+		{
+			_fl.push_back(l_tmp);
+		}
    	    cont = l_dir.GetNext(&l_filename);
    	}
 	l_mask = "System.map*";
@@ -114,7 +139,11 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
    	{
 		std::string l_tmp = l_path;
 		l_tmp += l_filename.c_str();
-		_fl.push_back(l_tmp);
+		//If this isn't a current kernel file
+		if(l_tmp.find(l_kernel) == std::string::npos)
+		{
+			_fl.push_back(l_tmp);
+		}
    	    cont = l_dir.GetNext(&l_filename);
    	}
 	l_mask = "vmlinuz*";
@@ -123,7 +152,11 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
    	{
 		std::string l_tmp = l_path;
 		l_tmp += l_filename.c_str();
-		_fl.push_back(l_tmp);
+		//If this isn't a current kernel file
+		if(l_tmp.find(l_kernel) == std::string::npos)
+		{
+			_fl.push_back(l_tmp);
+		}
    	    cont = l_dir.GetNext(&l_filename);
    	}
 

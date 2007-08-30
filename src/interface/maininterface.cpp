@@ -36,8 +36,10 @@ $Author$
 
 #include <config.h>
 #include <string>
+#include <wx/splash.h>
 #include <plugins/plugin_manager.h>
 #include <plugins/iplugin.h>
+#include <engine/engine.h>
 #include "maininterface.h"
 
 //GFX Elements
@@ -70,10 +72,13 @@ bool CMainInterface::Create(wxWindow* parent, wxWindowID id, const wxString& cap
     CreateControls();
     Centre();
 
+	//Retrieve CEngine instance pointer.
+	m_Engine = CEngine::Instance();
+
     if (FindWindow(ID_SPLITTERWINDOW1))
-        ((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW1))->SetSashPosition(200);
+        ((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW1))->SetSashPosition(SYMBOL_MAININTERFACE_SASH1_POS);
     if (FindWindow(ID_SPLITTERWINDOW2))
-        ((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW2))->SetSashPosition(200);
+        ((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW2))->SetSashPosition(SYMBOL_MAININTERFACE_SASH2_POS);
 
     return true;
 }
@@ -108,6 +113,16 @@ void CMainInterface::Init()
     {
 		std::cout << "Could not set icon.";
 	}
+
+	//Splash
+    wxBitmap bitmap;
+	
+	if(bitmap.LoadFile("splash.png"), wxBITMAP_TYPE_PNG)
+	{
+		//Bitmap successfully loaded
+        new wxSplashScreen(bitmap, wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT, 500, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSIMPLE_BORDER|wxSTAY_ON_TOP);
+	}
+	
 }
 
 void CMainInterface::CreateControls()
@@ -140,7 +155,6 @@ void CMainInterface::CreateControls()
     itemSplitterWindow10->SetMinimumPaneSize(0);
 
 	//Input plugins
-    //wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
     m_Input = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
 
 	// Happend plugins' name available
@@ -148,8 +162,6 @@ void CMainInterface::CreateControls()
     std::map<std::string, IInPlugin*>::iterator _it;
     for(_it = m_InputPlugs->begin(); _it != m_InputPlugs->end(); ++_it)
     {
-		std::cout << ":" << ((*_it).second)->getName() << '\n';
-    	//itemTreeCtrl11->AppendItem(l_root, _(((*_it).second)->getName().c_str()), 2, 2 );
     	wxTreeItemId l_plug = m_Input->AddCheckedItem(l_root, _(((*_it).second)->getName().c_str()), false );
 
 		std::list<std::string> l_list;
@@ -159,7 +171,19 @@ void CMainInterface::CreateControls()
 
 		for(_it2 = l_list.begin(); _it2 != l_list.end(); ++_it2)
 		{
-			m_Input->AddCheckedItem(l_plug, _((*_it2).c_str()), true );
+			wxTreeItemId l_file = m_Input->AddCheckedItem(l_plug, _((*_it2).c_str()), true );
+
+			//This plugin need root access ?
+			if(((*_it).second)->needRoot())
+			{
+				//If yes, did it have it ?
+				if(!m_Engine->isRoot())
+				{
+					//If not disable founded files.
+					m_Input->EnableItem(l_file, false);
+					m_Input->CheckItem(l_file, false);
+				}
+			}
 		}
     }
 	//
@@ -175,8 +199,6 @@ void CMainInterface::CreateControls()
     	l_out.Add(((*_it2).second)->getName());
 	}
     m_Output = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, l_out, wxLB_SINGLE );
-    //m_Output->InsertItems(l_out, m_Output->GetCount());
-	//
 
     wxPanel* itemPanel14 = new wxPanel( itemSplitterWindow12, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer15 = new wxBoxSizer(wxVERTICAL);
@@ -210,9 +232,23 @@ void CMainInterface::CreateControls()
     itemSplitterWindow12->SplitHorizontally(m_Output, itemPanel14, 50);
     itemSplitterWindow10->SplitVertically(m_Input, itemSplitterWindow12, 200);
 
-    wxStatusBar* itemStatusBar24 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar24->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar24);
+    m_StatusBar = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
+    m_StatusBar->SetFieldsCount(3);
+    itemFrame1->SetStatusBar(m_StatusBar);
+
+	if(m_Engine->isRoot())
+	{
+	 	SetStatusText("Launched as root/sudo", 0);
+	}
+	else
+	{
+	 	SetStatusText("Launched as standard user", 0);
+	}
+
+	std::string l_version = "Kernel : v";
+	m_Engine->getKernelVersion(l_version);
+	SetStatusText(l_version, 1);
+
 }
 
 bool CMainInterface::ShowToolTips()

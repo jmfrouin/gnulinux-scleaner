@@ -27,6 +27,7 @@ $Author$
 */
 
 #include <config.h>
+#include <string>
 #include <leak/memory_manager.h>
 #include "scleaner_wx.h"
 #include <engine/engine.h>
@@ -44,9 +45,11 @@ CSClean::CSClean()
 bool CSClean::OnInit(void)
 {
     bool l_ret = false;
+    wxImage::AddHandler(new wxPNGHandler);
 
 	//Retrieve CEngine instance pointer.
 	m_engine = CEngine::Instance();
+
 	//Load plugins
 	m_engine->loadPlugins("plugs");
 	//Load GFX interface

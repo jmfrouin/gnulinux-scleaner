@@ -27,6 +27,7 @@ $Author$
 #ifndef _ENGINE_H_
 #define _ENGINE_H_
 
+#include <string>
 #include <tools/smart_pointer.h>
 #include <tools/singleton.h>
 #include <plugins/plugin_manager.h>
@@ -60,6 +61,16 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*@return true is everything is OK, false otherwise.
 		*/
 		bool loadInterface();
+
+		/*!
+		*@brief Detect if launch as root
+		*/
+		bool isRoot();
+
+		/*!
+		*@brief Detect kernel version
+		*/
+		bool getKernelVersion(std::string& _version);
 	
 	private:
 		TSmartPtr<CPluginManager> 	m_pfm;

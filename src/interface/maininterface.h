@@ -39,11 +39,13 @@ $Author$
 #include "checktreectrl.h"
 #include <wx/statusbr.h>
 #include <wx/stattext.h>
+#include <tools/smart_pointer.h>
 #include "tray.h"
 
 class IInPlugin;
 class IOutPlugin;
 class wxCheckListBox;
+class CEngine;
 
 /*!
  * CMainInterface class declaration
@@ -81,6 +83,9 @@ protected:
 	//Output plugins
 	std::map<std::string, IOutPlugin*>* m_OutputPlugs;
 
+	//Engine
+	TSmartPtr<CEngine> 					m_Engine;
+
 	//GUI tree list which display input plugins and file list.
 	wxCheckTreeCtrl* 					m_Input;
 	//Informations GUI panel
@@ -90,6 +95,7 @@ protected:
 	wxStaticText* 						m_Line3;
 	//GUI checkbox which display output plugins
 	wxCheckListBox*						m_Output;
+    wxStatusBar* 						m_StatusBar;
 };
 
 #endif

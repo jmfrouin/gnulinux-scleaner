@@ -24,6 +24,7 @@ $Author$
 
 */
 
+#include <sys/utsname.h>
 #include <interface/maininterface.h>
 #include "engine.h"
 
@@ -41,10 +42,42 @@ bool CEngine::loadInterface()
 	bool l_ret = false;
 
 	CMainInterface* l_Main = 0;
-	l_Main = new CMainInterface(NULL, wxID_ANY, wxT(NAME), wxDefaultPosition, wxSize(365, 290));
+	l_Main = new CMainInterface(NULL, wxID_ANY, wxT(NAME), SYMBOL_MAININTERFACE_POSITION, SYMBOL_MAININTERFACE_SIZE);
 	if(l_Main)
     {
 		l_Main->Show(true);
+		l_ret = true;
+	}
+
+	return l_ret;
+}
+
+bool CEngine::isRoot()
+{
+	bool l_ret;
+	if((getuid() != 0) || (geteuid() != 0))
+	{
+		l_ret = false;
+	}
+	else
+	{
+		l_ret = true;
+	}
+	return l_ret;
+}
+
+bool CEngine::getKernelVersion(std::string& _version)
+{
+	bool l_ret = false;
+	utsname l_temp;
+	if(uname(&l_temp) != 0)
+	{
+		std::cerr << "[CEngine::getKernelVersion] Error !\n";
+	}
+	else
+	{
+		_version += l_temp.release;
+		
 		l_ret = true;
 	}
 
