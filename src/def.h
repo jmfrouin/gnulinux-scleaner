@@ -41,12 +41,13 @@ $Author$
 
 //General app infos
 #define MAJOR 0
-#define MINOR 2
+#define MINOR 25
 #define BUG 0
 #define t(u) #u
 #define VERSION(M,m,b) t(M) "." t(m) "." t(b)
 #define VER VERSION(MAJOR,MINOR,BUG)
 #define NAME "scleaner v"VER
+#define SPLASH true
 
 ////@begin control identifiers
 #define ID_TEST 10000
@@ -64,8 +65,8 @@ $Author$
 #define SYMBOL_TEST_POSITION wxDefaultPosition
 #define ID_MAININTERFACE 10000
 #define ID_TOOLBAR1 10002
-#define ID_TOOL1 10003
-#define ID_TOOL2 10004
+#define ID_PROCESS 10003
+#define ID_STOP 10004
 #define ID_TOOL3 10005
 #define ID_TOOL4 10006
 #define ID_SPLITTERWINDOW1 10007
@@ -74,14 +75,20 @@ $Author$
 #define ID_CHECKLISTBOX1 10010
 #define ID_SPLITTERWINDOW2 10011
 #define ID_TITLE 10012
+
+//Menu ID
+#define ID_ABOUT 10013
+#define ID_TOOLBAR 10014
+
 #define SYMBOL_MAININTERFACE_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX
 #define SYMBOL_MAININTERFACE_TITLE _("MainInterface")
 #define SYMBOL_MAININTERFACE_IDNAME ID_MAININTERFACE
-#define SYMBOL_MAININTERFACE_SIZE wxSize(640, 480)
+#define SYMBOL_MAININTERFACE_SIZE wxSize(800, 480)
 #define SYMBOL_MAININTERFACE_POSITION wxDefaultPosition
 
-#define SYMBOL_MAININTERFACE_SASH1_POS 200
-#define SYMBOL_MAININTERFACE_SASH2_POS 200
+#define SYMBOL_MAININTERFACE_SASH1_POS 400
+#define SYMBOL_MAININTERFACE_SASH2_POS 100
+#define TOOLBAR_STYLE = wxTB_FLAT | wxTB_DOCKABLE | wxTB_TEXT
 
 #endif                           // _DEF_H_
 /* vi:set ts=4: */

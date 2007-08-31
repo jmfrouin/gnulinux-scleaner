@@ -37,6 +37,7 @@ $Author$
 #include <config.h>
 #include <string>
 #include <wx/splash.h>
+#include <wx/wxhtml.h>
 #include <plugins/plugin_manager.h>
 #include <plugins/iplugin.h>
 #include <engine/engine.h>
@@ -46,11 +47,17 @@ $Author$
 #include <gfx/empty.xpm>
 #include <gfx/full.xpm>
 #include <gfx/smile.xpm>
+#include <gfx/run.xpm>
+#include <gfx/stop.xpm>
 
 IMPLEMENT_CLASS( CMainInterface, wxFrame )
 
 BEGIN_EVENT_TABLE( CMainInterface, wxFrame )
-EVT_TREE_SEL_CHANGED(ID_TREECTRL1, CMainInterface::OnSelChanged)
+	EVT_TREE_SEL_CHANGED(ID_TREECTRL1, CMainInterface::OnSelChanged)
+    EVT_MENU(ID_ABOUT, CMainInterface::OnAbout)
+    EVT_MENU(wxID_EXIT, CMainInterface::OnQuit)
+    EVT_MENU(ID_PROCESS, CMainInterface::OnProcess)
+    EVT_MENU(ID_STOP, CMainInterface::OnStop)
 END_EVENT_TABLE()
 
 CMainInterface::CMainInterface()
@@ -59,7 +66,7 @@ CMainInterface::CMainInterface()
 }
 
 CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-m_Input(0), m_Title(0), m_Output(0)
+m_Input(0), m_Title(0), m_Html(0), m_Output(0)
 {
     Init();
     Create(parent, id, caption, pos, size, style);
@@ -113,45 +120,60 @@ void CMainInterface::Init()
     {
 		std::cout << "Could not set icon.";
 	}
+	launchSplash(1000);
+}
 
+void CMainInterface::launchSplash(int _delay)
+{
+#if defined(SPLASH)
 	//Splash
     wxBitmap bitmap;
 	
 	if(bitmap.LoadFile("splash.png"), wxBITMAP_TYPE_PNG)
 	{
 		//Bitmap successfully loaded
-        new wxSplashScreen(bitmap, wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT, 500, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSIMPLE_BORDER|wxSTAY_ON_TOP);
+        new wxSplashScreen(bitmap, wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT, _delay, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSIMPLE_BORDER|wxSTAY_ON_TOP);
 	}
-	
+#endif
 }
 
 void CMainInterface::CreateControls()
 {    
-    CMainInterface* itemFrame1 = this;
+    CMainInterface* l_Frame = this;
 
-    wxMenuBar* menuBar = new wxMenuBar;
-    wxMenu* itemMenu3 = new wxMenu;
-    menuBar->Append(itemMenu3, _("Menu"));
-    itemFrame1->SetMenuBar(menuBar);
+	//________________________________________________________________
+	//MENU
+    wxMenuBar* l_MenuBar = new wxMenuBar;
+    wxMenu* l_File = new wxMenu;
+    wxMenu* l_Misc = new wxMenu;
 
-    wxToolBar* itemToolBar4 = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-    wxBitmap itemtool5Bitmap(wxNullBitmap);
-    wxBitmap itemtool5BitmapDisabled;
-    itemToolBar4->AddTool(ID_TOOL1, _T(""), itemtool5Bitmap, itemtool5BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
-    wxBitmap itemtool6Bitmap(wxNullBitmap);
-    wxBitmap itemtool6BitmapDisabled;
-    itemToolBar4->AddTool(ID_TOOL2, _T(""), itemtool6Bitmap, itemtool6BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
-    itemToolBar4->AddSeparator();
-    wxBitmap itemtool8Bitmap(wxNullBitmap);
-    wxBitmap itemtool8BitmapDisabled;
-    itemToolBar4->AddTool(ID_TOOL3, _T(""), itemtool8Bitmap, itemtool8BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
-    wxBitmap itemtool9Bitmap(wxNullBitmap);
-    wxBitmap itemtool9BitmapDisabled;
-    itemToolBar4->AddTool(ID_TOOL4, _T(""), itemtool9Bitmap, itemtool9BitmapDisabled, wxITEM_NORMAL, _T(""), wxEmptyString);
-    itemToolBar4->Realize();
-    itemFrame1->SetToolBar(itemToolBar4);
+	//File menu
+    l_MenuBar->Append(l_File, _("File"));
+	wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, "Quit");
+	l_File->Append(l_Quit);
+    
+	//Misc menu
+	l_MenuBar->Append(l_Misc, _("Misc"));
+	wxMenuItem* l_About = new wxMenuItem(l_Misc, ID_ABOUT, "About");
+	l_Misc->Append(l_About);
 
-    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemFrame1, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+    l_Frame->SetMenuBar(l_MenuBar);
+	//________________________________________________________________
+	//TOOLBAR
+    //l_ToolBar->SetMargins(4, 4);
+
+	//l_Frame->SetToolBar(l_ToolBar);
+    wxToolBar* l_ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
+    l_ToolBar->AddTool(ID_PROCESS, _T("Apply output plugin on selected files"),run_xpm , run_xpm, wxITEM_NORMAL, _T("Apply output plugin on selected files"), wxEmptyString);
+    l_ToolBar->AddTool(ID_STOP, _T("Stop"), stop_xpm, stop_xpm, wxITEM_NORMAL, _T("Stop"), wxEmptyString);
+    l_ToolBar->AddSeparator();
+    l_ToolBar->AddTool(ID_TOOL3, _T(""), smile_xpm, smile_xpm, wxITEM_NORMAL, _T(""), wxEmptyString);
+    l_ToolBar->AddTool(ID_TOOL4, _T(""), smile_xpm, smile_xpm, wxITEM_NORMAL, _T(""), wxEmptyString);
+    l_ToolBar->Realize();
+    l_Frame->SetToolBar(l_ToolBar);
+	//________________________________________________________________
+
+    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( l_Frame, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
     itemSplitterWindow10->SetMinimumPaneSize(0);
 
 	//Input plugins
@@ -200,7 +222,12 @@ void CMainInterface::CreateControls()
 	}
     m_Output = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, l_out, wxLB_SINGLE );
 
-    wxPanel* itemPanel14 = new wxPanel( itemSplitterWindow12, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+    m_Html = new wxHtmlWindow(itemSplitterWindow12, wxID_ANY, wxDefaultPosition, wxSize(380, 160), wxHW_SCROLLBAR_NEVER);
+    m_Html -> SetBorders(0);
+    m_Html -> LoadPage(wxT("html/about.html"));
+    m_Html -> SetSize(m_Html -> GetInternalRepresentation() -> GetWidth(), m_Html -> GetInternalRepresentation() -> GetHeight());
+
+    /*wxPanel* itemPanel14 = new wxPanel( itemSplitterWindow12, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer15 = new wxBoxSizer(wxVERTICAL);
     itemPanel14->SetSizer(itemBoxSizer15);
 
@@ -216,9 +243,9 @@ void CMainInterface::CreateControls()
     m_Line3 = new wxStaticText( itemPanel14, wxID_STATIC, _(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer15->Add(m_Line3, 0, wxALIGN_CENTER|wxALL, 5);
 
-    itemBoxSizer15->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer15->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);*/
 
-    wxStdDialogButtonSizer* itemStdDialogButtonSizer21 = new wxStdDialogButtonSizer;
+    /*wxStdDialogButtonSizer* itemStdDialogButtonSizer21 = new wxStdDialogButtonSizer;
 
     itemBoxSizer15->Add(itemStdDialogButtonSizer21, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     wxButton* itemButton22 = new wxButton( itemPanel14, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -227,22 +254,23 @@ void CMainInterface::CreateControls()
     wxButton* itemButton23 = new wxButton( itemPanel14, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStdDialogButtonSizer21->AddButton(itemButton23);
 
-    itemStdDialogButtonSizer21->Realize();
+    itemStdDialogButtonSizer21->Realize();*/
 
-    itemSplitterWindow12->SplitHorizontally(m_Output, itemPanel14, 50);
+    //itemSplitterWindow12->SplitHorizontally(m_Output, itemPanel14, 50);
+    itemSplitterWindow12->SplitHorizontally(m_Output, m_Html, 50);
     itemSplitterWindow10->SplitVertically(m_Input, itemSplitterWindow12, 200);
 
-    m_StatusBar = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
+    m_StatusBar = new wxStatusBar( l_Frame, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
     m_StatusBar->SetFieldsCount(3);
-    itemFrame1->SetStatusBar(m_StatusBar);
+    l_Frame->SetStatusBar(m_StatusBar);
 
 	if(m_Engine->isRoot())
 	{
-	 	SetStatusText("Launched as root/sudo", 0);
+	 	SetStatusText("Launched as root/sudo", 2);
 	}
 	else
 	{
-	 	SetStatusText("Launched as standard user", 0);
+	 	SetStatusText("Launched as standard user", 2);
 	}
 
 	std::string l_version = "Kernel : v";
@@ -269,11 +297,21 @@ wxIcon CMainInterface::GetIconResource( const wxString& name )
 }
 
 //Callbacks
+//Treeview
 void CMainInterface::OnSelChanged(wxTreeEvent& event)
 {
     wxTreeItemId l_item = m_Input->GetSelection();
 	
-	if(l_item.IsOk())
+	if(l_item == m_Input->GetRootItem())
+	{
+    	m_Html -> LoadPage(wxT("html/about.html"));
+	}
+	else
+	{
+    	m_Html -> LoadPage(wxT("html/kernels.html"));
+	}
+
+	/*if(l_item.IsOk())
 	{
 		wxString l_text = m_Input->GetItemText(l_item);
 		if(l_item != m_Input->GetRootItem())
@@ -298,5 +336,28 @@ void CMainInterface::OnSelChanged(wxTreeEvent& event)
 				m_Line3->SetLabel(l_version);
 			}
 		}
-	}
+	}*/
+}
+
+//Menu
+void CMainInterface::OnAbout(wxCommandEvent& WXUNUSED(event))
+{
+	launchSplash(3000);
+}
+
+void CMainInterface::OnQuit(wxCommandEvent& WXUNUSED(event))
+{
+    Close(true);
+}
+
+//Toolbar
+void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
+{
+    //GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
+	std::cout << "Process !!! " << '\n';
+}
+
+void CMainInterface::OnStop(wxCommandEvent& WXUNUSED(event))
+{
+    //GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
 }

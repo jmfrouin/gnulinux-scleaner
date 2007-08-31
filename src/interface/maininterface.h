@@ -45,6 +45,7 @@ $Author$
 class IInPlugin;
 class IOutPlugin;
 class wxCheckListBox;
+class wxHtmlWindow;
 class CEngine;
 
 /*!
@@ -72,6 +73,15 @@ public:
 
 	//Callbacks
 	void OnSelChanged(wxTreeEvent& event);
+	void OnAbout(wxCommandEvent& WXUNUSED(event));
+	void OnQuit(wxCommandEvent& WXUNUSED(event));
+	void OnProcess(wxCommandEvent& WXUNUSED(event));
+	void OnStop(wxCommandEvent& WXUNUSED(event));
+
+	/*!
+	*@brief Call splash screen
+	*/
+	void launchSplash(int _delay);
 
 protected:
     CTrayIcon*	m_Icon;
@@ -93,6 +103,7 @@ protected:
 	wxStaticText* 						m_Line1;
 	wxStaticText* 						m_Line2;
 	wxStaticText* 						m_Line3;
+	wxHtmlWindow*						m_Html;
 	//GUI checkbox which display output plugins
 	wxCheckListBox*						m_Output;
     wxStatusBar* 						m_StatusBar;
