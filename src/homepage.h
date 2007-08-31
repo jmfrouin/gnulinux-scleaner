@@ -35,6 +35,12 @@ $Author$
  * Project homepage : https://savannah.nongnu.org/projects/scleaner/
  *
  * @section intro_history Version history (what's new)
+ * v0.25.0:
+ * @li CHANGELOG added :D
+ * @li Replace Panel for plugin information with an HTML form.
+ * @li Toolbar works.
+ * @li Add a splash screen.
+ *
  * v0.2:
  * @li Adding GFX interface.
  * @li Adding CEngine which will deals with CLI and GUI.
