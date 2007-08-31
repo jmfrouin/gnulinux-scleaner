@@ -138,52 +138,57 @@ void MainInterface::CreateControls()
     itemToolBar4->Realize();
     itemFrame1->SetToolBar(itemToolBar4);
 
-    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemFrame1, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
-    itemSplitterWindow10->SetMinimumPaneSize(0);
+    wxStatusBar* itemStatusBar10 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar10->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar10);
 
-    wxTreeCtrl* itemTreeCtrl11 = new wxTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
+    wxPanel* itemPanel11 = new wxPanel( itemFrame1, ID_PANEL2, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
 
-    wxSplitterWindow* itemSplitterWindow12 = new wxSplitterWindow( itemSplitterWindow10, ID_SPLITTERWINDOW2, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
-    itemSplitterWindow12->SetMinimumPaneSize(0);
+    wxNotebook* itemNotebook12 = new wxNotebook( itemFrame1, ID_NOTEBOOK1, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
 
-    wxArrayString itemCheckListBox13Strings;
-    wxCheckListBox* itemCheckListBox13 = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, itemCheckListBox13Strings, wxLB_SINGLE );
+    wxSplitterWindow* itemSplitterWindow13 = new wxSplitterWindow( itemNotebook12, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+    itemSplitterWindow13->SetMinimumPaneSize(0);
 
-    wxPanel* itemPanel14 = new wxPanel( itemSplitterWindow12, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
-    wxBoxSizer* itemBoxSizer15 = new wxBoxSizer(wxVERTICAL);
-    itemPanel14->SetSizer(itemBoxSizer15);
+    wxTreeCtrl* itemTreeCtrl14 = new wxTreeCtrl( itemSplitterWindow13, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
 
-    wxStaticText* itemStaticText16 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer15->Add(itemStaticText16, 0, wxALIGN_LEFT|wxALL, 5);
+    wxSplitterWindow* itemSplitterWindow15 = new wxSplitterWindow( itemSplitterWindow13, ID_SPLITTERWINDOW2, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+    itemSplitterWindow15->SetMinimumPaneSize(0);
 
-    wxStaticText* itemStaticText17 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer15->Add(itemStaticText17, 0, wxALIGN_RIGHT|wxALL, 5);
+    wxArrayString itemCheckListBox16Strings;
+    wxCheckListBox* itemCheckListBox16 = new wxCheckListBox( itemSplitterWindow15, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, itemCheckListBox16Strings, wxLB_SINGLE );
 
-    wxStaticText* itemStaticText18 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer15->Add(itemStaticText18, 0, wxALIGN_RIGHT|wxALL, 5);
+    wxPanel* itemPanel17 = new wxPanel( itemSplitterWindow15, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizer18 = new wxBoxSizer(wxVERTICAL);
+    itemPanel17->SetSizer(itemBoxSizer18);
 
-    wxStaticText* itemStaticText19 = new wxStaticText( itemPanel14, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer15->Add(itemStaticText19, 0, wxALIGN_RIGHT|wxALL, 5);
+    wxStaticText* itemStaticText19 = new wxStaticText( itemPanel17, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer18->Add(itemStaticText19, 0, wxALIGN_LEFT|wxALL, 5);
 
-    itemBoxSizer15->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxStaticText* itemStaticText20 = new wxStaticText( itemPanel17, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer18->Add(itemStaticText20, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    wxStdDialogButtonSizer* itemStdDialogButtonSizer21 = new wxStdDialogButtonSizer;
+    wxStaticText* itemStaticText21 = new wxStaticText( itemPanel17, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer18->Add(itemStaticText21, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    itemBoxSizer15->Add(itemStdDialogButtonSizer21, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-    wxButton* itemButton22 = new wxButton( itemPanel14, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStdDialogButtonSizer21->AddButton(itemButton22);
+    wxStaticText* itemStaticText22 = new wxStaticText( itemPanel17, wxID_STATIC, _("Static text"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer18->Add(itemStaticText22, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    wxButton* itemButton23 = new wxButton( itemPanel14, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStdDialogButtonSizer21->AddButton(itemButton23);
+    itemBoxSizer18->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    itemStdDialogButtonSizer21->Realize();
+    wxStdDialogButtonSizer* itemStdDialogButtonSizer24 = new wxStdDialogButtonSizer;
 
-    itemSplitterWindow12->SplitHorizontally(itemCheckListBox13, itemPanel14, 50);
-    itemSplitterWindow10->SplitVertically(itemTreeCtrl11, itemSplitterWindow12, 200);
+    itemBoxSizer18->Add(itemStdDialogButtonSizer24, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxButton* itemButton25 = new wxButton( itemPanel17, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStdDialogButtonSizer24->AddButton(itemButton25);
 
-    wxStatusBar* itemStatusBar24 = new wxStatusBar( itemFrame1, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar24->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar24);
+    wxButton* itemButton26 = new wxButton( itemPanel17, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStdDialogButtonSizer24->AddButton(itemButton26);
+
+    itemStdDialogButtonSizer24->Realize();
+
+    itemSplitterWindow15->SplitHorizontally(itemCheckListBox16, itemPanel17, 50);
+    itemSplitterWindow13->SplitVertically(itemTreeCtrl14, itemSplitterWindow15, 200);
+    itemNotebook12->AddPage(itemSplitterWindow13, _("Tab"));
 
 ////@end MainInterface content construction
 }
