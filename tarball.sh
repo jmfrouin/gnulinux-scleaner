@@ -13,9 +13,6 @@
 
 #!/bin/bash
 timestamp=`date +%d%m%y_%H%M%S`
-echo "Tar the folder ..."
 tar cvf scleaner_$timestamp.tar *
-echo "Compression of tar archive ..."
 bzip2 scleaner_$timestamp.tar 
-echo "Moving it to backup folder ..."
 mv scleaner_$timestamp.tar.bz2 ../.
