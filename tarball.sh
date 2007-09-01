@@ -13,6 +13,6 @@
 
 #!/bin/bash
 timestamp=`date +%d%m%y_%H%M%S`
-tar cvf scleaner_$timestamp.tar *
-bzip2 scleaner_$timestamp.tar 
-mv scleaner_$timestamp.tar.bz2 ../.
+tar cvf scleaner_$1.tar * --exclude=.svn
+bzip2 scleaner_$1.tar 
+mv scleaner_$1.tar.bz2 ../.
