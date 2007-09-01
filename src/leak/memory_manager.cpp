@@ -29,6 +29,7 @@ $Author$
 #include <iomanip>
 #include <sstream>
 #include <iostream>
+#include <config.h>
 
 #include "memory_manager.h"
 
@@ -43,9 +44,7 @@ CMemoryManager::CMemoryManager()
     }
 
     //    throw CLoadingFailed("Memory leaks.log", "Impossible d'accéder en écriture");
-    m_File << "====================================================================================" << std::endl;
-    m_File << " MemoryManager v" << VERSION_MEMORY_MANAGER << " - Report (Compiled on " << __DATE__ << " @ " << __TIME__ << ")" << std::endl;
-    m_File << "====================================================================================" << std::endl << std::endl;
+    m_File << " MemoryManager v" << VERSION_MEMORY_MANAGER << ___(" - Report (Compiled on ") << __DATE__ << " @ " << __TIME__ << ")" << std::endl;
 }
 
 CMemoryManager::~CMemoryManager()
@@ -58,14 +57,14 @@ CMemoryManager::~CMemoryManager()
     {
         m_File << std::endl;
         m_File << "====================================================================================" << std::endl;
-        m_File << "   No leak detected, congratulations !  " << std::endl;
+        m_File << ___("   No leak detected, congratulations !  ") << std::endl;
         m_File << "====================================================================================" << std::endl << std::endl;
     }
     else
     {
         m_File << std::endl;
         m_File << "====================================================================================" << std::endl;
-        m_File << " Oops... Some leaks have been detected  " << std::endl;
+        m_File << ___(" Oops... Some leaks have been detected  ") << std::endl;
         m_File << "====================================================================================" << std::endl << std::endl;
         m_File << std::endl;
         Report();
@@ -89,8 +88,8 @@ void CMemoryManager::Report()
     }
 
     m_File << std::endl << std::endl << "-- "
-        << static_cast<int>(m_Blocks.size()) << " blocs not empty, "
-        << static_cast<int>(TotalSize)       << " bytes --"
+        << static_cast<int>(m_Blocks.size()) << ___(" blocs not empty, ")
+        << static_cast<int>(TotalSize)       << ___(" bytes --")
         << std::endl;
 
 }
@@ -133,7 +132,7 @@ void CMemoryManager::Free(void* _ptr, bool _array)
 
     if (It->second.Array != _array)
     {
-        m_File << "-- ERREUR | 0x" << _ptr << " @ " << It->second.File << " Line : " << It->second.Line << std::endl;
+        m_File << "-- ERREUR | 0x" << _ptr << " @ " << It->second.File << ___(" Line : ") << It->second.Line << std::endl;
         return;
     }
 

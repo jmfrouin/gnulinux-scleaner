@@ -90,5 +90,8 @@ $Author$
 #define SYMBOL_MAININTERFACE_SASH2_POS 100
 #define TOOLBAR_STYLE = wxTB_FLAT | wxTB_DOCKABLE | wxTB_TEXT
 
+//Useful macro
+#define ___(X) gettext(X)
+
 #endif                           // _DEF_H_
 /* vi:set ts=4: */

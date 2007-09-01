@@ -1,7 +1,5 @@
 /*
 Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
-*/
-/*
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,6 +29,7 @@ $Author$
 #include <leak/memory_manager.h>
 #include "scleaner_wx.h"
 #include <engine/engine.h>
+#include <libintl.h>
 
 CMemoryManager g_mm;
 
@@ -44,6 +43,9 @@ CSClean::CSClean()
 
 bool CSClean::OnInit(void)
 {
+	textdomain("scleaner");
+	std::cout << ___("scleaner starting ...\n");
+
     bool l_ret = false;
     wxImage::AddHandler(new wxPNGHandler);
 

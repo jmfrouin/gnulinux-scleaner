@@ -118,7 +118,7 @@ void CMainInterface::Init()
 
   	if (!m_Icon->SetIcon(full_xpm, wxT(NAME)))
     {
-		std::cout << "Could not set icon.";
+		std::cout << ___("Could not set icon.");
 	}
 	launchSplash(1000);
 }
@@ -148,13 +148,13 @@ void CMainInterface::CreateControls()
     wxMenu* l_Misc = new wxMenu;
 
 	//File menu
-    l_MenuBar->Append(l_File, _("File"));
-	wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, "Quit");
+    l_MenuBar->Append(l_File, _(___("File")));
+	wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, ___("Quit"));
 	l_File->Append(l_Quit);
     
 	//Misc menu
-	l_MenuBar->Append(l_Misc, _("Misc"));
-	wxMenuItem* l_About = new wxMenuItem(l_Misc, ID_ABOUT, "About");
+	l_MenuBar->Append(l_Misc, _(___("Misc")));
+	wxMenuItem* l_About = new wxMenuItem(l_Misc, ID_ABOUT, ___("About"));
 	l_Misc->Append(l_About);
 
     l_Frame->SetMenuBar(l_MenuBar);
@@ -164,7 +164,7 @@ void CMainInterface::CreateControls()
 
 	//l_Frame->SetToolBar(l_ToolBar);
     wxToolBar* l_ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-    l_ToolBar->AddTool(ID_PROCESS, _T("Apply output plugin on selected files"),run_xpm , run_xpm, wxITEM_NORMAL, _T("Apply output plugin on selected files"), wxEmptyString);
+    l_ToolBar->AddTool(ID_PROCESS, _T(___("Apply output plugin on selected files")),run_xpm , run_xpm, wxITEM_NORMAL, _T(___("Apply output plugin on selected files")), wxEmptyString);
     l_ToolBar->AddTool(ID_STOP, _T("Stop"), stop_xpm, stop_xpm, wxITEM_NORMAL, _T("Stop"), wxEmptyString);
     l_ToolBar->AddSeparator();
     l_ToolBar->AddTool(ID_TOOL3, _T(""), smile_xpm, smile_xpm, wxITEM_NORMAL, _T(""), wxEmptyString);
