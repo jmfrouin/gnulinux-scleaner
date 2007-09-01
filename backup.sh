@@ -14,8 +14,8 @@
 #!/bin/bash
 timestamp=`date +%d%m%y_%H%M%S`
 echo "Tar the folder ..."
-tar cvf trunk_$timestamp.tar *
+tar cvf scleaner_$timestamp.tar *
 echo "Compression of tar archive ..."
-bzip2 trunk_$timestamp.tar 
+bzip2 scleaner_$timestamp.tar 
 echo "Moving it to backup folder ..."
-mv trunk_$timestamp.tar.bz2 ../.
+mv scleaner_$timestamp.tar.bz2 ../.
