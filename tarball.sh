@@ -11,8 +11,10 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+PROG=scleaner
+
 #!/bin/bash
 timestamp=`date +%d%m%y_%H%M%S`
-tar cvf scleaner_$1.tar * --exclude=.svn
-bzip2 scleaner_$1.tar 
-mv scleaner_$1.tar.bz2 ../.
+tar cvf ${PROG}_$1.tar * --exclude=.svn
+bzip2 ${PROG}_$1.tar 
+gpg -b --use-agent ${PROG}_$1.tar.bz2
