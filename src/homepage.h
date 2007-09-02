@@ -40,6 +40,7 @@ $Author$
  * @li Replace Panel for plugin information with an HTML form.
  * @li Toolbar works.
  * @li Add a splash screen.
+ * @li Preparation for i8n.
  *
  * v0.2:
  * @li Adding GFX interface.
