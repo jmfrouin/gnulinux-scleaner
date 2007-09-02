@@ -12,4 +12,6 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #!/bin/bash
-find . -name "*.h" -o -name "*.cpp" | xargs xgettext --from-code -a -d scleaner -k___ -s -o scleaner.pot 
+#find . -name "*.h" -o -name "*.cpp" | xargs xgettext --from-code -a -d scleaner -k___ -s -o scleaner.pot 
+msgfmt -o scleaner.mo -v scleaner.po
+msgfmt -o scleaner_fr.mo -v scleaner_fr.po

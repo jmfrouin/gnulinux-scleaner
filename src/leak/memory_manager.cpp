@@ -44,6 +44,7 @@ CMemoryManager::CMemoryManager()
     }
 
     //    throw CLoadingFailed("Memory leaks.log", "Impossible d'accéder en écriture");
+
     m_File << " MemoryManager v" << VERSION_MEMORY_MANAGER << ___(" - Report (Compiled on ") << __DATE__ << " @ " << __TIME__ << ")" << std::endl;
 }
 
