@@ -30,9 +30,9 @@ $Author$
  *
  * $Rev$
  *
- * <center>Documentation homepage : http://www.scleaner.net
+ * <p align=right>Documentation homepage : http://www.scleaner.net
  *
- * Project homepage : https://savannah.nongnu.org/projects/scleaner/ </center>
+ * Project homepage : https://savannah.nongnu.org/projects/scleaner/ </p>
  *
  * @section intro_history Version history (what's new)
  * v0.25.0:
