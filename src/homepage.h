@@ -26,13 +26,13 @@ $Author$
 
 /*! @mainpage Simple Cleaner homepage
  *
- * <center>$Date$
+ * $Date$
  *
  * $Rev$
  *
- * Documentation homepage : http://www.scleaner.net
+ * <right>Documentation homepage : http://www.scleaner.net
  *
- * Project homepage : https://savannah.nongnu.org/projects/scleaner/ </center>
+ * Project homepage : https://savannah.nongnu.org/projects/scleaner/ </right>
  *
  * @section intro_history Version history (what's new)
  * v0.25.0:
