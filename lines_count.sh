@@ -1,1 +1,0 @@
-link scripts/lines_count.sh
