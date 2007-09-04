@@ -21,12 +21,14 @@
 # $Rev: 14 $
 # $Author: snoogie_sf $
 # ------------------------------------------------------
+# 04/09/07 : Adding a cscope rule
 
 PROJECT(scleaner)
 
 INCLUDE(FindDoxygen)
 INCLUDE(FindLATEX)
 INCLUDE(FindUnixCommands)
+INCLUDE(FindwxWidgets)
 
 ADD_DEFINITIONS(-Wall -g -MD)
 ADD_DEFINITIONS(-g -DLEAK_DETECTOR -DDEBUG -Wall -MD `wx-config --cxxflags`)
@@ -46,7 +48,10 @@ SET(scleaner_src scleaner_wx.cpp)
 ADD_EXECUTABLE(scleaner ${scleaner_src})
 TARGET_LINK_LIBRARIES(scleaner dl engine interface leaks log plugins tools `wx-config --libs`)
 
-#INSTALL(TARGETS testsapi
-#DESTINATION /usr/bin
-#PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+# Valgrind test
+ADD_CUSTOM_TARGET(valgrind COMMAND  valgrind -v --show-reachable=yes --leak-check=full scleaner)
 
+#cscope
+ADD_CUSTOM_TARGET(cscope ALL COMMAND find ${CMAKE_SOURCE_DIR} -name "*.h" -o -name "*.cpp" > ${CMAKE_SOURCE_DIR}/cscope.files && cscope -b -q -f${CMAKE_SOURCE_DIR}/cscope.out)
+
+#INSTALL(TARGETS scleaner DESTINATION /usr/bin PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)

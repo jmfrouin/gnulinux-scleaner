@@ -84,7 +84,7 @@ $Author$
  * man 2 uname (useful to get current used kernel version, to clean all unusued kernel)
  */
 
- /*! @page page2 Plugins to write
+ /*! @page page2 Inputs plugins to write
  *
  * Empty file
  *
@@ -105,11 +105,29 @@ $Author$
  * Unused and old kernel package
  *
  * Orphans
+ *
+ * .Trash folder plugins
+ *
+ * .thumbnail for browser stuff
+ *
+ * /var/cache/apt/archives plugin equivalent to apt-get clean
+ *
+ * *.ext~
+ */
+
+ /*! @page page5 Output plugins to write 
+ *
+ * based on hubackup / sbackup ?
+ * 
+ * Burn to cd
+ *
+ * Copy to usbdisk ?
+ *
  */
 
 /*! @page page4 Build & Installation
 * 
-* Please check INSTALL file for test scleaner 0.2.0.
+* Please check INSTALL file for test scleaner.
 *
 */
 
