@@ -26,6 +26,8 @@ $Author$
 
 /*! @mainpage Simple Cleaner homepage
  *
+ *  @image html gfx/scleaner0.25.0.png
+ *
  * $Date$
  *
  * $Rev$
@@ -62,9 +64,6 @@ $Author$
  *
  * Not yet implemented
  *
- * @section screenshots Screenshots
- *
- *  @image html gfx/scleaner0.25.0.png
  *
  *
  *
