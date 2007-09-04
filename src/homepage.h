@@ -26,8 +26,6 @@ $Author$
 
 /*! @mainpage Simple Cleaner homepage
  *
- * $Date$
- *
  * $Rev$
  *
  * Documentation homepage : http://www.scleaner.net
