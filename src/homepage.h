@@ -30,11 +30,11 @@ $Author$
  *
  * $Rev$
  *
- *  @image html gfx/scleaner0.25.0.png
- *
  * Documentation homepage : http://www.scleaner.net
  *
  * Project homepage : https://savannah.nongnu.org/projects/scleaner/
+ *
+ *  @image html gfx/scleaner0.25.0.png
  *
  * @section intro_history Version history (what's new)
  * v0.25.0:
