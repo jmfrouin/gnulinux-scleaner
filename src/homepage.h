@@ -26,11 +26,11 @@ $Author$
 
 /*! @mainpage Simple Cleaner homepage
  *
- *  @image html gfx/scleaner0.25.0.png
- *
  * $Date$
  *
  * $Rev$
+ *
+ *  @image html gfx/scleaner0.25.0.png
  *
  * Documentation homepage : http://www.scleaner.net
  *
