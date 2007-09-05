@@ -151,7 +151,7 @@ void CPluginManager::getFileList(std::list<std::string>& _fl)
 }
 
 
-//FIXME : Trash code, to clean on day
+//FIXME : Trash code, to clean one day
     //int l_ret = 0;
     //int l_size = 0;
 
