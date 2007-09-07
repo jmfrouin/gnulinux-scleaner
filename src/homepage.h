@@ -35,6 +35,10 @@ $Author$
  *  @image html gfx/scleaner0.25.0.png
  *
  * @section intro_history Version history (what's new)
+ * v0.30.0:
+ * @li It will be the first alpha release.
+ * @li Run now passed file list to output plugin.
+
  * v0.25.0:
  * @li CHANGELOG added :D
  * @li Replace Panel for plugin information with an HTML form.
