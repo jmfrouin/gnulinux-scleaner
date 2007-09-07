@@ -54,4 +54,4 @@ ADD_CUSTOM_TARGET(valgrind COMMAND  valgrind -v --show-reachable=yes --leak-chec
 #cscope
 ADD_CUSTOM_TARGET(cscope ALL COMMAND find ${CMAKE_SOURCE_DIR} -name "*.h" -o -name "*.cpp" > ${CMAKE_SOURCE_DIR}/cscope.files && cscope -b -f${CMAKE_SOURCE_DIR}/cscope.out)
 
-#INSTALL(TARGETS scleaner DESTINATION /usr/bin PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+INSTALL(TARGETS scleaner DESTINATION /usr/bin PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)

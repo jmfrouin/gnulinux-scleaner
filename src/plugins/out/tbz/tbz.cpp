@@ -45,6 +45,12 @@ CtbzPlugin::~CtbzPlugin()
 void CtbzPlugin::processFileList(std::list<std::string>& _fl)
 {
 	std::cout << "TBZ OUTPUT PLUGIN: processFileList" << '\n';
+	std::list<std::string>::iterator _it;
+	for(_it = _fl.begin(); _it != _fl.end(); ++_it)
+	{
+		std::cout << (*_it) << '\n';
+		
+	}
 }
 
 const std::string CtbzPlugin::description()

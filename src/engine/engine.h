@@ -71,6 +71,14 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*@brief Detect kernel version
 		*/
 		bool getKernelVersion(std::string& _version);
+
+		/*!
+		*@brief callOutputPlugins with a list of files
+		*@param _list A files list.
+		*@param _name Name of plugin.
+		*@todo Implement errors code.
+		*/
+		bool callOutputPlugin(std::list<std::string>& _list, std::string& _name);
 	
 	private:
 		TSmartPtr<CPluginManager> 	m_pfm;

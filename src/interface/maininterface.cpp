@@ -355,6 +355,14 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 {
     //GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
 	std::cout << "Process !!! " << '\n';
+    std::map<std::string, IInPlugin*>::iterator _it;
+	std::list<std::string> l_selected_files;
+    for(_it = m_InputPlugs->begin(); _it != m_InputPlugs->end(); ++_it)
+	{
+		((*_it).second)->getFileList(l_selected_files);
+	}
+	std::string l_name("tbz");
+	m_Engine->callOutputPlugin(l_selected_files, l_name);
 }
 
 void CMainInterface::OnStop(wxCommandEvent& WXUNUSED(event))

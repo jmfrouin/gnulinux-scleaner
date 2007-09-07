@@ -83,3 +83,21 @@ bool CEngine::getKernelVersion(std::string& _version)
 
 	return l_ret;
 }
+
+bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name)
+{
+	bool l_ret = false;
+	std::map<std::string, IOutPlugin*>* l_OutputPlugs;
+	l_OutputPlugs = m_pfm->getOutputListPtr();
+	IOutPlugin* l_plug = (*l_OutputPlugs)[_name];
+	if(l_plug != 0)
+	{
+		l_plug->processFileList(_list);
+		l_ret = true;
+	}
+	else
+	{
+		std::cout << "null";
+	}
+	return l_ret;
+}
