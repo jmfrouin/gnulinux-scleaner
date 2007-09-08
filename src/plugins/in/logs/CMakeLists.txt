@@ -22,6 +22,7 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-set(logs_src logs.cpp)
-add_library(logs SHARED ${logs_src}) 
-target_link_libraries(logs plugins tools)
+SET(logs_src logs.cpp)
+ADD_LIBRARY(logs SHARED ${logs_src}) 
+TARGET_LINK_LIBRARIES(logs plugins tools)
+INSTALL(TARGETS logs DESTINATION ${BINDIR}/plugs PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)

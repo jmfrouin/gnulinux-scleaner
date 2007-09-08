@@ -53,7 +53,7 @@ bool CSClean::OnInit(void)
 	m_engine = CEngine::Instance();
 
 	//Load plugins
-	m_engine->loadPlugins("plugs");
+	m_engine->loadPlugins("/usr/local/bin/plugs");
 	//Load GFX interface
 	l_ret = m_engine->loadInterface();
 

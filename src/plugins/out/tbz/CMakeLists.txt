@@ -22,6 +22,7 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-set(tbz_src tbz.cpp)
-add_library(tbz SHARED ${tbz_src}) 
-target_link_libraries(tbz plugins tools)
+SET(tbz_src tbz.cpp)
+ADD_LIBRARY(tbz SHARED ${tbz_src}) 
+TARGET_LINK_LIBRARIES(tbz plugins tools)
+INSTALL(TARGETS tbz DESTINATION ${BINDIR}/plugs PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)

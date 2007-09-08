@@ -1,0 +1,8 @@
+Package: scleaner
+Version: 0.30.0
+Section: System
+Priority: optional
+Architecture: all
+Depends: wxwidgets
+Maintainer: Jean-Michel FROUIN <jmfrouin@gmail.com>
+Description: A GNU/Linux desktop cleaner.

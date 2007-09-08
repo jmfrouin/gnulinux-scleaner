@@ -22,6 +22,7 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-set(kernels_src kernels.cpp)
-add_library(kernels SHARED ${kernels_src}) 
-target_link_libraries(kernels plugins tools)
+SET(kernels_src kernels.cpp)
+ADD_LIBRARY(kernels SHARED ${kernels_src}) 
+TARGET_LINK_LIBRARIES(kernels plugins tools)
+INSTALL(TARGETS kernels DESTINATION ${BINDIR}/plugs PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)

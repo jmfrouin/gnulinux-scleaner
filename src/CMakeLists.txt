@@ -38,6 +38,9 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
 
 SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
+#For installation
+SET(BINDIR /usr/local/scleaner/)
+
 SET(folder engine interface leak log plugins tools)
 FOREACH(fold ${folder})
 	ADD_SUBDIRECTORY(${fold})
@@ -54,4 +57,7 @@ ADD_CUSTOM_TARGET(valgrind COMMAND  valgrind -v --show-reachable=yes --leak-chec
 #cscope
 ADD_CUSTOM_TARGET(cscope ALL COMMAND find ${CMAKE_SOURCE_DIR} -name "*.h" -o -name "*.cpp" > ${CMAKE_SOURCE_DIR}/cscope.files && cscope -b -f${CMAKE_SOURCE_DIR}/cscope.out)
 
-INSTALL(TARGETS scleaner DESTINATION /usr/bin PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+#Install
+INSTALL(TARGETS scleaner DESTINATION ${BINDIR} PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/html DESTINATION ${BINDIR} DIRECTORY_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ REGEX .html)
+
