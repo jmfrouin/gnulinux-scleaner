@@ -1,8 +1,13 @@
+Source: scleaner
+Section: unknown
+Priority: extra
+Maintainer: Jean-Michel Frouin <jmfrouin@gmail.com>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
+
 Package: scleaner
-Version: 0.30.0
-Section: System
-Priority: optional
-Architecture: all
-Depends: wxwidgets
-Maintainer: Jean-Michel FROUIN <jmfrouin@gmail.com>
-Description: A GNU/Linux desktop cleaner.
+Architecture: any
+Depends: libwxbase2.8-0, ${shlibs:Depends}, ${misc:Depends}
+Description: A simple GNU/Linux desktop cleaner.
+ scleaner allow you to clean your GNU/Linux desktop. It uses
+ it's own plugin system. 

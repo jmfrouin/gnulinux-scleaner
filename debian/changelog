@@ -1,0 +1,6 @@
+scleaner (0.30.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat,  8 Sep 2007 20:44:03 +0200
+
