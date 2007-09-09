@@ -92,6 +92,7 @@ $Author$
 
 //Useful macro
 #define ___(X) gettext(X)
+#define BINDIR /usr/local/scleaner
 
 #endif                           // _DEF_H_
 /* vi:set ts=4: */

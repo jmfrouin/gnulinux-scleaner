@@ -227,7 +227,7 @@ void CMainInterface::CreateControls()
 
     m_Html = new wxHtmlWindow(itemSplitterWindow12, wxID_ANY, wxDefaultPosition, wxSize(380, 160), wxHW_SCROLLBAR_NEVER);
     m_Html -> SetBorders(0);
-    m_Html -> LoadPage(wxT("html/about.html"));
+    m_Html -> LoadPage(wxT("/usr/local/scleaner/html/about.html"));
     m_Html -> SetSize(m_Html -> GetInternalRepresentation() -> GetWidth(), m_Html -> GetInternalRepresentation() -> GetHeight());
 
     /*wxPanel* itemPanel14 = new wxPanel( itemSplitterWindow12, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
@@ -308,11 +308,11 @@ void CMainInterface::OnSelChanged(wxTreeEvent& event)
 	
 	if(l_item == m_Input->GetRootItem())
 	{
-    	m_Html -> LoadPage(wxT("html/about.html"));
+    	m_Html -> LoadPage(wxT("/usr/local/scleaner/html/about.html"));
 	}
 	else
 	{
-    	m_Html -> LoadPage(wxT("html/kernels.html"));
+    	m_Html -> LoadPage(wxT("/usr/local/scleaner/html/kernels.html"));
 	}
 
 	/*if(l_item.IsOk())
