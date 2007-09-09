@@ -14,6 +14,10 @@
 PROG=scleaner
 
 #!/bin/bash
+if [ $# -ne 1 ]; then
+	echo Stop
+	exit
+fi
 tar cvf ${PROG}_$1.tar scleaner --exclude=.svn --exclude=build > /dev/null
 echo Creating tar archive : ${PROG}_$1.tar
 gzip ${PROG}_$1.tar 

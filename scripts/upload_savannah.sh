@@ -11,15 +11,14 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-PROG=scleaner
-
 #!/bin/bash
-timestamp=`date +%d%m%y_%H%M%S`
-if [ $# -ne 1 ]; then
-	echo $0 version
+if [ $# -ne 3 ]; then
+	echo $0 filename login projectname
 	exit
 fi
-tar cvf ${PROG}_$1.tar * --exclude=.svn --exclude=build > /dev/null
-echo Creating tar archive : ${PROG}_$1.tar
-gzip ${PROG}_$1.tar 
-echo Compression of tar archive : ${PROG}_$1.tar.gz
+echo First sign the file:
+gpg -b --use-agent $1
+chmod 644 $1 $1.sig
+echo Give read permissions to your files!
+scp $1 $1.sig $2@dl.sv.nongnu.org:/releases/$3/
+echo Uploaded!
