@@ -32,6 +32,7 @@ $Author$
  *
  * Project homepage : https://savannah.nongnu.org/projects/scleaner/
  *
+ * Get last version : http://download.savannah.nongnu.org/releases/scleaner/
  *  @image html gfx/scleaner0.25.0.png
  *
  * @section intro_history Version history (what's new)
