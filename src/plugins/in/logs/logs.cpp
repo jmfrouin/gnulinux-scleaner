@@ -70,7 +70,8 @@ void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 	std::string l_path = "/var/log/";
 	std::string l_mask = "*";
 
-    wxDir l_dir(l_path);
+	wxString l_upath(l_path.c_str(), wxConvUTF8);
+    wxDir l_dir(l_upath);
 	int l_size = 0;
 		
 	std::cout << "\ngetFileList()\n";
@@ -83,7 +84,8 @@ void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 
    	wxString l_filename;
 
-   	bool cont = l_dir.GetFirst(&l_filename, l_mask, wxDIR_DEFAULT);
+	wxString l_umask(l_mask.c_str(), wxConvUTF8);
+   	bool cont = l_dir.GetFirst(&l_filename, l_umask, wxDIR_DEFAULT);
    	while(cont)
    	{
 		//struct stat l_info;
@@ -96,7 +98,7 @@ void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 		//}
 		//l_size += l_info.st_size;
 		std::string l_tmp = l_path;
-		l_tmp += l_filename.c_str();
+		l_tmp += l_filename.fn_str();
 		_fl.push_back(l_tmp);
    	    cont = l_dir.GetNext(&l_filename);
    	}

@@ -35,9 +35,10 @@ $Author$
  *  @image html gfx/scleaner0.25.0.png
  *
  * @section intro_history Version history (what's new)
- * v0.30.0:
+ * v0.30.1:
  * @li It will be the first alpha release.
  * @li Run now passed file list to output plugin.
+ * @li Fixed wxwidgets unicode uses.
 
  * v0.25.0:
  * @li CHANGELOG added :D

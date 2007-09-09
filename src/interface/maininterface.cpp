@@ -129,7 +129,7 @@ void CMainInterface::launchSplash(int _delay)
 	//Splash
     wxBitmap bitmap;
 	
-	if(bitmap.LoadFile("splash.png"), wxBITMAP_TYPE_PNG)
+	if(bitmap.LoadFile(_T("splash.png")), wxBITMAP_TYPE_PNG)
 	{
 		//Bitmap successfully loaded
         new wxSplashScreen(bitmap, wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT, _delay, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSIMPLE_BORDER|wxSTAY_ON_TOP);
@@ -148,13 +148,13 @@ void CMainInterface::CreateControls()
     wxMenu* l_Misc = new wxMenu;
 
 	//File menu
-    l_MenuBar->Append(l_File, _(___("File")));
-	wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, ___("Quit"));
+    l_MenuBar->Append(l_File, _T("File"));
+	wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, _T("Quit"));
 	l_File->Append(l_Quit);
     
 	//Misc menu
-	l_MenuBar->Append(l_Misc, _(___("Misc")));
-	wxMenuItem* l_About = new wxMenuItem(l_Misc, ID_ABOUT, ___("About"));
+	l_MenuBar->Append(l_Misc, _T("Misc"));
+	wxMenuItem* l_About = new wxMenuItem(l_Misc, ID_ABOUT, _T("About"));
 	l_Misc->Append(l_About);
 
     l_Frame->SetMenuBar(l_MenuBar);
@@ -164,7 +164,7 @@ void CMainInterface::CreateControls()
 
 	//l_Frame->SetToolBar(l_ToolBar);
     wxToolBar* l_ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-    l_ToolBar->AddTool(ID_PROCESS, _T(___("Apply output plugin on selected files")),run_xpm , run_xpm, wxITEM_NORMAL, _T(___("Apply output plugin on selected files")), wxEmptyString);
+    l_ToolBar->AddTool(ID_PROCESS, _T("Apply output plugin on selected files"),run_xpm , run_xpm, wxITEM_NORMAL, _T("Apply output plugin on selected files"), wxEmptyString);
     l_ToolBar->AddTool(ID_STOP, _T("Stop"), stop_xpm, stop_xpm, wxITEM_NORMAL, _T("Stop"), wxEmptyString);
     l_ToolBar->AddSeparator();
     l_ToolBar->AddTool(ID_TOOL3, _T(""), smile_xpm, smile_xpm, wxITEM_NORMAL, _T(""), wxEmptyString);
@@ -184,7 +184,8 @@ void CMainInterface::CreateControls()
     std::map<std::string, IInPlugin*>::iterator _it;
     for(_it = m_InputPlugs->begin(); _it != m_InputPlugs->end(); ++_it)
     {
-    	wxTreeItemId l_plug = m_Input->AddCheckedItem(l_root, _(((*_it).second)->getName().c_str()), false );
+		wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
+    	wxTreeItemId l_plug = m_Input->AddCheckedItem(l_root, l_str, false);
 
 		std::list<std::string> l_list;
 		((*_it).second)->getFileList(l_list);
@@ -193,7 +194,8 @@ void CMainInterface::CreateControls()
 
 		for(_it2 = l_list.begin(); _it2 != l_list.end(); ++_it2)
 		{
-			wxTreeItemId l_file = m_Input->AddCheckedItem(l_plug, _((*_it2).c_str()), true );
+			wxString l_str2((*_it2).c_str(), wxConvUTF8);
+			wxTreeItemId l_file = m_Input->AddCheckedItem(l_plug, l_str2, true);
 
 			//This plugin need root access ?
 			if(((*_it).second)->needRoot())
@@ -218,7 +220,8 @@ void CMainInterface::CreateControls()
     std::map<std::string, IOutPlugin*>::iterator _it2;
     for(_it2 = m_OutputPlugs->begin(); _it2 != m_OutputPlugs->end(); ++_it2)
     {
-    	l_out.Add(((*_it2).second)->getName());
+		wxString l_name( ((*_it2).second)->getName().c_str(), wxConvUTF8);
+    	l_out.Add(l_name);
 	}
     m_Output = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, l_out, wxLB_SINGLE );
 
@@ -266,16 +269,17 @@ void CMainInterface::CreateControls()
 
 	if(m_Engine->isRoot())
 	{
-	 	SetStatusText("Launched as root/sudo", 2);
+	 	SetStatusText(_T("Launched as root/sudo"), 2);
 	}
 	else
 	{
-	 	SetStatusText("Launched as standard user", 2);
+	 	SetStatusText(_T("Launched as standard user"), 2);
 	}
 
 	std::string l_version = "Kernel : v";
 	m_Engine->getKernelVersion(l_version);
-	SetStatusText(l_version, 1);
+	wxString l_uversion(l_version.c_str(), wxConvUTF8);
+	SetStatusText(l_uversion, 1);
 
 }
 

@@ -85,7 +85,8 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
 
 	std::string l_path = "/boot/";
 
-    wxDir l_dir(l_path);
+	wxString l_upath(l_path.c_str(), wxConvUTF8);
+    wxDir l_dir(l_upath);
    	if ( !l_dir.IsOpened() )
    	{
 		std::cout << "[ERR] Cannot open folder : " << l_path << '\n';
@@ -95,11 +96,13 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
 
 	std::string l_mask;
 	l_mask = "abi*";
-   	bool cont = l_dir.GetFirst(&l_filename, l_mask, wxDIR_DEFAULT);
+
+	wxString l_umask(l_mask.c_str(), wxConvUTF8);
+   	bool cont = l_dir.GetFirst(&l_filename, l_umask, wxDIR_DEFAULT);
    	while(cont)
    	{
 		std::string l_tmp = l_path;
-		l_tmp += l_filename.c_str();
+		l_tmp += l_filename.fn_str();
 		//If this isn't a current kernel file
 		if(l_tmp.find(l_kernel) == std::string::npos)
 		{
@@ -108,11 +111,13 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
    	    cont = l_dir.GetNext(&l_filename);
    	}
 	l_mask = "config*";
-   	cont = l_dir.GetFirst(&l_filename, l_mask, wxDIR_DEFAULT);
+
+	wxString l_umask2(l_mask.c_str(), wxConvUTF8);
+   	cont = l_dir.GetFirst(&l_filename, l_umask2, wxDIR_DEFAULT);
    	while(cont)
    	{
 		std::string l_tmp = l_path;
-		l_tmp += l_filename.c_str();
+		l_tmp += l_filename.fn_str();
 		//If this isn't a current kernel file
 		if(l_tmp.find(l_kernel) == std::string::npos)
 		{
@@ -121,11 +126,13 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
    	    cont = l_dir.GetNext(&l_filename);
    	}
 	l_mask = "initrd*";
-   	cont = l_dir.GetFirst(&l_filename, l_mask, wxDIR_DEFAULT);
+
+	wxString l_umask3(l_mask.c_str(), wxConvUTF8);
+   	cont = l_dir.GetFirst(&l_filename, l_umask3, wxDIR_DEFAULT);
    	while(cont)
    	{
 		std::string l_tmp = l_path;
-		l_tmp += l_filename.c_str();
+		l_tmp += l_filename.fn_str();
 		//If this isn't a current kernel file
 		if(l_tmp.find(l_kernel) == std::string::npos)
 		{
@@ -134,11 +141,13 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
    	    cont = l_dir.GetNext(&l_filename);
    	}
 	l_mask = "System.map*";
-   	cont = l_dir.GetFirst(&l_filename, l_mask, wxDIR_DEFAULT);
+
+	wxString l_umask4(l_mask.c_str(), wxConvUTF8);
+   	cont = l_dir.GetFirst(&l_filename, l_umask4, wxDIR_DEFAULT);
    	while(cont)
    	{
 		std::string l_tmp = l_path;
-		l_tmp += l_filename.c_str();
+		l_tmp += l_filename.fn_str();
 		//If this isn't a current kernel file
 		if(l_tmp.find(l_kernel) == std::string::npos)
 		{
@@ -147,11 +156,13 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
    	    cont = l_dir.GetNext(&l_filename);
    	}
 	l_mask = "vmlinuz*";
-   	cont = l_dir.GetFirst(&l_filename, l_mask, wxDIR_DEFAULT);
+
+	wxString l_umask5(l_mask.c_str(), wxConvUTF8);
+   	cont = l_dir.GetFirst(&l_filename, l_umask5, wxDIR_DEFAULT);
    	while(cont)
    	{
 		std::string l_tmp = l_path;
-		l_tmp += l_filename.c_str();
+		l_tmp += l_filename.fn_str();
 		//If this isn't a current kernel file
 		if(l_tmp.find(l_kernel) == std::string::npos)
 		{

@@ -61,6 +61,7 @@ class ClogsPlugin : public IInPlugin
 
 		/*!
 		*@brief From IInPlugin
+		*@todo : Fix use of wxwidgets in plugins !!!!
 		*/
 		void getFileList(std::list<std::string>& _fl);
 		bool needRoot();
