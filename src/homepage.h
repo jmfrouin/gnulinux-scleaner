@@ -26,8 +26,6 @@ $Author$
 
 /*! @mainpage Simple Cleaner homepage
  *
- * $Rev$
- *
  * Documentation homepage : http://www.scleaner.net
  *
  * Project homepage : https://savannah.nongnu.org/projects/scleaner/
@@ -53,6 +51,7 @@ $Author$
  *
  *  @image html gfx/gpl.png
  *
+ * $Rev$
  */
 
  /*! @page page3 Plugins documentations
