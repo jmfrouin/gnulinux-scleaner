@@ -1,2 +1,5 @@
 usr/bin
-usr/sbin
+usr/share/scleaner
+usr/share/scleaner/plugs
+usr/share/doc/scleaner
+usr/share/man/man1
