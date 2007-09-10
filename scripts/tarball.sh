@@ -19,7 +19,7 @@ if [ $# -ne 1 ]; then
 	echo $0 version
 	exit
 fi
-tar cvf ${PROG}_$1.tar * --exclude=.svn --exclude=build > /dev/null
+tar cvf ${PROG}_$1.tar * --exclude=.svn --exclude=build --exclude=build2 > /dev/null
 echo Creating tar archive : ${PROG}_$1.tar
 gzip ${PROG}_$1.tar 
 echo Compression of tar archive : ${PROG}_$1.tar.gz

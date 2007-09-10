@@ -41,9 +41,10 @@ SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 #For installation
 SET(BINDIR /usr/bin/)
 SET(SHAREDIR /usr/share/doc/scleaner/)
+SET(PLUGSDIR /usr/share/scleaner/plugs/)
 SET(MANDIR /usr/share/man/man1/)
 
-SET(folder engine interface leak log tools)
+SET(folder engine interface leak log plugins tools)
 FOREACH(fold ${folder})
 	ADD_SUBDIRECTORY(${fold})
 ENDFOREACH(fold ${folder})
