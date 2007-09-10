@@ -35,26 +35,6 @@ $Author$
  * Get last version : http://download.savannah.nongnu.org/releases/scleaner/
  *  @image html gfx/scleaner0.25.0.png
  *
- * @section intro_history Version history (what's new)
- * v0.30.1:
- * @li It will be the first alpha release.
- * @li Run now passed file list to output plugin.
- * @li Fixed wxwidgets unicode uses.
-
- * v0.25.0:
- * @li CHANGELOG added :D
- * @li Replace Panel for plugin information with an HTML form.
- * @li Toolbar works.
- * @li Add a splash screen.
- * @li Preparation for i8n.
- *
- * v0.2:
- * @li Adding GFX interface.
- * @li Adding CEngine which will deals with CLI and GUI.
- *
- * v0.1:
- * @li Initial version.
- *
  * @section intro_whatis What is scleaner ?
  *
  * scleaner will be able to clean your GNU/Linux desktop (developped under Ubuntu 7.04 Feisty) by removing for example all unwanted log, orphan or duplicate files ...

@@ -6,4 +6,4 @@ Replace Panel by an HTML view
 Add code to detect free space on /, /boot, /var ... in CEngine
 Write dameon to detect free space ?
 Desktop notification
-
+Create a rule which make a sym link betwen debian in build folder from source folder.

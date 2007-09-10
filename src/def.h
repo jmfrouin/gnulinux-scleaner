@@ -92,7 +92,11 @@ $Author$
 
 //Useful macro
 #define ___(X) gettext(X)
-#define BINDIR /usr/local/scleaner
+
+//Paths
+#define BINDIR /usr/bin/scleaner
+#define HTMLDIR /usr/bin/scleaner/html
+#define PLUGINSDIR /usr/bin/scleaner/plugs
 
 #endif                           // _DEF_H_
 /* vi:set ts=4: */

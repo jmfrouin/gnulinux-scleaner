@@ -1,6 +1,18 @@
-scleaner (0.30.1-1) unstable; urgency=low
+scleaner (0.30.2) unstable; urgency=low
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Correct plugins & html paths.
 
  -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat,  8 Sep 2007 20:44:03 +0200
+
+scleaner (0.30.1) unstable; urgency=low
+
+  * Correct a bug in dependencies. Since all wxWidgets libraries on Ubuntu are built in Unicode mode, some changes are need in source code.
+
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat,  8 Sep 2007 20:44:03 +0200
+
+scleaner (0.30.0) unstable; urgency=low
+
+  * Initial release
+
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat,  8 Sep 2007 19:32:45 +0200
 
