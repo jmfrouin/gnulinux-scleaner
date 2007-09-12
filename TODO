@@ -1,9 +1,6 @@
-Adding a "Need root" method in plugins.
-Link static or dynamic or one or more plugins ?.
 Alternate methode for each output plugins ?
 Add tooltip for disabled items in treeview (->"You need root rights to selected these items")
 Replace Panel by an HTML view
-Add code to detect free space on /, /boot, /var ... in CEngine
+Add code to detect free space on disk in CEngine
 Write dameon to detect free space ?
 Desktop notification
-Create a rule which make a sym link betwen debian in build folder from source folder.

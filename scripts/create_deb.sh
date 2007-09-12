@@ -15,12 +15,22 @@ PROG=scleaner
 
 #!/bin/bash
 if [ $# -ne 1 ]; then
-	echo Stop
+	echo $0 version
 	exit
 fi
-tar cvf ${PROG}_$1.tar scleaner --exclude=.svn --exclude=build > /dev/null
-echo Creating tar archive : ${PROG}_$1.tar
-gzip ${PROG}_$1.tar 
-echo Compression of tar archive : ${PROG}_$1.tar.gz
-sudo dpkg-buildpackage
-echo Build package
+tar cvf ${PROG}_$1.orig.tar . --exclude=${PROG}_$1.orig.tar --exclude=.svn --exclude=build > /dev/null
+echo Creating tar archive : ${PROG}_$1.orig.tar
+gzip ${PROG}_$1.orig.tar 
+echo Compression of tar archive : ${PROG}_$1.orig.tar.gz
+mv ${PROG}_$1.orig.tar.gz build/
+echo Moving ${PROG}_$1.orig.tar.gz to build
+mkdir build/${PROG}-$1
+echo Creating build/${PROG}-$1 directory
+cd build/${PROG}-$1
+echo Entering build/${PROG}-$1 directory
+dh_make -s
+echo dh_make
+cmake ../../src/
+echo Launching cmake
+dpkg-buildpackage -rfakeroot 
+echo Package built

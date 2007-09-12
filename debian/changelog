@@ -1,3 +1,9 @@
+scleaner (0.30.4) unstable; urgency=low
+
+  * Plugins are now compiled as separated debian package.
+
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat, 11 Sep 2007 18:25:26 +0200
+
 scleaner (0.30.3) unstable; urgency=low
 
   * Binary now in /usr/bin.
