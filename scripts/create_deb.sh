@@ -30,7 +30,7 @@ cd build/${PROG}-$1
 echo Entering build/${PROG}-$1 directory
 dh_make -s
 echo dh_make
-cmake ../../src/
-echo Launching cmake
+#cmake ../../src/
+#echo Launching cmake
 dpkg-buildpackage -rfakeroot 
 echo Package built

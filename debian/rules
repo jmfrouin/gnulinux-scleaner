@@ -24,7 +24,7 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
-
+	cmake $(CURDIR)/src
 	touch configure-stamp
 
 
@@ -89,7 +89,7 @@ binary-arch: build install
 #	dh_perl
 #	dh_makeshlibs
 	dh_installdeb
-	dh_shlibdeps
+	#dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

@@ -42,7 +42,7 @@ $Author$
 //General app infos
 #define MAJOR 0
 #define MINOR 30
-#define BUG 1
+#define BUG 4
 #define t(u) #u
 #define VERSION(M,m,b) t(M) "." t(m) "." t(b)
 #define VER VERSION(MAJOR,MINOR,BUG)
