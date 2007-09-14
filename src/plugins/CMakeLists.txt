@@ -22,11 +22,11 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-#SET(folder in out)
+SET(folder in out)
 
-#FOREACH(fold ${folder})
-#	ADD_SUBDIRECTORY(${fold})
-#ENDFOREACH(fold ${folder})
-#
+FOREACH(fold ${folder})
+	ADD_SUBDIRECTORY(${fold})
+ENDFOREACH(fold ${folder})
+
 set(plugin_src plugin_manager.cpp)
 add_library(plugins ${plugin_src})

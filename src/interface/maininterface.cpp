@@ -129,7 +129,7 @@ void CMainInterface::launchSplash(int _delay)
 	//Splash
     wxBitmap bitmap;
 	
-	if(bitmap.LoadFile(_T("splash.png")), wxBITMAP_TYPE_PNG)
+	if(bitmap.LoadFile(_T("/usr/share/doc/scleaner/splash.png")), wxBITMAP_TYPE_PNG)
 	{
 		//Bitmap successfully loaded
         new wxSplashScreen(bitmap, wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT, _delay, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSIMPLE_BORDER|wxSTAY_ON_TOP);
