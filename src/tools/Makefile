@@ -8,3 +8,7 @@ tarlib.o: tarlib.cpp
 
 testtarlib.o: testtarlib.cpp
 	g++ -c $^
+
+clean:
+	rm *.o
+	rm testtarlib

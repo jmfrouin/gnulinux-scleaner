@@ -1,3 +1,22 @@
+/* 
+ Copyright (c) 2004-2005 Andrew Reading.
+ Copyright (c) 2007 Sylvain Beucler.
+ Copyright (c) 2007 Jean-Michel Frouin.
+------------------------------------------------------
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "tarlib.h"
 #include <iostream>
 #include <fstream>
@@ -77,27 +96,48 @@ bool CTarLib::computeFileHeader(const std::string& _filename)
              l_mode += 1;
          }
 
-		std::string l_modestr("00");
+		std::string l_modestr;
 		std::stringstream* l_tmp = new std::stringstream;
 		(*l_tmp) << l_mode;
 		l_modestr += l_tmp->str();
+        l_modestr = PadWithZeros(l_modestr, 8);
 		delete l_tmp;
 		
 		std::cout << "Mode (8b) : " << l_modestr << '\n';
 
-		std::string l_uid("0000");
+		//UID
+		std::string l_uid;
 		l_tmp = new std::stringstream;
 		(*l_tmp) << l_info.st_uid;
 		l_uid += l_tmp->str();
 		delete l_tmp;
+        l_uid = PadWithZeros(l_uid, 8);
 		std::cout << "UID (8b) : " << l_uid << '\n';
 		
-		std::string l_gid("0000");
+		//GID
+		std::string l_gid;
 		l_tmp = new std::stringstream;
 		(*l_tmp) << l_info.st_gid;
 		l_gid += l_tmp->str();
 		delete l_tmp;
+        l_gid = PadWithZeros(l_gid, 8);
 		std::cout << "GID (8b) : " << l_gid << '\n';
+
+    	// File Size.
+    	std::string strFileSize = DecToOct(iFileEnd - iFileBegin);
+    	strncpy(Record.Size, PadWithZeros(strFileSize, 12).c_str(), 12);
+
+    // Time of modification
+    std::string strTime = DecToOct(time(0));
+    strncpy(Record.Mtime, PadWithZeros(strTime, 12).c_str(), 12);
+
+    // Add blank checksum.
+    memset(Record.Chksum, 0, 8);
+
+    // Type of file.
+    Record.Linkflag = 0;
+    strncpy(Record.Linkname, "", 100);
+    strncpy(Record.Magic, "ustar", 8);
 
 		l_ret=true;
 #endif
