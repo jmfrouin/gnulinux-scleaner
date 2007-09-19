@@ -322,7 +322,7 @@ std::string CTarArchive::DecToOct(int _nb)
     return l_ret.str();
 }
 
-std::string CTarArchive::PadWithZeros(std::string& _s, int _size)
+std::string CTarArchive::PadWithZeros(std::string& _s, unsigned int _size)
 {
     std::string l_ret;
     int l_size = _size - 1;

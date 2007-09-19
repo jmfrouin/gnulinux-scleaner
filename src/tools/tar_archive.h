@@ -103,7 +103,7 @@ class CTarArchive
 		*@return a std::string padded.
 		*@todo Move it to engine maybe ?
 		*/
-		std::string PadWithZeros(std::string& _s, int _size);
+		std::string PadWithZeros(std::string& _s, unsigned int _size);
 
 		/*!
 		*@brief Convert an int to std::string.

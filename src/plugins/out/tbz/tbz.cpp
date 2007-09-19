@@ -26,7 +26,7 @@ $Author$
 
 #include <iostream>
 #include <errno.h>
-#include <libtar.h>
+#include <tools/tar_archive.h>
 #include <fcntl.h>
 #include <plugins/plugin_initializer.h>
 #include "tbz.h"
@@ -48,19 +48,8 @@ CtbzPlugin::~CtbzPlugin()
 void CtbzPlugin::processFileList(std::list<std::string>& _fl)
 {
 	std::cout << "TBZ OUTPUT PLUGIN: processFileList" << '\n';
-	std::list<std::string>::iterator _it;
-
-	TAR* l_tar;
-	if (tar_open(&l_tar, "/tmp/tarball.tar", 0, O_WRONLY | O_CREAT, 0644, TAR_GNU) == -1)
-	{
-		std::cout << stderr << "tar_open():" << strerror(errno) << '\n';
-	}
-
-	if (tar_close(l_tar) != 0)
-	{
-		std::cout << stderr << "tar_close():" << strerror(errno) << '\n';
-	}
-
+	CTarArchive l_tar;
+	l_tar.Create(_fl, "backup.tar");
 }
 
 const std::string CtbzPlugin::description()
