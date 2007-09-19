@@ -1,14 +1,14 @@
-all: testtarlib
+all: testtar
 
-testtarlib: tarlib.o testtarlib.o
+testtar: tar_archive.o testtar.o
 	g++ -o $@ $^
 
-tarlib.o: tarlib.cpp
+tar_archive.o: tar_archive.cpp
 	g++ -c $^
 
-testtarlib.o: testtarlib.cpp
+testtar.o: testtar.cpp
 	g++ -c $^
 
 clean:
 	rm *.o
-	rm testtarlib
+	rm testtar
