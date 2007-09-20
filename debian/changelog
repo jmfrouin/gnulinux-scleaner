@@ -1,3 +1,11 @@
+scleaner (0.31.0) unstable; urgency=low
+
+  * Output plugin tbz is ready.
+  * First alpha release.
+  * Code cleanup.
+
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Fri, 14 Sep 2007 22:19:26 +0200
+
 scleaner (0.30.5) unstable; urgency=low
 
   * 2 input plugins & 1 output plugin are now delivered with scleaner.

@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
+Copyright (C) 2007 FROUIN Jean-Michel
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,17 +21,18 @@ $Date$
 $Rev$
 $Author$
 ------------------------------------------------------
-
 */
 
-#include <iostream>
-#include <errno.h>
-#include <tools/tar_archive.h>
-#include <fcntl.h>
-#include <plugins/plugin_initializer.h>
 #include "tbz.h"
-#include <wx/dir.h>
+#include <iostream>
+#include <fstream>
+#include <errno.h>
+#include <fcntl.h>
+#include <bzlib.h>
 #include <sys/stat.h>            ///Get file size.
+#include <wx/dir.h>
+#include <tools/tar_archive.h>
+#include <plugins/plugin_initializer.h>
 #include <leak/leak_detector.h>
 
 CPluginInitializer<CtbzPlugin> g_tbz;
@@ -50,6 +51,7 @@ void CtbzPlugin::processFileList(std::list<std::string>& _fl)
 	std::cout << "TBZ OUTPUT PLUGIN: processFileList" << '\n';
 	CTarArchive l_tar;
 	l_tar.Create(_fl, "backup.tar");
+	Compress("backup.tar" , "backup.tbz");
 }
 
 const std::string CtbzPlugin::description()
@@ -64,7 +66,7 @@ const std::string CtbzPlugin::author()
 
 const std::string CtbzPlugin::version()
 {
-	return "0.1";
+	return "0.5";
 }
 
 IPlugin::eType CtbzPlugin::Type()
@@ -73,4 +75,82 @@ IPlugin::eType CtbzPlugin::Type()
 	l_ret = eInput;
 	return l_ret;
 }
+
+//Private methods
+bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output)
+{
+	bool l_ret = false;
+	FILE* l_out = fopen(_output.c_str(), "wb");
+
+	// Open up the output file
+    if(!l_out)
+    {
+        std::cout << "Error out file!" << '\n';
+		l_ret = false;
+    }
+	else
+	{
+    	BZFILE* l_bz = 0;
+		int l_err = 0;
+    	l_bz = BZ2_bzWriteOpen(&l_err, l_out, 9, 0, 90);
+
+    	if(l_err != BZ_OK)
+    	{
+    	    std::cout << "Error bzWriteOpen!" << '\n';
+			l_ret = false;
+    	}
+		else
+		{
+    		// Open up the input file
+    		std::ifstream l_in(_input.c_str(), std::ios::in | std::ios::binary);
+
+			if(!l_in.good())
+			{
+    			std::cout << "Error in file!" << '\n';
+				l_ret = false;
+			}
+			else
+			{
+    			// Get the file size. (I hate C I/O, so don't use them :D )
+				struct stat l_info;
+				//Try to stat file.
+				if(stat(_input.c_str(), &l_info) == -1)
+				{
+					std::cout << "Cannot stat " << _input.c_str() << '\n';
+					l_ret = false;
+				}
+				else
+				{
+					char l_buf[4096];
+    			    memset(l_buf, 0, 4096);
+					do 
+					{   
+						l_in.read(l_buf, 4096);
+						std::streamsize l_bytesread = l_in.gcount();
+						BZ2_bzWrite(&l_err, l_bz, l_buf, l_bytesread);
+					} while(l_in.good()); 
+					
+					if( l_in.bad() || !l_in.eof() ) 
+					{
+						l_ret = false;
+					}
+					else
+					{
+						l_ret = true;
+					}
+					
+					l_in.close(); 
+				}
+
+    			// Close up.
+    			BZ2_bzWriteClose(&l_err, l_bz, 0, 0, 0);
+				fclose(l_out);
+				l_out = 0;
+			}
+		}
+	}
+
+    return l_ret;
+}
+
 /* vi:set ts=4: */

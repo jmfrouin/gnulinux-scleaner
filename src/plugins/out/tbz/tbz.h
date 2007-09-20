@@ -1,5 +1,7 @@
 /*
-Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
+ Copyright (C) 2004-2005 Andrew Reading.
+ Copyright (C) 2007 Sylvain Beucler.
+ Copyright (C) 2007 FROUIN Jean-Michel
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +23,6 @@ $Date$
 $Rev$
 $Author$
 ------------------------------------------------------
-
 */
 
 /*! @page page3 Plugins documentations.
@@ -57,7 +58,15 @@ class CtbzPlugin : public IOutPlugin
 		const std::string author();
 		const std::string version();
 		eType Type();
-
+	
+	private:
+		/*!
+		*@brief Compress a file using bz algo.
+		*@param _input Input file name.
+		*@param _output Output file name.
+		*@return true on success, false otherwise.
+		*/
+		bool Compress(const std::string& _input, const std::string& _output);
 };
 #endif                           //_TBZ_H_
 /* vi:set ts=4: */

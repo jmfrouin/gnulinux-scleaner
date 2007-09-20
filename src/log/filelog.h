@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
+Copyright (C) 2007 FROUIN Jean-Michel
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ $Date$
 $Rev$
 $Author$
 ------------------------------------------------------
-
 */
 
 #ifndef _FILELOG_H

@@ -4,3 +4,4 @@ Replace Panel by an HTML view
 Add code to detect free space on disk in CEngine
 Write dameon to detect free space ?
 Desktop notification
+Clean source code header (email)

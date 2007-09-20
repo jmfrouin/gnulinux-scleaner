@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2007 FROUIN Jean-Michel (jmfrouin@gmail.com)
+Copyright (C) 2007 FROUIN Jean-Michel
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@ $Date$
 $Rev$
 $Author$
 ------------------------------------------------------
-
 */
 
 /*
@@ -41,8 +40,8 @@ $Author$
 
 //General app infos
 #define MAJOR 0
-#define MINOR 30
-#define BUG 5
+#define MINOR 31
+#define BUG 0
 #define t(u) #u
 #define VERSION(M,m,b) t(M) "." t(m) "." t(b)
 #define VER VERSION(MAJOR,MINOR,BUG)

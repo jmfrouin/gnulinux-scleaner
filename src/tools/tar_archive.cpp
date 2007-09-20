@@ -52,7 +52,6 @@ bool CTarArchive::FillHeader(const std::string& _filename, posix_header& _header
 	else
 	{
 		std::string l_name(_filename);
-	    strncpy(_header.name, l_name.c_str(), 100);
 
 #if defined WIN32
         // No UID or GID support for Windows - Hack it up.
@@ -136,6 +135,21 @@ bool CTarArchive::FillHeader(const std::string& _filename, posix_header& _header
 
     	// Type of file.
     	_header.typeflag = REGTYPE;
+	
+		if (S_ISLNK(l_info.st_mode)) 
+		{
+			_header.typeflag = SYMTYPE;
+		} 
+		else
+		{ 
+			if (S_ISDIR(l_info.st_mode)) 
+			{
+				_header.typeflag = DIRTYPE;
+				l_name += "/";
+			}
+		}
+
+	    strncpy(_header.name, l_name.c_str(), 100);
 
     	strncpy(_header.linkname, "", 100);
 

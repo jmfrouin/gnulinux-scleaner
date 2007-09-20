@@ -11,4 +11,4 @@ testtar.o: testtar.cpp
 
 clean:
 	rm *.o
-	rm testtar
+	rm -f testtar
