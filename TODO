@@ -1,7 +1,13 @@
-Alternate methode for each output plugins ?
-Add tooltip for disabled items in treeview (->"You need root rights to selected these items")
-Replace Panel by an HTML view
+0.31.0:
+Add a progress bar
+Remove .tar
+Check that box is checked :)
+Add folder content in tar
+
+0.32.0
 Add code to detect free space on disk in CEngine
+Add tooltip for disabled items in treeview (->"You need root rights to selected these items")
+
+0.33.0:
 Write dameon to detect free space ?
 Desktop notification
-Clean source code header (email)
