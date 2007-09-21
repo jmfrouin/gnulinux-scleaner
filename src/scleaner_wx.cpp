@@ -43,7 +43,9 @@ CSClean::CSClean()
 bool CSClean::OnInit(void)
 {
 	textdomain("scleaner");
-	std::cout << ___("scleaner starting ...\n");
+#if defined DEBUG
+	std::cout << "[DBG] scleaner starting ...\n";
+#endif
 
     bool l_ret = false;
     wxImage::AddHandler(new wxPNGHandler);

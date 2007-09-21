@@ -41,6 +41,7 @@ $Author$
 #include <plugins/iplugin.h>
 #include <engine/engine.h>
 #include "maininterface.h"
+#include <wx/treectrl.h>
 
 //GFX Elements
 #include <gfx/empty.xpm>
@@ -117,7 +118,7 @@ void CMainInterface::Init()
 
   	if (!m_Icon->SetIcon(full_xpm, wxT(NAME)))
     {
-		std::cout << ___("Could not set icon.");
+		std::cout << "[ERR] Could not set icon.";
 	}
 	launchSplash(1000);
 }
@@ -189,7 +190,10 @@ void CMainInterface::CreateControls()
 		std::list<std::string> l_list;
 		((*_it).second)->getFileList(l_list);
 		std::list<std::string>::iterator _it2;
-		std::cout << "Taille : " << l_list.size() << '\n';
+
+#if defined DEBUG
+		std::cout << "[DBG] Size = " << l_list.size() << '\n';
+#endif
 
 		for(_it2 = l_list.begin(); _it2 != l_list.end(); ++_it2)
 		{
@@ -357,18 +361,65 @@ void CMainInterface::OnQuit(wxCommandEvent& WXUNUSED(event))
 void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 {
     //GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
-	std::cout << "Process !!! " << '\n';
-    std::map<std::string, IInPlugin*>::iterator _it;
+#if defined DEBUG
+	std::cout << "[DBG] Process !!! " << '\n';
+#endif
+    /*std::map<std::string, IInPlugin*>::iterator _it;
 	std::list<std::string> l_selected_files;
     for(_it = m_InputPlugs->begin(); _it != m_InputPlugs->end(); ++_it)
 	{
 		((*_it).second)->getFileList(l_selected_files);
 	}
 	std::string l_name("tbz");
-	m_Engine->callOutputPlugin(l_selected_files, l_name);
+	m_Engine->callOutputPlugin(l_selected_files, l_name);*/
+	std::list<std::string> l_selected_files;
+	GetSelectedFilesRecursively(m_Input->GetRootItem(), l_selected_files);
+
+#if defined DEBUG
+	std::cout << "[DBG] You have selected: " << '\n';
+    std::list<std::string>::iterator l_it;
+    for(l_it = l_selected_files.begin(); l_it != l_selected_files.end(); ++l_it)
+	{
+		std::cout << "[DBG] " << *l_it << '\n';
+	}
+#endif
 }
 
 void CMainInterface::OnStop(wxCommandEvent& WXUNUSED(event))
 {
     //GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
+}
+
+void CMainInterface::GetSelectedFilesRecursively(const wxTreeItemId& _idParent, std::list<std::string>& _fl, wxTreeItemIdValue _cookie)
+{
+    wxTreeItemId l_id;
+
+    if (!_cookie)
+	{
+        l_id = m_Input->GetFirstChild(_idParent, _cookie);
+	}
+    else
+	{
+        l_id = m_Input->GetNextChild(_idParent, _cookie);
+	}
+
+    if (!l_id.IsOk())
+	{
+        return;
+	}
+
+    wxString l_text = m_Input->GetItemText(l_id);
+	std::string l_temp(l_text.ToAscii());
+	wxCheckTreeItemData* l_data = m_Input->GetData(l_id);
+	if(/*l_data->GetEnabled() &&*/ l_data->GetChecked())
+	{
+		_fl.push_back(l_temp);
+	}
+
+    if (m_Input->ItemHasChildren(l_id))
+	{
+        GetSelectedFilesRecursively(l_id, _fl);
+	}
+
+    GetSelectedFilesRecursively(_idParent, _fl, _cookie);
 }

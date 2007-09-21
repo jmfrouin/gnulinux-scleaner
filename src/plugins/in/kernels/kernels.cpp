@@ -73,12 +73,14 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
 
 	if(uname(&l_temp) != 0)
 	{
-		std::cerr << "[CEngine::getKernelVersion] Error !\n";
+		std::cerr << "[ERR] CEngine::getKernelVersion error !\n";
 	}
 	else
 	{
 		l_kernel = l_temp.release;
-		std::cout << l_kernel << '\n';
+#if defined DEBUG
+		std::cout << "[DBG] Kernel version : " << l_kernel << '\n';
+#endif
 	}
 
 	std::string l_path = "/boot/";
@@ -168,9 +170,8 @@ void CkernelsPlugin::getFileList(std::list<std::string>& _fl)
 		}
    	    cont = l_dir.GetNext(&l_filename);
    	}
-
-	//std::cout << "kernels plugin : " << l_size << " bytes" << '\n';
 }
+
 bool CkernelsPlugin::needRoot()
 {
 	bool l_ret = false;

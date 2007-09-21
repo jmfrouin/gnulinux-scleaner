@@ -25,7 +25,6 @@ $Author: $
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-#cmakedefine DEBUG
 #cmakedefine LEAKS
 #cmakedefine VERBOSE
 #cmakedefine STATIC

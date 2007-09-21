@@ -71,11 +71,12 @@ void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 
 	wxString l_upath(l_path.c_str(), wxConvUTF8);
     wxDir l_dir(l_upath);
-	int l_size = 0;
-		
-	std::cout << "\ngetFileList()\n";
-	//We get all files as well archived one.
 
+#if defined DEBUG
+	int l_size = 0;
+#endif
+
+	//We get all files as well archived one. (*.1 *.2 ...)
    	if ( !l_dir.IsOpened() )
    	{
 		std::cout << "[ERR] Cannot open folder : " << l_path << '\n';
@@ -101,7 +102,10 @@ void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 		_fl.push_back(l_tmp);
    	    cont = l_dir.GetNext(&l_filename);
    	}
-	std::cout << "Logs plugin : " << l_size << " bytes" << '\n';
+
+#if defined DEBUG
+	std::cout << "[DBG] Logs plugin : " << l_size << " bytes" << '\n';
+#endif
 }
 
 bool ClogsPlugin::needRoot()

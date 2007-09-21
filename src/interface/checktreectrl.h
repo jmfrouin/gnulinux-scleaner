@@ -172,5 +172,4 @@ END_DECLARE_EVENT_TYPES()
 
 #define EVT_CHECKTREECTRL_TOGGLED(id, fn) DECLARE_EVENT_TABLE_ENTRY( wxEVT_COMMAND_CHECKTREECTRL_TOGGLED, id, -1, (wxObjectEventFunction) (wxEventFunction) (wxCheckTreeEventFunction) & fn, (wxObject *) NULL ),
 
-#endif
-// _WB_CHECKTREECTRL_H_
+#endif // _WB_CHECKTREECTRL_H_

@@ -3,6 +3,7 @@ Add a progress bar
 Remove .tar
 Check that box is checked :)
 Add folder content in tar
+Remove debug symbols
 
 0.32.0
 Add code to detect free space on disk in CEngine
@@ -11,3 +12,5 @@ Add tooltip for disabled items in treeview (->"You need root rights to selected 
 0.33.0:
 Write dameon to detect free space ?
 Desktop notification
+CLI support
+

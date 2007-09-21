@@ -71,7 +71,7 @@ bool CEngine::getKernelVersion(std::string& _version)
 	utsname l_temp;
 	if(uname(&l_temp) != 0)
 	{
-		std::cerr << ___("[CEngine::getKernelVersion] Error !\n");
+		std::cerr << "[ERR] CEngine::getKernelVersion error !\n";
 	}
 	else
 	{

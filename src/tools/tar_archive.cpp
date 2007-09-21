@@ -187,14 +187,14 @@ bool CTarArchive::FillHeader(const std::string& _filename, posix_header& _header
     	strncpy(_header.prefix, "", 167);
 
     	// Initialize our pointer.
-		char* _headerPtr = reinterpret_cast<char*>(&_header);
-    	char* l_startheaderPtr = _headerPtr;
+		char* l_startheaderPtr = reinterpret_cast<char*>(&_header);
+    	char* l_headerPtr ;
 		int l_checksum = 0;
 
     	// Find the checksum.
-    	for(_headerPtr; (_headerPtr - l_startheaderPtr) < 512; ++_headerPtr)
+    	for(l_headerPtr = l_startheaderPtr; (l_headerPtr - l_startheaderPtr) < 512; ++l_headerPtr)
     	{
-    	    l_checksum += static_cast<int>(*_headerPtr);
+    	    l_checksum += static_cast<int>(*l_headerPtr);
     	}
 
     	// Add 256 (2^8)

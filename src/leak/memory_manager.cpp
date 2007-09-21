@@ -51,7 +51,7 @@ CMemoryManager::CMemoryManager()
 CMemoryManager::~CMemoryManager()
 {
 #if defined DEBUG
-        std::cout << "[DEBUG] [CMemoryManager] ~CMemoryManager()" << std::endl;
+        std::cout << "[DBG] [CMemoryManager] ~CMemoryManager()" << std::endl;
 #endif
 
     if (m_Blocks.empty())
@@ -75,7 +75,7 @@ CMemoryManager::~CMemoryManager()
 void CMemoryManager::Report()
 {
 #if defined DEBUG
-        std::cout << "[DEBUG] [CMemoryManager] ReportLeaks()" << std::endl;
+        std::cout << "[DBG] [CMemoryManager] ReportLeaks()" << std::endl;
 #endif
 
     std::size_t TotalSize = 0;
@@ -100,8 +100,8 @@ void* CMemoryManager::Allocate(std::size_t _size, const std::string& _file, int 
     void* Ptr = malloc(_size);
 
 #if defined DEBUG && VERBOSE
-    std::cout << "[DEBUG] [CMemoryManager] Allocate()" << Ptr << std::endl;
-    std::cout << "[DEBUG] [CMemoryManager] +++" << " " << Ptr << " " << static_cast<int>(NewBlock.Size) << " " << NewBlock.Total << " " << NewBlock.File << " " << NewBlock.Line << std::endl;
+    std::cout << "[DBG] [CMemoryManager] Allocate()" << Ptr << std::endl;
+    std::cout << "[DBG] [CMemoryManager] +++" << " " << Ptr << " " << static_cast<int>(NewBlock.Size) << " " << NewBlock.Total << " " << NewBlock.File << " " << NewBlock.Line << std::endl;
 #endif
 
     TBlock NewBlock;
@@ -122,7 +122,7 @@ void CMemoryManager::Free(void* _ptr, bool _array)
     TBlockMap::iterator It = m_Blocks.find(_ptr);
 
 #if defined DEBUG && VERBOSE
-        std::cout << "[DEBUG] [CMemoryManager] Free(" << _ptr << ") " << std::endl;
+        std::cout << "[DBG] [CMemoryManager] Free(" << _ptr << ") " << std::endl;
 #endif
 
     if (It == m_Blocks.end())

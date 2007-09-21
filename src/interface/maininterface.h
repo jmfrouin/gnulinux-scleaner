@@ -33,7 +33,6 @@ $Author$
 #include <wx/frame.h>
 #include <wx/toolbar.h>
 #include <wx/splitter.h>
-//#include <wx/treectrl.h>
 #include "checktreectrl.h"
 #include <wx/statusbr.h>
 #include <wx/stattext.h>
@@ -78,8 +77,16 @@ public:
 
 	/*!
 	*@brief Call splash screen
+	*@param _delay Delay, before splash will gone.
 	*/
 	void launchSplash(int _delay);
+
+	/*!
+	*@brief Retrieve list of selected files to process.
+	*@param _idParent Parent tree ID.
+	*@param _cookie Cookie. :)
+	*/
+	void GetSelectedFilesRecursively(const wxTreeItemId& _idParent, std::list<std::string>& _fl, wxTreeItemIdValue _cookie = 0);
 
 protected:
     CTrayIcon*	m_Icon;

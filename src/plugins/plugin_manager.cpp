@@ -32,9 +32,10 @@ $Author$
 
 CPluginManager::~CPluginManager()
 {
+#if defined DEBUG
 	//Input plugins
 	int l_size = m_InputPlugins.size();
-	std::cout << "I founded ";
+	std::cout << "[DBG] I founded ";
 	if(l_size > 2)
 	{
     	 std::cout << l_size << " input plugins : " << '\n';
@@ -46,22 +47,22 @@ CPluginManager::~CPluginManager()
     std::map<std::string, IInPlugin*>::iterator _it;
     for(_it = m_InputPlugins.begin(); _it != m_InputPlugins.end(); ++_it)
     {
-        std::cout << (*_it).first << ": ";
+        std::cout << "[DBG] " << (*_it).first << ": ";
         std::cout << ((*_it).second)->description();
         bool l_threadable = ((*_it).second)->isThreadable();
 		if(l_threadable)
 		{
-			std::cout << "[Threadable]" << '\n';
+			std::cout << "[DBG] [Threadable]" << '\n';
 		}
 		else
 		{
-			std::cout << "[Standard]" << '\n';
+			std::cout << "[DBG] [Standard]" << '\n';
 		}
     }
 
 	//Output plugins
 	l_size = m_OutputPlugins.size();
-	std::cout << "I founded ";
+	std::cout << "[DBG] I founded ";
 	if(l_size > 2)
 	{
     	 std::cout << l_size << " output plugins : " << '\n';
@@ -73,18 +74,19 @@ CPluginManager::~CPluginManager()
     std::map<std::string, IOutPlugin*>::iterator _it2;
     for(_it2 = m_OutputPlugins.begin(); _it2 != m_OutputPlugins.end(); ++_it2)
     {
-        std::cout << (*_it2).first << ": ";
+        std::cout << "[DBG] " << (*_it2).first << ": ";
         std::cout << ((*_it2).second)->description();
         bool l_threadable = ((*_it2).second)->isThreadable();
 		if(l_threadable)
 		{
-			std::cout << "[Threadable]" << '\n';
+			std::cout << "[DBG] [Threadable]" << '\n';
 		}
 		else
 		{
-			std::cout << "[Standard]" << '\n';
+			std::cout << "[DBG] [Standard]" << '\n';
 		}
     }
+#endif
 }
 
 int CPluginManager::loadPlugins(const std::string& path)
@@ -103,16 +105,14 @@ int CPluginManager::loadPlugins(const std::string& path)
             void* handler = dlopen (tmp.c_str(), RTLD_NOW);
             if (handler != 0)
             {
-                //std::cout << " " << tmp << " loaded ! " << std::endl;
                 l_res++;
             }
             else
             {
-                std::cerr << "ERR : " << dlerror() << std::endl;
+                std::cerr << "[ERR] loadPlugins " << dlerror() << std::endl;
             }
         }
     }
-    //std::cout << l_res << '\n';
     return l_res;
 }
 
@@ -196,4 +196,5 @@ void CPluginManager::getFileList(std::list<std::string>& _fl)
 	//std::cout << "Total : " << l_ret << '\n';
     //return l_ret;
 //}
+
 /* vi:set ts=4: */
