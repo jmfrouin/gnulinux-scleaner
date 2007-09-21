@@ -1,13 +1,13 @@
-This package was debianized by Jean-Michel Frouin <jmfrouin@gmail.com> on
+This package was debianized by Jean-Michel Frouin <jmfrouin@gnu.org> on
 Sat,  8 Sep 2007 20:44:03 +0200.
 
 It was downloaded from http://download.savannah.nongnu.org/releases/scleaner/
 
-Upstream Author: FROUIN Jean-Michel <jmfrouin@gmail.com>
+Upstream Author: FROUIN Jean-Michel <jmfrouin@gnu.org>
 
 Copyright: 2007 Frouin Jean-Michel
 
 License: GPL v3
 
-The Debian packaging is (C) 2007, Jean-Michel Frouin <jmfrouin@gmail.com> and
+The Debian packaging is (C) 2007, Jean-Michel Frouin <jmfrouin@gnu.org> and
 is licensed under the GPL, see `/usr/share/common-licenses/GPL'.

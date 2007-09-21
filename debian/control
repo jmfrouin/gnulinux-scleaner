@@ -1,7 +1,7 @@
 Source: scleaner
 Section: misc
 Priority: extra
-Maintainer: Jean-Michel Frouin <jmfrouin@gmail.com>
+Maintainer: Jean-Michel Frouin <jmfrouin@gnu.org>
 Build-Depends: debhelper (>= 5)
 Standards-Version: 3.7.2
 
