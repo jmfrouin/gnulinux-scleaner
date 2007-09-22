@@ -36,6 +36,7 @@ $Author$
 #include "checktreectrl.h"
 #include <wx/statusbr.h>
 #include <wx/stattext.h>
+#include <engine/iprogress.h>
 #include <tools/smart_pointer.h>
 #include "tray.h"
 
@@ -44,11 +45,12 @@ class IOutPlugin;
 class wxCheckListBox;
 class wxHtmlWindow;
 class CEngine;
+class wxProgressDialog;
 
 /*!
  * CMainInterface class declaration
  */
-class CMainInterface: public wxFrame
+class CMainInterface: public wxFrame, public IProgressbar
 {    
     DECLARE_CLASS( CMainInterface )
     DECLARE_EVENT_TABLE()
@@ -88,6 +90,9 @@ public:
 	*/
 	void GetSelectedFilesRecursively(const wxTreeItemId& _idParent, std::list<std::string>& _fl, wxTreeItemIdValue _cookie = 0);
 
+	//From IProgressbar
+	void updateProgress(const std::string& _mess, int _nb);
+
 protected:
     CTrayIcon*	m_Icon;
 #if defined(__WXCOCOA__)
@@ -112,6 +117,9 @@ protected:
 	//GUI checkbox which display output plugins
 	wxCheckListBox*						m_Output;
     wxStatusBar* 						m_StatusBar;
+
+	//Progress bar for process part.
+	wxProgressDialog*					m_Progress;
 };
 
 #endif

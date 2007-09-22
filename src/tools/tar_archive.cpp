@@ -25,6 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <fstream>
 #include <sstream>
 #include <sys/stat.h>
+#include <engine/iprogress.h>
 
 CTarArchive::CTarArchive():
 m_FirstFile(false)
@@ -237,7 +238,7 @@ bool CTarArchive::WriteData(const std::string& _input, const std::string& _outpu
 
     if(!l_out.good())
     {
-        std::cout << "Error out file!" << '\n';
+        std::cerr << "Error out file!" << _output << '\n';
 		l_ret = false;
     }
 	else
@@ -246,7 +247,7 @@ bool CTarArchive::WriteData(const std::string& _input, const std::string& _outpu
 
 		if(!l_in.good())
 		{
-        	std::cout << "Error in file!" << '\n';
+        	std::cerr << "Error in file!" << _input << '\n';
 			l_ret = false;
 		}
 		else
@@ -308,14 +309,23 @@ bool CTarArchive::CleanClose(const std::string& _output)
 	return l_ret;
 }
 
-bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& _output)
+bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& _output, IProgressbar* _callback)
 {
 	bool l_ret = true;
 	std::list<std::string>::iterator l_it;
+	int l_size = _filenames.size();
+	int l_done = 0;
 	for(l_it = _filenames.begin(); l_it != _filenames.end(); ++l_it)
 	{
+		++l_done;
 		WriteData(*l_it, _output);
+		int l_res = l_done*50/l_size;
+		std::string l_mess("Adding ");
+		l_mess += *l_it + " to " + _output + " archive.";
+		_callback->updateProgress(l_mess, l_res);
+#if defined DEBUG
 		std::cout << *l_it << " appended to " << _output << '\n';
+#endif
 	}
 	CleanClose(_output);
 	return l_ret;

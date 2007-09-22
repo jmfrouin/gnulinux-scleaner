@@ -27,6 +27,7 @@ $Author$
 #define _OUT_PLUGIN_H_
 
 #include <config.h>
+#include <engine/iprogress.h>
 #include "iplugin.h"
 
 /*!
@@ -45,9 +46,11 @@ class IOutPlugin : public IPlugin
 			virtual ~IOutPlugin() {}
 
 			/*!
-			*@brief 
+			*@brief Process all files selected by user. 
+			*@param _fl Files list to fill.
+			*@param _callback For progress bar support.
 			*/
-			virtual void processFileList(std::list<std::string>& _fl) = 0;
+			virtual void processFileList(std::list<std::string>& _fl, IProgressbar* _callback) = 0;
 };
 
 #endif // _OUT_PLUGIN_H_

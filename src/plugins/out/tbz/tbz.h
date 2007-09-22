@@ -53,7 +53,7 @@ class CtbzPlugin : public IOutPlugin
 		/*!
 		*@brief From IPlugin.
 		*/
-		void processFileList(std::list<std::string>& _fl);
+		void processFileList(std::list<std::string>& _fl, IProgressbar* _callback);
 		const std::string description();
 		const std::string author();
 		const std::string version();
@@ -64,9 +64,10 @@ class CtbzPlugin : public IOutPlugin
 		*@brief Compress a file using bz algo.
 		*@param _input Input file name.
 		*@param _output Output file name.
+		*@param _callback For the progress bar.
 		*@return true on success, false otherwise.
 		*/
-		bool Compress(const std::string& _input, const std::string& _output);
+		bool Compress(const std::string& _input, const std::string& _output, IProgressbar* _callback);
 };
 #endif                           //_TBZ_H_
 /* vi:set ts=4: */

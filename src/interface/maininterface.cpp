@@ -23,14 +23,14 @@ $Author$
 ------------------------------------------------------
 */
 
-#include "wx/wxprec.h"
+#include <wx/wxprec.h>
 
 #ifdef __BORLANDC__
 #pragma hdrstop
 #endif
 
 #ifndef WX_PRECOMP
-#include "wx/wx.h"
+#include <wx/wx.h>
 #endif
 
 #include <config.h>
@@ -42,6 +42,7 @@ $Author$
 #include <engine/engine.h>
 #include "maininterface.h"
 #include <wx/treectrl.h>
+#include <wx/progdlg.h>
 
 //GFX Elements
 #include <gfx/empty.xpm>
@@ -66,7 +67,7 @@ CMainInterface::CMainInterface()
 }
 
 CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-m_Input(0), m_Title(0), m_Html(0), m_Output(0)
+m_Input(0), m_Title(0), m_Html(0), m_Output(0), m_Progress(0)
 {
     Init();
     Create(parent, id, caption, pos, size, style);
@@ -83,9 +84,13 @@ bool CMainInterface::Create(wxWindow* parent, wxWindowID id, const wxString& cap
 	m_Engine = CEngine::Instance();
 
     if (FindWindow(ID_SPLITTERWINDOW1))
+	{
         ((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW1))->SetSashPosition(SYMBOL_MAININTERFACE_SASH1_POS);
+	}
     if (FindWindow(ID_SPLITTERWINDOW2))
+	{
         ((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW2))->SetSashPosition(SYMBOL_MAININTERFACE_SASH2_POS);
+	}
 
     return true;
 }
@@ -317,33 +322,6 @@ void CMainInterface::OnSelChanged(wxTreeEvent& event)
 	{
     	m_Html -> LoadPage(wxT("/usr/share/doc/scleaner/kernels.html"));
 	}
-
-	/*if(l_item.IsOk())
-	{
-		wxString l_text = m_Input->GetItemText(l_item);
-		if(l_item != m_Input->GetRootItem())
-		{
-
-			if(l_text.Contains(_("/")))
-			{
-				l_text += " informations :";
-				m_Title->SetLabel(l_text);
-			}
-			else
-			{
-				std::map<std::string, IInPlugin*>::iterator l_it;
-				l_it = m_InputPlugs->find(l_text.c_str());
-				wxString l_description = (l_it->second)->description();
-				wxString l_author = (l_it->second)->author();
-				wxString l_version = (l_it->second)->version();
-				l_text += " plugin informations :";
-				m_Title->SetLabel(l_text);
-				m_Line1->SetLabel(l_description);
-				m_Line2->SetLabel(l_author);
-				m_Line3->SetLabel(l_version);
-			}
-		}
-	}*/
 }
 
 //Menu
@@ -370,8 +348,7 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 	{
 		((*_it).second)->getFileList(l_selected_files);
 	}
-	std::string l_name("tbz");
-	m_Engine->callOutputPlugin(l_selected_files, l_name);*/
+	*/
 	std::list<std::string> l_selected_files;
 	GetSelectedFilesRecursively(m_Input->GetRootItem(), l_selected_files);
 
@@ -383,6 +360,41 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 		std::cout << "[DBG] " << *l_it << '\n';
 	}
 #endif
+
+    m_Progress = new wxProgressDialog(_T("scleaner process your files ..."),
+                            _T("this is a information"),
+                            100,    // range
+                            this,   // parent
+                            wxPD_CAN_ABORT |
+                            // wxPD_CAN_SKIP |
+                            wxPD_APP_MODAL |
+                            // wxPD_AUTO_HIDE | -- try this as well
+                            wxPD_ELAPSED_TIME |
+                            wxPD_ESTIMATED_TIME |
+                            wxPD_REMAINING_TIME
+                            | wxPD_SMOOTH // - makes indeterminate mode bar on WinXP very small
+                            );
+
+	std::string l_name("tbz");
+
+	m_Engine->callOutputPlugin(l_selected_files, l_name, this);
+
+	delete m_Progress;
+	m_Progress = 0;
+}
+
+void CMainInterface::updateProgress(const std::string& _mess, int _nb)
+{
+		wxString l_msg(_mess.c_str(), wxConvUTF8);
+		bool l_continue = m_Progress->Update(_nb, l_msg, 0);
+		if(!l_continue)
+		{
+            if ( wxMessageBox(_T("Do you really want to cancel?"), _T("scleaner question"), wxYES_NO | wxICON_QUESTION) == wxNO)
+			{
+				l_continue = true;
+				m_Progress->Resume();
+			}
+		}
 }
 
 void CMainInterface::OnStop(wxCommandEvent& WXUNUSED(event))

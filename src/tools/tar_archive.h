@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <list>
 #include <string>
 #include <iostream>
+class IProgressbar;
 
 /*!
 *@brief Only to create GNU tar archive for the moment.
@@ -90,9 +91,10 @@ class CTarArchive
 		*@brief Create a tar archive.
 		*@param _filenames List of filename to tar.
 		*@param _output Output file name.
+		*@param _callback Progressbar callback.
 		*@return true on success, false otherwise.
 		*/
-		bool Create(std::list<std::string> _filenames, const std::string& _output);
+		bool Create(std::list<std::string> _filenames, const std::string& _output, IProgressbar* _callback);
 
 	private:
 

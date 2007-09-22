@@ -32,7 +32,10 @@ $Author$
  * Development mailing list : https://savannah.nongnu.org/mail/?group=scleaner
  *
  * Get last version : http://download.savannah.nongnu.org/releases/scleaner/
+ *
  *  @image html gfx/scleaner0.25.0.png
+ *
+ *  @image html gfx/scleaner_process.png
  *
  * @section intro_whatis What is scleaner ?
  *

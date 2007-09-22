@@ -30,6 +30,7 @@ $Author$
 #include <tools/smart_pointer.h>
 #include <tools/singleton.h>
 #include <plugins/plugin_manager.h>
+#include "iprogress.h"
 
 /*!
 *@brief Manage all operations
@@ -75,10 +76,11 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*@brief callOutputPlugins with a list of files
 		*@param _list A files list.
 		*@param _name Name of plugin.
+		*@param _callback For progress bar.
 		*@return true on success, false otherwise.
 		*@todo Implement errors code.
 		*/
-		bool callOutputPlugin(std::list<std::string>& _list, std::string& _name);
+		bool callOutputPlugin(std::list<std::string>& _list, std::string& _name, IProgressbar* _callback);
 	
 		/*!
 		*@brief Replace wxDir usage.

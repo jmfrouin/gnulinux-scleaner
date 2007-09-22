@@ -26,6 +26,7 @@ $Author$
 #include "tbz.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <errno.h>
 #include <fcntl.h>
 #include <bzlib.h>
@@ -46,12 +47,11 @@ CtbzPlugin::~CtbzPlugin()
 {
 }
 
-void CtbzPlugin::processFileList(std::list<std::string>& _fl)
+void CtbzPlugin::processFileList(std::list<std::string>& _fl, IProgressbar* _callback)
 {
-	std::cout << "TBZ OUTPUT PLUGIN: processFileList" << '\n';
 	CTarArchive l_tar;
-	l_tar.Create(_fl, "backup.tar");
-	Compress("backup.tar" , "backup.tbz");
+	l_tar.Create(_fl, "backup.tar", _callback);
+	Compress("backup.tar" , "backup.tbz", _callback);
 }
 
 const std::string CtbzPlugin::description()
@@ -66,7 +66,7 @@ const std::string CtbzPlugin::author()
 
 const std::string CtbzPlugin::version()
 {
-	return "0.5";
+	return "0.6";
 }
 
 IPlugin::eType CtbzPlugin::Type()
@@ -77,7 +77,7 @@ IPlugin::eType CtbzPlugin::Type()
 }
 
 //Private methods
-bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output)
+bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output, IProgressbar* _callback)
 {
 	bool l_ret = false;
 	FILE* l_out = fopen(_output.c_str(), "wb");
@@ -113,6 +113,7 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output)
 			{
     			// Get the file size. (I hate C I/O, so don't use them :D )
 				struct stat l_info;
+				double l_total;
 				//Try to stat file.
 				if(stat(_input.c_str(), &l_info) == -1)
 				{
@@ -123,10 +124,19 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output)
 				{
 					char l_buf[4096];
     			    memset(l_buf, 0, 4096);
+					l_total = l_info.st_size;
+					double l_done = 0;
 					do 
 					{   
 						l_in.read(l_buf, 4096);
 						std::streamsize l_bytesread = l_in.gcount();
+						l_done += l_bytesread;
+						int l_res = static_cast<int>((l_done*50)/l_total)+50;
+						std::string l_mess("bz2 compression of ");
+    					std::stringstream l_doneStr;
+    					l_doneStr << (l_res-50)*2;
+						l_mess += _output + " :  " + l_doneStr.str() + "%";
+						_callback->updateProgress(l_mess, l_res);
 						BZ2_bzWrite(&l_err, l_bz, l_buf, l_bytesread);
 					} while(l_in.good()); 
 					
