@@ -23,9 +23,19 @@ $Author$
 ------------------------------------------------------
 */
 
+#define _XOPEN_SOURCE 500
+#include <ftw.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/utsname.h>
+#include <dirent.h>
 #include <interface/maininterface.h>
 #include "engine.h"
+
+CEngine::CEngine():
+m_fl(0)
+{
+}
 
 int CEngine::loadPlugins(const std::string& _path)
 {
@@ -96,7 +106,38 @@ bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name
 	}
 	else
 	{
-		std::cout << "null";
+		std::cout << "[WNG] : null" << '\n';
 	}
 	return l_ret;
 }
+
+int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf)
+{
+	int l_ret = 0;
+
+	//std::cout << (long long) _stat->st_size;
+	//Check if it is a folder ?
+	if (_stat->st_mode > 23420) 
+	{
+#if defined DEBUG
+		std::cout << _fpath << '\n';
+#endif
+		CEngine::Instance()->GetList()->push_back(_fpath);
+	}
+
+    return l_ret;	// To tell nftw() to continue
+}
+
+bool CEngine::getFileList(std::list<std::string>& _fl, std::string _path, bool _recursive)
+{
+	bool l_ret = false;
+
+	int l_flags = FTW_PHYS;
+	m_fl = &_fl;
+
+    nftw(_path.c_str(), FTW_callback, 20, l_flags);
+	
+	m_fl = 0;
+	return l_ret;
+}
+/* vi:set ts=4: */

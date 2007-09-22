@@ -1,9 +1,11 @@
 0.31.0:
+Add file size :)
 Add a progress bar
 Remove .tar
-Check that box is checked :)
-Add folder content in tar
+OK : Check that box is checked :)
+OK : Add folder content in tar
 Remove debug symbols
+Implement error code
 
 0.32.0
 Add code to detect free space on disk in CEngine

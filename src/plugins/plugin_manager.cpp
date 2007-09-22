@@ -89,21 +89,22 @@ CPluginManager::~CPluginManager()
 #endif
 }
 
-int CPluginManager::loadPlugins(const std::string& path)
+int CPluginManager::loadPlugins(const std::string& _path)
 {
-    struct dirent** namelist;
+    struct dirent** l_namelist;
     int l_res = 0;
-    int n = scandir(path.c_str(), &namelist, 0, alphasort);
-    while (n-- > 0)
+    int l_nb = scandir(_path.c_str(), &l_namelist, 0, alphasort);
+    while (l_nb-- > 0)
     {
-        std::string tmp = path;
-        tmp += "/";
-        tmp += namelist[n]->d_name;
+        std::string l_tmp = _path;
+        l_tmp += "/";
+        l_tmp += l_namelist[l_nb]->d_name;
+		free(l_namelist[l_nb]);
 
-        if (tmp.length() > 8)
+        if (l_tmp.length() > 8)
         {
-            void* handler = dlopen (tmp.c_str(), RTLD_NOW);
-            if (handler != 0)
+            void* l_handler = dlopen (l_tmp.c_str(), RTLD_NOW);
+            if (l_handler != 0)
             {
                 l_res++;
             }
@@ -113,6 +114,7 @@ int CPluginManager::loadPlugins(const std::string& path)
             }
         }
     }
+	free(l_namelist);
     return l_res;
 }
 

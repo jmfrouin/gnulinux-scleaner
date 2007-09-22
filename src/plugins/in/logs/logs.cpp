@@ -26,9 +26,9 @@ $Author$
 #include <iostream>
 #include <plugins/plugin_initializer.h>
 #include "logs.h"
-#include <wx/dir.h>
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
+#include <engine/engine.h>
 
 CPluginInitializer<ClogsPlugin> g_logs;
 
@@ -66,46 +66,11 @@ IPlugin::eType ClogsPlugin::Type()
 //From IInPlugin
 void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 {
-	std::string l_path = "/var/log/";
-	std::string l_mask = "*";
-
-	wxString l_upath(l_path.c_str(), wxConvUTF8);
-    wxDir l_dir(l_upath);
-
-#if defined DEBUG
-	int l_size = 0;
-#endif
-
-	//We get all files as well archived one. (*.1 *.2 ...)
-   	if ( !l_dir.IsOpened() )
-   	{
-		std::cout << "[ERR] Cannot open folder : " << l_path << '\n';
-   	}
-
-   	wxString l_filename;
-
-	wxString l_umask(l_mask.c_str(), wxConvUTF8);
-   	bool cont = l_dir.GetFirst(&l_filename, l_umask, wxDIR_DEFAULT);
-   	while(cont)
-   	{
-		//struct stat l_info;
-		//std::string l_name(l_path);
-		//l_name += "/";
-		//l_name += l_filename.c_str();
-		//if(stat(l_name.c_str(), &l_info) == -1)
-		//{
-		//	std::cout << "[ERR] : " __FILE__ << "@" << __LINE__ << ": Cannot stat " << l_filename.c_str() << '\n';
-		//}
-		//l_size += l_info.st_size;
-		std::string l_tmp = l_path;
-		l_tmp += l_filename.fn_str();
-		_fl.push_back(l_tmp);
-   	    cont = l_dir.GetNext(&l_filename);
-   	}
-
-#if defined DEBUG
-	std::cout << "[DBG] Logs plugin : " << l_size << " bytes" << '\n';
-#endif
+	CEngine* l_Eng = CEngine::Instance();
+	if(l_Eng != 0)
+	{
+		l_Eng->getFileList(_fl, "/var/log/");
+	}
 }
 
 bool ClogsPlugin::needRoot()

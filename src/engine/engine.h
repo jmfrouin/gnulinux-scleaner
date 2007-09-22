@@ -40,7 +40,7 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		/*!
 		*@brief ctor
 		*/
-		CEngine(){}
+		CEngine();
 	
 		/*!
 		*@brief dtor
@@ -75,12 +75,39 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*@brief callOutputPlugins with a list of files
 		*@param _list A files list.
 		*@param _name Name of plugin.
+		*@return true on success, false otherwise.
 		*@todo Implement errors code.
 		*/
 		bool callOutputPlugin(std::list<std::string>& _list, std::string& _name);
 	
+		/*!
+		*@brief Replace wxDir usage.
+		*@param _fl The files list to fill.
+		*@param _path Where retrieve file list.
+		*@param _recursive If true, enter subfolders.
+		*@return true on success, false otherwise.
+		*/
+		bool getFileList(std::list<std::string>& _fl, std::string _path, bool _recursive = true);
+
+		/*!
+		*@brief Callback : man ftw.
+		*@param _fpath Directory.
+		*@param _stat Where retrieve file list.
+		*@param _tflag Flags.
+		*@param _ftwbuf the TFW buffer.
+		*@return true on success, false otherwise.
+		*/
+		static int FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf);
+
+		//Accessor
+		std::list<std::string>* GetList()
+		{
+			return m_fl;
+		}
+
 	private:
 		TSmartPtr<CPluginManager> 	m_pfm;
+		std::list<std::string>* 	m_fl; 	//For FTW_callback
 	
 };
 #endif //_ENGINE_H_

@@ -23,12 +23,13 @@ $Author$
 ------------------------------------------------------
 */
 
-#include <config.h>
-#include <string>
-#include <leak/memory_manager.h>
 #include "scleaner_wx.h"
-#include <engine/engine.h>
+#include <config.h>
 #include <libintl.h>
+#include <string>
+#include <list>
+#include <leak/memory_manager.h>
+#include <engine/engine.h>
 
 CMemoryManager g_mm;
 
