@@ -42,7 +42,8 @@ $Author$
 
 class IInPlugin;
 class IOutPlugin;
-class wxCheckListBox;
+//class wxCheckListBox;
+class wxRadioBox;
 class wxHtmlWindow;
 class CEngine;
 class wxProgressDialog;
@@ -115,7 +116,8 @@ protected:
 	wxStaticText* 						m_Line3;
 	wxHtmlWindow*						m_Html;
 	//GUI checkbox which display output plugins
-	wxCheckListBox*						m_Output;
+	//wxCheckListBox*						m_Output;
+	wxRadioBox*							m_Output;
     wxStatusBar* 						m_StatusBar;
 
 	//Progress bar for process part.

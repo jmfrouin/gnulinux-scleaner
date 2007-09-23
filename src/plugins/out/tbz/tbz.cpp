@@ -50,7 +50,9 @@ CtbzPlugin::~CtbzPlugin()
 void CtbzPlugin::processFileList(std::list<std::string>& _fl, IProgressbar* _callback)
 {
 	CTarArchive l_tar;
+
 	l_tar.Create(_fl, "backup.tar", _callback);
+
 	Compress("backup.tar" , "backup.tbz", _callback);
 }
 

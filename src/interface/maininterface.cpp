@@ -42,7 +42,9 @@ $Author$
 #include <engine/engine.h>
 #include "maininterface.h"
 #include <wx/treectrl.h>
+#include <wx/radiobox.h>
 #include <wx/progdlg.h>
+#include <wx/filedlg.h>
 
 //GFX Elements
 #include <gfx/empty.xpm>
@@ -231,7 +233,12 @@ void CMainInterface::CreateControls()
 		wxString l_name( ((*_it2).second)->getName().c_str(), wxConvUTF8);
     	l_out.Add(l_name);
 	}
-    m_Output = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, l_out, wxLB_SINGLE );
+
+    //m_Output = new wxCheckListBox( itemSplitterWindow12, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, l_out, wxLB_SINGLE);
+	wxString l_title(_T("Output plugins"));
+    m_Output = new wxRadioBox(itemSplitterWindow12, ID_RADIOBOX, l_title, wxDefaultPosition, wxDefaultSize, l_out, 1, wxRA_SPECIFY_COLS);
+	m_Output->SetSelection(0);
+
 
     m_Html = new wxHtmlWindow(itemSplitterWindow12, wxID_ANY, wxDefaultPosition, wxSize(380, 160), wxHW_SCROLLBAR_NEVER);
     m_Html -> SetBorders(0);
@@ -342,13 +349,6 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 #if defined DEBUG
 	std::cout << "[DBG] Process !!! " << '\n';
 #endif
-    /*std::map<std::string, IInPlugin*>::iterator _it;
-	std::list<std::string> l_selected_files;
-    for(_it = m_InputPlugs->begin(); _it != m_InputPlugs->end(); ++_it)
-	{
-		((*_it).second)->getFileList(l_selected_files);
-	}
-	*/
 	std::list<std::string> l_selected_files;
 	GetSelectedFilesRecursively(m_Input->GetRootItem(), l_selected_files);
 
@@ -375,7 +375,22 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
                             | wxPD_SMOOTH // - makes indeterminate mode bar on WinXP very small
                             );
 
-	std::string l_name("tbz");
+	std::string l_name;
+	wxString l_nameWX;
+	l_nameWX = m_Output->GetStringSelection();
+	l_name = l_nameWX.char_str();
+
+#if defined DEBUG
+	std::cout << "[DBG] CMainInterface : Get selection : " << l_name << '\n';
+#endif
+
+    wxFileDialog l_outputFileDlg(this, _T("Select an output folder"));
+    if (l_outputFileDlg.ShowModal() != wxID_OK)
+	{
+        return;
+	}
+
+//    wxFFile file(filedlg.GetFilename(), _T("r"));
 
 	m_Engine->callOutputPlugin(l_selected_files, l_name, this);
 

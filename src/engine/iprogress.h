@@ -17,50 +17,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date$
-$Rev$
-$Author$
+$Date: 2007-09-20 19:54:41 +0200 (jeu, 20 sep 2007) $
+$Rev: 109 $
+$Author: snoogie $
 ------------------------------------------------------
 */
 
-#include "scleaner_wx.h"
-#include <config.h>
-#include <libintl.h>
+#ifndef _IPROGRESS_H_
+#define _IPROGRESS_H_
+
 #include <string>
-#include <list>
-#include <leak/memory_manager.h>
-#include <engine/engine.h>
-
-CMemoryManager g_mm;
-
-#include <leak/leak_detector.h>
-
-IMPLEMENT_APP(CSClean)
-
-CSClean::CSClean()
+/**
+ * @brief Plugin Interface
+ */
+class IProgressbar
 {
-}
-
-bool CSClean::OnInit(void)
-{
-	//textdomain("scleaner");
-#if defined DEBUG
-	std::cout << "[DBG] scleaner starting ...\n";
-#endif
-
-    bool l_ret = false;
-    wxImage::AddHandler(new wxPNGHandler);
-
-	//Retrieve CEngine instance pointer.
-	m_engine = CEngine::Instance();
-
-	//Load plugins
-	m_engine->loadPlugins(PLUG_FOLDER);
-
-	//Load GFX interface
-	l_ret = m_engine->loadInterface();
-
-    return l_ret;
-}
-
+	public:
+		/*!
+		*@brief Update process progress bar callback.
+		*@param _nb Update number.
+		*/
+		virtual void updateProgress(const std::string& _mess, int _nb) = 0;
+};
+#endif                           //_IPROGRESS_H_
 /* vi:set ts=4: */
+

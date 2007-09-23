@@ -71,7 +71,7 @@ $Author$
 #define ID_SPLITTERWINDOW1 10007
 #define ID_STATUSBAR1 10008
 #define ID_TREECTRL1 10009
-#define ID_CHECKLISTBOX1 10010
+#define ID_RADIOBOX 10010
 #define ID_SPLITTERWINDOW2 10011
 #define ID_TITLE 10012
 
@@ -92,10 +92,7 @@ $Author$
 //Useful macro
 #define ___(X) gettext(X)
 
-//Paths
-#define BINDIR /usr/bin/scleaner
-#define HTMLDIR /usr/bin/scleaner/html
-#define PLUGINSDIR /usr/bin/scleaner/plugs
+#define PLUG_FOLDER "/usr/share/scleaner/plugs"
 
 #endif                           // _DEF_H_
 /* vi:set ts=4: */

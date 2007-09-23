@@ -40,9 +40,11 @@ m_fl(0)
 int CEngine::loadPlugins(const std::string& _path)
 {
 	int l_ret=0;
+
 	//Plugins manager
 	m_pfm = CPluginManager::Instance();
-    l_ret = m_pfm->loadPlugins(_path);
+    
+	l_ret = m_pfm->loadPlugins(_path);
 	return l_ret;
 }
 
