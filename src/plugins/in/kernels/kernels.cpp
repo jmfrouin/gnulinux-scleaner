@@ -42,21 +42,6 @@ CkernelsPlugin::~CkernelsPlugin()
 {
 }
 
-const std::string CkernelsPlugin::description()
-{
-	return "This plugins allow user to removed all unused kernels. This plugin need root access !!";
-}
-
-const std::string CkernelsPlugin::author()
-{
-	return "Frouin Jean-Michel";
-}
-
-const std::string CkernelsPlugin::version()
-{
-	return "0.1";
-}
-
 IPlugin::eType CkernelsPlugin::Type()
 {
 	eType l_ret;

@@ -17,39 +17,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date$
-$Rev$
-$Author$
+$Date: 2007-09-20 19:54:41 +0200 (jeu, 20 sep 2007) $
+$Rev: 109 $
+$Author: snoogie $
 ------------------------------------------------------
 */
 
 /*! @page page3 Plugins documentations.
-* - @subpage kernels
+* - @subpage logs
 */
 
-/*! @page kernels kernels: input plugin.
+/*! @page backfiles backfiles: input plugin.
 * @section desc Description
-* This plugin allow user to remove all <b>kernels</b> unused, automatically installed on system.
+* This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
 * <br>
+* In fact it just scan <b>/home/user/</b> and its subfolders.
 * @section param Parameters
 * @section pb Knows bugs
-* @section todo Todo
+* @todo Support both modes, simple user & root/sudo.
 */
 
-#ifndef _KERN_H_
-#define _KERN_H_
+#ifndef _BACKFILES_H_
+#define _BACKFILES_H_
 
 #include <config.h>
 #include <plugins/in_plugin.h>
 
-/*!
-*@brief Find unused kernels.
-*/
-class CkernelsPlugin : public IInPlugin
+class CbackfilesPlugin : public IInPlugin
 {
     public:
-        CkernelsPlugin();
-        ~CkernelsPlugin();
+        CbackfilesPlugin();
+        ~CbackfilesPlugin();
 
 		/*!
 		*@brief From IPlugin.
@@ -58,9 +56,10 @@ class CkernelsPlugin : public IInPlugin
 
 		/*!
 		*@brief From IInPlugin
+		*@todo : Fix use of wxwidgets in plugins !!!!
 		*/
 		void getFileList(std::list<std::string>& _fl);
 		bool needRoot();
 };
-#endif                           //_KERN_H_
+#endif                           //_BACKFILES_H_
 /* vi:set ts=4: */

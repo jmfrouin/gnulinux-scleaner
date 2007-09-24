@@ -37,7 +37,7 @@ $Author$
  *
  *  @image html gfx/scleaner_process.png
  *
- *  @image html gfx/scleaner0.25.0.png
+ *  @image html gfx/scleaner0.31.0.png
  *
  * @section intro_whatis What is scleaner ?
  *

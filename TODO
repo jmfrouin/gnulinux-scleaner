@@ -1,19 +1,21 @@
 0.31.0:
 Add file size :)
-OK : Add a progress bar
 Remove .tar
-OK : Check that box is checked :)
-OK : Add folder content in tar
-Remove debug symbols
 Implement error code
 Add output file dialog
 French version ?
+Add tooltip for disabled items in treeview (->"You need root rights to selected these items")
+Add code to detect free space on disk in CEngine
+Add code to detect a twice selected file.
+Check memory leaks and FIXME in code
+OK : Add code for detect user home folder in CEngine.
+OK : Add a progress bar
+OK : Check that box is checked :)
+OK : Add folder content in tar
+OK : Add a pattern matching code in CEngine::getFileList
+RELEASE : Remove debug symbols
 
 0.32.0
-Add code to detect free space on disk in CEngine
-Add tooltip for disabled items in treeview (->"You need root rights to selected these items")
-
-0.33.0:
 Write dameon to detect free space ?
 Desktop notification
 CLI support

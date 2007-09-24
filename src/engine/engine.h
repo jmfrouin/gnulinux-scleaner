@@ -86,10 +86,11 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*@brief Replace wxDir usage.
 		*@param _fl The files list to fill.
 		*@param _path Where retrieve file list.
+		*@param _pattern Apply _pattern before adding file to the files list.
 		*@param _recursive If true, enter subfolders.
 		*@return true on success, false otherwise.
 		*/
-		bool getFileList(std::list<std::string>& _fl, std::string _path, bool _recursive = true);
+		bool getFileList(std::list<std::string>& _fl, const std::string& _path, const std::string& _pattern, bool _recursive = true);
 
 		/*!
 		*@brief Callback : man ftw.
@@ -101,15 +102,28 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*/
 		static int FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf);
 
-		//Accessor
-		std::list<std::string>* GetList()
+		/*!
+		*@brief Retrieve username.
+		*@param _username The std::string to fill.
+		*@return true on success, false otherwise.
+		*/
+		bool getUsername(std::string& _username);
+
+		//Accessors
+		std::list<std::string>* getList()
 		{
 			return m_fl;
 		}
 
+		std::string getPattern()
+		{
+			return m_pattern;
+		}
+
 	private:
 		TSmartPtr<CPluginManager> 	m_pfm;
-		std::list<std::string>* 	m_fl; 	//For FTW_callback
+		std::list<std::string>* 	m_fl; 		//For FTW_callback
+		std::string					m_pattern;	//For pattern matching
 	
 };
 #endif //_ENGINE_H_

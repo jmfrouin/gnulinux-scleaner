@@ -22,5 +22,8 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-SET(interface_src tray.cpp maininterface.cpp checklistctrl.cpp)
-ADD_LIBRARY(interface ${interface_src})
+SET(backfiles_src backfiles.cpp)
+ADD_LIBRARY(backfiles SHARED ${backfiles_src}) 
+TARGET_LINK_LIBRARIES(backfiles plugins tools)
+INSTALL(TARGETS backfiles DESTINATION ${PLUGSDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/plugins/in/backfiles/backfiles.html DESTINATION ${SHAREDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)

@@ -27,8 +27,9 @@ $Author$
 #include <ftw.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/utsname.h>
+#include <pwd.h>
 #include <dirent.h>
+#include <sys/utsname.h>
 #include <interface/maininterface.h>
 #include "engine.h"
 
@@ -116,30 +117,69 @@ bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name
 int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf)
 {
 	int l_ret = 0;
+	std::string l_path(_fpath);
 
-	//std::cout << (long long) _stat->st_size;
 	//Check if it is a folder ?
 	if (_stat->st_mode > 23420) 
 	{
+		//Pattern matching
+		if(l_path.find(CEngine::Instance()->getPattern(), 0) != std::string::npos)
+		{
 #if defined DEBUG
-		std::cout << _fpath << '\n';
+			std::cout << "[DBG] FTW_callback : " << l_path << '\n';
 #endif
-		CEngine::Instance()->GetList()->push_back(_fpath);
+			CEngine::Instance()->getList()->push_back(l_path);
+		}
 	}
 
     return l_ret;	// To tell nftw() to continue
 }
 
-bool CEngine::getFileList(std::list<std::string>& _fl, std::string _path, bool _recursive)
+bool CEngine::getFileList(std::list<std::string>& _fl, const std::string& _path, const std::string& _pattern, bool _recursive)
 {
 	bool l_ret = false;
 
 	int l_flags = FTW_PHYS;
 	m_fl = &_fl;
 
-    nftw(_path.c_str(), FTW_callback, 20, l_flags);
+	m_pattern = _pattern;
+
+    if( nftw(_path.c_str(), FTW_callback, 20, l_flags) == 0)
+	{
+		l_ret = true;
+	}
 	
 	m_fl = 0;
 	return l_ret;
 }
+
+bool CEngine::getUsername(std::string& _username)
+{
+	bool l_ret = false;
+
+	uid_t l_uid = geteuid();
+
+	struct passwd* l_passwd = 0;
+	l_passwd = getpwuid(l_uid);
+
+#if defined DEBUG
+	std::cout << "[DBG] CEngine::getUsername UID: " << l_uid << '\n';
+#endif
+	
+	if (l_passwd) 
+	{
+		_username = l_passwd->pw_name;
+#if defined DEBUG
+		std::cout << "[DBG] CEngine::getUsername Username: " << _username << '\n';
+#endif
+		l_ret = true;
+	}
+	else
+	{
+		l_ret = false;
+	}
+
+	return l_ret;
+}
+
 /* vi:set ts=4: */

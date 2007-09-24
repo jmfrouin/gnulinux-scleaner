@@ -34,8 +34,6 @@ $Author$
 * In fact it just scan <b>/var/log/</b> and its subfolders.
 * @section param Parameters
 * @section pb Knows bugs
-* @section todo Todo
-* Put folder scannings code in CEngine.
 */
 
 #ifndef _LOGS_H_
@@ -53,14 +51,10 @@ class ClogsPlugin : public IInPlugin
 		/*!
 		*@brief From IPlugin.
 		*/
-		const std::string description();
-		const std::string author();
-		const std::string version();
 		eType Type();
 
 		/*!
 		*@brief From IInPlugin
-		*@todo : Fix use of wxwidgets in plugins !!!!
 		*/
 		void getFileList(std::list<std::string>& _fl);
 		bool needRoot();

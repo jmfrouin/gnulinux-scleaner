@@ -33,7 +33,8 @@ $Author$
 #include <wx/frame.h>
 #include <wx/toolbar.h>
 #include <wx/splitter.h>
-#include "checktreectrl.h"
+//#include "checktreectrl.h"
+#include <wx/notebook.h>
 #include <wx/statusbr.h>
 #include <wx/stattext.h>
 #include <engine/iprogress.h>
@@ -72,11 +73,13 @@ public:
     static bool ShowToolTips();
 
 	//Callbacks
-	void OnSelChanged(wxTreeEvent& event);
+	//void OnSelChanged(wxTreeEvent& event);
 	void OnAbout(wxCommandEvent& WXUNUSED(event));
 	void OnQuit(wxCommandEvent& WXUNUSED(event));
 	void OnProcess(wxCommandEvent& WXUNUSED(event));
 	void OnStop(wxCommandEvent& WXUNUSED(event));
+	void OnSelRadio(wxCommandEvent& event);
+	void OnNotebook(wxNotebookEvent& event);
 
 	/*!
 	*@brief Call splash screen
@@ -89,7 +92,7 @@ public:
 	*@param _idParent Parent tree ID.
 	*@param _cookie Cookie. :)
 	*/
-	void GetSelectedFilesRecursively(const wxTreeItemId& _idParent, std::list<std::string>& _fl, wxTreeItemIdValue _cookie = 0);
+	//void GetSelectedFilesRecursively(const wxTreeItemId& _idParent, std::list<std::string>& _fl, wxTreeItemIdValue _cookie = 0);
 
 	//From IProgressbar
 	void updateProgress(const std::string& _mess, int _nb);
@@ -108,7 +111,9 @@ protected:
 	TSmartPtr<CEngine> 					m_Engine;
 
 	//GUI tree list which display input plugins and file list.
-	wxCheckTreeCtrl* 					m_Input;
+	//wxCheckTreeCtrl* 					m_Input;
+	wxNotebook*							m_Input;
+
 	//Informations GUI panel
 	wxStaticText* 						m_Title;
 	wxStaticText* 						m_Line1;

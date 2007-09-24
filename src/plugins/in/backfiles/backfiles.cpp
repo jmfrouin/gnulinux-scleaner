@@ -17,31 +17,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date$
-$Rev$
-$Author$
+$Date: 2007-09-22 19:17:21 +0200 (sam, 22 sep 2007) $
+$Rev: 115 $
+$Author: snoogie $
 ------------------------------------------------------
 */
 
 #include <iostream>
 #include <plugins/plugin_initializer.h>
-#include "logs.h"
+#include "backfiles.h"
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-CPluginInitializer<ClogsPlugin> g_logs;
+CPluginInitializer<CbackfilesPlugin> g_backfiles;
 
-ClogsPlugin::ClogsPlugin()
+CbackfilesPlugin::CbackfilesPlugin()
 {
-    setName("logs");
+    setName("backfiles");
 }
 
-ClogsPlugin::~ClogsPlugin()
+CbackfilesPlugin::~CbackfilesPlugin()
 {
 }
 
-IPlugin::eType ClogsPlugin::Type()
+IPlugin::eType CbackfilesPlugin::Type()
 {
 	eType l_ret;
 	l_ret = eInput;
@@ -49,19 +49,31 @@ IPlugin::eType ClogsPlugin::Type()
 }
 
 //From IInPlugin
-void ClogsPlugin::getFileList(std::list<std::string>& _fl)
+void CbackfilesPlugin::getFileList(std::list<std::string>& _fl)
 {
 	CEngine* l_Eng = CEngine::Instance();
 	if(l_Eng != 0)
 	{
-		l_Eng->getFileList(_fl, "/var/log/", "");
+		std::string l_path("/home/");
+		std::string l_username;
+		bool l_res = l_Eng->getUsername(l_username);
+		std::cout << l_username << '\n';
+		std::cout << l_res << '\n';
+		if(l_res)
+		{
+			l_path += l_username;
+			l_path += "/";
+		}
+		std::cout << l_path << '\n';
+		l_Eng->getFileList(_fl, l_path, "~");
+		l_Eng->getFileList(_fl, l_path, ".bak");
 	}
 }
 
-bool ClogsPlugin::needRoot()
+bool CbackfilesPlugin::needRoot()
 {
 	bool l_ret;
-	l_ret = true; // In order to access /var/log/ we need root access.
+	l_ret = false; // This plugin will work in both (user/root) mode.
 	return l_ret;
 }
 
