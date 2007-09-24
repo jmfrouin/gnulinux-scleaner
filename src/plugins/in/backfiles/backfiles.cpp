@@ -57,14 +57,11 @@ void CbackfilesPlugin::getFileList(std::list<std::string>& _fl)
 		std::string l_path("/home/");
 		std::string l_username;
 		bool l_res = l_Eng->getUsername(l_username);
-		std::cout << l_username << '\n';
-		std::cout << l_res << '\n';
 		if(l_res)
 		{
 			l_path += l_username;
 			l_path += "/";
 		}
-		std::cout << l_path << '\n';
 		l_Eng->getFileList(_fl, l_path, "~");
 		l_Eng->getFileList(_fl, l_path, ".bak");
 	}

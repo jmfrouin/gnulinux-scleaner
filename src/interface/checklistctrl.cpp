@@ -23,8 +23,6 @@ $Author: snoogie $
 ------------------------------------------------------
 */
 
-#include <wx/imaglist.h>
-
 // Include XPM icons
 #include <gfx/checked.xpm>
 #include <gfx/checked_dis.xpm>
@@ -58,18 +56,13 @@ wxListCtrl(parent, id, pt, sz, style)
 bool wxCheckListCtrl::LoadIcons()
 {
     m_imageList = new wxImageList(16, 16, true);
-    AssignImageList(m_imageList);
+    AssignImageList(m_imageList, wxIMAGE_LIST_SMALL);
 
     m_imageList->Add(wxIcon(checked_xpm));
     m_imageList->Add(wxIcon(checked_dis_xpm));
     m_imageList->Add(wxIcon(unchecked_xpm));
     m_imageList->Add(wxIcon(unchecked_dis_xpm));
 
-#if 0
-    m_imageList->Add(wxIcon(closedfolder_xpm), 0, true);
-    m_imageList->Add(wxIcon(closedfolder_dis_xpm), 0, false);
-#endif
-    
     return true;
 }
 
@@ -78,7 +71,7 @@ wxCheckListCtrl::~wxCheckListCtrl()
 }
 
 /// Set the appropriate icon
-bool wxCheckListCtrl::SetIcon(wxListItem& item)
+bool wxCheckListCtrl::SetIcon(long& item)
 {
     wxCheckListItemAttr* data = (wxCheckListItemAttr*) GetItemData(item);
     if (data)
@@ -110,7 +103,8 @@ bool wxCheckListCtrl::SetIcon(wxListItem& item)
 void wxCheckListCtrl::OnMouseEvent(wxMouseEvent& event)
 {
     int flags = 0;
-    wxListItem item = HitTest(wxPoint(event.GetX(), event.GetY()), flags);
+	long l_subitem;
+    long item = HitTest(wxPoint(event.GetX(), event.GetY()), flags, &l_subitem);
     
     if (event.LeftDown())
     {
@@ -118,6 +112,7 @@ void wxCheckListCtrl::OnMouseEvent(wxMouseEvent& event)
         {
             wxCheckListItemAttr* data = (wxCheckListItemAttr*) GetItemData(item);
 
+std::cout << "mouse event" << data->GetEnabled() << " " << data->GetChecked() << '\n';
             if (data && data->GetEnabled())
             {
                 data->SetChecked(!data->GetChecked());
@@ -138,7 +133,7 @@ void wxCheckListCtrl::OnMouseEvent(wxMouseEvent& event)
 
 void wxCheckListCtrl::OnKeyDown(wxKeyEvent& event)
 {
-    wxListItem item = GetSelection();
+    /*wxListItem item = GetSelection();
     if (event.GetKeyCode() == WXK_SPACE)
     {
         if (item.IsOk())
@@ -162,11 +157,12 @@ void wxCheckListCtrl::OnKeyDown(wxKeyEvent& event)
     else
     {
         event.Skip();
-    }
+    }*/
+        event.Skip();
 }
 
 /// Check/uncheck the item
-bool wxCheckListCtrl::CheckItem(wxListItem& item, bool check)
+bool wxCheckListCtrl::CheckItem(long& item, bool check)
 {
     wxCheckListItemAttr* data = (wxCheckListItemAttr*) GetItemData(item);
     
@@ -179,7 +175,7 @@ bool wxCheckListCtrl::CheckItem(wxListItem& item, bool check)
 }
 
 /// Enable/disable the item
-bool wxCheckListCtrl::EnableItem(wxListItem& item, bool enable)
+bool wxCheckListCtrl::EnableItem(long& item, bool enable)
 {
     wxCheckListItemAttr* data = (wxCheckListItemAttr*) GetItemData(item);
     
@@ -192,29 +188,18 @@ bool wxCheckListCtrl::EnableItem(wxListItem& item, bool enable)
 }
 
 /// Add an item
-wxListItem wxCheckListCtrl::AddCheckedItem(wxListItem& parent, const wxString& label, bool checked)
+long wxCheckListCtrl::AddCheckedItem(int _counter, const wxString& _label, bool _checked)
 {
-    wxCheckListItemAttr* data = new wxCheckListItemAttr;
-    data->SetChecked(checked);
-    data->SetTranslatedLabel(label);
-    data->SetUntranslatedLabel(label);
-    wxListItem id = AppendItem(parent, label, -1, -1, data);
-    SetIcon(id);
+	std::cout << "AddCheckedItem" << '\n';
+	long l_ret;
+	wxListItem l_item;
+	l_ret = InsertItem(_counter, _label, 1);
+    wxCheckListItemAttr* l_data = new wxCheckListItemAttr;
+    l_data->SetChecked(_checked);
+	SetItemData(l_ret, (long)l_data);
+    SetIcon(l_ret);
 
-    return id;
-}
-
-/// Add an item with separate translated and untranslated labels
-wxListItem wxCheckListCtrl::AddCheckedItem(wxListItem& parent, const wxString& translatedLabel, const wxString& untranslatedLabel, bool checked)
-{
-    wxCheckListItemAttr* data = new wxCheckListItemAttr;
-    data->SetChecked(checked);
-    data->SetTranslatedLabel(translatedLabel);
-    data->SetUntranslatedLabel(untranslatedLabel);
-    wxListItem id = AppendItem(parent, translatedLabel, -1, -1, data);
-    SetIcon(id);
-
-    return id;
+	return l_ret;
 }
 
 /// Get the data for the item

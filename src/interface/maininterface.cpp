@@ -41,13 +41,14 @@ $Author$
 #include <plugins/iplugin.h>
 #include <engine/engine.h>
 #include "maininterface.h"
-#include <wx/treectrl.h>
+//#include <wx/treectrl.h>
 #include <wx/radiobox.h>
 #include <wx/progdlg.h>
 #include <wx/filedlg.h>
 #include <wx/splash.h>
 #include <wx/wxhtml.h>
-#include <wx/listctrl.h>
+//#include <wx/listctrl.h>
+#include "checklistctrl.h"
 #include <wx/imaglist.h>
 
 //GFX Elements
@@ -223,7 +224,7 @@ void CMainInterface::CreateControls()
     	l_imageListSmall->Add(wxIcon(checked_dis_xpm));
     	l_imageListSmall->Add(wxIcon(unchecked_dis_xpm));
 
-		wxListCtrl* l_fileslist = new wxListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
+		wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
 
     	l_fileslist->SetImageList(l_imageListSmall, wxIMAGE_LIST_SMALL);
 
@@ -250,7 +251,8 @@ void CMainInterface::CreateControls()
 			std::string l_filename(*_it2);
 			wxString l_str2(l_filename.c_str(), wxConvUTF8);
 			//wxTreeItemId l_file = m_Input->AddCheckedItem(l_plug, l_str2, true);
-        	long l_tmp = l_fileslist->InsertItem(l_counter, l_str2, 0);
+        	//long l_tmp = l_fileslist->InsertItem(l_counter, l_str2, 0);
+			long l_tmp = l_fileslist->AddCheckedItem(l_counter, l_str2, true);
 			l_fileslist->SetItemData(l_tmp, l_counter);
 			
 			//Insert file size.

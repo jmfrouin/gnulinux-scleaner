@@ -27,6 +27,7 @@ $Author: snoogie $
 #define _WX_CHECKLISTCTRL_H_
 
 #include <wx/listctrl.h>
+#include <wx/imaglist.h>
 
 // Type of item
 
@@ -90,22 +91,19 @@ public:
 //// Operations
 
     /// Add an item
-    wxListItem AddCheckedItem(wxListItem& parent, const wxString& label, bool checked = false);
-
-    /// Add an item with separate translated and untranslated labels
-    wxListItem AddCheckedItem(wxListItem& parent, const wxString& translatedLabel, const wxString& untranslatedLabel, bool checked = false);
+	long AddCheckedItem(int _counter, const wxString& _label, bool _checked = false);
 
     /// Check/uncheck the item
-    bool CheckItem(wxListItem& item, bool check);
+    bool CheckItem(long& item, bool check);
 
     /// Enable/disable the item
-    bool EnableItem(wxListItem& item, bool enable);
+    bool EnableItem(long& item, bool enable);
 
     /// Load the icons
     bool LoadIcons();
 
     /// Set the appropriate icon
-    bool SetIcon(wxListItem& item);
+    bool SetIcon(long& item);
 
     /// Get the data for the item
     wxCheckListItemAttr* GetData(wxListItem& item);
@@ -129,16 +127,16 @@ public:
     void SetChecked(bool checked) { m_checked = checked; }
     bool IsChecked() const { return m_checked; }
 
-    wxListItem GetListItemId() const { return m_listItemId; }
-    void SetListItemId(wxListItem id) { m_listItemId = id; }
+    long GetListItemId() const { return m_listItemId; }
+    void SetListItemId(long& id) { m_listItemId = id; }
 
     wxCheckListItemAttr* GetData() const { return m_data; }
     void SetData(wxCheckListItemAttr* data) { m_data = data; }
 
 private:
-    bool                  m_checked;
-    wxListItem            m_listItemId;
-    wxCheckListItemAttr*  m_data;
+    bool                  	m_checked;
+    long            		m_listItemId;
+    wxCheckListItemAttr*  	m_data;
 
     DECLARE_DYNAMIC_CLASS(wxCheckListEvent);
 };
