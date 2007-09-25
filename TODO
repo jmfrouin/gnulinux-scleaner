@@ -8,6 +8,7 @@ Add tooltip for disabled items in treeview (->"You need root rights to selected 
 Add code to detect free space on disk in CEngine
 Add code to detect a twice selected file.
 Check memory leaks and FIXME in code
+Uniform source code formatting.
 OK : Add code for detect user home folder in CEngine.
 OK : Add a progress bar
 OK : Check that box is checked :)

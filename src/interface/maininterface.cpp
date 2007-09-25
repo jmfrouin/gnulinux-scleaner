@@ -47,7 +47,7 @@ $Author$
 #include <wx/filedlg.h>
 #include <wx/splash.h>
 #include <wx/wxhtml.h>
-//#include <wx/listctrl.h>
+#include <wx/listctrl.h>
 #include "checklistctrl.h"
 #include <wx/imaglist.h>
 
@@ -224,7 +224,8 @@ void CMainInterface::CreateControls()
     	l_imageListSmall->Add(wxIcon(checked_dis_xpm));
     	l_imageListSmall->Add(wxIcon(unchecked_dis_xpm));
 
-		wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
+		//wxListCtrl* l_fileslist = new wxListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+		wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 
     	l_fileslist->SetImageList(l_imageListSmall, wxIMAGE_LIST_SMALL);
 
@@ -251,8 +252,8 @@ void CMainInterface::CreateControls()
 			std::string l_filename(*_it2);
 			wxString l_str2(l_filename.c_str(), wxConvUTF8);
 			//wxTreeItemId l_file = m_Input->AddCheckedItem(l_plug, l_str2, true);
-        	//long l_tmp = l_fileslist->InsertItem(l_counter, l_str2, 0);
-			long l_tmp = l_fileslist->AddCheckedItem(l_counter, l_str2, true);
+        	long l_tmp = l_fileslist->InsertItem(l_counter, l_str2, 0);
+			//long l_tmp = l_fileslist->AddCheckedItem(l_counter, l_str2, true);
 			l_fileslist->SetItemData(l_tmp, l_counter);
 			
 			//Insert file size.
@@ -393,6 +394,7 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 #endif
 	std::list<std::string> l_selected_files;
 	//GetSelectedFilesRecursively(m_Input->GetRootItem(), l_selected_files);
+	GetSelectedFiles(l_selected_files);
 
 #if defined DEBUG
 	std::cout << "[DBG] You have selected: " << '\n';
@@ -422,15 +424,15 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 	l_nameWX = m_Output->GetStringSelection();
 	l_name = l_nameWX.char_str();
 
-#if defined DEBUG
+//#if defined DEBUG
 	std::cout << "[DBG] CMainInterface : Get selection : " << l_name << '\n';
-#endif
+//#endif
 
-    wxFileDialog l_outputFileDlg(this, _T("Select an output folder"));
-    if (l_outputFileDlg.ShowModal() != wxID_OK)
-	{
-        return;
-	}
+    //wxFileDialog l_outputFileDlg(this, _T("Select an output folder"));
+    //if (l_outputFileDlg.ShowModal() != wxID_OK)
+	//{
+    //    return;
+	//}
 
 //    wxFFile file(filedlg.GetFilename(), _T("r"));
 
@@ -459,39 +461,38 @@ void CMainInterface::OnStop(wxCommandEvent& WXUNUSED(event))
     //GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
 }
 
-/*void CMainInterface::GetSelectedFilesRecursively(const wxTreeItemId& _idParent, std::list<std::string>& _fl, wxTreeItemIdValue _cookie)
+void CMainInterface::GetSelectedFiles(std::list<std::string>& _fl)
 {
-    wxTreeItemId l_id;
-
-    if (!_cookie)
+	unsigned int l_pagesNb = m_Input->GetPageCount();
+	std::cout << "I found " << l_pagesNb << " pages\n";
+	
+	for(unsigned int i = 0; i < l_pagesNb; ++i)
 	{
-        l_id = m_Input->GetFirstChild(_idParent, _cookie);
-	}
-    else
-	{
-        l_id = m_Input->GetNextChild(_idParent, _cookie);
-	}
+		wxWindow* l_win = m_Input->GetPage(i);
+		wxCheckListCtrl* l_list = (wxCheckListCtrl*) l_win;
+		int l_itemsNb = l_list->GetItemCount();
 
-    if (!l_id.IsOk())
-	{
-        return;
+		std::cout << "I found " << l_itemsNb << " items in page " << i << '\n';
+		for(int j = 0; j < l_itemsNb; ++j)
+		{
+			wxListItem l_item;
+			l_item.SetId(j);
+			if(l_list->GetItem(l_item))
+			{
+				if(l_item.GetImage() == 0)
+				{
+					wxString l_temp = l_item.m_text;
+					std::string l_file(l_temp.ToAscii());
+					_fl.push_back(l_file);
+				}
+			}
+			else
+			{
+				std::cerr << "[ERR] CMainInterface::GetSelectedFiles GetItem !!" << '\n';
+			}
+		}
 	}
-
-    wxString l_text = m_Input->GetItemText(l_id);
-	std::string l_temp(l_text.ToAscii());
-	wxCheckTreeItemData* l_data = m_Input->GetData(l_id);
-	if(l_data->GetEnabled() && l_data->GetChecked())
-	{
-		_fl.push_back(l_temp);
-	}
-
-    if (m_Input->ItemHasChildren(l_id))
-	{
-        GetSelectedFilesRecursively(l_id, _fl);
-	}
-
-    GetSelectedFilesRecursively(_idParent, _fl, _cookie);
-}*/
+}
 
 void CMainInterface::OnSelRadio(wxCommandEvent& event)
 {

@@ -25,9 +25,7 @@ $Author: snoogie $
 
 // Include XPM icons
 #include <gfx/checked.xpm>
-#include <gfx/checked_dis.xpm>
 #include <gfx/unchecked.xpm>
-#include <gfx/unchecked_dis.xpm>
 
 #include "checklistctrl.h"
 
@@ -41,9 +39,6 @@ BEGIN_EVENT_TABLE(wxCheckListCtrl, wxListCtrl)
     EVT_MOUSE_EVENTS(wxCheckListCtrl::OnMouseEvent)
     EVT_CHAR(wxCheckListCtrl::OnKeyDown)
 END_EVENT_TABLE()
-
-DEFINE_EVENT_TYPE(wxEVT_COMMAND_CHECKLISTCTRL_TOGGLED)
-IMPLEMENT_DYNAMIC_CLASS(wxCheckListEvent, wxNotifyEvent)
 
 wxCheckListCtrl::wxCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
                                    const wxSize& sz, long style):
@@ -59,9 +54,7 @@ bool wxCheckListCtrl::LoadIcons()
     AssignImageList(m_imageList, wxIMAGE_LIST_SMALL);
 
     m_imageList->Add(wxIcon(checked_xpm));
-    m_imageList->Add(wxIcon(checked_dis_xpm));
     m_imageList->Add(wxIcon(unchecked_xpm));
-    m_imageList->Add(wxIcon(unchecked_dis_xpm));
 
     return true;
 }
@@ -73,30 +66,21 @@ wxCheckListCtrl::~wxCheckListCtrl()
 /// Set the appropriate icon
 bool wxCheckListCtrl::SetIcon(long& item)
 {
-    wxCheckListItemAttr* data = (wxCheckListItemAttr*) GetItemData(item);
-    if (data)
-    {
-        int imageIndex = 0;
-        if (data->GetChecked())
-        {
-            if (data->GetEnabled())
-                imageIndex = wxCHECKLIST_IMAGE_CHILD_CHECK_ENABLED;
-            else
-                imageIndex = wxCHECKLIST_IMAGE_CHILD_CHECK_DISABLED;
-        }
-        else
-        {
-            if (data->GetEnabled())
-                imageIndex = wxCHECKLIST_IMAGE_CHILD_UNCHECKED_ENABLED;
-            else
-                imageIndex = wxCHECKLIST_IMAGE_CHILD_UNCHECKED_DISABLED;
-        }
-        SetItemImage(item, imageIndex);
+	std::cout << "SetIcon : Item = " << item << '\n';
+	wxListItem l_item;
+	l_item.SetId(item);
+	GetItem(l_item);
 
-        return true;
-    }
-    else
-        return false;
+	if(l_item.GetImage() == 0)
+	{
+        SetItemImage(item, 1);
+	}
+	else
+	{
+        SetItemImage(item, 0);
+	}
+
+	return true;
 }
 
 
@@ -105,27 +89,11 @@ void wxCheckListCtrl::OnMouseEvent(wxMouseEvent& event)
     int flags = 0;
 	long l_subitem;
     long item = HitTest(wxPoint(event.GetX(), event.GetY()), flags, &l_subitem);
+	std::cout << "Item : " << std::dec << item << '\n';
     
     if (event.LeftDown())
     {
-        if (flags & wxLIST_HITTEST_ONITEMICON)
-        {
-            wxCheckListItemAttr* data = (wxCheckListItemAttr*) GetItemData(item);
-
-std::cout << "mouse event" << data->GetEnabled() << " " << data->GetChecked() << '\n';
-            if (data && data->GetEnabled())
-            {
-                data->SetChecked(!data->GetChecked());
-                SetIcon(item);
-
-                wxCheckListEvent commandEvent(wxEVT_COMMAND_CHECKLISTCTRL_TOGGLED, GetId());
-                commandEvent.SetEventObject(this);
-                commandEvent.SetListItemId(item);
-                commandEvent.SetChecked(data->GetChecked());
-                commandEvent.SetData(data);
-                GetEventHandler()->ProcessEvent(commandEvent);
-            }
-        }
+		SetIcon(item);
     }
 
     event.Skip();
@@ -160,53 +128,3 @@ void wxCheckListCtrl::OnKeyDown(wxKeyEvent& event)
     }*/
         event.Skip();
 }
-
-/// Check/uncheck the item
-bool wxCheckListCtrl::CheckItem(long& item, bool check)
-{
-    wxCheckListItemAttr* data = (wxCheckListItemAttr*) GetItemData(item);
-    
-    if (data)
-    {
-        data->SetChecked(check);
-        SetIcon(item);
-    }
-    return true;
-}
-
-/// Enable/disable the item
-bool wxCheckListCtrl::EnableItem(long& item, bool enable)
-{
-    wxCheckListItemAttr* data = (wxCheckListItemAttr*) GetItemData(item);
-    
-    if (data)
-    {
-        data->SetEnabled(enable);
-        SetIcon(item);
-    }
-    return true;
-}
-
-/// Add an item
-long wxCheckListCtrl::AddCheckedItem(int _counter, const wxString& _label, bool _checked)
-{
-	std::cout << "AddCheckedItem" << '\n';
-	long l_ret;
-	wxListItem l_item;
-	l_ret = InsertItem(_counter, _label, 1);
-    wxCheckListItemAttr* l_data = new wxCheckListItemAttr;
-    l_data->SetChecked(_checked);
-	SetItemData(l_ret, (long)l_data);
-    SetIcon(l_ret);
-
-	return l_ret;
-}
-
-/// Get the data for the item
-wxCheckListItemAttr* wxCheckListCtrl::GetData(wxListItem& item)
-{
-    wxCheckListItemAttr* data = (wxCheckListItemAttr*) GetItemData(item);
-    return data;
-}
-
-

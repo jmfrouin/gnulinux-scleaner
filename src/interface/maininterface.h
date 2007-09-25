@@ -89,10 +89,9 @@ public:
 
 	/*!
 	*@brief Retrieve list of selected files to process.
-	*@param _idParent Parent tree ID.
-	*@param _cookie Cookie. :)
+	*@param _fl Files list to fill.
 	*/
-	//void GetSelectedFilesRecursively(const wxTreeItemId& _idParent, std::list<std::string>& _fl, wxTreeItemIdValue _cookie = 0);
+	void GetSelectedFiles(std::list<std::string>& _fl);
 
 	//From IProgressbar
 	void updateProgress(const std::string& _mess, int _nb);

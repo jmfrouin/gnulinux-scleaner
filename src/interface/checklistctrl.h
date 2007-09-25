@@ -29,44 +29,6 @@ $Author: snoogie $
 #include <wx/listctrl.h>
 #include <wx/imaglist.h>
 
-// Type of item
-
-#define wxCHECKLIST_ICON_CHILD       0x01
-#define wxCHECKLIST_ICON_FOLDER      0x02
-
-// Identifier of the icon
-#define wxCHECKLIST_IMAGE_CHILD_CHECK_ENABLED     0
-#define wxCHECKLIST_IMAGE_CHILD_CHECK_DISABLED    1
-#define wxCHECKLIST_IMAGE_CHILD_UNCHECKED_ENABLED   2
-#define wxCHECKLIST_IMAGE_CHILD_UNCHECKED_DISABLED  3
-
-/*!
- * wxCheckListItemAttr
- * Holds the data for each list item.
- */
-
-class wxCheckListItemAttr: public wxListItemAttr
-{
-public:
-    wxCheckListItemAttr() { m_checked = false; m_enabled = true; m_iconType = wxCHECKLIST_ICON_CHILD;}
-    ~wxCheckListItemAttr()  {}
-
-    void SetChecked(bool checked) { m_checked = checked; }
-    bool GetChecked() const { return m_checked; }
-
-    void SetEnabled(bool enabled) { m_enabled = enabled; }
-    bool GetEnabled() const { return m_enabled; }
-
-    void SetIconType(int iconType) { m_iconType = iconType; }
-    int GetIconType() const { return m_iconType; }
-
-private:
-    bool    m_checked;
-    bool    m_enabled;
-    int     m_iconType;
-};
-
-
 /*!
  * wxCheckListCtrl
  * The options hierarchy viewer.
@@ -86,71 +48,16 @@ public:
 
 //// Accessors
 
-    wxImageList* GetImageList() const { return m_imageList; }
-
-//// Operations
-
-    /// Add an item
-	long AddCheckedItem(int _counter, const wxString& _label, bool _checked = false);
-
-    /// Check/uncheck the item
-    bool CheckItem(long& item, bool check);
-
-    /// Enable/disable the item
-    bool EnableItem(long& item, bool enable);
-
     /// Load the icons
     bool LoadIcons();
 
     /// Set the appropriate icon
     bool SetIcon(long& item);
 
-    /// Get the data for the item
-    wxCheckListItemAttr* GetData(wxListItem& item);
-
 protected:
     wxImageList*        m_imageList;
 
     DECLARE_EVENT_TABLE()
 };
-
-class wxCheckListEvent: public wxNotifyEvent
-{
-public:
-    wxCheckListEvent(wxEventType commandType = wxEVT_NULL, int id = 0):
-                 wxNotifyEvent(commandType, id)
-    {
-        m_checked = false;
-        m_data = NULL;
-    }
-
-    void SetChecked(bool checked) { m_checked = checked; }
-    bool IsChecked() const { return m_checked; }
-
-    long GetListItemId() const { return m_listItemId; }
-    void SetListItemId(long& id) { m_listItemId = id; }
-
-    wxCheckListItemAttr* GetData() const { return m_data; }
-    void SetData(wxCheckListItemAttr* data) { m_data = data; }
-
-private:
-    bool                  	m_checked;
-    long            		m_listItemId;
-    wxCheckListItemAttr*  	m_data;
-
-    DECLARE_DYNAMIC_CLASS(wxCheckListEvent);
-};
-
-typedef void (wxEvtHandler::*wxCheckListEventFunction)(wxCheckListEvent&);
-
-// ----------------------------------------------------------------------------
-// swatch control events and macros for handling them
-// ----------------------------------------------------------------------------
-
-BEGIN_DECLARE_EVENT_TYPES()
-    DECLARE_EVENT_TYPE(wxEVT_COMMAND_CHECKLISTCTRL_TOGGLED, 900)
-END_DECLARE_EVENT_TYPES()
-
-#define EVT_CHECKLISTCTRL_TOGGLED(id, fn) DECLARE_EVENT_TABLE_ENTRY( wxEVT_COMMAND_CHECKLISTCTRL_TOGGLED, id, -1, (wxObjectEventFunction) (wxEventFunction) (wxCheckListEventFunction) & fn, (wxObject *) NULL ),
 
 #endif // _WB_CHECKLISTCTRL_H_
