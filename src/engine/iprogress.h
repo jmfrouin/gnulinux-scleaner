@@ -34,11 +34,10 @@ class IProgressbar
 {
 	public:
 		/*!
-		*@brief Update process progress bar callback.
-		*@param _nb Update number.
-		*/
+		 *@brief Update process progress bar callback.
+		 *@param _nb Update number.
+		 */
 		virtual void updateProgress(const std::string& _mess, int _nb) = 0;
 };
-#endif                           //_IPROGRESS_H_
+#endif							 //_IPROGRESS_H_
 /* vi:set ts=4: */
-

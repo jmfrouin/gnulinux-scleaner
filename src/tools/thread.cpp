@@ -31,11 +31,13 @@ IThread::IThread()
 
 }
 
+
 IThread::~IThread()
 {
 	std::cout << "Waiting end of thread ..." << '\n';
 	pthread_join(m_Thread, 0);
 }
+
 
 int IThread::Run()
 {
@@ -45,13 +47,14 @@ int IThread::Run()
 	std::cout << "Launching thread ..." << '\n';
 	l_tmp = pthread_create(&m_Thread, 0, link, this);
 
-	if(l_tmp != 0) 
+	if(l_tmp != 0)
 	{
 		std::cerr <<  l_ret << strerror(l_ret) << '\n';
 		l_ret = EXIT_FAILURE;
 	}
 	return l_ret;
 }
+
 
 /*void IThread::__Run()
 {
@@ -66,4 +69,6 @@ void IThread::__End()
 {
 	pthread_exit(0);
 }
+
+
 /* vi:set ts=4: */

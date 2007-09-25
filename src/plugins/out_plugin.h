@@ -31,27 +31,25 @@ $Author$
 #include "iplugin.h"
 
 /*!
-*@brief Output plugin interface.
-*/
+ *@brief Output plugin interface.
+ */
 class IOutPlugin : public IPlugin
 {
-		public:
-			/*!
-			*@brief ctor
-			*/
-			IOutPlugin() {}
-			/*!
-			*@brief dtor
-			*/
-			virtual ~IOutPlugin() {}
+	public:
+		/*!
+		 *@brief ctor
+		 */
+		IOutPlugin() {}
+		/*!
+		 *@brief dtor
+		 */
+		virtual ~IOutPlugin() {}
 
-			/*!
-			*@brief Process all files selected by user. 
-			*@param _fl Files list to fill.
-			*@param _callback For progress bar support.
-			*/
-			virtual void processFileList(std::list<std::string>& _fl, IProgressbar* _callback) = 0;
+		/*!
+		 *@brief Process all files selected by user.
+		 *@param _fl Files list to fill.
+		 *@param _callback For progress bar support.
+		 */
+		virtual void processFileList(std::list<std::string>& _fl, IProgressbar* _callback) = 0;
 };
-
-#endif // _OUT_PLUGIN_H_
-
+#endif							 // _OUT_PLUGIN_H_

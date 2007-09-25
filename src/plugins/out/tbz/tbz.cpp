@@ -30,7 +30,7 @@ $Author$
 #include <errno.h>
 #include <fcntl.h>
 #include <bzlib.h>
-#include <sys/stat.h>            ///Get file size.
+#include <sys/stat.h>			 ///Get file size.
 #include <wx/dir.h>
 #include <tools/tar_archive.h>
 #include <plugins/plugin_initializer.h>
@@ -40,12 +40,14 @@ CPluginInitializer<CtbzPlugin> g_tbz;
 
 CtbzPlugin::CtbzPlugin()
 {
-    setName("tbz");
+	setName("tbz");
 }
+
 
 CtbzPlugin::~CtbzPlugin()
 {
 }
+
 
 void CtbzPlugin::processFileList(std::list<std::string>& _fl, IProgressbar* _callback)
 {
@@ -56,20 +58,24 @@ void CtbzPlugin::processFileList(std::list<std::string>& _fl, IProgressbar* _cal
 	Compress("backup.tar" , "backup.tbz", _callback);
 }
 
+
 const std::string CtbzPlugin::description()
 {
 	return "This plugin allow user to create a tarball then compress it using bzip2.";
 }
+
 
 const std::string CtbzPlugin::author()
 {
 	return "Frouin Jean-Michel";
 }
 
+
 const std::string CtbzPlugin::version()
 {
 	return "0.6";
 }
+
 
 IPlugin::eType CtbzPlugin::Type()
 {
@@ -78,6 +84,7 @@ IPlugin::eType CtbzPlugin::Type()
 	return l_ret;
 }
 
+
 //Private methods
 bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output, IProgressbar* _callback)
 {
@@ -85,35 +92,35 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 	FILE* l_out = fopen(_output.c_str(), "wb");
 
 	// Open up the output file
-    if(!l_out)
-    {
-        std::cout << "Error out file!" << '\n';
+	if(!l_out)
+	{
+		std::cout << "Error out file!" << '\n';
 		l_ret = false;
-    }
+	}
 	else
 	{
-    	BZFILE* l_bz = 0;
+		BZFILE* l_bz = 0;
 		int l_err = 0;
-    	l_bz = BZ2_bzWriteOpen(&l_err, l_out, 9, 0, 90);
+		l_bz = BZ2_bzWriteOpen(&l_err, l_out, 9, 0, 90);
 
-    	if(l_err != BZ_OK)
-    	{
-    	    std::cout << "Error bzWriteOpen!" << '\n';
+		if(l_err != BZ_OK)
+		{
+			std::cout << "Error bzWriteOpen!" << '\n';
 			l_ret = false;
-    	}
+		}
 		else
 		{
-    		// Open up the input file
-    		std::ifstream l_in(_input.c_str(), std::ios::in | std::ios::binary);
+			// Open up the input file
+			std::ifstream l_in(_input.c_str(), std::ios::in | std::ios::binary);
 
 			if(!l_in.good())
 			{
-    			std::cout << "Error in file!" << '\n';
+				std::cout << "Error in file!" << '\n';
 				l_ret = false;
 			}
 			else
 			{
-    			// Get the file size. (I hate C I/O, so don't use them :D )
+				// Get the file size. (I hate C I/O, so don't use them :D )
 				struct stat l_info;
 				double l_total;
 				//Try to stat file.
@@ -125,24 +132,24 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 				else
 				{
 					char l_buf[4096];
-    			    memset(l_buf, 0, 4096);
+					memset(l_buf, 0, 4096);
 					l_total = l_info.st_size;
 					double l_done = 0;
-					do 
-					{   
+					do
+					{
 						l_in.read(l_buf, 4096);
 						std::streamsize l_bytesread = l_in.gcount();
 						l_done += l_bytesread;
 						int l_res = static_cast<int>((l_done*50)/l_total)+50;
 						std::string l_mess("bz2 compression of ");
-    					std::stringstream l_doneStr;
-    					l_doneStr << (l_res-50)*2;
+						std::stringstream l_doneStr;
+						l_doneStr << (l_res-50)*2;
 						l_mess += _output + " :  " + l_doneStr.str() + "%";
 						_callback->updateProgress(l_mess, l_res);
 						BZ2_bzWrite(&l_err, l_bz, l_buf, l_bytesread);
-					} while(l_in.good()); 
-					
-					if( l_in.bad() || !l_in.eof() ) 
+					} while(l_in.good());
+
+					if( l_in.bad() || !l_in.eof() )
 					{
 						l_ret = false;
 					}
@@ -150,19 +157,20 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 					{
 						l_ret = true;
 					}
-					
-					l_in.close(); 
+
+					l_in.close();
 				}
 
-    			// Close up.
-    			BZ2_bzWriteClose(&l_err, l_bz, 0, 0, 0);
+				// Close up.
+				BZ2_bzWriteClose(&l_err, l_bz, 0, 0, 0);
 				fclose(l_out);
 				l_out = 0;
 			}
 		}
 	}
 
-    return l_ret;
+	return l_ret;
 }
+
 
 /* vi:set ts=4: */

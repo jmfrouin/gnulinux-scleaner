@@ -33,7 +33,7 @@ int main()
 		throw(std::string("Uh-oh"));
 	}
 	catch(std::string& s)
-	{	
+	{
 		std::cout << s << '\n';
 	}
 	return EXIT_SUCCESS;

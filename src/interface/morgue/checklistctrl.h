@@ -47,34 +47,33 @@ $Author: snoogie $
 
 class wxCheckListItemAttr: public wxListItemAttr
 {
-public:
-    wxCheckListItemAttr() { m_checked = false; m_enabled = true; m_iconType = wxCHECKLIST_ICON_CHILD;}
-    ~wxCheckListItemAttr()  {}
+	public:
+		wxCheckListItemAttr() { m_checked = false; m_enabled = true; m_iconType = wxCHECKLIST_ICON_CHILD;}
+		~wxCheckListItemAttr()  {}
 
-    void SetChecked(bool checked) { m_checked = checked; }
-    bool GetChecked() const { return m_checked; }
+		void SetChecked(bool checked) { m_checked = checked; }
+		bool GetChecked() const { return m_checked; }
 
-    void SetEnabled(bool enabled) { m_enabled = enabled; }
-    bool GetEnabled() const { return m_enabled; }
+		void SetEnabled(bool enabled) { m_enabled = enabled; }
+		bool GetEnabled() const { return m_enabled; }
 
-    void SetIconType(int iconType) { m_iconType = iconType; }
-    int GetIconType() const { return m_iconType; }
+		void SetIconType(int iconType) { m_iconType = iconType; }
+		int GetIconType() const { return m_iconType; }
 
-    void SetTranslatedLabel(const wxString& label) { m_translatedLabel = label; }
-    const wxString& GetTranslatedLabel() const { return m_translatedLabel; }
+		void SetTranslatedLabel(const wxString& label) { m_translatedLabel = label; }
+		const wxString& GetTranslatedLabel() const { return m_translatedLabel; }
 
-    void SetUntranslatedLabel(const wxString& label) { m_untranslatedLabel = label; }
-    const wxString& GetUntranslatedLabel() const { return m_untranslatedLabel; }
+		void SetUntranslatedLabel(const wxString& label) { m_untranslatedLabel = label; }
+		const wxString& GetUntranslatedLabel() const { return m_untranslatedLabel; }
 
-private:
-    bool    m_checked;
-    bool    m_enabled;
-    int     m_iconType;
+	private:
+		bool    m_checked;
+		bool    m_enabled;
+		int     m_iconType;
 
-    wxString    m_untranslatedLabel;
-    wxString    m_translatedLabel;
+		wxString    m_untranslatedLabel;
+		wxString    m_translatedLabel;
 };
-
 
 /*!
  * wxCheckListCtrl
@@ -83,68 +82,68 @@ private:
 
 class wxCheckListCtrl: public wxListCtrl
 {
-    DECLARE_CLASS(wxCheckListCtrl)
-public:
-    wxCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition,
-        const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
-    ~wxCheckListCtrl();
+	DECLARE_CLASS(wxCheckListCtrl)
+		public:
+		wxCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition,
+			const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
+		~wxCheckListCtrl();
 
-//// Event handlers    
-    void OnMouseEvent(wxMouseEvent& event);
-    void OnKeyDown(wxKeyEvent& event);
+		//// Event handlers
+		void OnMouseEvent(wxMouseEvent& event);
+		void OnKeyDown(wxKeyEvent& event);
 
-//// Accessors
+		//// Accessors
 
-    wxImageList* GetImageList() const { return m_imageList; }
+		wxImageList* GetImageList() const { return m_imageList; }
 
-//// Operations
+		//// Operations
 
-    /// Add an item
-	long AddCheckedItem(int _counter, const wxString& _label, bool _checked = false);
+		/// Add an item
+		long AddCheckedItem(int _counter, const wxString& _label, bool _checked = false);
 
-    /// Check/uncheck the item
-    bool CheckItem(long& item, bool check);
+		/// Check/uncheck the item
+		bool CheckItem(long& item, bool check);
 
-    /// Enable/disable the item
-    bool EnableItem(long& item, bool enable);
+		/// Enable/disable the item
+		bool EnableItem(long& item, bool enable);
 
-    /// Load the icons
-    bool LoadIcons();
+		/// Load the icons
+		bool LoadIcons();
 
-    /// Set the appropriate icon
-    bool SetIcon(long& item);
+		/// Set the appropriate icon
+		bool SetIcon(long& item);
 
-protected:
-    wxImageList*        m_imageList;
+	protected:
+		wxImageList*        m_imageList;
 
-    DECLARE_EVENT_TABLE()
+		DECLARE_EVENT_TABLE()
 };
 
 class wxCheckListEvent: public wxNotifyEvent
 {
-public:
-    wxCheckListEvent(wxEventType commandType = wxEVT_NULL, int id = 0):
-                 wxNotifyEvent(commandType, id)
-    {
-        m_checked = false;
-        m_data = NULL;
-    }
+	public:
+		wxCheckListEvent(wxEventType commandType = wxEVT_NULL, int id = 0):
+		wxNotifyEvent(commandType, id)
+		{
+			m_checked = false;
+			m_data = NULL;
+		}
 
-    void SetChecked(bool checked) { m_checked = checked; }
-    bool IsChecked() const { return m_checked; }
+		void SetChecked(bool checked) { m_checked = checked; }
+		bool IsChecked() const { return m_checked; }
 
-    long GetListItemId() const { return m_listItemId; }
-    void SetListItemId(long& id) { m_listItemId = id; }
+		long GetListItemId() const { return m_listItemId; }
+		void SetListItemId(long& id) { m_listItemId = id; }
 
-    wxCheckListItemAttr* GetData() const { return m_data; }
-    void SetData(wxCheckListItemAttr* data) { m_data = data; }
+		wxCheckListItemAttr* GetData() const { return m_data; }
+		void SetData(wxCheckListItemAttr* data) { m_data = data; }
 
-private:
-    bool                  	m_checked;
-    long            		m_listItemId;
-    wxCheckListItemAttr*  	m_data;
+	private:
+		bool                    m_checked;
+		long                    m_listItemId;
+		wxCheckListItemAttr*    m_data;
 
-    DECLARE_DYNAMIC_CLASS(wxCheckListEvent);
+		DECLARE_DYNAMIC_CLASS(wxCheckListEvent);
 };
 
 typedef void (wxEvtHandler::*wxCheckListEventFunction)(wxCheckListEvent&);
@@ -154,9 +153,8 @@ typedef void (wxEvtHandler::*wxCheckListEventFunction)(wxCheckListEvent&);
 // ----------------------------------------------------------------------------
 
 BEGIN_DECLARE_EVENT_TYPES()
-    DECLARE_EVENT_TYPE(wxEVT_COMMAND_CHECKLISTCTRL_TOGGLED, 900)
+DECLARE_EVENT_TYPE(wxEVT_COMMAND_CHECKLISTCTRL_TOGGLED, 900)
 END_DECLARE_EVENT_TYPES()
 
 #define EVT_CHECKLISTCTRL_TOGGLED(id, fn) DECLARE_EVENT_TABLE_ENTRY( wxEVT_COMMAND_CHECKLISTCTRL_TOGGLED, id, -1, (wxObjectEventFunction) (wxEventFunction) (wxCheckListEventFunction) & fn, (wxObject *) NULL ),
-
-#endif // _WB_CHECKLISTCTRL_H_
+#endif							 // _WB_CHECKLISTCTRL_H_

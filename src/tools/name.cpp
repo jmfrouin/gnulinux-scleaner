@@ -30,17 +30,22 @@ CName::CName()
 {
 }
 
+
 CName::~CName()
 {
 }
 
+
 const std::string& CName::getName()
 {
-    return m_Name;
+	return m_Name;
 }
+
 
 void CName::setName(const std::string& _Name)
 {
-    m_Name.assign(_Name);
+	m_Name.assign(_Name);
 }
+
+
 /* vi:set ts=4: */

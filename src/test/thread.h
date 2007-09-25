@@ -35,15 +35,15 @@ class CThread
 		~CThread();
 
 		/*!
-		*@brief Launch thread
-		*/
-		int Run();		
+		 *@brief Launch thread
+		 */
+		int Run();
 
 		/*!
-		*@brief The function to run to be pure virtual.
-		*/
+		 *@brief The function to run to be pure virtual.
+		 */
 		void __Run();
-	
+
 	private:
 		pthread_t m_Thread;
 
@@ -55,6 +55,5 @@ static void* link(void* _context)
 	CThread* l_Thread = (CThread*)_context;
 	l_Thread->__Run();
 }
-
-#endif //_THREAD_H_
+#endif							 //_THREAD_H_
 /* vi:set ts=4: */

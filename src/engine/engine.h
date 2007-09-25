@@ -33,87 +33,87 @@ $Author$
 #include "iprogress.h"
 
 /*!
-*@brief Manage all operations
-*/
+ *@brief Manage all operations
+ */
 class CEngine: public CSmartCpt, public TSingleton<CEngine>
 {
 	public:
 		/*!
-		*@brief ctor
-		*/
+		 *@brief ctor
+		 */
 		CEngine();
-	
-		/*!
-		*@brief dtor
-		*/
-		~CEngine(){}
-	
-	public:
-        /*!
-         *@brief Call load plugins in PluginManager.
-         *@param path The folder location.
-         *@return Number of plugins founded.
-         */
-        int loadPlugins (const std::string& path);
 
 		/*!
-		*@brief Load GFX interface build on wxWidgets
-		*@return true is everything is OK, false otherwise.
-		*/
+		 *@brief dtor
+		 */
+		~CEngine(){}
+
+	public:
+		/*!
+		 *@brief Call load plugins in PluginManager.
+		 *@param path The folder location.
+		 *@return Number of plugins founded.
+		 */
+		int loadPlugins (const std::string& path);
+
+		/*!
+		 *@brief Load GFX interface build on wxWidgets
+		 *@return true is everything is OK, false otherwise.
+		 */
 		bool loadInterface();
 
 		/*!
-		*@brief Detect if launch as root
-		*/
+		 *@brief Detect if launch as root
+		 */
 		bool isRoot();
 
 		/*!
-		*@brief Detect kernel version
-		*/
+		 *@brief Detect kernel version
+		 */
 		bool getKernelVersion(std::string& _version);
 
 		/*!
-		*@brief callOutputPlugins with a list of files
-		*@param _list A files list.
-		*@param _name Name of plugin.
-		*@param _callback For progress bar.
-		*@return true on success, false otherwise.
-		*@todo Implement errors code.
-		*/
+		 *@brief callOutputPlugins with a list of files
+		 *@param _list A files list.
+		 *@param _name Name of plugin.
+		 *@param _callback For progress bar.
+		 *@return true on success, false otherwise.
+		 *@todo Implement errors code.
+		 */
 		bool callOutputPlugin(std::list<std::string>& _list, std::string& _name, IProgressbar* _callback);
-	
+
 		/*!
-		*@brief Replace wxDir usage.
-		*@param _fl The files list to fill.
-		*@param _path Where retrieve file list.
-		*@param _pattern Apply _pattern before adding file to the files list.
-		*@param _recursive If true, enter subfolders.
-		*@return true on success, false otherwise.
-		*/
+		 *@brief Replace wxDir usage.
+		 *@param _fl The files list to fill.
+		 *@param _path Where retrieve file list.
+		 *@param _pattern Apply _pattern before adding file to the files list.
+		 *@param _recursive If true, enter subfolders.
+		 *@return true on success, false otherwise.
+		 */
 		bool getFileList(std::list<std::string>& _fl, const std::string& _path, const std::string& _pattern, bool _recursive = true);
 
 		/*!
-		*@brief Callback : man ftw.
-		*@param _fpath Directory.
-		*@param _stat Where retrieve file list.
-		*@param _tflag Flags.
-		*@param _ftwbuf the TFW buffer.
-		*@return true on success, false otherwise.
-		*/
+		 *@brief Callback : man ftw.
+		 *@param _fpath Directory.
+		 *@param _stat Where retrieve file list.
+		 *@param _tflag Flags.
+		 *@param _ftwbuf the TFW buffer.
+		 *@return true on success, false otherwise.
+		 */
 		static int FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf);
 
 		/*!
-		*@brief Retrieve username.
-		*@param _username The std::string to fill.
-		*@return true on success, false otherwise.
-		*/
+		 *@brief Retrieve username.
+		 *@param _username The std::string to fill.
+		 *@return true on success, false otherwise.
+		 */
 		bool getUsername(std::string& _username);
 
 		/*!
-		*@brief Better size display.
-		*@param _size Size to format.
-		*@param _str String to fill.
-		*/
+		 *@brief Better size display.
+		 *@param _size Size to format.
+		 *@param _str String to fill.
+		 */
 		static void formatSize(double _size, std::string& _str);
 
 		//Accessors
@@ -128,9 +128,11 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		}
 
 	private:
-		TSmartPtr<CPluginManager> 	m_pfm;
-		std::list<std::string>* 	m_fl; 		//For FTW_callback
-		std::string					m_pattern;	//For pattern matching
-	
+		TSmartPtr<CPluginManager>   m_pfm;
+								 //For FTW_callback
+		std::list<std::string>*     m_fl;
+								 //For pattern matching
+		std::string                 m_pattern;
+
 };
-#endif //_ENGINE_H_
+#endif							 //_ENGINE_H_

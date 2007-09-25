@@ -29,27 +29,27 @@ $Author$
 #include <fstream>
 
 /*!
-* @brief Log manipulation interface
-*/
+ * @brief Log manipulation interface
+ */
 class ILog
 {
-    public:
+	public:
 		/*!
-		* @brief	Default constructor.
-		*/
-        ILog();
+		 * @brief	Default constructor.
+		 */
+		ILog();
 		/*!
-		* @brief	Destructor.
-		*/
-        virtual ~ILog();
+		 * @brief	Destructor.
+		 */
+		virtual ~ILog();
 
 		/*!
-		* @brief	Write report.
-		*/
+		 * @brief	Write report.
+		 */
 		virtual void Report() = 0;
 
-    public:
+	public:
 		std::ofstream      m_File;
 };
-#endif //_ILOG_H_
+#endif							 //_ILOG_H_
 /* vi:set ts=4: */

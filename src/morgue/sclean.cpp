@@ -38,15 +38,17 @@ int main()
 {
 	std::cout << "sclean " << VER << '\n';
 
-    bool l_ret = false;
-    TSmartPtr<CPluginManager> l_pfm;
+	bool l_ret = false;
+	TSmartPtr<CPluginManager> l_pfm;
 	l_pfm = CPluginManager::Instance();
-    l_ret = l_pfm->loadPlugins("plugs");
-    l_pfm->SpaceUsed();
-	
+	l_ret = l_pfm->loadPlugins("plugs");
+	l_pfm->SpaceUsed();
+
 	std::cout << "Launch" << '\n';
 
 	//delete l_pfm; //Not need anymore : thanks smart pointers.
 	return l_ret;
 }
+
+
 /* vi:set ts=4: */

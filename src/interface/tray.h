@@ -34,43 +34,43 @@ class CMainInterface;
 class CTrayIcon: public wxTaskBarIcon, public CSmartCpt
 {
 	private:
-		enum {
-    		PU_RESTORE = 10001,
-    		PU_NEW_ICON,
-    		PU_OLD_ICON,
-    		PU_EXIT,
-    		PU_CHECKMARK,
-    		PU_SUB1,
-    		PU_SUB2,
-    		PU_SUBMAIN
+		enum
+		{
+			PU_RESTORE = 10001,
+			PU_NEW_ICON,
+			PU_OLD_ICON,
+			PU_EXIT,
+			PU_CHECKMARK,
+			PU_SUB1,
+			PU_SUB2,
+			PU_SUBMAIN
 		};
 
 	public:
-#if defined(__WXCOCOA__)
-    	CTrayIcon(wxTaskBarIconType iconType = DEFAULT_TYPE):
+	#if defined(__WXCOCOA__)
+		CTrayIcon(wxTaskBarIconType iconType = DEFAULT_TYPE):
 		wxTaskBarIcon(iconType), m_Parent(0)
-#else
-    	CTrayIcon():
+		#else
+			CTrayIcon():
 		m_Parent(0)
-#endif
-    	{}
+		#endif
+			{}
 
 		void setParent(CMainInterface* _parent);
-    	void OnLeftButtonDClick(wxTaskBarIconEvent&);
-    	void OnMenuRestore(wxCommandEvent&);
-    	void OnMenuExit(wxCommandEvent&);
-    	void OnMenuSetNewIcon(wxCommandEvent&);
-    	void OnMenuSetOldIcon(wxCommandEvent&);
-       	void OnMenuCheckmark(wxCommandEvent&);
-       	void OnMenuUICheckmark(wxUpdateUIEvent&);
-    	void OnMenuSub(wxCommandEvent&);
-    	virtual wxMenu *CreatePopupMenu();
+		void OnLeftButtonDClick(wxTaskBarIconEvent&);
+		void OnMenuRestore(wxCommandEvent&);
+		void OnMenuExit(wxCommandEvent&);
+		void OnMenuSetNewIcon(wxCommandEvent&);
+		void OnMenuSetOldIcon(wxCommandEvent&);
+		void OnMenuCheckmark(wxCommandEvent&);
+		void OnMenuUICheckmark(wxUpdateUIEvent&);
+		void OnMenuSub(wxCommandEvent&);
+		virtual wxMenu *CreatePopupMenu();
 
-	public: 
-		CMainInterface*	m_Parent;
+	public:
+		CMainInterface* m_Parent;
 
-	DECLARE_EVENT_TABLE()
+		DECLARE_EVENT_TABLE()
 };
-
-#endif //_TRAY_H_
+#endif							 //_TRAY_H_
 /* vi:set ts=4: */

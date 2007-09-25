@@ -94,6 +94,5 @@ $Author$
 #define ___(X) gettext(X)
 
 #define PLUG_FOLDER "/usr/share/scleaner/plugs"
-
-#endif                           // _DEF_H_
+#endif							 // _DEF_H_
 /* vi:set ts=4: */

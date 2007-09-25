@@ -31,10 +31,12 @@ CThread::CThread()
 
 }
 
+
 CThread::~CThread()
 {
 
 }
+
 
 int CThread::Run()
 {
@@ -44,7 +46,7 @@ int CThread::Run()
 	std::cout << "Launching thread ..." << '\n';
 	l_tmp = pthread_create(&m_Thread, 0, link, this);
 
-	if(l_tmp != 0) 
+	if(l_tmp != 0)
 	{
 		std::cerr <<  l_ret << strerror(l_ret) << '\n';
 		l_ret = EXIT_FAILURE;
@@ -52,8 +54,9 @@ int CThread::Run()
 	std::cout << "Waiting end of thread ..." << '\n';
 
 	pthread_join(m_Thread, 0);
-	
+
 }
+
 
 void CThread::__Run()
 {
@@ -63,4 +66,6 @@ void CThread::__Run()
 	std::cout << "Ok ready to ... quit :) !!" << '\n';
 	pthread_exit(0);
 }
+
+
 /* vi:set ts=4: */

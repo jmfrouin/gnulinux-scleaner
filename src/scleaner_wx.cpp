@@ -41,15 +41,16 @@ CSClean::CSClean()
 {
 }
 
+
 bool CSClean::OnInit(void)
 {
 	//textdomain("scleaner");
-#if defined DEBUG
+	#if defined DEBUG
 	std::cout << "[DBG] scleaner starting ...\n";
-#endif
+	#endif
 
-    bool l_ret = false;
-    wxImage::AddHandler(new wxPNGHandler);
+	bool l_ret = false;
+	wxImage::AddHandler(new wxPNGHandler);
 
 	//Retrieve CEngine instance pointer.
 	m_engine = CEngine::Instance();
@@ -60,7 +61,8 @@ bool CSClean::OnInit(void)
 	//Load GFX interface
 	l_ret = m_engine->loadInterface();
 
-    return l_ret;
+	return l_ret;
 }
+
 
 /* vi:set ts=4: */

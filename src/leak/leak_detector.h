@@ -14,10 +14,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 -------------------------------------------------------------------------
 
-This file is based on file from Laurent Gomilla : 
+This file is based on file from Laurent Gomilla :
 http://loulou.developpez.com/tutoriels/moteur3d/
 
 -------------------------------------------------------------------------
@@ -44,6 +43,7 @@ inline void* operator new(std::size_t Size, const char* File, int Line)
 	return g_mm.Allocate(Size, File, Line, false);
 }
 
+
 /*!
  * @brief new[] operator surcharge
  */
@@ -52,6 +52,7 @@ inline void* operator new[](std::size_t Size, const char* File, int Line)
 	return g_mm.Allocate(Size, File, Line, true);
 }
 
+
 /*!
  * @brief delete operator surcharge
  */
@@ -59,6 +60,7 @@ inline void operator delete(void* Ptr)
 {
 	g_mm.Free(Ptr, false);
 }
+
 
 /*!
  * @brief delete[] operator surcharge

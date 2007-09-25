@@ -43,20 +43,20 @@ class IPlugin : public CName
 			eOutput
 		};
 
-    public:
+	public:
 		/*!
 		 * @brief ctor
 		 */
 		IPlugin(){}
 
-    	/*!
-    	 * @brief dtor.
-    	 */
-    	virtual ~IPlugin(){}
+		/*!
+		 * @brief dtor.
+		 */
+		virtual ~IPlugin(){}
 
 		/*!
-		*@brief This plugin is threadable ?
-		*/
+		 *@brief This plugin is threadable ?
+		 */
 		virtual bool isThreadable()
 		{
 			bool l_ret = false;
@@ -64,9 +64,9 @@ class IPlugin : public CName
 		}
 
 		/*!
-		*@brief Input or output plugin ?
-		*/
+		 *@brief Input or output plugin ?
+		 */
 		virtual eType Type() = 0;
 };
-#endif                           //_IPLUGIN_H_
+#endif							 //_IPLUGIN_H_
 /* vi:set ts=4: */

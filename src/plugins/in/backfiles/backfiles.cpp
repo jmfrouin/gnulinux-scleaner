@@ -26,7 +26,7 @@ $Author: snoogie $
 #include <iostream>
 #include <plugins/plugin_initializer.h>
 #include "backfiles.h"
-#include <sys/stat.h>            ///Get file size.
+#include <sys/stat.h>			 ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
@@ -34,12 +34,14 @@ CPluginInitializer<CbackfilesPlugin> g_backfiles;
 
 CbackfilesPlugin::CbackfilesPlugin()
 {
-    setName("backfiles");
+	setName("backfiles");
 }
+
 
 CbackfilesPlugin::~CbackfilesPlugin()
 {
 }
+
 
 IPlugin::eType CbackfilesPlugin::Type()
 {
@@ -47,6 +49,7 @@ IPlugin::eType CbackfilesPlugin::Type()
 	l_ret = eInput;
 	return l_ret;
 }
+
 
 //From IInPlugin
 void CbackfilesPlugin::getFileList(std::list<std::string>& _fl)
@@ -67,11 +70,13 @@ void CbackfilesPlugin::getFileList(std::list<std::string>& _fl)
 	}
 }
 
+
 bool CbackfilesPlugin::needRoot()
 {
 	bool l_ret;
-	l_ret = false; // This plugin will work in both (user/root) mode.
+	l_ret = false;				 // This plugin will work in both (user/root) mode.
 	return l_ret;
 }
+
 
 /* vi:set ts=4: */

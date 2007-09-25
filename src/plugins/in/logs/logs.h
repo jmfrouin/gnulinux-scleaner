@@ -24,17 +24,17 @@ $Author$
 */
 
 /*! @page page3 Plugins documentations.
-* - @subpage logs
-*/
+ * - @subpage logs
+ */
 
 /*! @page logs logs: input plugin.
-* @section desc Description
-* This plugin allow user to clean <b>logs</b> files.
-* <br>
-* In fact it just scan <b>/var/log/</b> and its subfolders.
-* @section param Parameters
-* @section pb Knows bugs
-*/
+ * @section desc Description
+ * This plugin allow user to clean <b>logs</b> files.
+ * <br>
+ * In fact it just scan <b>/var/log/</b> and its subfolders.
+ * @section param Parameters
+ * @section pb Knows bugs
+ */
 
 #ifndef _LOGS_H_
 #define _LOGS_H_
@@ -44,20 +44,20 @@ $Author$
 
 class ClogsPlugin : public IInPlugin
 {
-    public:
-        ClogsPlugin();
-        ~ClogsPlugin();
+	public:
+		ClogsPlugin();
+		~ClogsPlugin();
 
 		/*!
-		*@brief From IPlugin.
-		*/
+		 *@brief From IPlugin.
+		 */
 		eType Type();
 
 		/*!
-		*@brief From IInPlugin
-		*/
+		 *@brief From IInPlugin
+		 */
 		void getFileList(std::list<std::string>& _fl);
 		bool needRoot();
 };
-#endif                           //_LOGS_H_
+#endif							 //_LOGS_H_
 /* vi:set ts=4: */

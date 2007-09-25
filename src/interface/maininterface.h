@@ -54,83 +54,82 @@ class wxProgressDialog;
  * CMainInterface class declaration
  */
 class CMainInterface: public wxFrame, public IProgressbar
-{    
-    DECLARE_CLASS( CMainInterface )
-    DECLARE_EVENT_TABLE()
+{
+	DECLARE_CLASS( CMainInterface )
+		DECLARE_EVENT_TABLE()
 
-public:
-    /// Constructors
-    CMainInterface();
-    CMainInterface(wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE);
+		public:
+		/// Constructors
+		CMainInterface();
+		CMainInterface(wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE);
 
-    bool Create(wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE );
+		bool Create(wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE );
 
-    ~CMainInterface();
+		~CMainInterface();
 
-    void Init();
-    void CreateControls();
-    wxBitmap GetBitmapResource( const wxString& name );
-    wxIcon GetIconResource( const wxString& name );
-    static bool ShowToolTips();
+		void Init();
+		void CreateControls();
+		wxBitmap GetBitmapResource( const wxString& name );
+		wxIcon GetIconResource( const wxString& name );
+		static bool ShowToolTips();
 
-	//Callbacks
-	//void OnSelChanged(wxTreeEvent& event);
-	void OnAbout(wxCommandEvent& WXUNUSED(event));
-	void OnQuit(wxCommandEvent& WXUNUSED(event));
-	void OnProcess(wxCommandEvent& WXUNUSED(event));
-	void OnStop(wxCommandEvent& WXUNUSED(event));
-	void OnSelRadio(wxCommandEvent& event);
-	void OnNotebook(wxNotebookEvent& event);
+		//Callbacks
+		//void OnSelChanged(wxTreeEvent& event);
+		void OnAbout(wxCommandEvent& WXUNUSED(event));
+		void OnQuit(wxCommandEvent& WXUNUSED(event));
+		void OnProcess(wxCommandEvent& WXUNUSED(event));
+		void OnStop(wxCommandEvent& WXUNUSED(event));
+		void OnSelRadio(wxCommandEvent& event);
+		void OnNotebook(wxNotebookEvent& event);
 
-	/*!
-	*@brief Call splash screen
-	*@param _delay Delay, before splash will gone.
-	*/
-	void launchSplash(int _delay);
+		/*!
+		 *@brief Call splash screen
+		 *@param _delay Delay, before splash will gone.
+		 */
+		void launchSplash(int _delay);
 
-	/*!
-	*@brief Retrieve list of selected files to process.
-	*@param _fl Files list to fill.
-	*/
-	void GetSelectedFiles(std::list<std::string>& _fl);
+		/*!
+		 *@brief Retrieve list of selected files to process.
+		 *@param _fl Files list to fill.
+		 */
+		void GetSelectedFiles(std::list<std::string>& _fl);
 
-	//From IProgressbar
-	void updateProgress(const std::string& _mess, int _nb);
+		//From IProgressbar
+		void updateProgress(const std::string& _mess, int _nb);
 
-protected:
-    CTrayIcon*	m_Icon;
-#if defined(__WXCOCOA__)
-    CTrayIcon*	m_DockIcon;
-#endif
-	//Input plugins
-	std::map<std::string, IInPlugin*>* 	m_InputPlugs;
-	//Output plugins
-	std::map<std::string, IOutPlugin*>* m_OutputPlugs;
+	protected:
+		CTrayIcon*  m_Icon;
+	#if defined(__WXCOCOA__)
+		CTrayIcon*  m_DockIcon;
+	#endif
+		//Input plugins
+		std::map<std::string, IInPlugin*>*  m_InputPlugs;
+		//Output plugins
+		std::map<std::string, IOutPlugin*>* m_OutputPlugs;
 
-	//Engine
-	TSmartPtr<CEngine> 					m_Engine;
+		//Engine
+		TSmartPtr<CEngine>                  m_Engine;
 
-	//GUI tree list which display input plugins and file list.
-	//wxCheckTreeCtrl* 					m_Input;
-	wxNotebook*							m_Input;
+		//GUI tree list which display input plugins and file list.
+		//wxCheckTreeCtrl* 					m_Input;
+		wxNotebook*                         m_Input;
 
-	//Informations GUI panel
-	wxStaticText* 						m_Title;
-	wxStaticText* 						m_Line1;
-	wxStaticText* 						m_Line2;
-	wxStaticText* 						m_Line3;
-	wxHtmlWindow*						m_Html;
-	//GUI checkbox which display output plugins
-	//wxCheckListBox*						m_Output;
-	wxRadioBox*							m_Output;
-    wxStatusBar* 						m_StatusBar;
+		//Informations GUI panel
+		wxStaticText*                       m_Title;
+		wxStaticText*                       m_Line1;
+		wxStaticText*                       m_Line2;
+		wxStaticText*                       m_Line3;
+		wxHtmlWindow*                       m_Html;
+		//GUI checkbox which display output plugins
+		//wxCheckListBox*						m_Output;
+		wxRadioBox*                         m_Output;
+		wxStatusBar*                        m_StatusBar;
 
-	//Progress bar for process part.
-	wxProgressDialog*					m_Progress;
+		//Progress bar for process part.
+		wxProgressDialog*                   m_Progress;
 
-	//Total sizes
-	std::vector<double>					m_TotalSizes;
+		//Total sizes
+		std::vector<double>                 m_TotalSizes;
 };
-
 #endif
-    // _MAININTERFACE_H_
+// _MAININTERFACE_H_

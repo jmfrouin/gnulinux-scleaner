@@ -47,27 +47,26 @@ class IPlugin;
 
 class CMainDialog: public wxDialog, public CSmartCpt
 {
-public:
-    CMainDialog(wxWindow* parent, const wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, const long windowStyle = wxDEFAULT_DIALOG_STYLE);
-    ~CMainDialog();
+	public:
+		CMainDialog(wxWindow* parent, const wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, const long windowStyle = wxDEFAULT_DIALOG_STYLE);
+		~CMainDialog();
 
-    void OnOK(wxCommandEvent& event);
-    void OnExit(wxCommandEvent& event);
-    void OnCloseWindow(wxCloseEvent& event);
-	void OnChecklistboxSelected(wxCommandEvent& event);
-    void Init(void);
+		void OnOK(wxCommandEvent& event);
+		void OnExit(wxCommandEvent& event);
+		void OnCloseWindow(wxCloseEvent& event);
+		void OnChecklistboxSelected(wxCommandEvent& event);
+		void Init(void);
 
-protected:
-    CTrayIcon*	m_Icon;
-#if defined(__WXCOCOA__)
-    CTrayIcon*	m_DockIcon;
-#endif
-	std::map<std::string, IPlugin*>* 	m_PluginsList;
-	wxStaticText*						m_Title;
-	wxStaticText*						m_Description;
+	protected:
+		CTrayIcon*  m_Icon;
+	#if defined(__WXCOCOA__)
+		CTrayIcon*  m_DockIcon;
+	#endif
+		std::map<std::string, IPlugin*>*    m_PluginsList;
+		wxStaticText*                       m_Title;
+		wxStaticText*                       m_Description;
 
-DECLARE_EVENT_TABLE()
+		DECLARE_EVENT_TABLE()
 };
-
-#endif // _MAINDIALOG_H_
+#endif							 // _MAINDIALOG_H_
 /* vi:set ts=4: */

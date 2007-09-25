@@ -30,7 +30,10 @@ ILog::ILog()
 {
 }
 
+
 ILog::~ILog()
 {
 }
+
+
 /* vi:set ts=4: */

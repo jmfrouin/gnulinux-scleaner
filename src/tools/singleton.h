@@ -29,17 +29,17 @@ $Author$
 #include <leak/leak_detector.h>
 
 /*!
-*@brief A singleton template.
-*@note Tips : A good idea is to use a CSmartPtr to grab Instance() to avoid memory leak.
-*/
+ *@brief A singleton template.
+ *@note Tips : A good idea is to use a CSmartPtr to grab Instance() to avoid memory leak.
+ */
 template <class T>
 class TSingleton
 {
 	public:
-        /*!
-         *@brief Singleton accessor.
-         */
-        static T* Instance()
+		/*!
+		 *@brief Singleton accessor.
+		 */
+		static T* Instance()
 		{
 			T* l_ret = m_Inst;
 
@@ -50,34 +50,33 @@ class TSingleton
 
 			return l_ret;
 		}
-		
+
 	protected:
 		/*!
-		*@brief Default constructor
-		*
-		*Made constructor private to avoid problem.
-		*
-		*Nobody except itself can create it.
-		*/
+		 *@brief Default constructor
+		 *
+		 *Made constructor private to avoid problem.
+		 *
+		 *Nobody except itself can create it.
+		 */
 		TSingleton()
 		{
 		}
 
 		/*!
-		*@brief Destructor
-		*@note Made destructor private to avoid problem.
-		*@note Nobody except itself can create it.
-		*/
+		 *@brief Destructor
+		 *@note Made destructor private to avoid problem.
+		 *@note Nobody except itself can create it.
+		 */
 		virtual ~TSingleton()
 		{
 		}
-		
+
 	private:
-		static T*	m_Inst;	///< The only single instance.
+		static T*   m_Inst;		 ///< The only single instance.
 };
 
 template <class T>
 T* TSingleton<T>::m_Inst = 0;
-
-#endif //_SINGLETON_H_
+#endif							 //_SINGLETON_H_
 /* vi:set ts=4: */

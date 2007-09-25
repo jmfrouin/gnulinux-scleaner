@@ -41,55 +41,57 @@ $Author$
  */
 class CPluginManager: public CSmartCpt, public TSingleton<CPluginManager>
 {
-    public:
-        /*!
-         *@brief Load all available plugins.
-         *@param path The folder location.
-         *@return Number of plugins founded.
-         */
-        int loadPlugins (const std::string& path);
-
-        /*!
-         *@brief Add a new input plugin to the list of available plugins.
-         *@param _toadd Plugin to add.
-         */
-        void add(IInPlugin* _toadd);
-
-        /*!
-         *@brief Add a new output plugin to the list of available plugins.
-         *@param _toadd Plugin to add.
-         */
-        void add(IOutPlugin* _toadd);
+	public:
+		/*!
+		 *@brief Load all available plugins.
+		 *@param path The folder location.
+		 *@return Number of plugins founded.
+		 */
+		int loadPlugins (const std::string& path);
 
 		/*!
-		*@brief Pointer on input plugins list
-		*/
+		 *@brief Add a new input plugin to the list of available plugins.
+		 *@param _toadd Plugin to add.
+		 */
+		void add(IInPlugin* _toadd);
+
+		/*!
+		 *@brief Add a new output plugin to the list of available plugins.
+		 *@param _toadd Plugin to add.
+		 */
+		void add(IOutPlugin* _toadd);
+
+		/*!
+		 *@brief Pointer on input plugins list
+		 */
 		std::map<std::string, IInPlugin*>* getInputListPtr();
 
 		/*!
-		*@brief Pointer on output plugins list
-		*/
+		 *@brief Pointer on output plugins list
+		 */
 		std::map<std::string, IOutPlugin*>* getOutputListPtr();
 
-        /*!
-         *@brief Retrieve list found of ALL plugins.
-         */
+		/*!
+		 *@brief Retrieve list found of ALL plugins.
+		 */
 		void getFileList(std::list<std::string>& _fl);
 
-        /*!
-         * @brief ctor.
-         */
-        CPluginManager(){};
+		/*!
+		 * @brief ctor.
+		 */
+		CPluginManager(){};
 
-        /*!
-         * @brief dtor.
+		/*!
+		 * @brief dtor.
 		 * @todo Fix the leak on plugins loaded.
-         */
-        ~CPluginManager();
+		 */
+		~CPluginManager();
 
-    private:
-        std::map<std::string, IInPlugin*> 	m_InputPlugins;		///< List of available input plugins.
-        std::map<std::string, IOutPlugin*> 	m_OutputPlugins;	///< List of available output plugins.
+	private:
+								 ///< List of available input plugins.
+		std::map<std::string, IInPlugin*>   m_InputPlugins;
+								 ///< List of available output plugins.
+		std::map<std::string, IOutPlugin*>  m_OutputPlugins;
 };
-#endif                           //_PLUGIN_MANAGER_H_
+#endif							 //_PLUGIN_MANAGER_H_
 /* vi:set ts=4: */

@@ -39,16 +39,18 @@ m_fl(0)
 {
 }
 
+
 int CEngine::loadPlugins(const std::string& _path)
 {
 	int l_ret=0;
 
 	//Plugins manager
 	m_pfm = CPluginManager::Instance();
-    
+
 	l_ret = m_pfm->loadPlugins(_path);
 	return l_ret;
 }
+
 
 bool CEngine::loadInterface()
 {
@@ -57,13 +59,14 @@ bool CEngine::loadInterface()
 	CMainInterface* l_Main = 0;
 	l_Main = new CMainInterface(NULL, wxID_ANY, wxT(NAME), SYMBOL_MAININTERFACE_POSITION, SYMBOL_MAININTERFACE_SIZE);
 	if(l_Main)
-    {
+	{
 		l_Main->Show(true);
 		l_ret = true;
 	}
 
 	return l_ret;
 }
+
 
 bool CEngine::isRoot()
 {
@@ -79,6 +82,7 @@ bool CEngine::isRoot()
 	return l_ret;
 }
 
+
 bool CEngine::getKernelVersion(std::string& _version)
 {
 	bool l_ret = false;
@@ -90,12 +94,13 @@ bool CEngine::getKernelVersion(std::string& _version)
 	else
 	{
 		_version += l_temp.release;
-		
+
 		l_ret = true;
 	}
 
 	return l_ret;
 }
+
 
 bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name, IProgressbar* _callback)
 {
@@ -115,26 +120,28 @@ bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name
 	return l_ret;
 }
 
+
 int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf)
 {
 	int l_ret = 0;
 	std::string l_path(_fpath);
 
 	//Check if it is a folder ?
-	if (_stat->st_mode > 23420) 
+	if (_stat->st_mode > 23420)
 	{
 		//Pattern matching
 		if(l_path.find(CEngine::Instance()->getPattern(), 0) != std::string::npos)
 		{
-#if defined DEBUG
+			#if defined DEBUG
 			std::cout << "[DBG] FTW_callback : " << l_path << '\n';
-#endif
+			#endif
 			CEngine::Instance()->getList()->push_back(l_path);
 		}
 	}
 
-    return l_ret;	// To tell nftw() to continue
+	return l_ret;				 // To tell nftw() to continue
 }
+
 
 bool CEngine::getFileList(std::list<std::string>& _fl, const std::string& _path, const std::string& _pattern, bool _recursive)
 {
@@ -145,14 +152,15 @@ bool CEngine::getFileList(std::list<std::string>& _fl, const std::string& _path,
 
 	m_pattern = _pattern;
 
-    if( nftw(_path.c_str(), FTW_callback, 20, l_flags) == 0)
+	if( nftw(_path.c_str(), FTW_callback, 20, l_flags) == 0)
 	{
 		l_ret = true;
 	}
-	
+
 	m_fl = 0;
 	return l_ret;
 }
+
 
 bool CEngine::getUsername(std::string& _username)
 {
@@ -163,16 +171,16 @@ bool CEngine::getUsername(std::string& _username)
 	struct passwd* l_passwd = 0;
 	l_passwd = getpwuid(l_uid);
 
-#if defined DEBUG
+	#if defined DEBUG
 	std::cout << "[DBG] CEngine::getUsername UID: " << l_uid << '\n';
-#endif
-	
-	if (l_passwd) 
+	#endif
+
+	if (l_passwd)
 	{
 		_username = l_passwd->pw_name;
-#if defined DEBUG
+		#if defined DEBUG
 		std::cout << "[DBG] CEngine::getUsername Username: " << _username << '\n';
-#endif
+		#endif
 		l_ret = true;
 	}
 	else
@@ -182,6 +190,7 @@ bool CEngine::getUsername(std::string& _username)
 
 	return l_ret;
 }
+
 
 void CEngine::formatSize(double _size, std::string& _str)
 {
@@ -210,4 +219,6 @@ void CEngine::formatSize(double _size, std::string& _str)
 	}
 	_str += l_temp.str();
 }
+
+
 /* vi:set ts=4: */

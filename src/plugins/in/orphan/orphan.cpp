@@ -32,28 +32,33 @@ CPluginInitializer<CorphanPlugin> g_orphan;
 
 CorphanPlugin::CorphanPlugin()
 {
-    setName("orphan");
+	setName("orphan");
 }
+
 
 CorphanPlugin::~CorphanPlugin()
 {
 }
+
 
 const std::string CorphanPlugin::location()
 {
 	return "/var/log/orphan.log";
 }
 
+
 const std::string CorphanPlugin::description()
 {
 	return "Application settings orphan cleaner";
 }
+
 
 bool CorphanPlugin::isThreadable()
 {
 	bool l_ret = true;
 	return l_ret;
 }
+
 
 void CorphanPlugin::__Run()
 {
@@ -64,10 +69,13 @@ void CorphanPlugin::__Run()
 	IThread::__End();
 }
 
+
 IPlugin::eType CorphanPlugin::Type()
 {
 	eType l_ret;
 	l_ret = eInput;
 	return l_ret;
 }
+
+
 /* vi:set ts=4: */

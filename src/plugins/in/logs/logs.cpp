@@ -26,7 +26,7 @@ $Author$
 #include <iostream>
 #include <plugins/plugin_initializer.h>
 #include "logs.h"
-#include <sys/stat.h>            ///Get file size.
+#include <sys/stat.h>			 ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
@@ -34,12 +34,14 @@ CPluginInitializer<ClogsPlugin> g_logs;
 
 ClogsPlugin::ClogsPlugin()
 {
-    setName("logs");
+	setName("logs");
 }
+
 
 ClogsPlugin::~ClogsPlugin()
 {
 }
+
 
 IPlugin::eType ClogsPlugin::Type()
 {
@@ -47,6 +49,7 @@ IPlugin::eType ClogsPlugin::Type()
 	l_ret = eInput;
 	return l_ret;
 }
+
 
 //From IInPlugin
 void ClogsPlugin::getFileList(std::list<std::string>& _fl)
@@ -58,11 +61,13 @@ void ClogsPlugin::getFileList(std::list<std::string>& _fl)
 	}
 }
 
+
 bool ClogsPlugin::needRoot()
 {
 	bool l_ret;
-	l_ret = true; // In order to access /var/log/ we need root access.
+	l_ret = true;				 // In order to access /var/log/ we need root access.
 	return l_ret;
 }
+
 
 /* vi:set ts=4: */

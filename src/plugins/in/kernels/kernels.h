@@ -24,17 +24,17 @@ $Author$
 */
 
 /*! @page page3 Plugins documentations.
-* - @subpage kernels
-*/
+ * - @subpage kernels
+ */
 
 /*! @page kernels kernels: input plugin.
-* @section desc Description
-* This plugin allow user to remove all <b>kernels</b> unused, automatically installed on system.
-* <br>
-* @section param Parameters
-* @section pb Knows bugs
-* @section todo Todo
-*/
+ * @section desc Description
+ * This plugin allow user to remove all <b>kernels</b> unused, automatically installed on system.
+ * <br>
+ * @section param Parameters
+ * @section pb Knows bugs
+ * @section todo Todo
+ */
 
 #ifndef _KERN_H_
 #define _KERN_H_
@@ -43,24 +43,24 @@ $Author$
 #include <plugins/in_plugin.h>
 
 /*!
-*@brief Find unused kernels.
-*/
+ *@brief Find unused kernels.
+ */
 class CkernelsPlugin : public IInPlugin
 {
-    public:
-        CkernelsPlugin();
-        ~CkernelsPlugin();
+	public:
+		CkernelsPlugin();
+		~CkernelsPlugin();
 
 		/*!
-		*@brief From IPlugin.
-		*/
+		 *@brief From IPlugin.
+		 */
 		eType Type();
 
 		/*!
-		*@brief From IInPlugin
-		*/
+		 *@brief From IInPlugin
+		 */
 		void getFileList(std::list<std::string>& _fl);
 		bool needRoot();
 };
-#endif                           //_KERN_H_
+#endif							 //_KERN_H_
 /* vi:set ts=4: */

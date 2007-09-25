@@ -31,29 +31,29 @@ $Author$
 #include <tools/thread.h>
 
 /*!
-*@brief Thread plugin.
-*
-* This plugin will find / delete orphan folder from "/home/user/.APP".
-*/
+ *@brief Thread plugin.
+ *
+ * This plugin will find / delete orphan folder from "/home/user/.APP".
+ */
 class CorphanPlugin : public IPlugin, public IThread
 {
-    public:
-        CorphanPlugin();
-        ~CorphanPlugin();
+	public:
+		CorphanPlugin();
+		~CorphanPlugin();
 
 		/*!
-		*@brief From IPlugin.
-		*/
+		 *@brief From IPlugin.
+		 */
 		const std::string location();
 		const std::string description();
 		bool isThreadable();
 		eType Type();
 
 		/*!
-		*@brief From CThread.
-		*/
+		 *@brief From CThread.
+		 */
 		virtual void __Run();
 
 };
-#endif                           //_ORPHAN_H_
+#endif							 //_ORPHAN_H_
 /* vi:set ts=4: */

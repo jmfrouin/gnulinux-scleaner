@@ -44,9 +44,9 @@ $Author$
  * scleaner will be able to clean your GNU/Linux desktop (developped under Ubuntu 7.04 Feisty) by removing for example all unwanted log, orphan or duplicate files ...
  *
  * It support plugins to allow developpers to add there own plugins. It is able to minimize in Tray.
- * 
+ *
  * It use wxWidgets for frontend.
- * 
+ *
  * It used this https://wiki.ubuntu.com/SystemCleanUpTool as guidelines for developpement and add some others ideas.
  * @section install Installation
  *
@@ -60,11 +60,11 @@ $Author$
  * $Rev$
  */
 
- /*! @page page3 Plugins documentations
+/*! @page page3 Plugins documentations
  * Here you can find all plugins documentations.
  */
 
- /*! @page page1 Improvement
+/*! @page page1 Improvement
  *
  * @section error Error code
  *
@@ -75,13 +75,13 @@ $Author$
  * man 2 uname (useful to get current used kernel version, to clean all unusued kernel)
  */
 
- /*! @page page2 Inputs plugins to write
+/*! @page page2 Inputs plugins to write
  *
  * Empty file
  *
  * Empty folder
- * 
- * .app orphan folder 
+ *
+ * .app orphan folder
  *
  * duplicate files : use MD5 SUM to identify them.
  *
@@ -92,7 +92,7 @@ $Author$
  * make clean
  *
  * .thumbnail
- * 
+ *
  * Unused and old kernel package
  *
  * Orphans
@@ -106,10 +106,10 @@ $Author$
  * *.ext~
  */
 
- /*! @page page5 Output plugins to write 
+/*! @page page5 Output plugins to write
  *
  * based on hubackup / sbackup ?
- * 
+ *
  * Burn to cd
  *
  * Copy to usbdisk ?
@@ -117,10 +117,9 @@ $Author$
  */
 
 /*! @page page4 Build & Installation
-* 
-* Please check INSTALL file for test scleaner.
-*
-*/
+ *
+ * Please check INSTALL file for test scleaner.
+ *
+ */
 
 /* vi:set ts=4: */
-

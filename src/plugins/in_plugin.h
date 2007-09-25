@@ -30,29 +30,28 @@ $Author$
 #include "iplugin.h"
 
 /*!
-*@brief Input plugin interface.
-*/
+ *@brief Input plugin interface.
+ */
 class IInPlugin : public IPlugin
 {
-		public:
-			/*!
-			*@brief ctor
-			*/
-			IInPlugin() {}
-			/*!
-			*@brief dtor
-			*/
-			virtual ~IInPlugin() {}
+	public:
+		/*!
+		 *@brief ctor
+		 */
+		IInPlugin() {}
+		/*!
+		 *@brief dtor
+		 */
+		virtual ~IInPlugin() {}
 
-			/*!
-			*@brief Does it need to be run as root (sudo) ?
-			*/
-			virtual bool needRoot() = 0;
+		/*!
+		 *@brief Does it need to be run as root (sudo) ?
+		 */
+		virtual bool needRoot() = 0;
 
-			/*!
-			*@brief Return a std::list of files targeted by plugin.
-			*/
-			virtual void getFileList(std::list<std::string>& _fl) = 0;
+		/*!
+		 *@brief Return a std::list of files targeted by plugin.
+		 */
+		virtual void getFileList(std::list<std::string>& _fl) = 0;
 };
-
-#endif // _IN_PLUGIN_H_
+#endif							 // _IN_PLUGIN_H_

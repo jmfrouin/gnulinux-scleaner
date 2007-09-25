@@ -36,28 +36,27 @@ $Author: snoogie $
 
 class wxCheckListCtrl: public wxListCtrl
 {
-    DECLARE_CLASS(wxCheckListCtrl)
-public:
-    wxCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition,
-        const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
-    ~wxCheckListCtrl();
+	DECLARE_CLASS(wxCheckListCtrl)
+		public:
+		wxCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition,
+			const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
+		~wxCheckListCtrl();
 
-//// Event handlers    
-    void OnMouseEvent(wxMouseEvent& event);
-    void OnKeyDown(wxKeyEvent& event);
+		//// Event handlers
+		void OnMouseEvent(wxMouseEvent& event);
+		void OnKeyDown(wxKeyEvent& event);
 
-//// Accessors
+		//// Accessors
 
-    /// Load the icons
-    bool LoadIcons();
+		/// Load the icons
+		bool LoadIcons();
 
-    /// Set the appropriate icon
-    bool SetIcon(long& item);
+		/// Set the appropriate icon
+		bool SetIcon(long& item);
 
-protected:
-    wxImageList*        m_imageList;
+	protected:
+		wxImageList*        m_imageList;
 
-    DECLARE_EVENT_TABLE()
+		DECLARE_EVENT_TABLE()
 };
-
-#endif // _WB_CHECKLISTCTRL_H_
+#endif							 // _WB_CHECKLISTCTRL_H_

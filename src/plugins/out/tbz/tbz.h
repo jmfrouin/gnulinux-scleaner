@@ -26,17 +26,17 @@ $Author$
 */
 
 /*! @page page3 Plugins documentations.
-* - @subpage tbz
-*/
+ * - @subpage tbz
+ */
 
 /*! @page tbz tbz: output plugin.
-* @section desc Description
-* This plugin allow user to create a <b>tarball</b> with all selected files from input plugins. Then it will compress it using <b>bzip2</b>.
-* <br>
-* @section param Parameters
-* @section pb Knows bugs
-* @section todo Todo
-*/
+ * @section desc Description
+ * This plugin allow user to create a <b>tarball</b> with all selected files from input plugins. Then it will compress it using <b>bzip2</b>.
+ * <br>
+ * @section param Parameters
+ * @section pb Knows bugs
+ * @section todo Todo
+ */
 
 #ifndef _TBZ_H_
 #define _TBZ_H_
@@ -46,28 +46,28 @@ $Author$
 
 class CtbzPlugin : public IOutPlugin
 {
-    public:
-        CtbzPlugin();
-        ~CtbzPlugin();
+	public:
+		CtbzPlugin();
+		~CtbzPlugin();
 
 		/*!
-		*@brief From IPlugin.
-		*/
+		 *@brief From IPlugin.
+		 */
 		void processFileList(std::list<std::string>& _fl, IProgressbar* _callback);
 		const std::string description();
 		const std::string author();
 		const std::string version();
 		eType Type();
-	
+
 	private:
 		/*!
-		*@brief Compress a file using bz algo.
-		*@param _input Input file name.
-		*@param _output Output file name.
-		*@param _callback For the progress bar.
-		*@return true on success, false otherwise.
-		*/
+		 *@brief Compress a file using bz algo.
+		 *@param _input Input file name.
+		 *@param _output Output file name.
+		 *@param _callback For the progress bar.
+		 *@return true on success, false otherwise.
+		 */
 		bool Compress(const std::string& _input, const std::string& _output, IProgressbar* _callback);
 };
-#endif                           //_TBZ_H_
+#endif							 //_TBZ_H_
 /* vi:set ts=4: */

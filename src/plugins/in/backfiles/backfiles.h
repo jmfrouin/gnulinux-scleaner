@@ -24,18 +24,18 @@ $Author: snoogie $
 */
 
 /*! @page page3 Plugins documentations.
-* - @subpage logs
-*/
+ * - @subpage logs
+ */
 
 /*! @page backfiles backfiles: input plugin.
-* @section desc Description
-* This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
-* <br>
-* In fact it just scan <b>/home/user/</b> and its subfolders.
-* @section param Parameters
-* @section pb Knows bugs
-* @todo Support both modes, simple user & root/sudo.
-*/
+ * @section desc Description
+ * This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
+ * <br>
+ * In fact it just scan <b>/home/user/</b> and its subfolders.
+ * @section param Parameters
+ * @section pb Knows bugs
+ * @todo Support both modes, simple user & root/sudo.
+ */
 
 #ifndef _BACKFILES_H_
 #define _BACKFILES_H_
@@ -45,21 +45,21 @@ $Author: snoogie $
 
 class CbackfilesPlugin : public IInPlugin
 {
-    public:
-        CbackfilesPlugin();
-        ~CbackfilesPlugin();
+	public:
+		CbackfilesPlugin();
+		~CbackfilesPlugin();
 
 		/*!
-		*@brief From IPlugin.
-		*/
+		 *@brief From IPlugin.
+		 */
 		eType Type();
 
 		/*!
-		*@brief From IInPlugin
-		*@todo : Fix use of wxwidgets in plugins !!!!
-		*/
+		 *@brief From IInPlugin
+		 *@todo : Fix use of wxwidgets in plugins !!!!
+		 */
 		void getFileList(std::list<std::string>& _fl);
 		bool needRoot();
 };
-#endif                           //_BACKFILES_H_
+#endif							 //_BACKFILES_H_
 /* vi:set ts=4: */

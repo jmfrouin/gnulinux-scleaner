@@ -29,8 +29,8 @@ $Author$
 #include <pthread.h>
 
 /*!
-*@brief Thread another class by heritage.
-*/
+ *@brief Thread another class by heritage.
+ */
 class IThread
 {
 	public:
@@ -38,20 +38,20 @@ class IThread
 		virtual ~IThread();
 
 		/*!
-		*@brief Launch thread
-		*/
-		int Run();		
+		 *@brief Launch thread
+		 */
+		int Run();
 
 		/*!
-		*@brief The function to run to be pure virtual.
-		*/
+		 *@brief The function to run to be pure virtual.
+		 */
 		virtual void __Run() = 0;
 
 		/*!
-		*@brief Need to be call when __Run has end.
-		*/
+		 *@brief Need to be call when __Run has end.
+		 */
 		void __End();
-	
+
 	private:
 		pthread_t m_Thread;
 
@@ -64,6 +64,5 @@ static void* link(void* _context)
 	l_Thread->__Run();
 	return 0;
 }
-
-#endif //_THREAD_H_
+#endif							 //_THREAD_H_
 /* vi:set ts=4: */
