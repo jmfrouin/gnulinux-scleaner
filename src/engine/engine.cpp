@@ -27,6 +27,7 @@ $Author$
 #include <ftw.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sstream>
 #include <pwd.h>
 #include <dirent.h>
 #include <sys/utsname.h>
@@ -182,4 +183,31 @@ bool CEngine::getUsername(std::string& _username)
 	return l_ret;
 }
 
+void CEngine::formatSize(double _size, std::string& _str)
+{
+	std::stringstream l_temp;
+	if(_size > (1024*1024))
+	{
+		l_temp << _size / (1024*1024) << " M" << '\n';
+	}
+	else
+	{
+		if(_size > 1024)
+		{
+			l_temp << _size / 1024 << " K" << '\n';
+		}
+		else
+		{
+			if(_size == 0)
+			{
+				l_temp << "null size" << '\n';
+			}
+			else
+			{
+				l_temp << _size  << " b" << '\n';
+			}
+		}
+	}
+	_str += l_temp.str();
+}
 /* vi:set ts=4: */

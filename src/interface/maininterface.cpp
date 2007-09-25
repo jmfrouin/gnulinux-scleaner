@@ -201,6 +201,7 @@ void CMainInterface::CreateControls()
 	int l_flags = wxBK_TOP | wxNB_MULTILINE | wxDOUBLE_BORDER;
 	m_Input = new wxNotebook(itemSplitterWindow10, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
 
+	double l_totalsize = 0;
 	// Happend plugins' name available
 	//wxTreeItemId l_root = m_Input->AddRoot(wxT("Input plugins"), wxTreeItemIcon_Expanded, wxTreeItemIcon_Expanded);
     std::map<std::string, IInPlugin*>::iterator _it;
@@ -266,10 +267,10 @@ void CMainInterface::CreateControls()
 			}
 			else
 			{
-    			std::stringstream l_size;
-    			l_size << l_info.st_size;
-				std::string l_ssize(l_size.str());
-				wxString l_usize(l_ssize.c_str(), wxConvUTF8);
+				l_totalsize += l_info.st_size;
+				std::string l_size;
+				m_Engine->formatSize(l_info.st_size, l_size);
+				wxString l_usize(l_size.c_str(), wxConvUTF8);
 	    		l_fileslist->SetItem(l_tmp, 1, l_usize);
 	    		l_fileslist->SetItem(l_tmp, 2, l_usize);
 			}
@@ -294,6 +295,7 @@ void CMainInterface::CreateControls()
 
     	l_fileslist->Show();
 		m_Input->AddPage(l_fileslist, l_str, true);
+		m_TotalSizes.push_back(l_totalsize);
     }
 
     wxSplitterWindow* itemSplitterWindow12 = new wxSplitterWindow( itemSplitterWindow10, ID_SPLITTERWINDOW2, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
@@ -363,12 +365,8 @@ wxIcon CMainInterface::GetIconResource( const wxString& name )
 
 //Callbacks
 //NoteBook
-/* 
- *@todo	Add total in status bar here
- *@todo And so create a std::list of double
- *@todo And a display function in Ko, Mo
-*/
 /*
+ *@todo Fix size display.
  *@todo On one disk scan can occur but not on per plugin
  */
 void CMainInterface::OnNotebook(wxNotebookEvent& event) 
@@ -379,6 +377,18 @@ void CMainInterface::OnNotebook(wxNotebookEvent& event)
 	if(m_Html != 0)
 	{
     	m_Html->LoadPage(wxT("/usr/share/doc/scleaner/") + l_name + _T(".html"));
+	}
+	std::stringstream l_tot;
+	std::cout << l_sel << '\n';
+	if(m_TotalSizes.size() > 0)
+	{
+		std::cout << m_TotalSizes[l_sel] << '\n';
+		std::string l_total("Total size : ");
+		CEngine::Instance()->formatSize(m_TotalSizes[l_sel], l_total);
+		wxString l_totalsize(l_total.c_str(), wxConvUTF8);
+
+		SetStatusText(l_totalsize, 0);
+		//PushStatusText(l_totalsize);
 	}
 }
 

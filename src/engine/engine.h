@@ -109,6 +109,13 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*/
 		bool getUsername(std::string& _username);
 
+		/*!
+		*@brief Better size display.
+		*@param _size Size to format.
+		*@param _str String to fill.
+		*/
+		static void formatSize(double _size, std::string& _str);
+
 		//Accessors
 		std::list<std::string>* getList()
 		{

@@ -30,6 +30,7 @@ $Author$
 #include <map>
 #include <list>
 #include <string>
+#include <vector>
 #include <wx/frame.h>
 #include <wx/toolbar.h>
 #include <wx/splitter.h>
@@ -126,6 +127,9 @@ protected:
 
 	//Progress bar for process part.
 	wxProgressDialog*					m_Progress;
+
+	//Total sizes
+	std::vector<double>					m_TotalSizes;
 };
 
 #endif
