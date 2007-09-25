@@ -363,6 +363,14 @@ wxIcon CMainInterface::GetIconResource( const wxString& name )
 
 //Callbacks
 //NoteBook
+/* 
+ *@todo	Add total in status bar here
+ *@todo And so create a std::list of double
+ *@todo And a display function in Ko, Mo
+*/
+/*
+ *@todo On one disk scan can occur but not on per plugin
+ */
 void CMainInterface::OnNotebook(wxNotebookEvent& event) 
 { 
 	wxString l_name;
