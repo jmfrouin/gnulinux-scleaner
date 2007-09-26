@@ -349,7 +349,7 @@ void CMainInterface::CreateControls()
 	m_Engine->getKernelVersion(l_version);
 	wxString l_uversion(l_version.c_str(), wxConvUTF8);
 	SetStatusText(l_uversion, 1);
-	std::string l_path, l_used("Used mounted space: "), l_free("Free mounted space: "), l_total("Total mounted space: ");
+	std::string l_path, l_used("Used: "), l_free("Free: "), l_total("Total: ");
 	m_Engine->getFreeSpace(l_path, l_used, l_free, l_total);
 	wxString l_utotal(l_total.c_str(), wxConvUTF8);
 	SetStatusText(l_utotal, 3);
