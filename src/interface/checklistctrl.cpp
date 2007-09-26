@@ -69,7 +69,6 @@ wxCheckListCtrl::~wxCheckListCtrl()
 /// Set the appropriate icon
 bool wxCheckListCtrl::SetIcon(long& item)
 {
-	std::cout << "SetIcon : Item = " << item << '\n';
 	wxListItem l_item;
 	l_item.SetId(item);
 	GetItem(l_item);
@@ -89,14 +88,16 @@ bool wxCheckListCtrl::SetIcon(long& item)
 
 void wxCheckListCtrl::OnMouseEvent(wxMouseEvent& event)
 {
-	int flags = 0;
+	int l_flags = 0;
 	long l_subitem;
-	long item = HitTest(wxPoint(event.GetX(), event.GetY()), flags, &l_subitem);
-	std::cout << "Item : " << std::dec << item << '\n';
+	long l_item = HitTest(wxPoint(event.GetX(), event.GetY()), l_flags, &l_subitem);
 
 	if (event.LeftDown())
 	{
-		SetIcon(item);
+		if (l_flags & wxLIST_HITTEST_ONITEMICON)
+		{
+			SetIcon(l_item);
+		}
 	}
 
 	event.Skip();
@@ -105,30 +106,16 @@ void wxCheckListCtrl::OnMouseEvent(wxMouseEvent& event)
 
 void wxCheckListCtrl::OnKeyDown(wxKeyEvent& event)
 {
-	/*wxListItem item = GetSelection();
+	int l_flags = 0;
+	long l_subitem;
+	long l_item = HitTest(wxPoint(event.GetX(), event.GetY()), l_flags, &l_subitem);
+
 	if (event.GetKeyCode() == WXK_SPACE)
 	{
-		if (item.IsOk())
-		{
-			wxCheckListItemAttr* data = (wxCheckListItemAttr*) GetItemData(item);
-
-			if (data && data->GetEnabled())
-			{
-				data->SetChecked(!data->GetChecked());
-				SetIcon(item);
-
-				wxCheckListEvent commandEvent(wxEVT_COMMAND_CHECKLISTCTRL_TOGGLED, GetId());
-				commandEvent.SetEventObject(this);
-				commandEvent.SetListItemId(item);
-				commandEvent.SetChecked(data->GetChecked());
-				commandEvent.SetData(data);
-				GetEventHandler()->ProcessEvent(commandEvent);
-			}
-		}
+		SetIcon(l_item);
 	}
 	else
 	{
 		event.Skip();
-	}*/
-	event.Skip();
+	}
 }

@@ -55,7 +55,16 @@ void CtbzPlugin::processFileList(std::list<std::string>& _fl, IProgressbar* _cal
 
 	l_tar.Create(_fl, "backup.tar", _callback);
 
-	Compress("backup.tar" , "backup.tbz", _callback);
+	if(Compress("backup.tar" , "backup.tbz", _callback))
+	{
+		unlink("backup.tar");
+	}
+	else
+	{
+		std::cerr << "[ERR] CtbzPlugin::processFileList An error occured during compression so I left " << "backup.tar" << '\n';
+	}
+	
+
 }
 
 

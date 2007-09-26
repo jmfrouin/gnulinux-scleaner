@@ -245,7 +245,7 @@ void CMainInterface::CreateControls()
 		l_itemCol.SetAlign(wxLIST_FORMAT_CENTRE);
 		l_fileslist->InsertColumn(1, l_itemCol);
 
-		l_itemCol.SetText(_T("Misc"));
+		l_itemCol.SetText(_T("Relevance"));
 		l_itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
 		l_fileslist->InsertColumn(2, l_itemCol);
 
@@ -303,6 +303,8 @@ void CMainInterface::CreateControls()
 		m_TotalSizes.push_back(l_totalsize);
 	}
 
+	m_Input->AdvanceSelection();
+
 	wxSplitterWindow* itemSplitterWindow12 = new wxSplitterWindow( itemSplitterWindow10, ID_SPLITTERWINDOW2, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 	itemSplitterWindow12->SetMinimumPaneSize(0);
 
@@ -328,7 +330,7 @@ void CMainInterface::CreateControls()
 	itemSplitterWindow10->SplitVertically(m_Input, itemSplitterWindow12, 200);
 
 	m_StatusBar = new wxStatusBar( l_Frame, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
-	m_StatusBar->SetFieldsCount(3);
+	m_StatusBar->SetFieldsCount(6);
 	l_Frame->SetStatusBar(m_StatusBar);
 
 	if(m_Engine->isRoot())
@@ -340,14 +342,21 @@ void CMainInterface::CreateControls()
 		std::string l_username;
 		m_Engine->getUsername(l_username);
 		wxString l_uusername(l_username.c_str(), wxConvUTF8);
-		SetStatusText(_T("Launched as standard user (") + l_uusername + _T(")"), 2);
+		SetStatusText(_T("Launched as ") + l_uusername, 2);
 	}
 
 	std::string l_version = "Kernel : v";
 	m_Engine->getKernelVersion(l_version);
 	wxString l_uversion(l_version.c_str(), wxConvUTF8);
 	SetStatusText(l_uversion, 1);
-
+	std::string l_path, l_used("Used mounted space: "), l_free("Free mounted space: "), l_total("Total mounted space: ");
+	m_Engine->getFreeSpace(l_path, l_used, l_free, l_total);
+	wxString l_utotal(l_total.c_str(), wxConvUTF8);
+	SetStatusText(l_utotal, 3);
+	wxString l_uused(l_used.c_str(), wxConvUTF8);
+	SetStatusText(l_uused, 4);
+	wxString l_ufree(l_free.c_str(), wxConvUTF8);
+	SetStatusText(l_ufree, 5);
 }
 
 
@@ -373,10 +382,6 @@ wxIcon CMainInterface::GetIconResource( const wxString& name )
 
 //Callbacks
 //NoteBook
-/*
- *@todo Fix size display.
- *@todo On one disk scan can occur but not on per plugin
- */
 void CMainInterface::OnNotebook(wxNotebookEvent& event)
 {
 	wxString l_name;
@@ -387,16 +392,12 @@ void CMainInterface::OnNotebook(wxNotebookEvent& event)
 		m_Html->LoadPage(wxT("/usr/share/doc/scleaner/") + l_name + _T(".html"));
 	}
 	std::stringstream l_tot;
-	std::cout << l_sel << '\n';
 	if(m_TotalSizes.size() > 0)
 	{
-		std::cout << m_TotalSizes[l_sel] << '\n';
 		std::string l_total("Total size : ");
 		CEngine::Instance()->formatSize(m_TotalSizes[l_sel], l_total);
 		wxString l_totalsize(l_total.c_str(), wxConvUTF8);
-
 		SetStatusText(l_totalsize, 0);
-		//PushStatusText(l_totalsize);
 	}
 }
 

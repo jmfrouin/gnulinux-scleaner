@@ -32,6 +32,9 @@ $Author$
 #include <plugins/plugin_manager.h>
 #include "iprogress.h"
 
+#define FSTAB "/etc/fstab"
+#define ROUND(x) ((x-(int)x>0)?(int)x+1:(int)x) //Mainly wrote for formatSize
+
 /*!
  *@brief Manage all operations
  */
@@ -115,6 +118,16 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		 *@param _str String to fill.
 		 */
 		static void formatSize(double _size, std::string& _str);
+
+		/*!
+		 *@brief Get free space on system (Using mount table : by default /etc/fstab).
+		 *@param _path To get space from a path.
+		 *@param _used Used space correctly formatted.
+		 *@param _free Available space correctly formatted.
+		 *@param _total Total space correctly formatted.
+		 *@return free space size in bytes.
+		 */
+		double getFreeSpace(const std::string& _path, std::string& _used, std::string& _free, std::string& _total);
 
 		//Accessors
 		std::list<std::string>* getList()

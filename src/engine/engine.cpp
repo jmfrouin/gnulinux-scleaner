@@ -30,6 +30,9 @@ $Author$
 #include <sstream>
 #include <pwd.h>
 #include <dirent.h>
+#include <sys/stat.h>
+#include <sys/vfs.h>
+#include <mntent.h>
 #include <sys/utsname.h>
 #include <interface/maininterface.h>
 #include "engine.h"
@@ -195,30 +198,103 @@ bool CEngine::getUsername(std::string& _username)
 void CEngine::formatSize(double _size, std::string& _str)
 {
 	std::stringstream l_temp;
-	if(_size > (1024*1024))
+
+	if(_size > (1024*1024*1024))
 	{
-		l_temp << _size / (1024*1024) << " M" << '\n';
+		l_temp << ROUND((_size / (1024*1024*1024))) << "G";
 	}
 	else
 	{
-		if(_size > 1024)
+		if(_size > (1024*1024))
 		{
-			l_temp << _size / 1024 << " K" << '\n';
+			l_temp << ROUND(_size / (1024*1024)) << "M";
 		}
 		else
 		{
-			if(_size == 0)
+			if(_size > 1024)
 			{
-				l_temp << "null size" << '\n';
+				l_temp << ROUND(_size / 1024) << "K";
 			}
 			else
 			{
-				l_temp << _size  << " b" << '\n';
+				if(_size == 0)
+				{
+					l_temp << "null size";
+				}
+				else
+				{
+					l_temp << _size;
+				}
 			}
 		}
 	}
 	_str += l_temp.str();
 }
 
+
+double CEngine::getFreeSpace(const std::string& _path, std::string& _used, std::string& _free, std::string& _total)
+{
+	double l_ret = 0;
+	
+	FILE* l_mountTable;
+	struct mntent* l_mountEntry;
+
+	l_mountTable = setmntent(FSTAB, "r");
+
+	if (l_mountTable == 0) 
+	{
+		perror(FSTAB);
+	}
+	else
+	{
+		double l_free, l_used, l_total;
+		l_free = l_used = l_total = 0;
+
+		while ((l_mountEntry = getmntent(l_mountTable))) 
+		{
+			struct statfs l_stat;
+			double l_blocks_used;
+			double l_blocks_percent_used;
+
+			if (statfs(l_mountEntry->mnt_dir, &l_stat) != 0) 
+			{
+				perror(l_mountEntry->mnt_dir);
+			}
+			else
+			{
+				if (l_stat.f_blocks > 0) 
+				{
+					l_blocks_used = l_stat.f_blocks - l_stat.f_bfree;
+					l_blocks_percent_used = (double)(l_blocks_used * 100.0 / (l_blocks_used + l_stat.f_bavail) + 0.5);
+					if (strcmp(l_mountEntry->mnt_fsname, "/dev/root") == 0) 
+					{
+						/* Adjusts l_mountEntry->mnt_fsname to be the real root l_mountEntry->mnt_fsname,
+						 * or leaves l_mountEntry->mnt_fsname alone if it can't find it */
+						//find_real_root_l_mountEntry->mnt_fsname_name( l_mountEntry->mnt_fsname);
+					}
+					else
+					{
+						l_free += l_stat.f_bavail*(l_stat.f_bsize);
+						l_used += (l_stat.f_blocks - l_stat.f_bfree)*(l_stat.f_bsize);
+						l_total += l_stat.f_blocks*(l_stat.f_bsize); 
+					}
+				}
+			}
+		}
+
+			std::string l_size;
+			formatSize(l_free, l_size);
+			_free += l_size;
+			l_size.clear();
+			formatSize(l_total, l_size);
+			_total += l_size;
+			l_size.clear();
+			formatSize(l_used, l_size);
+			_used += l_size;
+			endmntent(l_mountTable);
+	}
+
+	return l_ret;
+}
 
 /* vi:set ts=4: */
