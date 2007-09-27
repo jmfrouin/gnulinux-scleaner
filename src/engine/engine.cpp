@@ -38,7 +38,7 @@ $Author$
 #include "engine.h"
 
 CEngine::CEngine():
-m_fl(0)
+m_rootPlugin(0), m_asRoot(false), m_callback(0)
 {
 }
 
@@ -124,45 +124,6 @@ bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name
 }
 
 
-int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf)
-{
-	int l_ret = 0;
-	std::string l_path(_fpath);
-
-	//Check if it is a folder ?
-	if (_stat->st_mode > 23420)
-	{
-		//Pattern matching
-		if(l_path.find(CEngine::Instance()->getPattern(), 0) != std::string::npos)
-		{
-			#if defined DEBUG
-			std::cout << "[DBG] FTW_callback : " << l_path << '\n';
-			#endif
-			CEngine::Instance()->getList()->push_back(l_path);
-		}
-	}
-
-	return l_ret;				 // To tell nftw() to continue
-}
-
-
-bool CEngine::getFileList(std::list<std::string>& _fl, const std::string& _path, const std::string& _pattern, bool _recursive)
-{
-	bool l_ret = false;
-
-	int l_flags = FTW_PHYS;
-	m_fl = &_fl;
-
-	m_pattern = _pattern;
-
-	if( nftw(_path.c_str(), FTW_callback, 20, l_flags) == 0)
-	{
-		l_ret = true;
-	}
-
-	m_fl = 0;
-	return l_ret;
-}
 
 
 bool CEngine::getUsername(std::string& _username)
@@ -297,4 +258,108 @@ double CEngine::getFreeSpace(const std::string& _path, std::string& _used, std::
 	return l_ret;
 }
 
+bool CEngine::scanDisk(IProgressbar* _callback)
+{
+	bool l_ret = false;
+	std::string l_path("/home");
+
+	//If launch as root
+	if(isRoot())
+	{
+		std::map<std::string, IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
+		std::map<std::string, IInPlugin*>::iterator l_it;
+		for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
+		{
+			if(((*l_it).second)->needRoot())
+			{
+				IRootPlugin* l_root = dynamic_cast<IRootPlugin*>((*l_it).second);
+				std::string l_dir;
+				l_root->getDirectory(l_dir);
+				_callback->updateProgress(l_dir, true);
+				scanDirectory(l_dir, true, l_root);
+			}
+		}
+	}
+	else
+	{
+		std::string l_username;
+		getUsername(l_username);
+		l_path += "/" + l_username;
+		#if defined DEBUG
+		std::cout << "[DBG] CEngine::scanDisk Path : " << l_path << '\n';
+		#endif
+	}
+	m_callback = _callback;
+	scanDirectory(l_path);
+	return l_ret;
+}
+
+
+int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf)
+{
+	int l_ret = 0;
+	std::string l_path(_fpath);
+
+	//Check if it is a folder ?
+	if (_stat->st_mode > 23420)
+	{
+		#if defined DEBUG
+		std::cout << "[DBG] FTW_callback : " << l_path << '\n';
+		#endif
+		CEngine* l_eng = CEngine::Instance();
+		if(l_eng->asRoot())
+		{
+			IRootPlugin* l_root = 0;
+			l_root = l_eng->rootPlugin();
+			if(l_root != 0)
+			{
+				l_root->processFile(l_path);
+			}
+		}
+		else
+		{
+			std::map<std::string, IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
+			std::map<std::string, IInPlugin*>::iterator l_it;
+			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
+			{
+				IProgressbar* l_prog = l_eng->getCallback();
+
+				if(l_prog != 0)
+				{
+					l_prog->updateProgress(l_path, true);
+				}
+
+				if(!((*l_it).second)->needRoot())
+				{
+					((*l_it).second)->processFile(l_path);
+				}
+			}
+		}
+	}
+
+	return l_ret;				 // To tell nftw() to continue
+}
+
+
+bool CEngine::scanDirectory(const std::string& _path, bool _asRoot, IRootPlugin* _rootPlugin, bool _recursive)
+{
+	bool l_ret = false;
+
+	int l_flags = FTW_PHYS;
+
+	if(_asRoot)
+	{
+		m_asRoot = true;
+		m_rootPlugin = _rootPlugin;
+	}
+
+	if( nftw(_path.c_str(), FTW_callback, 20, l_flags) == 0)
+	{
+		l_ret = true;
+	}
+
+	m_asRoot = false;
+
+	return l_ret;
+}
 /* vi:set ts=4: */

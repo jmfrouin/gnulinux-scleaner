@@ -23,14 +23,12 @@ $Author$
 ------------------------------------------------------
 */
 
-#include <iostream>
-#include <plugins/plugin_initializer.h>
+#include <plugins/inplugin_initializer.h>
 #include "logs.h"
-#include <sys/stat.h>			 ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-CPluginInitializer<ClogsPlugin> g_logs;
+CPluginInitializerIn<ClogsPlugin> g_logs;
 
 ClogsPlugin::ClogsPlugin()
 {
@@ -51,14 +49,15 @@ IPlugin::eType ClogsPlugin::Type()
 }
 
 
-//From IInPlugin
-void ClogsPlugin::getFileList(std::list<std::string>& _fl)
+void ClogsPlugin::getDirectory(std::string& _path)
 {
-	CEngine* l_Eng = CEngine::Instance();
-	if(l_Eng != 0)
-	{
-		l_Eng->getFileList(_fl, "/var/log/", "");
-	}
+	_path = "/var/log/";
+}
+
+
+void ClogsPlugin::processFile(const std::string& _filename)
+{
+	m_fl.push_back(_filename);
 }
 
 

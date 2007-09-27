@@ -33,10 +33,10 @@ $Author$
 #include <sys/stat.h>			 ///Get file size.
 #include <wx/dir.h>
 #include <tools/tar_archive.h>
-#include <plugins/plugin_initializer.h>
+#include <plugins/outplugin_initializer.h>
 #include <leak/leak_detector.h>
 
-CPluginInitializer<CtbzPlugin> g_tbz;
+CPluginInitializerOut<CtbzPlugin> g_tbz;
 
 CtbzPlugin::CtbzPlugin()
 {
@@ -154,7 +154,7 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 						std::stringstream l_doneStr;
 						l_doneStr << (l_res-50)*2;
 						l_mess += _output + " :  " + l_doneStr.str() + "%";
-						_callback->updateProgress(l_mess, l_res);
+						_callback->updateProgress(l_mess, false, l_res);
 						BZ2_bzWrite(&l_err, l_bz, l_buf, l_bytesread);
 					} while(l_in.good());
 

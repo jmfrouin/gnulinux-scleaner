@@ -2,13 +2,13 @@
 Add output file dialog
 French version ?
 Add tooltip for disabled items in notebook (->"You need root rights to selected these items")
-Add code to detect free space on disk in CEngine
 Add code to detect a twice selected file.
-POSTPONED : Decrease or increase m_TotalSize on select/deselect
-Code need to do only ONE disc scan.
 Check memory leaks and FIXME in code
 Implement error code
-OK: Remove .tar
+wxGauge for scan
+OK : Add code to detect free space on disk in CEngine
+OK : Code need to do only ONE disc scan.
+OK : Remove .tar
 OK : Add file size :)
 OK: Uniform source code formatting.
 OK: Add code for detect user home folder in CEngine.
@@ -17,6 +17,7 @@ OK: Check that box is checked :)
 OK: Add folder content in tar
 OK: Add a pattern matching code in CEngine::getFileList
 RELEASE : Remove debug symbols
+POSTPONED : Decrease or increase m_TotalSize on select/deselect
 
 0.32.0
 Write dameon to detect free space ?

@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2007 FROUIN Jean-Michel
+Copyright (C) 2007 FROUROOT Jean-Michel
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,54 +17,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date$
-$Rev$
-$Author$
+$Date: 2007-09-25 22:33:08 +0200 (mar, 25 sep 2007) $
+$Rev: 128 $
+$Author: snoogie $
 ------------------------------------------------------
 */
 
-#ifndef _IN_PLUGIN_H_
-#define _IN_PLUGIN_H_
+#ifndef _ROOT_PLUGROOT_H_
+#define _ROOT_PLUGROOT_H_
 
 #include <config.h>
-#include "iplugin.h"
+#include "in_plugin.h"
 
 /*!
- *@brief Input plugin interface.
+ *@brief Root input plugin interface.
  */
-class IInPlugin : public IPlugin
+class IRootPlugin : public IInPlugin
 {
 	public:
 		/*!
 		 *@brief ctor
 		 */
-		IInPlugin() {}
+		IRootPlugin() {}
 		/*!
 		 *@brief dtor
 		 */
-		virtual ~IInPlugin() {}
+		virtual ~IRootPlugin() {}
 
 		/*!
-		 *@brief Does it need to be run as root (sudo) ?
-		 */
-		virtual bool needRoot() = 0;
-
-		/*!
-		 *@brief Return a std::list of files targeted by plugin.
-		 *@param _fl The files list to fill.
-		 */
-		void getFileList(std::list<std::string>& _fl)
-		{
-			_fl.merge(m_fl);
-		}
-
-		/*!
-		*@brief This method add, or not, _filename to m_fl.
-		*@param _filename The file name to process.
+		*@brief This method fill the directory to process.
+		*@param _filename The directory name to process.
 		*/
-		virtual void processFile(const std::string& _filename) = 0;
-	
-	protected:
-		std::list<std::string>		m_fl;
+		virtual void getDirectory(std::string& _path) = 0;
 };
-#endif							 // _IN_PLUGIN_H_
+#endif							 // _ROOT_PLUGROOT_H_

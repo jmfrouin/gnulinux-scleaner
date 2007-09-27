@@ -30,6 +30,7 @@ $Author$
 #include <tools/smart_pointer.h>
 #include <tools/singleton.h>
 #include <plugins/plugin_manager.h>
+#include <plugins/root_plugin.h>
 #include "iprogress.h"
 
 #define FSTAB "/etc/fstab"
@@ -68,12 +69,12 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		/*!
 		 *@brief Detect if launch as root
 		 */
-		bool isRoot();
+		static bool isRoot();
 
 		/*!
 		 *@brief Detect kernel version
 		 */
-		bool getKernelVersion(std::string& _version);
+		static bool getKernelVersion(std::string& _version);
 
 		/*!
 		 *@brief callOutputPlugins with a list of files
@@ -87,13 +88,13 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 
 		/*!
 		 *@brief Replace wxDir usage.
-		 *@param _fl The files list to fill.
 		 *@param _path Where retrieve file list.
-		 *@param _pattern Apply _pattern before adding file to the files list.
+		 *@param _asRoot Scan in root mode.
+		 *@param _rootPlugin Root plugin.
 		 *@param _recursive If true, enter subfolders.
 		 *@return true on success, false otherwise.
 		 */
-		bool getFileList(std::list<std::string>& _fl, const std::string& _path, const std::string& _pattern, bool _recursive = true);
+		bool scanDirectory(const std::string& _path, bool _asRoot = false, IRootPlugin* _rootPlugin = 0, bool _recursive = true);
 
 		/*!
 		 *@brief Callback : man ftw.
@@ -129,23 +130,38 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		 */
 		double getFreeSpace(const std::string& _path, std::string& _used, std::string& _free, std::string& _total);
 
+		/*!
+		*@brief Launch a scan and pass each file to input plugin, to allow them to build file list.
+		 *@param _callback For progress bar.
+		*/
+		bool scanDisk(IProgressbar* _callback);
+
 		//Accessors
-		std::list<std::string>* getList()
+		CPluginManager*	getPluginManager()
 		{
-			return m_fl;
+			return m_pfm;
 		}
 
-		std::string getPattern()
+		bool asRoot()
 		{
-			return m_pattern;
+			return m_asRoot;
+		}
+
+		IRootPlugin* rootPlugin()
+		{
+			return m_rootPlugin;
+		}
+
+		IProgressbar* getCallback()
+		{
+			return m_callback;
 		}
 
 	private:
 		TSmartPtr<CPluginManager>   m_pfm;
-								 //For FTW_callback
-		std::list<std::string>*     m_fl;
-								 //For pattern matching
-		std::string                 m_pattern;
-
+		//Due to this fuck*** callback
+		IRootPlugin*				m_rootPlugin;
+		bool						m_asRoot;
+		IProgressbar*				m_callback;
 };
 #endif							 //_ENGINE_H_

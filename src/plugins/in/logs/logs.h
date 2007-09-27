@@ -40,9 +40,9 @@ $Author$
 #define _LOGS_H_
 
 #include <config.h>
-#include <plugins/in_plugin.h>
+#include <plugins/root_plugin.h>
 
-class ClogsPlugin : public IInPlugin
+class ClogsPlugin : public IRootPlugin
 {
 	public:
 		ClogsPlugin();
@@ -54,9 +54,14 @@ class ClogsPlugin : public IInPlugin
 		eType Type();
 
 		/*!
+		*@brief From IRootPlugin
+		*/
+		void getDirectory(std::string& _path);
+
+		/*!
 		 *@brief From IInPlugin
 		 */
-		void getFileList(std::list<std::string>& _fl);
+		void processFile(const std::string& _filename);
 		bool needRoot();
 };
 #endif							 //_LOGS_H_

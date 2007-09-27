@@ -17,30 +17,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date$
-$Rev$
-$Author$
+$Date: 2007-09-25 22:33:08 +0200 (mar, 25 sep 2007) $
+$Rev: 128 $
+$Author: snoogie $
 ------------------------------------------------------
 */
 
-#ifndef _PLUGIN_INITIALIZER_H_
-#define _PLUGIN_INITIALIZER_H_
+#ifndef _INPLUGIN_INITIALIZER_H_
+#define _INPLUGIN_INITIALIZER_H_
 
 #include <config.h>
 #include <iostream>
+#include <engine/engine.h>
 
 #include "plugin_manager.h"
 
 template <class T>
-class CPluginInitializer
+class CPluginInitializerIn
 {
 	public:
-		CPluginInitializer()
+		CPluginInitializerIn()
 		{
 			CPluginManager* l_pfm = CPluginManager::Instance();
 			T* l_obj = new T;
-			l_pfm->add(l_obj);
+			if(!CEngine::isRoot())
+			{
+				if(!l_obj->needRoot())
+				{
+					l_pfm->add(l_obj);
+				}
+			}
+			else
+			{
+				l_pfm->add(l_obj);
+			}
+
 		}
 };
-#endif							 //_PLUGIN_INITIALIZER_H_
+#endif							 //_INPLUGIN_INITIALIZER_H_
 /* vi:set ts=4: */

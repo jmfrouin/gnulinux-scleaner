@@ -78,6 +78,7 @@ class CMainInterface: public wxFrame, public IProgressbar
 		void OnAbout(wxCommandEvent& WXUNUSED(event));
 		void OnQuit(wxCommandEvent& WXUNUSED(event));
 		void OnProcess(wxCommandEvent& WXUNUSED(event));
+		void OnScan(wxCommandEvent& WXUNUSED(event));
 		void OnStop(wxCommandEvent& WXUNUSED(event));
 		void OnSelRadio(wxCommandEvent& event);
 		void OnNotebook(wxNotebookEvent& event);
@@ -95,7 +96,7 @@ class CMainInterface: public wxFrame, public IProgressbar
 		void GetSelectedFiles(std::list<std::string>& _fl);
 
 		//From IProgressbar
-		void updateProgress(const std::string& _mess, int _nb);
+		void updateProgress(const std::string& _mess, bool _pulse, int _nb);
 
 	protected:
 		CTrayIcon*  m_Icon;
@@ -115,15 +116,12 @@ class CMainInterface: public wxFrame, public IProgressbar
 		wxNotebook*                         m_Input;
 
 		//Informations GUI panel
-		wxStaticText*                       m_Title;
-		wxStaticText*                       m_Line1;
-		wxStaticText*                       m_Line2;
-		wxStaticText*                       m_Line3;
 		wxHtmlWindow*                       m_Html;
 		//GUI checkbox which display output plugins
 		//wxCheckListBox*						m_Output;
 		wxRadioBox*                         m_Output;
 		wxStatusBar*                        m_StatusBar;
+		wxSplitterWindow* 					m_Split;
 
 		//Progress bar for process part.
 		wxProgressDialog*                   m_Progress;

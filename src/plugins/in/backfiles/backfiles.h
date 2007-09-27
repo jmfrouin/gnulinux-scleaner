@@ -56,9 +56,8 @@ class CbackfilesPlugin : public IInPlugin
 
 		/*!
 		 *@brief From IInPlugin
-		 *@todo : Fix use of wxwidgets in plugins !!!!
 		 */
-		void getFileList(std::list<std::string>& _fl);
+		void processFile(const std::string& _filename);
 		bool needRoot();
 };
 #endif							 //_BACKFILES_H_

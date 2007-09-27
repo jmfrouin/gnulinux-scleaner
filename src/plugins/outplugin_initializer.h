@@ -17,55 +17,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date: 2007-09-22 19:17:21 +0200 (sam, 22 sep 2007) $
-$Rev: 115 $
+$Date: 2007-09-25 22:33:08 +0200 (mar, 25 sep 2007) $
+$Rev: 128 $
 $Author: snoogie $
 ------------------------------------------------------
 */
 
+#ifndef _OUTPLUGIN_INITIALIZER_H_
+#define _OUTPLUGIN_INITIALIZER_H_
+
+#include <config.h>
 #include <iostream>
-#include <plugins/inplugin_initializer.h>
-#include "backfiles.h"
-#include <sys/stat.h>			 ///Get file size.
-#include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-CPluginInitializerIn<CbackfilesPlugin> g_backfiles;
+#include "plugin_manager.h"
 
-CbackfilesPlugin::CbackfilesPlugin()
+template <class T>
+class CPluginInitializerOut
 {
-	setName("backfiles");
-}
-
-
-CbackfilesPlugin::~CbackfilesPlugin()
-{
-}
-
-
-IPlugin::eType CbackfilesPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
-}
-
-
-void CbackfilesPlugin::processFile(const std::string& _filename)
-{
-	if((_filename.find("~", 0) != std::string::npos) || (_filename.find("bak", 0) != std::string::npos))
-	{
-		m_fl.push_back(_filename);
-	}
-}
-
-
-bool CbackfilesPlugin::needRoot()
-{
-	bool l_ret;
-	l_ret = false;				 // This plugin will work in both (user/root) mode.
-	return l_ret;
-}
-
-
+	public:
+		CPluginInitializerOut()
+		{
+			CPluginManager* l_pfm = CPluginManager::Instance();
+			T* l_obj = new T;
+			l_pfm->add(l_obj);
+		}
+};
+#endif							 //_OUTPLUGIN_INITIALIZER_H_
 /* vi:set ts=4: */
