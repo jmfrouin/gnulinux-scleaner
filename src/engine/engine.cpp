@@ -318,6 +318,7 @@ int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tfl
 		}
 		else
 		{
+			int l_count = 0;
 			std::map<std::string, IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
 			std::map<std::string, IInPlugin*>::iterator l_it;
 			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
@@ -326,7 +327,11 @@ int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tfl
 
 				if(l_prog != 0)
 				{
-					l_prog->updateProgress(l_path, true);
+					if(l_count++ == 100)
+					{
+						l_prog->updateProgress(l_path, true);
+						l_count = 0;
+					}
 				}
 
 				if(!((*l_it).second)->needRoot())
