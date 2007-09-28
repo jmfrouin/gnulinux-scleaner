@@ -30,9 +30,10 @@ $Author$
 #include <sstream>
 #include <pwd.h>
 #include <dirent.h>
+#include <mntent.h>
+#include <time.h>
 #include <sys/stat.h>
 #include <sys/vfs.h>
-#include <mntent.h>
 #include <sys/utsname.h>
 #include <interface/maininterface.h>
 #include "engine.h"
@@ -105,7 +106,7 @@ bool CEngine::getKernelVersion(std::string& _version)
 }
 
 
-bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name, IProgressbar* _callback)
+bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name, const std::string& _path, IProgressbar* _callback)
 {
 	bool l_ret = false;
 	std::map<std::string, IOutPlugin*>* l_OutputPlugs;
@@ -113,7 +114,7 @@ bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name
 	IOutPlugin* l_plug = (*l_OutputPlugs)[_name];
 	if(l_plug != 0)
 	{
-		l_plug->processFileList(_list, _callback);
+		l_plug->processFileList(_list, _path, _callback);
 		l_ret = true;
 	}
 	else
@@ -366,5 +367,77 @@ bool CEngine::scanDirectory(const std::string& _path, bool _asRoot, IRootPlugin*
 	m_asRoot = false;
 
 	return l_ret;
+}
+
+void CEngine::getTimestamp(std::string& _str)
+{
+	time_t l_tm;
+	struct tm l_time;
+
+	time(&l_tm);
+	memcpy(&l_time, localtime(&l_tm), sizeof(l_time));
+
+	//Append date: YYYYMMDD
+	std::stringstream l_temp;
+	//Append year
+	l_temp << 1900 + l_time.tm_year;
+
+	//Append month
+	if(l_time.tm_mon + 1 < 10)
+	{
+		l_temp << 0 << l_time.tm_mon + 1;
+	}
+	else
+	{
+		l_temp << l_time.tm_mon + 1;
+	}
+
+	//Append day
+	if(l_time.tm_mday + 1 < 10)
+	{
+		l_temp << 0 << l_time.tm_mday;
+	}
+	else
+	{
+		l_temp << l_time.tm_mday;
+	}
+
+	l_temp << "_";
+
+	//Append hour
+	if(l_time.tm_hour < 10)
+	{
+		l_temp << 0 << l_time.tm_hour;
+	}
+	else
+	{
+		l_temp << l_time.tm_hour;
+	}
+
+	//Append minute
+	if(l_time.tm_min < 10)
+	{
+		l_temp << 0 << l_time.tm_min;
+	}
+	else
+	{
+		l_temp << l_time.tm_min;
+	}
+
+	//Append second
+	if(l_time.tm_sec < 10)
+	{
+		l_temp << 0 << l_time.tm_sec;
+	}
+	else
+	{
+		l_temp << l_time.tm_sec;
+	}
+
+	_str += l_temp.str();
+
+	#if defined DEBUG
+	std::cout << "CEngine::getTimestamp Timestamp: " << _str << '\n';
+	#endif
 }
 /* vi:set ts=4: */

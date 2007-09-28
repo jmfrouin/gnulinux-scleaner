@@ -323,9 +323,9 @@ bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& _
 		++l_done;
 		WriteData(*l_it, _output);
 		int l_res = l_done*50/l_size;
-		std::string l_mess("Adding ");
-		l_mess += *l_it + " to " + _output + " archive.";
-		_callback->updateProgress(l_mess, l_res);
+		std::string l_mess("Adding\n");
+		l_mess += *l_it;
+		_callback->updateProgress(l_mess, false, l_res);
 		#if defined DEBUG
 		std::cout << *l_it << " appended to " << _output << '\n';
 		#endif

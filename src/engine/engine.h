@@ -80,11 +80,12 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		 *@brief callOutputPlugins with a list of files
 		 *@param _list A files list.
 		 *@param _name Name of plugin.
+		 *@param _path Path to save (if applicable) the output file.
 		 *@param _callback For progress bar.
 		 *@return true on success, false otherwise.
 		 *@todo Implement errors code.
 		 */
-		bool callOutputPlugin(std::list<std::string>& _list, std::string& _name, IProgressbar* _callback);
+		bool callOutputPlugin(std::list<std::string>& _list, std::string& _name, const std::string& _path, IProgressbar* _callback);
 
 		/*!
 		 *@brief Replace wxDir usage.
@@ -111,7 +112,7 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		 *@param _username The std::string to fill.
 		 *@return true on success, false otherwise.
 		 */
-		bool getUsername(std::string& _username);
+		static bool getUsername(std::string& _username);
 
 		/*!
 		 *@brief Better size display.
@@ -128,13 +129,19 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		 *@param _total Total space correctly formatted.
 		 *@return free space size in bytes.
 		 */
-		double getFreeSpace(const std::string& _path, std::string& _used, std::string& _free, std::string& _total);
+		static double getFreeSpace(const std::string& _path, std::string& _used, std::string& _free, std::string& _total);
 
 		/*!
 		*@brief Launch a scan and pass each file to input plugin, to allow them to build file list.
 		 *@param _callback For progress bar.
 		*/
 		bool scanDisk(IProgressbar* _callback);
+		
+		/*!
+		*@brief Get a timestamp.
+		*@param _str The str to fill.
+		*/
+		static void getTimestamp(std::string& _str);
 
 		//Accessors
 		CPluginManager*	getPluginManager()

@@ -53,11 +53,12 @@ class CtbzPlugin : public IOutPlugin
 		/*!
 		 *@brief From IPlugin.
 		 */
-		void processFileList(std::list<std::string>& _fl, IProgressbar* _callback);
-		const std::string description();
-		const std::string author();
-		const std::string version();
 		eType Type();
+
+		/*!
+		*@brief From IOutPlugin
+		*/
+		void processFileList(std::list<std::string>& _fl, const std::string& _path, IProgressbar* _callback);
 
 	private:
 		/*!

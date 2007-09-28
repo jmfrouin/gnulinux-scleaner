@@ -49,40 +49,25 @@ CtbzPlugin::~CtbzPlugin()
 }
 
 
-void CtbzPlugin::processFileList(std::list<std::string>& _fl, IProgressbar* _callback)
+void CtbzPlugin::processFileList(std::list<std::string>& _fl, const std::string& _path, IProgressbar* _callback)
 {
 	CTarArchive l_tar;
 
-	l_tar.Create(_fl, "backup.tar", _callback);
+	std::string l_date;
+	CEngine::getTimestamp(l_date);
 
-	if(Compress("backup.tar" , "backup.tbz", _callback))
+	l_tar.Create(_fl, _path + "/backup_" + l_date + ".tar" , _callback);
+
+	if(Compress(_path + "/backup_" + l_date + ".tar" , _path + "/backup_" + l_date + ".tbz", _callback))
 	{
-		unlink("backup.tar");
+		std::string l_del(_path);
+		l_del += "/backup_" + l_date + ".tar";
+		unlink(l_del.c_str());
 	}
 	else
 	{
-		std::cerr << "[ERR] CtbzPlugin::processFileList An error occured during compression so I left " << "backup.tar" << '\n';
+		std::cerr << "[ERR] CtbzPlugin::processFileList An error occured during compression so I left " << _path + "/backup_" + l_date + ".tar" << '\n';
 	}
-	
-
-}
-
-
-const std::string CtbzPlugin::description()
-{
-	return "This plugin allow user to create a tarball then compress it using bzip2.";
-}
-
-
-const std::string CtbzPlugin::author()
-{
-	return "Frouin Jean-Michel";
-}
-
-
-const std::string CtbzPlugin::version()
-{
-	return "0.6";
 }
 
 
@@ -150,7 +135,7 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 						std::streamsize l_bytesread = l_in.gcount();
 						l_done += l_bytesread;
 						int l_res = static_cast<int>((l_done*50)/l_total)+50;
-						std::string l_mess("bz2 compression of ");
+						std::string l_mess("bz2 compression of\n");
 						std::stringstream l_doneStr;
 						l_doneStr << (l_res-50)*2;
 						l_mess += _output + " :  " + l_doneStr.str() + "%";

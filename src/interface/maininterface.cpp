@@ -40,15 +40,16 @@ $Author$
 #include <plugins/plugin_manager.h>
 #include <plugins/iplugin.h>
 #include <engine/engine.h>
-#include "maininterface.h"
+#include <tools/crc.h>
 #include <wx/radiobox.h>
 #include <wx/progdlg.h>
-#include <wx/filedlg.h>
+#include <wx/dirdlg.h>
 #include <wx/splash.h>
 #include <wx/wxhtml.h>
 #include <wx/listctrl.h>
-#include "checklistctrl.h"
 #include <wx/imaglist.h>
+#include "maininterface.h"
+#include "checklistctrl.h"
 
 //Tray icons
 #include <gfx/empty.xpm>
@@ -327,10 +328,10 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 		_T("this is a information"),
 		100,					 // range
 		this,					 // parent
-		wxPD_CAN_ABORT |
-	// wxPD_CAN_SKIP |
+		//wxPD_CAN_ABORT |
+		// wxPD_CAN_SKIP |
 		wxPD_APP_MODAL |
-	// wxPD_AUTO_HIDE | -- try this as well
+	 	wxPD_AUTO_HIDE | 
 		wxPD_ELAPSED_TIME |
 		wxPD_ESTIMATED_TIME |
 		wxPD_REMAINING_TIME
@@ -376,7 +377,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 		l_itemCol.SetAlign(wxLIST_FORMAT_CENTRE);
 		l_fileslist->InsertColumn(1, l_itemCol);
 
-		l_itemCol.SetText(_T("Relevance"));
+		l_itemCol.SetText(_T("CRC"));
 		l_itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
 		l_fileslist->InsertColumn(2, l_itemCol);
 
@@ -406,7 +407,26 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 				m_Engine->formatSize(l_info.st_size, l_size);
 				wxString l_usize(l_size.c_str(), wxConvUTF8);
 				l_fileslist->SetItem(l_tmp, 1, l_usize);
-				l_fileslist->SetItem(l_tmp, 2, l_usize);
+
+				if(l_info.st_size != 0)
+				{
+					std::ifstream l_file(l_filename.c_str());
+					char l_buf[4096];
+					l_file.get(l_buf, 4096);
+					unsigned int l_read = l_file.gcount();
+
+					unsigned short l_crc;
+    				CCRC::calc_UDF_CRC((unsigned int*)l_buf, l_read, l_crc);
+					l_file.close();
+					
+					std::stringstream l_crc2;
+					l_crc2 << l_crc;
+					l_fileslist->SetItem(l_tmp, 2, wxString(std::string(l_crc2.str()).c_str(), wxConvUTF8));
+				}
+				else
+				{
+					l_fileslist->SetItem(l_tmp, 2, wxString(_T("No CRC on null size")));
+				}
 			}
 
 			++l_counter;
@@ -448,10 +468,10 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 		_T("this is a information"),
 		100,					 // range
 		this,					 // parent
-		wxPD_CAN_ABORT |
-	// wxPD_CAN_SKIP |
+		//wxPD_CAN_ABORT |
+		// wxPD_CAN_SKIP |
 		wxPD_APP_MODAL |
-	// wxPD_AUTO_HIDE | -- try this as well
+		//wxPD_AUTO_HIDE | -- try this as well
 		wxPD_ELAPSED_TIME |
 		wxPD_ESTIMATED_TIME |
 		wxPD_REMAINING_TIME
@@ -467,15 +487,27 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 	std::cout << "[DBG] CMainInterface : Get selection : " << l_name << '\n';
 	#endif
 
-	//wxFileDialog l_outputFileDlg(this, _T("Select an output folder"));
-	//if (l_outputFileDlg.ShowModal() != wxID_OK)
-	//{
-	//    return;
-	//}
+	wxString l_msg;
+	if(CEngine::isRoot())
+	{
+		l_msg = _T("/root/");
+	}
+	else
+	{
+		std::string l_path("/home");
+		std::string l_username;
+		CEngine::getUsername(l_username);
+		l_path += "/" + l_username;
+		l_msg.FromUTF8(l_path.c_str());
+	}
 
-	//    wxFFile file(filedlg.GetFilename(), _T("r"));
+	wxDirDialog l_outputFileDlg(this, _T("Select an output folder for ") + l_nameWX + _T(" plugin:"), l_msg, wxDD_DIR_MUST_EXIST);
 
-	m_Engine->callOutputPlugin(l_selected_files, l_name, this);
+	if (l_outputFileDlg.ShowModal() == wxID_OK)
+	{
+		std::string l_selPath(l_outputFileDlg.GetPath().char_str()); 
+		m_Engine->callOutputPlugin(l_selected_files, l_name, l_selPath, this);
+	}
 
 	delete m_Progress;
 	m_Progress = 0;
@@ -495,14 +527,14 @@ void CMainInterface::updateProgress(const std::string& _mess, bool _pulse, int _
 		l_continue = m_Progress->Update(_nb, l_msg, 0);
 	}
 
-	if(!l_continue)
-	{
-		if ( wxMessageBox(_T("Do you really want to cancel?"), _T("scleaner question"), wxYES_NO | wxICON_QUESTION) == wxNO)
-		{
-			l_continue = true;
-			m_Progress->Resume();
-		}
-	}
+	//if(!l_continue)
+	//{
+	//	if ( wxMessageBox(_T("Do you really want to cancel?"), _T("scleaner question"), wxYES_NO | wxICON_QUESTION) == wxNO)
+	//	{
+	//		l_continue = true;
+	//		m_Progress->Resume();
+	//	}
+	//}
 }
 
 

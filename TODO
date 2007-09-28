@@ -1,15 +1,18 @@
 0.31.0:
-Add output file dialog
 French version ?
 Add tooltip for disabled items in notebook (->"You need root rights to selected these items")
 Add code to detect a twice selected file.
 Check memory leaks and FIXME in code
-Implement error code
-wxGauge for scan
-OK : Add code to detect free space on disk in CEngine
-OK : Code need to do only ONE disc scan.
-OK : Remove .tar
-OK : Add file size :)
+IMPORTANT : Implement error code
+Fix small std outputs errors
+PARTIAL : Add CRC in checklistbox
+OK: Add output file dialog
+OK: Add a function in CEngine static to get date in string for backup
+OK: wxGauge for scan
+OK: Add code to detect free space on disk in CEngine
+OK: Code need to do only ONE disc scan.
+OK: Remove .tar
+OK: Add file size :)
 OK: Uniform source code formatting.
 OK: Add code for detect user home folder in CEngine.
 OK: Add a progress bar

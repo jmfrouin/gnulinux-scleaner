@@ -30,6 +30,7 @@ $Author$
 #include <list>
 #include <leak/memory_manager.h>
 #include <engine/engine.h>
+#include <tools/crc.h>
 
 CMemoryManager g_mm;
 
