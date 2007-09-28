@@ -5,6 +5,7 @@ Add code to detect a twice selected file.
 Check memory leaks and FIXME in code
 IMPORTANT : Implement error code
 Fix small std outputs errors
+Add an icon :)
 PARTIAL : Add CRC in checklistbox
 OK: Add output file dialog
 OK: Add a function in CEngine static to get date in string for backup

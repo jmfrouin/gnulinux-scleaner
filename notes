@@ -1,0 +1,2 @@
+./configure --enable-monolithic --disable-shared --enable-unicode --with-gtk --with-libpng=builtin --with-zlib=builtin
+
