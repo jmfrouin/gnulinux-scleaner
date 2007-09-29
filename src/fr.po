@@ -1,191 +1,193 @@
 # scleaner i8n template
 # Copyright (C) 2007 Frouin Jean-Michel
 # This file is distributed under the GPL3 license.
-#
+# Jean-Michel FROUIN <jmfrouin@gnu.org>, 2007.
+# 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: scleaner 0.31\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-30 00:31+0200\n"
-"PO-Revision-Date: 2007-09-30 00:34+0200\n"
-"Last-Translator: Jean-Michel FROUIN <jmfrouin@gnu.org>\n"
-"Language-Team: French\n"
+"PO-Revision-Date: 2007-09-30 00:57+0200\n"
+"Last-Translator:  <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Content-Type: text/plain; charset=\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);"
 
 #: leak/memory_manager.cpp:62
 msgid "   No leak detected, congratulations !  "
-msgstr ""
+msgstr "   Pas de fuites mémoires trouvées, bravo !  "
 
 #: tools/tar_archive.cpp:252
 msgid " (file is skipped)"
-msgstr ""
+msgstr " (le fichier est ignoré)"
 
 #: leak/memory_manager.cpp:48
 msgid " - Report (Compiled on "
-msgstr ""
+msgstr " - Rapport (Compilé le "
 
 #: leak/memory_manager.cpp:140
 msgid " Line : "
-msgstr ""
+msgstr " Ligne : "
 
 #: leak/memory_manager.cpp:69
 msgid " Oops... Some leaks have been detected  "
-msgstr ""
+msgstr " Oops... Quelques fuites ont été trouvées  "
 
 #: tools/tar_archive.cpp:345
 msgid " appended to "
-msgstr ""
+msgstr " ajouté à "
 
 #: leak/memory_manager.cpp:94
 msgid " blocs not empty, "
-msgstr ""
+msgstr " blocs non vide, "
 
 #: leak/memory_manager.cpp:88
 msgid " bytes"
-msgstr ""
+msgstr " octets"
 
 #: leak/memory_manager.cpp:95
 msgid " bytes --"
-msgstr ""
+msgstr " octets --"
 
 #: tools/tar_archive.cpp:304
 msgid " file!"
-msgstr ""
+msgstr " "
 
 #: plugins/plugin_manager.cpp:45
 msgid " input plugin : "
-msgstr ""
+msgstr " greffon d'entrée : "
 
 #: plugins/plugin_manager.cpp:41
 msgid " input plugins : "
-msgstr ""
+msgstr " greffons d'entrée : "
 
 #: plugins/plugin_manager.cpp:71
 msgid " output plugin : "
-msgstr ""
+msgstr " greffon de sortie : "
 
 #: plugins/plugin_manager.cpp:67
 msgid " output plugins : "
-msgstr ""
+msgstr " greffons de sortie : "
 
 #: interface/maininterface.cpp:507
 msgid " plugin:"
-msgstr ""
+msgstr " greffon :"
 
 #: tools/tar_archive.cpp:52
 msgid " so I skip it !"
-msgstr ""
+msgstr " ignoré !"
 
 #: tools/tar_archive.cpp:288
 msgid "' hasn't been add to tar archive !"
-msgstr ""
+msgstr "' n'a pas été ajouté à l'archive tar !"
 
 #: interface/maininterface.cpp:301 interface/maininterface.cpp:585
 msgid ".html"
-msgstr ""
+msgstr "_fr.html"
 
 #: interface/maininterface.cpp:235
 msgid "/usr/share/doc/scleaner/about.html"
-msgstr ""
+msgstr "/usr/share/doc/scleaner/about_fr.html"
 
 #: tools/tar_archive.cpp:341
 msgid "Adding\n"
-msgstr ""
+msgstr "Ajout de\n"
 
 #: interface/maininterface.cpp:200
 msgid "Apply output plugin on selected files."
-msgstr ""
+msgstr "Appliquer le greffon de sortie aux fichiers sélectionnés."
 
 #: plugins/out/tbz/tbz.cpp:124
 msgid "Cannot stat "
-msgstr ""
+msgstr "Ne peut évaluer "
 
 #: interface/maininterface.cpp:202
 msgid "Configuration"
-msgstr ""
+msgstr "Configuration"
 
 #: interface/tray.cpp:65
 msgid "E&xit"
-msgstr ""
+msgstr "Quitter"
 
 #: plugins/out/tbz/tbz.cpp:103
 msgid "Error bzWriteOpen!"
-msgstr ""
+msgstr "Erreur bzWriteOpen!"
 
 #: plugins/out/tbz/tbz.cpp:113
 msgid "Error in file!"
-msgstr ""
+msgstr "Erreur fichier d'entrée!"
 
 #: plugins/out/tbz/tbz.cpp:92
 msgid "Error out file!"
-msgstr ""
+msgstr "Erreur fichier de sortie!"
 
 #: interface/maininterface.cpp:375
 msgid "File location"
-msgstr ""
+msgstr "Emplacement du fichier"
 
 #: interface/maininterface.cpp:261
 msgid "Free: "
-msgstr ""
+msgstr "Libre :"
 
 #: engine/engine.cpp:166
 msgid "GB"
-msgstr ""
+msgstr "Go"
 
 #: engine/engine.cpp:178
 msgid "KB"
-msgstr ""
+msgstr "Ko"
 
 #: interface/maininterface.cpp:257
 msgid "Kernel : v"
-msgstr ""
+msgstr "Noyau : v"
 
 #: interface/maininterface.cpp:254
 msgid "Launched as "
-msgstr ""
+msgstr "Lancé en tant que "
 
 #: interface/maininterface.cpp:247
 msgid "Launched as root/sudo"
-msgstr ""
+msgstr "Lancé en tant que superutilisateur"
 
 #: engine/engine.cpp:172
 msgid "MB"
-msgstr ""
+msgstr "Mo"
 
 #: interface/maininterface.cpp:229
 msgid "Output plugins"
-msgstr ""
+msgstr "Greffons de sortie"
 
 #: interface/maininterface.cpp:204
 msgid "Quit"
-msgstr ""
+msgstr "Quitter"
 
 #: interface/maininterface.cpp:507
 msgid "Select an output folder for "
-msgstr ""
+msgstr "Selectionnez un plugin de sortie pour "
 
 #: interface/maininterface.cpp:198
 msgid "Select input plugins to use."
-msgstr ""
+msgstr "Selectionnez les greffons d'entrée à utiliser."
 
 #: interface/maininterface.cpp:379
 msgid "Size (bytes)"
-msgstr ""
+msgstr "Taille (octets)"
 
 #: interface/maininterface.cpp:383
 msgid "TODO"
-msgstr ""
+msgstr "TODO"
 
 #: interface/maininterface.cpp:306
 msgid "Total size : "
-msgstr ""
+msgstr "Taille totale : "
 
 #: interface/maininterface.cpp:261
 msgid "Total: "
-msgstr ""
+msgstr "Total : "
 
 #: interface/maininterface.cpp:199
 msgid "Use input plugins to find files."
@@ -193,7 +195,7 @@ msgstr ""
 
 #: interface/maininterface.cpp:261
 msgid "Used: "
-msgstr ""
+msgstr "Utilisée : "
 
 #: engine/engine.cpp:440
 msgid "[DBG] CEngine::getTimestamp Timestamp: "
@@ -285,7 +287,7 @@ msgstr ""
 
 #: engine/engine.cpp:122
 msgid "[WNG] : null"
-msgstr ""
+msgstr "[WNG] : nul"
 
 #: tools/tar_archive.cpp:71
 msgid "[WNG] Archiving non-ordinary file (Linked or Device file?)"
@@ -305,20 +307,21 @@ msgstr ""
 
 #: plugins/out/tbz/tbz.cpp:139
 msgid "bz2 compression of\n"
-msgstr ""
+msgstr "Compression bz2 de\n"
 
 #: engine/engine.cpp:184
 msgid "null size"
-msgstr ""
+msgstr "taille nulle"
 
 #: interface/maininterface.cpp:470
 msgid "scleaner process your files ..."
-msgstr ""
+msgstr "scleaner s'occupe de vos fichiers ..."
 
 #: interface/maininterface.cpp:330
 msgid "scleaner scan your disk ..."
-msgstr ""
+msgstr "scleaner analyse votre disque ..."
 
 #: interface/maininterface.cpp:331 interface/maininterface.cpp:471
 msgid "this is a information"
-msgstr ""
+msgstr "ceci est une information"
+
