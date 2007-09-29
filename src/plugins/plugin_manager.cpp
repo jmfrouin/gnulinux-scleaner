@@ -102,7 +102,7 @@ int CPluginManager::loadPlugins(const std::string& _path)
 		l_tmp += l_namelist[l_nb]->d_name;
 		free(l_namelist[l_nb]);
 
-		if (l_tmp.length() > 8)
+		if (l_tmp.length() > 28)
 		{
 			void* l_handler = dlopen (l_tmp.c_str(), RTLD_NOW);
 			if (l_handler != 0)

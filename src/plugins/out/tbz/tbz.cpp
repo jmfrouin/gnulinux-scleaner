@@ -56,17 +56,18 @@ void CtbzPlugin::processFileList(std::list<std::string>& _fl, const std::string&
 	std::string l_date;
 	CEngine::getTimestamp(l_date);
 
-	l_tar.Create(_fl, _path + "/backup_" + l_date + ".tar" , _callback);
-
-	if(Compress(_path + "/backup_" + l_date + ".tar" , _path + "/backup_" + l_date + ".tbz", _callback))
+	if(l_tar.Create(_fl, _path + "/backup_" + l_date + ".tar" , _callback))
 	{
-		std::string l_del(_path);
-		l_del += "/backup_" + l_date + ".tar";
-		unlink(l_del.c_str());
-	}
-	else
-	{
-		std::cerr << "[ERR] CtbzPlugin::processFileList An error occured during compression so I left " << _path + "/backup_" + l_date + ".tar" << '\n';
+		if(Compress(_path + "/backup_" + l_date + ".tar" , _path + "/backup_" + l_date + ".tbz", _callback))
+		{
+			std::string l_del(_path);
+			l_del += "/backup_" + l_date + ".tar";
+			unlink(l_del.c_str());
+		}
+		else
+		{
+			std::cerr << "[ERR] An error occured during compression so I left " << _path + "/backup_" + l_date + ".tar" << '\n';
+		}
 	}
 }
 

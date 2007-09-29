@@ -48,7 +48,7 @@ bool CTarArchive::FillHeader(const std::string& _filename, posix_header& _header
 	//Try to stat file.
 	if(stat(_filename.c_str(), &l_info) == -1)
 	{
-		std::cout << "[ERR] : " __FILE__ << "@" << __LINE__ << ": Cannot stat " << _filename.c_str() << '\n';
+		std::cout << "[WNG] Cannot stat file: " << _filename.c_str() << " so I skip it !" << '\n';
 		l_ret = false;
 	}
 	else
@@ -67,7 +67,7 @@ bool CTarArchive::FillHeader(const std::string& _filename, posix_header& _header
 		if(!(l_info.st_mode & S_IFREG))
 		{
 			// Not a normal file.  Let's archive it anyway, but warn the user.
-			std::cout << "Warning: Archiving non-ordinary file (Linked or Device file?)" << '\n';
+			std::cout << "[WNG] Archiving non-ordinary file (Linked or Device file?)" << '\n';
 		}
 
 		// Add the normal file bit.
@@ -233,52 +233,59 @@ bool CTarArchive::WriteData(const std::string& _input, const std::string& _outpu
 	std::string strData = strTarfile;*/
 
 	posix_header l_header;
-	FillHeader(_input, l_header);
-
-	std::ofstream l_out(_output.c_str(), std::ios::out | std::ios::binary | std::ios::app | std::ios::ate);
-
-	if(!l_out.good())
+	if(FillHeader(_input, l_header))
 	{
-		std::cerr << "Error out file!" << _output << '\n';
-		l_ret = false;
-	}
-	else
-	{
-		std::ifstream l_in(_input.c_str(), std::ios::in | std::ios::binary);
+		std::ofstream l_out(_output.c_str(), std::ios::out | std::ios::binary | std::ios::app | std::ios::ate);
 
-		if(!l_in.good())
+		if(!l_out.good())
 		{
-			std::cerr << "Error in file!" << _input << '\n';
+			std::cerr << "[ERR] Error output file: " << _output << '\n';
 			l_ret = false;
 		}
 		else
 		{
-			//Round it to % 512
-			if(m_FirstFile)
-			{
-				int l_AmountToRound = RoundTo512(l_out.tellp()) - l_out.tellp();
+			std::ifstream l_in(_input.c_str(), std::ios::in | std::ios::binary);
 
-				for(int i = 0; i < l_AmountToRound; ++i)
+			if(!l_in.good())
+			{
+				std::cerr << "[WNG] Error in file: " << _input << " (file is skipped)" << '\n';
+				l_ret = true; // If we cannot read a file it's not vital, we skip, but we need to inform user !
+			}
+			else
+			{
+				//Round it to % 512
+				if(m_FirstFile)
 				{
-					l_out.put('\0');
+					int l_AmountToRound = RoundTo512(l_out.tellp()) - l_out.tellp();
+
+					for(int i = 0; i < l_AmountToRound; ++i)
+					{
+						l_out.put('\0');
+					}
 				}
+
+				m_FirstFile = true;
+
+				//Write header
+				l_out.write(reinterpret_cast<char*>(&l_header), sizeof(l_header));
+
+				//Append file content
+				char l_char;
+				while(l_in.get(l_char))
+				{
+					l_out.put(l_char);
+				}
+
+				l_in.close();
+				l_out.close();
+				l_ret = true;
 			}
-
-			m_FirstFile = true;
-
-			//Write header
-			l_out.write(reinterpret_cast<char*>(&l_header), sizeof(l_header));
-
-			//Append file content
-			char l_char;
-			while(l_in.get(l_char))
-			{
-				l_out.put(l_char);
-			}
-
-			l_in.close();
-			l_out.close();
 		}
+	}
+	else
+	{
+		std::cerr << "[WNG] File '" << _input << "' hasn't been add to tar archive !" << '\n';
+		l_ret = true; // If we cannot compute header, we skip it.
 	}
 
 	return l_ret;
@@ -293,7 +300,7 @@ bool CTarArchive::CleanClose(const std::string& _output)
 
 	if(!l_out.good())
 	{
-		std::cout << "Error out file!" << '\n';
+		std::cout << "[ERR] Cannot open " << _output << " file!" << '\n';
 		l_ret = false;
 	}
 	else
@@ -307,6 +314,7 @@ bool CTarArchive::CleanClose(const std::string& _output)
 		l_out.put('\0');
 		l_out.put('\0');
 		l_out.close();
+		l_ret = true;
 	}
 	return l_ret;
 }
@@ -314,14 +322,20 @@ bool CTarArchive::CleanClose(const std::string& _output)
 
 bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& _output, IProgressbar* _callback)
 {
-	bool l_ret = true;
+	bool l_ret = false;
 	std::list<std::string>::iterator l_it;
 	int l_size = _filenames.size();
 	int l_done = 0;
+	bool l_error = false;
+	
 	for(l_it = _filenames.begin(); l_it != _filenames.end(); ++l_it)
 	{
 		++l_done;
-		WriteData(*l_it, _output);
+		if(!WriteData(*l_it, _output))
+		{
+			l_error = true;
+			break;
+		}
 		int l_res = l_done*50/l_size;
 		std::string l_mess("Adding\n");
 		l_mess += *l_it;
@@ -330,7 +344,26 @@ bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& _
 		std::cout << *l_it << " appended to " << _output << '\n';
 		#endif
 	}
-	CleanClose(_output);
+	
+	if(l_error)
+	{
+		std::cout << (*l_it) << '\n';
+		unlink(_output.c_str());
+		std::cout << "[ERR] Due to error(s) on WriteData, I delete " << _output << '\n';
+	}
+	else
+	{
+		if(CleanClose(_output))
+		{
+			l_ret = true;
+		}
+		else
+		{
+			unlink(_output.c_str());
+			std::cout << "[ERR] Due to error(s) on CleanClose, I delete " << _output << '\n';
+			l_ret = false;
+		}
+	}
 	return l_ret;
 }
 

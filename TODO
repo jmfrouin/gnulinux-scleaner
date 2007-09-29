@@ -4,7 +4,6 @@ Check memory leaks and FIXME in code
 Fix small std outputs errors
 Icons
 Bug total size with 1 tab.
-IMPORTANT: Implement error code
 PARTIAL : Add CRC in checklistbox
 LAST: French version
 OK: Add an icon :)
