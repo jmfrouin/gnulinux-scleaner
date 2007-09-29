@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: scleaner 0.31\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-30 00:31+0200\n"
-"PO-Revision-Date: 2007-09-30 00:57+0200\n"
+"PO-Revision-Date: 2007-09-30 01:04+0200\n"
 "Last-Translator:  <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -191,7 +191,7 @@ msgstr "Total : "
 
 #: interface/maininterface.cpp:199
 msgid "Use input plugins to find files."
-msgstr ""
+msgstr "Utilisez les greffons d'entrée pour trouver des fichiers."
 
 #: interface/maininterface.cpp:261
 msgid "Used: "
@@ -199,91 +199,91 @@ msgstr "Utilisée : "
 
 #: engine/engine.cpp:440
 msgid "[DBG] CEngine::getTimestamp Timestamp: "
-msgstr ""
+msgstr "[DBG] CEngine::getTimestamp Timestamp: "
 
 #: engine/engine.cpp:140
 msgid "[DBG] CEngine::getUsername UID: "
-msgstr ""
+msgstr "[DBG] CEngine::getUsername UID: "
 
 #: engine/engine.cpp:147
 msgid "[DBG] CEngine::getUsername Username: "
-msgstr ""
+msgstr "[DBG] CEngine::getUsername Nom d'utilisateur: "
 
 #: engine/engine.cpp:290
 msgid "[DBG] CEngine::scanDisk Path : "
-msgstr ""
+msgstr "[DBG] CEngine::scanDisk Répertoire : "
 
 #: interface/maininterface.cpp:490
 msgid "[DBG] CMainInterface : Get selection : "
-msgstr ""
+msgstr "[DBG] CMainInterface : Get selection : "
 
 #: engine/engine.cpp:308
 msgid "[DBG] FTW_callback : "
-msgstr ""
+msgstr "[DBG] FTW_callback : "
 
 #: plugins/plugin_manager.cpp:38 plugins/plugin_manager.cpp:64
 msgid "[DBG] I founded "
-msgstr ""
+msgstr "[DBG] J'ai trouvé "
 
 #: interface/maininterface.cpp:455
 msgid "[DBG] Process !!! "
-msgstr ""
+msgstr "[DBG] Traitement !!! "
 
 #: interface/maininterface.cpp:362
 msgid "[DBG] Size = "
-msgstr ""
+msgstr "[DBG] Taille = "
 
 #: interface/maininterface.cpp:462
 msgid "[DBG] You have selected: "
-msgstr ""
+msgstr "[DBG] Vous avez selectionné : "
 
 #: scleaner_wx.cpp:53
 msgid "[DBG] scleaner starting ...\n"
-msgstr ""
+msgstr "[DBG] scleaner démarre ...\n"
 
 #: tools/tar_archive.cpp:42
 msgid "[DBG]File header for "
-msgstr ""
+msgstr "[DBG]Calcul de l'en tête fichier pour "
 
 #: leak/memory_manager.cpp:43
 msgid "[ERR] : Cannot open "
-msgstr ""
+msgstr "[ERR] : Ne peut ouvrir "
 
 #: interface/maininterface.cpp:404
 msgid "[ERR] : Cannot stat "
-msgstr ""
+msgstr "[ERR] : Ne peut statuer "
 
 #: plugins/out/tbz/tbz.cpp:69
 msgid "[ERR] An error occured during compression so I left "
-msgstr ""
+msgstr "[ERR] Une erreur lors de la compression ayant eu lieu, je laisse le fichier "
 
 #: engine/engine.cpp:96
 msgid "[ERR] CEngine::getKernelVersion error !\n"
-msgstr ""
+msgstr "[ERR] CEngine::getKernelVersion !\n"
 
 #: interface/maininterface.cpp:575
 msgid "[ERR] CMainInterface::GetSelectedFiles GetItem !!"
-msgstr ""
+msgstr "[ERR] CMainInterface::GetSelectedFiles GetItem !!"
 
 #: tools/tar_archive.cpp:304
 msgid "[ERR] Cannot open "
-msgstr ""
+msgstr "[ERR] Impossible d'ouvrir "
 
 #: interface/maininterface.cpp:150
 msgid "[ERR] Could not set icon.\n"
-msgstr ""
+msgstr "[ERR] Impossible de définir l'icone.\n"
 
 #: tools/tar_archive.cpp:364
 msgid "[ERR] Due to error(s) on CleanClose, I delete "
-msgstr ""
+msgstr "[ERR] A cause d'erreur(s) dans CleanClose, j'efface "
 
 #: tools/tar_archive.cpp:353
 msgid "[ERR] Due to error(s) on WriteData, I delete "
-msgstr ""
+msgstr "[ERR] A cause d'erreur(s) dans WriteData, j'efface "
 
 #: tools/tar_archive.cpp:243
 msgid "[ERR] Error output file: "
-msgstr ""
+msgstr "[ERR] Erreur sur le fichier de sortie: "
 
 #: engine/engine.cpp:122
 msgid "[WNG] : null"
@@ -291,19 +291,19 @@ msgstr "[WNG] : nul"
 
 #: tools/tar_archive.cpp:71
 msgid "[WNG] Archiving non-ordinary file (Linked or Device file?)"
-msgstr ""
+msgstr "[WNG] Ajout d'un fichier non géré (lien ou fichier device?)"
 
 #: tools/tar_archive.cpp:52
 msgid "[WNG] Cannot stat file: "
-msgstr ""
+msgstr "[WNG] Ne peut statuer sur le fichier : "
 
 #: tools/tar_archive.cpp:252
 msgid "[WNG] Error in file: "
-msgstr ""
+msgstr "[WNG] Erreur dans le fichier : "
 
 #: tools/tar_archive.cpp:288
 msgid "[WNG] File '"
-msgstr ""
+msgstr "[WNG] Fichier '"
 
 #: plugins/out/tbz/tbz.cpp:139
 msgid "bz2 compression of\n"
