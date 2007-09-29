@@ -59,7 +59,7 @@ $Author$
 //Toolbar icons
 #include <gfx/exit.xpm>
 #include <gfx/run.xpm>
-#include <gfx/stop.xpm>
+#include <gfx/select.xpm>
 #include <gfx/scan.xpm>
 #include <gfx/config.xpm>
 
@@ -75,7 +75,7 @@ EVT_MENU(ID_SCAN, CMainInterface::OnScan)
 EVT_MENU(ID_ABOUT, CMainInterface::OnAbout)
 EVT_MENU(wxID_EXIT, CMainInterface::OnQuit)
 EVT_MENU(ID_PROCESS, CMainInterface::OnProcess)
-EVT_MENU(ID_STOP, CMainInterface::OnStop)
+EVT_MENU(ID_SELECT, CMainInterface::OnStop)
 END_EVENT_TABLE()
 
 CMainInterface::CMainInterface()
@@ -193,7 +193,7 @@ void CMainInterface::CreateControls()
 
 	//l_Frame->SetToolBar(l_ToolBar);
 	wxToolBar* l_ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-	l_ToolBar->AddTool(ID_STOP, _T("Select input plugins to use."), stop_xpm, stop_xpm, wxITEM_NORMAL, _T("Select input plugins to use."), wxEmptyString);
+	l_ToolBar->AddTool(ID_SELECT, _T("Select input plugins to use."), select_xpm, select_xpm, wxITEM_NORMAL, _T("Select input plugins to use."), wxEmptyString);
 	l_ToolBar->AddTool(ID_SCAN, _T("Use input plugins to find files."), scan_xpm, scan_xpm, wxITEM_NORMAL, _T("Use input plugins to find files."), wxEmptyString);
 	l_ToolBar->AddTool(ID_PROCESS, _T("Apply output plugin on selected files."),run_xpm , run_xpm, wxITEM_NORMAL, _T("Apply output plugin on selected files."), wxEmptyString);
 	l_ToolBar->AddSeparator();

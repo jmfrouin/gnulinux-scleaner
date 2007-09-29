@@ -54,8 +54,6 @@ SET(scleaner_src scleaner_wx.cpp)
 ADD_EXECUTABLE(scleaner ${scleaner_src})
 TARGET_LINK_LIBRARIES(scleaner dl engine interface leaks log plugins tools `wx-config --libs`)
 
-
-
 # Valgrind test
 ADD_CUSTOM_TARGET(valgrind COMMAND  valgrind -v --show-reachable=yes --leak-check=full scleaner)
 
