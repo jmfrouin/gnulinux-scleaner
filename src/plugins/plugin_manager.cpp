@@ -35,14 +35,14 @@ CPluginManager::~CPluginManager()
 	#if defined DEBUG
 	//Input plugins
 	int l_size = m_InputPlugins.size();
-	std::cout << "[DBG] I founded ";
+	std::cout << i8n("[DBG] I founded ");
 	if(l_size > 2)
 	{
-		std::cout << l_size << " input plugins : " << '\n';
+		std::cout << l_size << i8n(" input plugins : ") << '\n';
 	}
 	else
 	{
-		std::cout << l_size << " input plugin : " << '\n';
+		std::cout << l_size << i8n(" input plugin : ") << '\n';
 	}
 	std::map<std::string, IInPlugin*>::iterator _it;
 	for(_it = m_InputPlugins.begin(); _it != m_InputPlugins.end(); ++_it)
@@ -61,14 +61,14 @@ CPluginManager::~CPluginManager()
 
 	//Output plugins
 	l_size = m_OutputPlugins.size();
-	std::cout << "[DBG] I founded ";
+	std::cout << i8n("[DBG] I founded ");
 	if(l_size > 2)
 	{
-		std::cout << l_size << " output plugins : " << '\n';
+		std::cout << l_size << i8n(" output plugins : ") << '\n';
 	}
 	else
 	{
-		std::cout << l_size << " output plugin : " << '\n';
+		std::cout << l_size << i8n(" output plugin : ") << '\n';
 	}
 	std::map<std::string, IOutPlugin*>::iterator _it2;
 	for(_it2 = m_OutputPlugins.begin(); _it2 != m_OutputPlugins.end(); ++_it2)

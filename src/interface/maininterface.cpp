@@ -53,9 +53,11 @@ $Author$
 
 //App icon
 #include <gfx/scleaner.xpm>
+
 //Tray icons
 #include <gfx/empty.xpm>
 #include <gfx/full.xpm>
+
 //Toolbar icons
 #include <gfx/exit.xpm>
 #include <gfx/run.xpm>
@@ -145,7 +147,7 @@ void CMainInterface::Init()
 
 	if (!m_Icon->SetIcon(full_xpm, wxT(NAME)))
 	{
-		std::cout << "[ERR] Could not set icon.";
+		std::cout << i8n("[ERR] Could not set icon.\n");
 	}
 	launchSplash(1000);
 }
@@ -193,13 +195,13 @@ void CMainInterface::CreateControls()
 
 	//l_Frame->SetToolBar(l_ToolBar);
 	wxToolBar* l_ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-	l_ToolBar->AddTool(ID_SELECT, _T("Select input plugins to use."), select_xpm, select_xpm, wxITEM_NORMAL, _T("Select input plugins to use."), wxEmptyString);
-	l_ToolBar->AddTool(ID_SCAN, _T("Use input plugins to find files."), scan_xpm, scan_xpm, wxITEM_NORMAL, _T("Use input plugins to find files."), wxEmptyString);
-	l_ToolBar->AddTool(ID_PROCESS, _T("Apply output plugin on selected files."),run_xpm , run_xpm, wxITEM_NORMAL, _T("Apply output plugin on selected files."), wxEmptyString);
+	l_ToolBar->AddTool(ID_SELECT, wxString(i8n("Select input plugins to use."), wxConvUTF8), select_xpm, select_xpm, wxITEM_NORMAL, wxString(i8n("Select input plugins to use."), wxConvUTF8), wxEmptyString);
+	l_ToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
+	l_ToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
 	l_ToolBar->AddSeparator();
-	//l_ToolBar->AddTool(ID_CONFIG, _T("Configuration"),config_xpm , config_xpm, wxITEM_NORMAL, _T("Configuration"), wxEmptyString);
+	l_ToolBar->AddTool(ID_CONFIG, wxString(i8n("Configuration"), wxConvUTF8), config_xpm , config_xpm, wxITEM_NORMAL, wxString(i8n("Configuration"), wxConvUTF8), wxEmptyString);
 	//l_ToolBar->AddSeparator();
-	l_ToolBar->AddTool(wxID_EXIT, _T("Quit"),exit_xpm , exit_xpm, wxITEM_NORMAL, _T("Quit"), wxEmptyString);
+	l_ToolBar->AddTool(wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8),exit_xpm , exit_xpm, wxITEM_NORMAL, wxString(i8n("Quit"), wxConvUTF8), wxEmptyString);
 	l_ToolBar->Realize();
 	l_Frame->SetToolBar(l_ToolBar);
 	//________________________________________________________________
@@ -208,7 +210,6 @@ void CMainInterface::CreateControls()
 	m_Split->SetMinimumPaneSize(0);
 
 	//Input plugins
-	//m_Input = new wxCheckTreeCtrl( itemSplitterWindow10, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
 	int l_flags = wxBK_TOP | wxNB_MULTILINE | wxDOUBLE_BORDER;
 	m_Input = new wxNotebook(m_Split, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
 
@@ -225,14 +226,14 @@ void CMainInterface::CreateControls()
 		l_out.Add(l_name);
 	}
 
-	wxString l_title(_T("Output plugins"));
+	wxString l_title(wxString(i8n("Output plugins"), wxConvUTF8));
 	m_Output = new wxRadioBox(itemSplitterWindow12, ID_RADIOBOX, l_title, wxDefaultPosition, wxDefaultSize, l_out, 1, wxRA_SPECIFY_COLS);
 	m_Output->SetSelection(0);
 
 	m_Html = new wxHtmlWindow(itemSplitterWindow12, wxID_ANY, wxDefaultPosition, wxSize(380, 160), wxHW_SCROLLBAR_NEVER);
-	m_Html -> SetBorders(0);
-	m_Html -> LoadPage(wxT("/usr/share/doc/scleaner/about.html"));
-	m_Html -> SetSize(m_Html -> GetInternalRepresentation() -> GetWidth(), m_Html -> GetInternalRepresentation() -> GetHeight());
+	m_Html->SetBorders(0);
+	m_Html->LoadPage(wxString(i8n("/usr/share/doc/scleaner/about.html"), wxConvUTF8));
+	m_Html->SetSize(m_Html->GetInternalRepresentation()->GetWidth(), m_Html->GetInternalRepresentation()->GetHeight());
 
 	itemSplitterWindow12->SplitHorizontally(m_Output, m_Html, 50);
 	m_Split->SplitVertically(m_Input, itemSplitterWindow12, 200);
@@ -243,21 +244,21 @@ void CMainInterface::CreateControls()
 
 	if(m_Engine->isRoot())
 	{
-		SetStatusText(_T("Launched as root/sudo"), 2);
+		SetStatusText(wxString(i8n("Launched as root/sudo"), wxConvUTF8), 2);
 	}
 	else
 	{
 		std::string l_username;
 		m_Engine->getUsername(l_username);
 		wxString l_uusername(l_username.c_str(), wxConvUTF8);
-		SetStatusText(_T("Launched as ") + l_uusername, 2);
+		SetStatusText(wxString(i8n("Launched as "), wxConvUTF8) + l_uusername, 2);
 	}
 
-	std::string l_version = "Kernel : v";
+	std::string l_version = i8n("Kernel : v");
 	m_Engine->getKernelVersion(l_version);
 	wxString l_uversion(l_version.c_str(), wxConvUTF8);
 	SetStatusText(l_uversion, 1);
-	std::string l_path, l_used("Used: "), l_free("Free: "), l_total("Total: ");
+	std::string l_path, l_used(i8n("Used: ")), l_free(i8n("Free: ")), l_total(i8n("Total: "));
 	m_Engine->getFreeSpace(l_path, l_used, l_free, l_total);
 	wxString l_utotal(l_total.c_str(), wxConvUTF8);
 	SetStatusText(l_utotal, 3);
@@ -297,12 +298,12 @@ void CMainInterface::OnNotebook(wxNotebookEvent& event)
 	l_name  = m_Input->GetPageText(l_sel);
 	if(m_Html != 0 && !l_name.empty())
 	{
-		m_Html->LoadPage(wxT("/usr/share/doc/scleaner/") + l_name + _T(".html"));
+		m_Html->LoadPage(wxT("/usr/share/doc/scleaner/") + l_name + wxString(i8n(".html"), wxConvUTF8));
 	}
 	std::stringstream l_tot;
 	if(m_TotalSizes.size() > 0)
 	{
-		std::string l_total("Total size : ");
+		std::string l_total(i8n("Total size : "));
 		CEngine::Instance()->formatSize(m_TotalSizes[l_sel], l_total);
 		wxString l_totalsize(l_total.c_str(), wxConvUTF8);
 		SetStatusText(l_totalsize, 0);
@@ -326,8 +327,8 @@ void CMainInterface::OnQuit(wxCommandEvent& WXUNUSED(event))
 //Toolbar
 void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 {
-	m_Progress = new wxProgressDialog(_T("scleaner scan your disk ..."),
-		_T("this is a information"),
+	m_Progress = new wxProgressDialog(wxString(i8n("scleaner scan your disk ..."), wxConvUTF8),
+		wxString(i8n("this is a information"), wxConvUTF8),
 		100,					 // range
 		this,					 // parent
 		//wxPD_CAN_ABORT |
@@ -358,7 +359,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 		std::list<std::string>::iterator _it2;
 
 		#if defined DEBUG
-		std::cout << "[DBG] Size = " << l_list.size() << '\n';
+		std::cout << i8n("[DBG] Size = ") << l_list.size() << '\n';
 		#endif
 		//FIXME : Manual delete need
 		wxImageList* l_imageListSmall = new wxImageList(16, 16, true);
@@ -371,15 +372,15 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 
 		//Setting header:
 		wxListItem l_itemCol;
-		l_itemCol.SetText(_T("File location"));
+		l_itemCol.SetText(wxString(i8n("File location"), wxConvUTF8));
 		l_itemCol.SetImage(-1);
 		l_fileslist->InsertColumn(0, l_itemCol);
 
-		l_itemCol.SetText(_T("Size (bytes)"));
+		l_itemCol.SetText(wxString(i8n("Size (bytes)"), wxConvUTF8));
 		l_itemCol.SetAlign(wxLIST_FORMAT_CENTRE);
 		l_fileslist->InsertColumn(1, l_itemCol);
 
-		l_itemCol.SetText(_T("TODO"));
+		l_itemCol.SetText(wxString(i8n("TODO"), wxConvUTF8));
 		l_itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
 		l_fileslist->InsertColumn(2, l_itemCol);
 
@@ -400,7 +401,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 			//Try to stat file.
 			if(stat(l_filename.c_str(), &l_info) == -1)
 			{
-				std::cout << "[ERR] : " __FILE__ << "@" << __LINE__ << ": Cannot stat " << l_filename << '\n';
+				std::cout << i8n("[ERR] : Cannot stat ") << l_filename << '\n';
 			}
 			else
 			{
@@ -451,14 +452,14 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 {
 	//GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
 	#if defined DEBUG
-	std::cout << "[DBG] Process !!! " << '\n';
+	std::cout << i8n("[DBG] Process !!! ") << '\n';
 	#endif
 	std::list<std::string> l_selected_files;
 	//GetSelectedFilesRecursively(m_Input->GetRootItem(), l_selected_files);
 	GetSelectedFiles(l_selected_files);
 
 	#if defined DEBUG
-	std::cout << "[DBG] You have selected: " << '\n';
+	std::cout << i8n("[DBG] You have selected: ") << '\n';
 	std::list<std::string>::iterator l_it;
 	for(l_it = l_selected_files.begin(); l_it != l_selected_files.end(); ++l_it)
 	{
@@ -466,8 +467,8 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 	}
 	#endif
 
-	m_Progress = new wxProgressDialog(_T("scleaner process your files ..."),
-		_T("this is a information"),
+	m_Progress = new wxProgressDialog(wxString(i8n("scleaner process your files ..."), wxConvUTF8),
+		wxString(i8n("this is a information"), wxConvUTF8),
 		100,					 // range
 		this,					 // parent
 		//wxPD_CAN_ABORT |
@@ -486,7 +487,7 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 	l_name = l_nameWX.char_str();
 
 	#if defined DEBUG
-	std::cout << "[DBG] CMainInterface : Get selection : " << l_name << '\n';
+	std::cout << i8n("[DBG] CMainInterface : Get selection : ") << l_name << '\n';
 	#endif
 
 	wxString l_msg;
@@ -503,7 +504,7 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 		l_msg.FromUTF8(l_path.c_str());
 	}
 
-	wxDirDialog l_outputFileDlg(this, _T("Select an output folder for ") + l_nameWX + _T(" plugin:"), l_msg, wxDD_DIR_MUST_EXIST);
+	wxDirDialog l_outputFileDlg(this, wxString(i8n("Select an output folder for "), wxConvUTF8) + l_nameWX + wxString(i8n(" plugin:"), wxConvUTF8), l_msg, wxDD_DIR_MUST_EXIST);
 
 	if (l_outputFileDlg.ShowModal() == wxID_OK)
 	{
@@ -571,7 +572,7 @@ void CMainInterface::GetSelectedFiles(std::list<std::string>& _fl)
 			}
 			else
 			{
-				std::cerr << "[ERR] CMainInterface::GetSelectedFiles GetItem !!" << '\n';
+				std::cerr << i8n("[ERR] CMainInterface::GetSelectedFiles GetItem !!") << '\n';
 			}
 		}
 	}
@@ -581,5 +582,5 @@ void CMainInterface::GetSelectedFiles(std::list<std::string>& _fl)
 void CMainInterface::OnSelRadio(wxCommandEvent& event)
 {
 	wxString l_name = event.GetString();
-	m_Html -> LoadPage(wxT("/usr/share/doc/scleaner/") + l_name + _T(".html"));
+	m_Html -> LoadPage(wxT("/usr/share/doc/scleaner/") + l_name + wxString(i8n(".html"), wxConvUTF8));
 }

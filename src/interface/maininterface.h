@@ -34,7 +34,6 @@ $Author$
 #include <wx/frame.h>
 #include <wx/toolbar.h>
 #include <wx/splitter.h>
-//#include "checktreectrl.h"
 #include <wx/notebook.h>
 #include <wx/statusbr.h>
 #include <wx/stattext.h>
@@ -44,7 +43,6 @@ $Author$
 
 class IInPlugin;
 class IOutPlugin;
-//class wxCheckListBox;
 class wxRadioBox;
 class wxHtmlWindow;
 class CEngine;
@@ -105,6 +103,7 @@ class CMainInterface: public wxFrame, public IProgressbar
 	#endif
 		//Input plugins
 		std::map<std::string, IInPlugin*>*  m_InputPlugs;
+
 		//Output plugins
 		std::map<std::string, IOutPlugin*>* m_OutputPlugs;
 
@@ -112,13 +111,12 @@ class CMainInterface: public wxFrame, public IProgressbar
 		TSmartPtr<CEngine>                  m_Engine;
 
 		//GUI tree list which display input plugins and file list.
-		//wxCheckTreeCtrl* 					m_Input;
 		wxNotebook*                         m_Input;
 
 		//Informations GUI panel
 		wxHtmlWindow*                       m_Html;
+
 		//GUI checkbox which display output plugins
-		//wxCheckListBox*						m_Output;
 		wxRadioBox*                         m_Output;
 		wxStatusBar*                        m_StatusBar;
 		wxSplitterWindow* 					m_Split;

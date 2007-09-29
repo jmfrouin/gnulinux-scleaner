@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <tar.h>
 #include <grp.h>
 #include <pwd.h>
+#include <config.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -38,7 +39,7 @@ bool CTarArchive::FillHeader(const std::string& _filename, posix_header& _header
 	bool l_ret = false;
 
 	#if defined DEBUG
-	std::cout << "File header for " << _filename << " :" << '\n';
+	std::cout << i8n("[DBG]File header for ") << _filename << " :" << '\n';
 	#endif
 
 	struct stat l_info;
@@ -48,7 +49,7 @@ bool CTarArchive::FillHeader(const std::string& _filename, posix_header& _header
 	//Try to stat file.
 	if(stat(_filename.c_str(), &l_info) == -1)
 	{
-		std::cout << "[WNG] Cannot stat file: " << _filename.c_str() << " so I skip it !" << '\n';
+		std::cout << i8n("[WNG] Cannot stat file: ") << _filename.c_str() << i8n(" so I skip it !") << '\n';
 		l_ret = false;
 	}
 	else
@@ -67,7 +68,7 @@ bool CTarArchive::FillHeader(const std::string& _filename, posix_header& _header
 		if(!(l_info.st_mode & S_IFREG))
 		{
 			// Not a normal file.  Let's archive it anyway, but warn the user.
-			std::cout << "[WNG] Archiving non-ordinary file (Linked or Device file?)" << '\n';
+			std::cout << i8n("[WNG] Archiving non-ordinary file (Linked or Device file?)") << '\n';
 		}
 
 		// Add the normal file bit.
@@ -239,7 +240,7 @@ bool CTarArchive::WriteData(const std::string& _input, const std::string& _outpu
 
 		if(!l_out.good())
 		{
-			std::cerr << "[ERR] Error output file: " << _output << '\n';
+			std::cerr << i8n("[ERR] Error output file: ") << _output << '\n';
 			l_ret = false;
 		}
 		else
@@ -248,7 +249,7 @@ bool CTarArchive::WriteData(const std::string& _input, const std::string& _outpu
 
 			if(!l_in.good())
 			{
-				std::cerr << "[WNG] Error in file: " << _input << " (file is skipped)" << '\n';
+				std::cerr << i8n("[WNG] Error in file: ") << _input << i8n(" (file is skipped)") << '\n';
 				l_ret = true; // If we cannot read a file it's not vital, we skip, but we need to inform user !
 			}
 			else
@@ -284,7 +285,7 @@ bool CTarArchive::WriteData(const std::string& _input, const std::string& _outpu
 	}
 	else
 	{
-		std::cerr << "[WNG] File '" << _input << "' hasn't been add to tar archive !" << '\n';
+		std::cerr << i8n("[WNG] File '") << _input << i8n("' hasn't been add to tar archive !") << '\n';
 		l_ret = true; // If we cannot compute header, we skip it.
 	}
 
@@ -300,7 +301,7 @@ bool CTarArchive::CleanClose(const std::string& _output)
 
 	if(!l_out.good())
 	{
-		std::cout << "[ERR] Cannot open " << _output << " file!" << '\n';
+		std::cout << i8n("[ERR] Cannot open ") << _output << i8n(" file!") << '\n';
 		l_ret = false;
 	}
 	else
@@ -337,11 +338,11 @@ bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& _
 			break;
 		}
 		int l_res = l_done*50/l_size;
-		std::string l_mess("Adding\n");
+		std::string l_mess(i8n("Adding\n"));
 		l_mess += *l_it;
 		_callback->updateProgress(l_mess, false, l_res);
 		#if defined DEBUG
-		std::cout << *l_it << " appended to " << _output << '\n';
+		std::cout << *l_it << i8n(" appended to ") << _output << '\n';
 		#endif
 	}
 	
@@ -349,7 +350,7 @@ bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& _
 	{
 		std::cout << (*l_it) << '\n';
 		unlink(_output.c_str());
-		std::cout << "[ERR] Due to error(s) on WriteData, I delete " << _output << '\n';
+		std::cout << i8n("[ERR] Due to error(s) on WriteData, I delete ") << _output << '\n';
 	}
 	else
 	{
@@ -360,7 +361,7 @@ bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& _
 		else
 		{
 			unlink(_output.c_str());
-			std::cout << "[ERR] Due to error(s) on CleanClose, I delete " << _output << '\n';
+			std::cout << i8n("[ERR] Due to error(s) on CleanClose, I delete ") << _output << '\n';
 			l_ret = false;
 		}
 	}

@@ -93,7 +93,7 @@ bool CEngine::getKernelVersion(std::string& _version)
 	utsname l_temp;
 	if(uname(&l_temp) != 0)
 	{
-		std::cerr << "[ERR] CEngine::getKernelVersion error !\n";
+		std::cerr << i8n("[ERR] CEngine::getKernelVersion error !\n");
 	}
 	else
 	{
@@ -119,7 +119,7 @@ bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name
 	}
 	else
 	{
-		std::cout << "[WNG] : null" << '\n';
+		std::cout << i8n("[WNG] : null") << '\n';
 	}
 	return l_ret;
 }
@@ -137,14 +137,14 @@ bool CEngine::getUsername(std::string& _username)
 	l_passwd = getpwuid(l_uid);
 
 	#if defined DEBUG
-	std::cout << "[DBG] CEngine::getUsername UID: " << l_uid << '\n';
+	std::cout << i8n("[DBG] CEngine::getUsername UID: ") << l_uid << '\n';
 	#endif
 
 	if (l_passwd)
 	{
 		_username = l_passwd->pw_name;
 		#if defined DEBUG
-		std::cout << "[DBG] CEngine::getUsername Username: " << _username << '\n';
+		std::cout << i8n("[DBG] CEngine::getUsername Username: ") << _username << '\n';
 		#endif
 		l_ret = true;
 	}
@@ -163,25 +163,25 @@ void CEngine::formatSize(double _size, std::string& _str)
 
 	if(_size > (1024*1024*1024))
 	{
-		l_temp << ROUND((_size / (1024*1024*1024))) << "G";
+		l_temp << ROUND((_size / (1024*1024*1024))) << i8n("GB");
 	}
 	else
 	{
 		if(_size > (1024*1024))
 		{
-			l_temp << ROUND(_size / (1024*1024)) << "M";
+			l_temp << ROUND(_size / (1024*1024)) << i8n("MB");
 		}
 		else
 		{
 			if(_size > 1024)
 			{
-				l_temp << ROUND(_size / 1024) << "K";
+				l_temp << ROUND(_size / 1024) << i8n("KB");
 			}
 			else
 			{
 				if(_size == 0)
 				{
-					l_temp << "null size";
+					l_temp << i8n("null size");
 				}
 				else
 				{
@@ -287,7 +287,7 @@ bool CEngine::scanDisk(IProgressbar* _callback)
 		getUsername(l_username);
 		l_path += "/" + l_username;
 		#if defined DEBUG
-		std::cout << "[DBG] CEngine::scanDisk Path : " << l_path << '\n';
+		std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << l_path << '\n';
 		#endif
 	}
 	m_callback = _callback;
@@ -305,7 +305,7 @@ int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tfl
 	if (_stat->st_mode > 23420)
 	{
 		#if defined DEBUG
-		std::cout << "[DBG] FTW_callback : " << l_path << '\n';
+		std::cout << i8n("[DBG] FTW_callback : ") << l_path << '\n';
 		#endif
 		CEngine* l_eng = CEngine::Instance();
 		if(l_eng->asRoot())
@@ -437,7 +437,7 @@ void CEngine::getTimestamp(std::string& _str)
 	_str += l_temp.str();
 
 	#if defined DEBUG
-	std::cout << "CEngine::getTimestamp Timestamp: " << _str << '\n';
+	std::cout << i8n("[DBG] CEngine::getTimestamp Timestamp: ") << _str << '\n';
 	#endif
 }
 /* vi:set ts=4: */

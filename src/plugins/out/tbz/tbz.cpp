@@ -66,7 +66,7 @@ void CtbzPlugin::processFileList(std::list<std::string>& _fl, const std::string&
 		}
 		else
 		{
-			std::cerr << "[ERR] An error occured during compression so I left " << _path + "/backup_" + l_date + ".tar" << '\n';
+			std::cerr << i8n("[ERR] An error occured during compression so I left ") << _path + "/backup_" + l_date + ".tar" << '\n';
 		}
 	}
 }
@@ -89,7 +89,7 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 	// Open up the output file
 	if(!l_out)
 	{
-		std::cout << "Error out file!" << '\n';
+		std::cout << i8n("Error out file!") << '\n';
 		l_ret = false;
 	}
 	else
@@ -100,7 +100,7 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 
 		if(l_err != BZ_OK)
 		{
-			std::cout << "Error bzWriteOpen!" << '\n';
+			std::cout << i8n("Error bzWriteOpen!") << '\n';
 			l_ret = false;
 		}
 		else
@@ -110,7 +110,7 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 
 			if(!l_in.good())
 			{
-				std::cout << "Error in file!" << '\n';
+				std::cout << i8n("Error in file!") << '\n';
 				l_ret = false;
 			}
 			else
@@ -121,7 +121,7 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 				//Try to stat file.
 				if(stat(_input.c_str(), &l_info) == -1)
 				{
-					std::cout << "Cannot stat " << _input.c_str() << '\n';
+					std::cout << i8n("Cannot stat ") << _input.c_str() << '\n';
 					l_ret = false;
 				}
 				else
@@ -136,7 +136,7 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 						std::streamsize l_bytesread = l_in.gcount();
 						l_done += l_bytesread;
 						int l_res = static_cast<int>((l_done*50)/l_total)+50;
-						std::string l_mess("bz2 compression of\n");
+						std::string l_mess(i8n("bz2 compression of\n"));
 						std::stringstream l_doneStr;
 						l_doneStr << (l_res-50)*2;
 						l_mess += _output + " :  " + l_doneStr.str() + "%";

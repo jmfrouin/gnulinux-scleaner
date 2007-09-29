@@ -65,8 +65,6 @@ bool CSClean::OnInit(void)
 	//Load GFX interface
 	l_ret = m_engine->loadInterface();
 
-	std::cout << i8n( "Hello, world!\n";
-
 	return l_ret;
 }
 

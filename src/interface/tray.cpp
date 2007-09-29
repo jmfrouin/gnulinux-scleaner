@@ -62,7 +62,7 @@ wxMenu *CTrayIcon::CreatePopupMenu()
 	menu->Append(PU_RESTORE, _T(NAME));
 	#ifndef __WXMAC_OSX__		 /*Mac has built-in quit menu*/
 	menu->AppendSeparator();
-	menu->Append(PU_EXIT,    _T("E&xit"));
+	menu->Append(PU_EXIT, wxString(i8n("E&xit"), wxConvUTF8));
 	#endif
 	return menu;
 }

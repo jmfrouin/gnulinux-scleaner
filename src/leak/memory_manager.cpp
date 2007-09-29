@@ -40,12 +40,12 @@ CMemoryManager::CMemoryManager()
 	m_File.open("_memoryleaks.log");
 	if (!m_File)
 	{
-		std::cout << "Erreur : Cannot open m_File" << std::endl;
+		std::cout << i8n("[ERR] : Cannot open ") << m_File << std::endl;
 	}
 
 	//    throw CLoadingFailed("Memory leaks.log", "Impossible d'accder en criture");
 
-	m_File << " MemoryManager v" << VERSION_MEMORY_MANAGER << ___(" - Report (Compiled on ") << __DATE__ << " @ " << __TIME__ << ")" << std::endl;
+	m_File << " MemoryManager v" << VERSION_MEMORY_MANAGER << i8n(" - Report (Compiled on ") << __DATE__ << " @ " << __TIME__ << ")" << std::endl;
 }
 
 
@@ -59,14 +59,14 @@ CMemoryManager::~CMemoryManager()
 	{
 		m_File << std::endl;
 		m_File << "====================================================================================" << std::endl;
-		m_File << ___("   No leak detected, congratulations !  ") << std::endl;
+		m_File << i8n("   No leak detected, congratulations !  ") << std::endl;
 		m_File << "====================================================================================" << std::endl << std::endl;
 	}
 	else
 	{
 		m_File << std::endl;
 		m_File << "====================================================================================" << std::endl;
-		m_File << ___(" Oops... Some leaks have been detected  ") << std::endl;
+		m_File << i8n(" Oops... Some leaks have been detected  ") << std::endl;
 		m_File << "====================================================================================" << std::endl << std::endl;
 		m_File << std::endl;
 		Report();
@@ -85,14 +85,14 @@ void CMemoryManager::Report()
 	{
 		TotalSize += i->second.Size;
 		m_File << "-> 0x" << i->first
-			<< " | "   << std::setw(7) << std::setfill(' ') << static_cast<int>(i->second.Size) << " bytes"
+			<< " | "   << std::setw(7) << std::setfill(' ') << static_cast<int>(i->second.Size) << i8n(" bytes")
 			<< " | "   << i->second.File << " (" << i->second.Line << ")" << std::endl;
 		free(i->first);
 	}
 
 	m_File << std::endl << std::endl << "-- "
-		<< static_cast<int>(m_Blocks.size()) << ___(" blocs not empty, ")
-		<< static_cast<int>(TotalSize)       << ___(" bytes --")
+		<< static_cast<int>(m_Blocks.size()) << i8n(" blocs not empty, ")
+		<< static_cast<int>(TotalSize)       << i8n(" bytes --")
 		<< std::endl;
 
 }
@@ -137,7 +137,7 @@ void CMemoryManager::Free(void* _ptr, bool _array)
 
 	if (It->second.Array != _array)
 	{
-		m_File << "-- ERREUR | 0x" << _ptr << " @ " << It->second.File << ___(" Line : ") << It->second.Line << std::endl;
+		m_File << "-- ERR | 0x" << _ptr << " @ " << It->second.File << i8n(" Line : ") << It->second.Line << std::endl;
 		return;
 	}
 
