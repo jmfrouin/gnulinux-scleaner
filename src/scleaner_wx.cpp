@@ -25,7 +25,6 @@ $Author$
 
 #include "scleaner_wx.h"
 #include <config.h>
-#include <libintl.h>
 #include <string>
 #include <list>
 #include <leak/memory_manager.h>
@@ -45,9 +44,13 @@ CSClean::CSClean()
 
 bool CSClean::OnInit(void)
 {
-	//textdomain("scleaner");
+	//i8n
+	setlocale( LC_ALL, "" );
+	bindtextdomain( "scleaner", "/usr/share/locale" );
+	textdomain( "scleaner" );
+
 	#if defined DEBUG
-	std::cout << "[DBG] scleaner starting ...\n";
+	std::cout << i8n("[DBG] scleaner starting ...\n");
 	#endif
 
 	bool l_ret = false;
@@ -61,6 +64,8 @@ bool CSClean::OnInit(void)
 
 	//Load GFX interface
 	l_ret = m_engine->loadInterface();
+
+	std::cout << i8n( "Hello, world!\n";
 
 	return l_ret;
 }

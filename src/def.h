@@ -94,8 +94,11 @@ $Author$
 #define TOOLBAR_STYLE = wxTB_FLAT | wxTB_DOCKABLE | wxTB_TEXT
 
 //Useful macro
-#define ___(X) gettext(X)
+#define i8n(X) gettext(X)
 
 #define PLUG_FOLDER "/usr/share/scleaner/plugs"
+
+#include <libintl.h>
+#include <locale.h>
 #endif							 // _DEF_H_
 /* vi:set ts=4: */
