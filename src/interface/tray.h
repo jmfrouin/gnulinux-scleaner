@@ -37,13 +37,7 @@ class CTrayIcon: public wxTaskBarIcon, public CSmartCpt
 		enum
 		{
 			PU_RESTORE = 10001,
-			PU_NEW_ICON,
-			PU_OLD_ICON,
 			PU_EXIT,
-			PU_CHECKMARK,
-			PU_SUB1,
-			PU_SUB2,
-			PU_SUBMAIN
 		};
 
 	public:
@@ -60,11 +54,6 @@ class CTrayIcon: public wxTaskBarIcon, public CSmartCpt
 		void OnLeftButtonDClick(wxTaskBarIconEvent&);
 		void OnMenuRestore(wxCommandEvent&);
 		void OnMenuExit(wxCommandEvent&);
-		void OnMenuSetNewIcon(wxCommandEvent&);
-		void OnMenuSetOldIcon(wxCommandEvent&);
-		void OnMenuCheckmark(wxCommandEvent&);
-		void OnMenuUICheckmark(wxUpdateUIEvent&);
-		void OnMenuSub(wxCommandEvent&);
 		virtual wxMenu *CreatePopupMenu();
 
 	public:

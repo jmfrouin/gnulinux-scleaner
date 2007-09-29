@@ -51,6 +51,8 @@ $Author$
 #include "maininterface.h"
 #include "checklistctrl.h"
 
+//App icon
+#include <gfx/scleaner.xpm>
 //Tray icons
 #include <gfx/empty.xpm>
 #include <gfx/full.xpm>
@@ -109,6 +111,7 @@ bool CMainInterface::Create(wxWindow* parent, wxWindowID id, const wxString& cap
 		((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW2))->SetSashPosition(SYMBOL_MAININTERFACE_SASH2_POS);
 	}
 
+  	SetIcon(wxICON(scleaner));
 	return true;
 }
 
@@ -190,10 +193,9 @@ void CMainInterface::CreateControls()
 
 	//l_Frame->SetToolBar(l_ToolBar);
 	wxToolBar* l_ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-	l_ToolBar->AddTool(ID_SCAN, _T("Use input plugins to find files"), scan_xpm, scan_xpm, wxITEM_NORMAL, _T("Use input plugins to find files"), wxEmptyString);
-	l_ToolBar->AddTool(ID_STOP, _T("Stop scan process"), stop_xpm, stop_xpm, wxITEM_NORMAL, _T("Stop scan process"), wxEmptyString);
-	l_ToolBar->AddSeparator();
-	l_ToolBar->AddTool(ID_PROCESS, _T("Apply output plugin on selected files"),run_xpm , run_xpm, wxITEM_NORMAL, _T("Apply output plugin on selected files"), wxEmptyString);
+	l_ToolBar->AddTool(ID_STOP, _T("Select input plugins to use."), stop_xpm, stop_xpm, wxITEM_NORMAL, _T("Select input plugins to use."), wxEmptyString);
+	l_ToolBar->AddTool(ID_SCAN, _T("Use input plugins to find files."), scan_xpm, scan_xpm, wxITEM_NORMAL, _T("Use input plugins to find files."), wxEmptyString);
+	l_ToolBar->AddTool(ID_PROCESS, _T("Apply output plugin on selected files."),run_xpm , run_xpm, wxITEM_NORMAL, _T("Apply output plugin on selected files."), wxEmptyString);
 	l_ToolBar->AddSeparator();
 	l_ToolBar->AddTool(ID_CONFIG, _T("Configuration"),config_xpm , config_xpm, wxITEM_NORMAL, _T("Configuration"), wxEmptyString);
 	l_ToolBar->AddSeparator();

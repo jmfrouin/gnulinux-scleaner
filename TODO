@@ -1,12 +1,13 @@
 0.31.0:
-French version ?
-Add tooltip for disabled items in notebook (->"You need root rights to selected these items")
 Add code to detect a twice selected file.
 Check memory leaks and FIXME in code
-IMPORTANT : Implement error code
 Fix small std outputs errors
-Add an icon :)
+Icons
+Bug total size with 1 tab.
+IMPORTANT: Implement error code
 PARTIAL : Add CRC in checklistbox
+LAST: French version
+OK: Add an icon :)
 OK: Add output file dialog
 OK: Add a function in CEngine static to get date in string for backup
 OK: wxGauge for scan
