@@ -5,7 +5,7 @@ Fix small std outputs errors
 Icons
 Bug total size with 1 tab.
 PARTIAL : Add CRC in checklistbox
-LAST: French version
+OK: French version
 OK: Add an icon :)
 OK: Add output file dialog
 OK: Add a function in CEngine static to get date in string for backup
