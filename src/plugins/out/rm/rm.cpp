@@ -42,6 +42,17 @@ CrmPlugin::~CrmPlugin()
 
 void CrmPlugin::processFileList(std::list<std::string>& _fl, const std::string& _path, IProgressbar* _callback)
 {
+	std::list<std::string>::iterator l_it;
+	int l_size = _fl.size();
+	int l_done = 0;
+	for(l_it = _fl.begin(); l_it != _fl.end(); ++l_it)
+	{
+		//unlink((*l_it).c_str());
+		std::cout << (*l_it).c_str() << '\n';
+
+		int l_res = l_done*100/l_size;
+		_callback->updateProgress((*l_it), false, l_res);
+	}
 }
 
 

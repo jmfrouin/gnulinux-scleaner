@@ -328,8 +328,9 @@ int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tfl
 
 				if(l_prog != 0)
 				{
-					if(l_count++ == 100)
+					if(l_count++ == 10)
 					{
+						std::cout << l_count << '\n';
 						l_prog->updateProgress(l_path, true);
 						l_count = 0;
 					}

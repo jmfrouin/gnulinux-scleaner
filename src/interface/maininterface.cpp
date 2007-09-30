@@ -199,7 +199,7 @@ void CMainInterface::CreateControls()
 	l_ToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
 	l_ToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
 	l_ToolBar->AddSeparator();
-	l_ToolBar->AddTool(ID_CONFIG, wxString(i8n("Configuration"), wxConvUTF8), config_xpm , config_xpm, wxITEM_NORMAL, wxString(i8n("Configuration"), wxConvUTF8), wxEmptyString);
+	//l_ToolBar->AddTool(ID_CONFIG, wxString(i8n("Configuration"), wxConvUTF8), config_xpm , config_xpm, wxITEM_NORMAL, wxString(i8n("Configuration"), wxConvUTF8), wxEmptyString);
 	//l_ToolBar->AddSeparator();
 	l_ToolBar->AddTool(wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8),exit_xpm , exit_xpm, wxITEM_NORMAL, wxString(i8n("Quit"), wxConvUTF8), wxEmptyString);
 	l_ToolBar->Realize();
