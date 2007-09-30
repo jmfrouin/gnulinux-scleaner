@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-30 01:05+0200\n"
+"POT-Creation-Date: 2007-09-30 12:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,6 +92,10 @@ msgstr ""
 msgid "/usr/share/doc/scleaner/about.html"
 msgstr ""
 
+#: interface/maininterface.cpp:188
+msgid "About"
+msgstr ""
+
 #: tools/tar_archive.cpp:341
 msgid "Adding\n"
 msgstr ""
@@ -122,6 +126,10 @@ msgstr ""
 
 #: plugins/out/tbz/tbz.cpp:92
 msgid "Error out file!"
+msgstr ""
+
+#: interface/maininterface.cpp:182
+msgid "File"
 msgstr ""
 
 #: interface/maininterface.cpp:375
@@ -156,11 +164,15 @@ msgstr ""
 msgid "MB"
 msgstr ""
 
+#: interface/maininterface.cpp:187
+msgid "Misc"
+msgstr ""
+
 #: interface/maininterface.cpp:229
 msgid "Output plugins"
 msgstr ""
 
-#: interface/maininterface.cpp:204
+#: interface/maininterface.cpp:183 interface/maininterface.cpp:204
 msgid "Quit"
 msgstr ""
 

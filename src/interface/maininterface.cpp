@@ -179,13 +179,13 @@ void CMainInterface::CreateControls()
 	wxMenu* l_Misc = new wxMenu;
 
 	//File menu
-	l_MenuBar->Append(l_File, _T("File"));
-	wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, _T("Quit"));
+	l_MenuBar->Append(l_File, wxString(i8n("File"), wxConvUTF8));
+	wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8));
 	l_File->Append(l_Quit);
 
 	//Misc menu
-	l_MenuBar->Append(l_Misc, _T("Misc"));
-	wxMenuItem* l_About = new wxMenuItem(l_Misc, ID_ABOUT, _T("About"));
+	l_MenuBar->Append(l_Misc, wxString(i8n("Misc"), wxConvUTF8));
+	wxMenuItem* l_About = new wxMenuItem(l_Misc, ID_ABOUT, wxString(i8n("About"), wxConvUTF8));
 	l_Misc->Append(l_About);
 
 	l_Frame->SetMenuBar(l_MenuBar);
