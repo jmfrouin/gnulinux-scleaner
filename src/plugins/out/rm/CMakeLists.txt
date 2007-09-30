@@ -21,8 +21,10 @@
 # $Rev: 14 $
 # $Author: snoogie_sf $
 # ------------------------------------------------------
-SET(folder rm tbz)
 
-FOREACH(fold ${folder})
-	ADD_SUBDIRECTORY(${fold})
-ENDFOREACH(fold ${folder})
+SET(rm_src rm.cpp)
+ADD_LIBRARY(rm SHARED ${rm_src}) 
+TARGET_LINK_LIBRARIES(rm plugins tools)
+INSTALL(TARGETS rm DESTINATION ${PLUGSDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/plugins/out/rm/rm.html DESTINATION ${SHAREDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/plugins/out/rm/rm_fr.html DESTINATION ${SHAREDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
