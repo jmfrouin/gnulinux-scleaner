@@ -1,10 +1,7 @@
 0.31.0:
-Add code to detect a twice selected file.
-Check memory leaks and FIXME in code
-Fix small std outputs errors
-Icons
-Bug total size with 1 tab.
 PARTIAL : Add CRC in checklistbox
+OK: Fix small std outputs errors
+OK: Icons
 OK: French version
 OK: Add an icon :)
 OK: Add output file dialog
@@ -24,6 +21,8 @@ RELEASE : Remove debug symbols
 POSTPONED : Decrease or increase m_TotalSize on select/deselect
 
 0.32.0
+Add code to detect a twice selected file.
+Check memory leaks and FIXME in code
 Write dameon to detect free space ?
 Desktop notification
 CLI support

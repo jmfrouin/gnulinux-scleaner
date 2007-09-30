@@ -7,7 +7,7 @@ Standards-Version: 3.7.2
 
 Package: scleaner
 Architecture: any
-Depends: libwxbase2.8-0 (>=2.8.0), libwxgtk2.8-0 (>=2.8.0)
+Depends:
 Description: A simple GNU/Linux desktop cleaner
  scleaner will be able to clean your GNU/Linux desktop. 
  Il is able to remove, for example:

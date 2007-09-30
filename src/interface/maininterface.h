@@ -77,7 +77,7 @@ class CMainInterface: public wxFrame, public IProgressbar
 		void OnQuit(wxCommandEvent& WXUNUSED(event));
 		void OnProcess(wxCommandEvent& WXUNUSED(event));
 		void OnScan(wxCommandEvent& WXUNUSED(event));
-		void OnStop(wxCommandEvent& WXUNUSED(event));
+		void OnSelect(wxCommandEvent& WXUNUSED(event));
 		void OnSelRadio(wxCommandEvent& event);
 		void OnNotebook(wxNotebookEvent& event);
 

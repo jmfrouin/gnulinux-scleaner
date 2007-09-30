@@ -53,7 +53,7 @@ IPlugin::eType CbackfilesPlugin::Type()
 
 void CbackfilesPlugin::processFile(const std::string& _filename)
 {
-	if((_filename.find("~", 0) != std::string::npos) || (_filename.find("bak", 0) != std::string::npos))
+	if((_filename.find("~", 0) == (_filename.length()-1)) || (_filename.find("bak", 0) == (_filename.length()-3)))
 	{
 		m_fl.push_back(_filename);
 	}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-30 12:59+0200\n"
+"POT-Creation-Date: 2007-09-30 18:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,7 +84,7 @@ msgstr ""
 msgid "' hasn't been add to tar archive !"
 msgstr ""
 
-#: interface/maininterface.cpp:301 interface/maininterface.cpp:585
+#: interface/maininterface.cpp:301 interface/maininterface.cpp:586
 msgid ".html"
 msgstr ""
 
@@ -106,10 +106,6 @@ msgstr ""
 
 #: plugins/out/tbz/tbz.cpp:124
 msgid "Cannot stat "
-msgstr ""
-
-#: interface/maininterface.cpp:202
-msgid "Configuration"
 msgstr ""
 
 #: interface/tray.cpp:65
@@ -184,6 +180,13 @@ msgstr ""
 msgid "Select input plugins to use."
 msgstr ""
 
+#: interface/maininterface.cpp:547
+msgid ""
+"Since for this alpha version, there are only 3 input plugins (and 2 that run "
+"only in root mode), the dialog for selecting input plugins is not yet ready :"
+"D but will be available soon !!"
+msgstr ""
+
 #: interface/maininterface.cpp:379
 msgid "Size (bytes)"
 msgstr ""
@@ -208,7 +211,7 @@ msgstr ""
 msgid "Used: "
 msgstr ""
 
-#: engine/engine.cpp:440
+#: engine/engine.cpp:441
 msgid "[DBG] CEngine::getTimestamp Timestamp: "
 msgstr ""
 
@@ -272,7 +275,7 @@ msgstr ""
 msgid "[ERR] CEngine::getKernelVersion error !\n"
 msgstr ""
 
-#: interface/maininterface.cpp:575
+#: interface/maininterface.cpp:576
 msgid "[ERR] CMainInterface::GetSelectedFiles GetItem !!"
 msgstr ""
 

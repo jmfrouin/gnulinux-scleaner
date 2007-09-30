@@ -1,5 +1,13 @@
 # scleaner i8n template
 # Copyright (C) 2007 Frouin Jean-Michel
+#: interface/maininterface.cpp:547
+msgid ""
+"Since for this alpha version, there are only 3 input plugins (and 2 that run "
+"only in root mode), the dialog for selecting input plugins is not yet ready :"
+"D but will be available soon !!"
+msgstr ""
+"Comme cette version alpha ne contient que 3 greffons (dont 2 qui nécessitent le mode superutilsateur), le dialogue pour sélectionner les greffons d'entrée n'est pas pret :D mais il le sera très bientôt !!"
+
 # This file is distributed under the GPL3 license.
 # Jean-Michel FROUIN <jmfrouin@gnu.org>, 2007.
 # 
@@ -92,6 +100,7 @@ msgstr "_fr.html"
 #: interface/maininterface.cpp:235
 msgid "/usr/share/doc/scleaner/about.html"
 msgstr "/usr/share/doc/scleaner/about_fr.html"
+
 #: interface/maininterface.cpp:188
 msgid "About"
 msgstr "A propos"

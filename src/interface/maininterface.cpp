@@ -77,7 +77,7 @@ EVT_MENU(ID_SCAN, CMainInterface::OnScan)
 EVT_MENU(ID_ABOUT, CMainInterface::OnAbout)
 EVT_MENU(wxID_EXIT, CMainInterface::OnQuit)
 EVT_MENU(ID_PROCESS, CMainInterface::OnProcess)
-EVT_MENU(ID_SELECT, CMainInterface::OnStop)
+EVT_MENU(ID_SELECT, CMainInterface::OnSelect)
 END_EVENT_TABLE()
 
 CMainInterface::CMainInterface()
@@ -541,9 +541,10 @@ void CMainInterface::updateProgress(const std::string& _mess, bool _pulse, int _
 }
 
 
-void CMainInterface::OnStop(wxCommandEvent& WXUNUSED(event))
+void CMainInterface::OnSelect(wxCommandEvent& WXUNUSED(event))
 {
 	//GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
+	wxMessageDialog(this, wxString(i8n("Since for this alpha version, there are only 3 input plugins (and 2 that run only in root mode), the dialog for selecting input plugins is not yet ready :D but will be available soon !!"), wxConvUTF8), _T("scleaner"), wxOK | wxICON_EXCLAMATION).ShowModal();
 }
 
 

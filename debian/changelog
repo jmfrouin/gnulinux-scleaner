@@ -3,6 +3,7 @@ scleaner (0.31.0) unstable; urgency=low
   * Output plugin tbz is ready.
   * First alpha release.
   * Code cleanup.
+  * French version.
 
  -- Jean-Michel Frouin <jmfrouin@gnu.org>  Fri, 14 Sep 2007 22:19:26 +0200
 
