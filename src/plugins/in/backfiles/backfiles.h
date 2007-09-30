@@ -24,7 +24,7 @@ $Author: snoogie $
 */
 
 /*! @page page3 Plugins documentations.
- * - @subpage logs
+ * - @subpage backfiles
  */
 
 /*! @page backfiles backfiles: input plugin.
