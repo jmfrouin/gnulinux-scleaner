@@ -37,7 +37,7 @@ std::size_t CMemoryManager::TBlock::Total = 0;
 
 CMemoryManager::CMemoryManager()
 {
-	m_File.open("_memoryleaks.log");
+	m_File.open("/tmp/_memoryleaks.log");
 	if (!m_File)
 	{
 		std::cout << i8n("[ERR] : Cannot open ") << m_File << std::endl;
