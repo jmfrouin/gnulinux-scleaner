@@ -64,17 +64,6 @@ $Author$
  * Here you can find all plugins documentations.
  */
 
-/*! @page page1 Improvement
- *
- * @section error Error code
- *
- * Can be nice to centralise all error code in a .h file include by config.h or def.h.
- *
- * @section info Write an system info object
- *
- * man 2 uname (useful to get current used kernel version, to clean all unusued kernel)
- */
-
 /*! @page page2 Inputs plugins to write
  *
  * Empty file
