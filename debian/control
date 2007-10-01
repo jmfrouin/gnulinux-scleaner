@@ -10,6 +10,7 @@ XS-Vcs-SVN: svn://svn.savannah.nongnu.org/project/scleaner
 
 Package: scleaner
 Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: simple GNU/Linux desktop cleaner
  scleaner is a small utility which aim is to help the user to clean a GNU/Linux
  desktop. It is able to remove, for example, unwanted logs, orphan or duplicate 
