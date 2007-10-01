@@ -17,46 +17,48 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------
 Project : scleaner
 ------------------------------------------------------
-$Date: 2007-09-21 19:43:56 +0200 (ven, 21 sep 2007) $
-$Rev: 111 $
+$Date: 2007-09-30 18:15:32 +0200 (dim, 30 sep 2007) $
+$Rev: 157 $
 $Author: snoogie $
 ------------------------------------------------------
 */
 
-#ifndef _WX_CHECKLISTCTRL_H_
-#define _WX_CHECKLISTCTRL_H_
+#ifndef _SELECT_DIALOG_H_
+#define _SELECT_DIALOG_H_
 
-#include <wx/listctrl.h>
-#include <wx/imaglist.h>
+#include <list>
+#include <string>
+#include <wx/frame.h>
+
+class wxCheckListBox;
+class wxPanel;
 
 /*!
- * wxCheckListCtrl
- * The options hierarchy viewer.
- */
-
-class wxCheckListCtrl: public wxListCtrl
+*@brief Dialog to select input plugins.
+*/
+class CSelectDialog : public wxFrame
 {
-	DECLARE_CLASS(wxCheckListCtrl)
-		public:
-		wxCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition,
-			const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
-		virtual ~wxCheckListCtrl();
+	public:
+		/*!
+		*@brief Constructor
+		*@param _title The dialog box title.
+		*@param _pluginList Available plugin list.
+		*/
+		CSelectDialog(const wxString& _title, std::list<std::string>& _pluginList);
 
-		//// Event handlers
-		void OnMouseEvent(wxMouseEvent& event);
-		void OnKeyDown(wxKeyEvent& event);
+		/*!
+		*@brief Destructor
+		*/
+		virtual ~CSelectDialog();
 
-		//// Accessors
-
-		/// Load the icons
-		bool LoadIcons();
-
-		/// Set the appropriate icon
-		bool SetIcon(long& item);
+		//Callbacks
+		void OnListbox(wxCommandEvent& event);
 
 	protected:
-		wxImageList*        m_imageList;
+    	wxCheckListBox*	m_Input;
+		wxPanel*		m_Panel;
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
-#endif							 // _WB_CHECKLISTCTRL_H_
+
+#endif// _SELECT_DIALOG_H_

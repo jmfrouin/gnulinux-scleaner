@@ -22,5 +22,5 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-SET(interface_src tray.cpp maininterface.cpp checklistctrl.cpp)
+SET(interface_src checklistctrl.cpp maininterface.cpp select_dialog.cpp tray.cpp)
 ADD_LIBRARY(interface ${interface_src})

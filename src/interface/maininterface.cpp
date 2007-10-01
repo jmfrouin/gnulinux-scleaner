@@ -50,6 +50,7 @@ $Author$
 #include <wx/imaglist.h>
 #include "maininterface.h"
 #include "checklistctrl.h"
+#include "select_dialog.h"
 
 //App icon
 #include <gfx/scleaner.xpm>
@@ -87,7 +88,7 @@ CMainInterface::CMainInterface()
 
 
 CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-m_Input(0), m_Html(0), m_Output(0), m_StatusBar(0), m_Split(0), m_Progress(0)
+m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), m_Input(0), m_Html(0), m_Output(0), m_StatusBar(0), m_Split(0), m_Progress(0)
 {
 	Init();
 	Create(parent, id, caption, pos, size, style);
@@ -130,9 +131,9 @@ CMainInterface::~CMainInterface()
 void CMainInterface::Init()
 {
 	//Initialisation
-	m_InputPlugs = CPluginManager::Instance()->getInputListPtr();
+	m_AvailableInputPlugs = CPluginManager::Instance()->getInputListPtr();
 	m_OutputPlugs = CPluginManager::Instance()->getOutputListPtr();
-	if(!m_InputPlugs || !m_OutputPlugs)
+	if(!m_AvailableInputPlugs || !m_OutputPlugs)
 	{
 		return;
 	}
@@ -349,7 +350,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 	double l_totalsize = 0;
 	// Happend plugins' name available
 	std::map<std::string, IInPlugin*>::iterator _it;
-	for(_it = m_InputPlugs->begin(); _it != m_InputPlugs->end(); ++_it)
+	for(_it = m_AvailableInputPlugs->begin(); _it != m_AvailableInputPlugs->end(); ++_it)
 	{
 		wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
 
@@ -545,6 +546,17 @@ void CMainInterface::OnSelect(wxCommandEvent& WXUNUSED(event))
 {
 	//GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
 	wxMessageDialog(this, wxString(i8n("Since for this alpha version, there are only 3 input plugins (and 2 that run only in root mode), the dialog for selecting input plugins is not yet ready :D but will be available soon !!"), wxConvUTF8), _T("scleaner"), wxOK | wxICON_EXCLAMATION).ShowModal();
+
+	std::list<std::string> l_pluginList;
+
+	std::map<std::string, IInPlugin*>::iterator l_it;
+	for(l_it = m_AvailableInputPlugs->begin(); l_it != m_AvailableInputPlugs->end(); ++l_it)
+	{
+		l_pluginList.push_back((*l_it).first);
+	}
+
+    CSelectDialog l_selDlg(wxString(i8n("Select input plugins to use"), wxConvUTF8), l_pluginList);
+    l_selDlg.Show(true);
 }
 
 

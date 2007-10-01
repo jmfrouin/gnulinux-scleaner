@@ -48,9 +48,10 @@ $Author$
  * It use wxWidgets for frontend.
  *
  * It used this https://wiki.ubuntu.com/SystemCleanUpTool as guidelines for developpement and add some others ideas.
+ *
  * @section install Installation
  *
- * Not yet implemented
+ * You can download the last version here : http://download.savannah.nongnu.org/releases/scleaner/ (get *.deb files)
  *
  *
  *
@@ -62,6 +63,13 @@ $Author$
 
 /*! @page page3 Plugins documentations
  * Here you can find all plugins documentations.
+ */
+
+/*! @page page1 Successful platform tested
+ *
+ * Debian etch 4.00
+ *
+ * Ubuntu Feisty 7.04
  */
 
 /*! @page page2 Inputs plugins to write

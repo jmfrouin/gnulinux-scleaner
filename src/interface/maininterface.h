@@ -63,7 +63,7 @@ class CMainInterface: public wxFrame, public IProgressbar
 
 		bool Create(wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE );
 
-		~CMainInterface();
+		virtual ~CMainInterface();
 
 		void Init();
 		void CreateControls();
@@ -102,7 +102,8 @@ class CMainInterface: public wxFrame, public IProgressbar
 		CTrayIcon*  m_DockIcon;
 	#endif
 		//Input plugins
-		std::map<std::string, IInPlugin*>*  m_InputPlugs;
+		std::map<std::string, IInPlugin*>*  m_AvailableInputPlugs;
+		std::map<std::string, IInPlugin*>*  m_SelectedInputPlugs;
 
 		//Output plugins
 		std::map<std::string, IOutPlugin*>* m_OutputPlugs;
