@@ -12,6 +12,13 @@ else
 	CFLAGS += -O2
 endif
 
+cmake: cmake-stamp
+cmake-stamp:
+	dh_testdir
+	mkdir build
+	cd build; cmake ../src/
+	touch $@
+
 build: build-stamp
 build-stamp:
 	dh_testdir

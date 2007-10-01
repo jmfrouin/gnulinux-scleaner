@@ -3,7 +3,7 @@ Section: misc
 Priority: optional
 Maintainer: Jean-Michel Frouin <jmfrouin@gnu.org>, David Paleino <d.paleino@gmail.com> 
 Homepage: http://savannah.nongnu.org/projects/scleaner/
-Build-Depends: debhelper (>= 5)
+Build-Depends: debhelper (>= 5), cmake
 Standards-Version: 3.7.2
 XS-Vcs-Browser: http://svn.savannah.nongnu.org/viewvc/trunk/?root=scleaner
 XS-Vcs-SVN: svn://svn.savannah.nongnu.org/project/scleaner
