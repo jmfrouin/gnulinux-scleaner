@@ -1,7 +1,8 @@
 Source: scleaner
 Section: misc
-Priority: extra
+Priority: optional
 Maintainer: Jean-Michel Frouin <jmfrouin@gnu.org>
+Homepage: http://savannah.nongnu.org/projects/scleaner/
 Build-Depends: debhelper (>= 5)
 Standards-Version: 3.7.2
 
