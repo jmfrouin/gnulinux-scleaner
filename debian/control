@@ -5,19 +5,13 @@ Maintainer: Jean-Michel Frouin <jmfrouin@gnu.org>
 Homepage: http://savannah.nongnu.org/projects/scleaner/
 Build-Depends: debhelper (>= 5)
 Standards-Version: 3.7.2
+XS-Vcs-Browser: http://svn.savannah.nongnu.org/viewvc/trunk/?root=scleaner
 
 Package: scleaner
 Architecture: any
-Depends:
-Description: A simple GNU/Linux desktop cleaner
- scleaner will be able to clean your GNU/Linux desktop. 
- Il is able to remove, for example:
- all unwanted logs, orphan or duplicate files ...
- scleaner use two kind of plugins: 
- - Input plugin which find files 
- - Output plugin which did something with these files. 
- Example: You use logs plugin (input plugin) to find all logs on your computer, 
- and burn them to a CD or DVD in tar+bzip2 format (output plugin). 
- scleaner can be launch as root or simple user, 
- but some plugin need root access to work properly. 
- scleaner stay in your tray bar, when not used or to do repetitive work. 
+Description:  simple GNU/Linux desktop cleaner
+ scleaner use a powerful plugin system. You can select input plugins which
+ allow you to find files on your computer. You can select output plugins
+ which allow you to apply various action to these files.
+ scleaner has 2 modes, a user mode which allow your files, an a super user
+ (root) mode which allow you to clean the whole computer.
