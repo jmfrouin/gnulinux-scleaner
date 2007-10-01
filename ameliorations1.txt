@@ -1,0 +1,26 @@
+bonsoir,
+
+je viens de tester en vitesse l'application. Voici le genre de chose que j'aimerais y trouver :
+
+- filtre de recherche de fichiers temps dans des répertoires suivant divers critères : dossiers perso, dossiers systèmes, exclure un répertoire, inclure seulement quelques répertoires.
+
+- recherche d'un type d'extension de fichiers particulier (genre : .doc, .xls, à jeter :) ou alors les fichiers temps pour latex, .aux, ou les immondes ._dstore de mac os x etc)
+
+- tout ceci avec par exemple une sélection ou une non sélection par défaut (les ~ automatiquement sélectionnés, les .aux automatiquements non sélectionnés)
+
+- facilités de sélections par dossiers / sous dossiers (là c'est fichier par fichier ..)
+
+- facilité de sélection par plage, avec shift etc (comme dans konqueror par exemple)
+
+- pour le moment si on déplace la sélection avec les flèches, et on commute avec la barre d'espace, les fichiers à sélectionner ne se déplacent pas (de façon générale les sélections par clavier ne fonctionnent pas bien)
+
+- classement par critère (taille etc)
+
+- possibilité de sauvegarder un tgz individuel dans chaque sous-dossier (par exemple si j'ai /home/moi/docs/fichier1.bak /home/moi/docs/fichier2.bak /home/moi/docs/fichier3.bak cela sauvegarde les fichiers temporaires dans /home/moi/docs/backup_bak.tgz et ainsi de suite pour chaque dossier au lieu d'avoir un seul gros fichier de backup)
+
+- pour les fichiers de noyau, cela a sélectionné le noyau en cours ainsi que ses fichiers de conf actuels.
+
+- pour les logs, possibilité de garder le log en cours et d'effacer les archives de ces logs (les .1.gz etc)
+
+voilà ce que j'ai vu pour le moment.
+Projet intéressant !

@@ -100,6 +100,8 @@ $Author$
  *
  * /var/cache/apt/archives plugin equivalent to apt-get clean
  *
+ * Plugin sur les par2 / rar avi
+ *
  * *.ext~
  */
 
