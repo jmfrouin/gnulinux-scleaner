@@ -1,2 +1,5 @@
+wx Build:
 ./configure --enable-monolithic --disable-shared --enable-unicode
 
+
+sed -i "s/#DATE#/`date`/" debian/changelog
