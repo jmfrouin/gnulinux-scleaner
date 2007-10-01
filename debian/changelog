@@ -1,3 +1,9 @@
+scleaner (0.32.0) unstable; urgency=low
+
+  * Add a gnome icon. scleaner is put under Application;System;
+
+ -- Jean-Michel Frouin <jmfrouin@gnu.org>  Fri, 30 Sep 2007 23:44:26 +0200
+
 scleaner (0.31.0) unstable; urgency=low
 
   * Output plugin tbz is ready.

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=scleaner
+GenericName=
+Comment=Clean your system
+Icon=gparted.xpm
+Exec=scleaner
+Terminal=false
+Categories=Application;System;
