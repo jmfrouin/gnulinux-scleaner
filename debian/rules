@@ -20,7 +20,7 @@ cmake-stamp:
 	touch $@
 
 build: build-stamp
-build-stamp:
+build-stamp: cmake
 	dh_testdir
 	$(MAKE)
 	touch $@
