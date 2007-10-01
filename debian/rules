@@ -16,20 +16,20 @@ cmake: cmake-stamp
 cmake-stamp:
 	dh_testdir
 	mkdir build
-	cd build; cmake ../src/
+	(cd build; cmake ../src/)
 	touch $@
 
 build: build-stamp
 build-stamp: cmake
 	dh_testdir
-	$(MAKE)
+	( cd build; $(MAKE) )
 	touch $@
 
 clean:
 	dh_testdir
 	dh_testroot
-	dh_clean build-stamp
-	-$(MAKE) clean
+	dh_clean build-stamp cmake-stamp
+	-rm -vrf build/
 
 install: build
 	dh_testdir
