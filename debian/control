@@ -6,12 +6,13 @@ Homepage: http://savannah.nongnu.org/projects/scleaner/
 Build-Depends: debhelper (>= 5)
 Standards-Version: 3.7.2
 XS-Vcs-Browser: http://svn.savannah.nongnu.org/viewvc/trunk/?root=scleaner
+XS-Vcs-SVN: svn://svn.savannah.nongnu.org/project/scleaner
 
 Package: scleaner
 Architecture: any
 Description:  simple GNU/Linux desktop cleaner
- scleaner use a powerful plugin system. You can select input plugins which
- allow you to find files on your computer. You can select output plugins
- which allow you to apply various action to these files.
- scleaner has 2 modes, a user mode which allow your files, an a super user
- (root) mode which allow you to clean the whole computer.
+scleaner is a small utility which aim is to help the user to clean a GNU/Linux desktop. It is able to remove, for example, unwanted logs, orphan or duplicate files.
+.
+scleaner is based on a plugin system, which lets you search for files to be removed and act on these files.
+.
+scleaner can be used both as a normal-user than as root.
