@@ -24,3 +24,5 @@ je viens de tester en vitesse l'application. Voici le genre de chose que j'aimer
 
 voilà ce que j'ai vu pour le moment.
 Projet intéressant !
+
+slint est en effet excellent (et il y en a plein d'autres, à la finddupes, duper, dupefinder, etc.), mais ces programmes ne permettent pas de répondre de manière synthétique lorsqu'une arborescence complète est dupliquée (et impossible de modifier l'énorme pipe de fslint dans ce sens...). Ils ne permettent généralement pas non plus de renvoyer les doublons entre ton disque et des fichiers gravés sur CD/DVD.
