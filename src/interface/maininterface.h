@@ -121,6 +121,8 @@ class CMainInterface: public wxFrame, public IProgressbar
 		wxRadioBox*                         m_Output;
 		wxStatusBar*                        m_StatusBar;
 		wxSplitterWindow* 					m_Split;
+		wxSplitterWindow* 					m_Split2;
+		wxSplitterWindow* 					m_Split3;
 
 		//Progress bar for process part.
 		wxProgressDialog*                   m_Progress;

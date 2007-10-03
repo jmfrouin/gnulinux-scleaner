@@ -88,7 +88,7 @@ CMainInterface::CMainInterface()
 
 
 CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), m_Input(0), m_Html(0), m_Output(0), m_StatusBar(0), m_Split(0), m_Progress(0)
+m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), m_Input(0), m_Html(0), m_Output(0), m_StatusBar(0), m_Split(0), m_Split2(0), m_Split3(0), m_Progress(0)
 {
 	Init();
 	Create(parent, id, caption, pos, size, style);
@@ -112,6 +112,10 @@ bool CMainInterface::Create(wxWindow* parent, wxWindowID id, const wxString& cap
 	if (FindWindow(ID_SPLITTERWINDOW2))
 	{
 		((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW2))->SetSashPosition(SYMBOL_MAININTERFACE_SASH2_POS);
+	}
+	if (FindWindow(ID_SPLITTERWINDOW3))
+	{
+		((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW3))->SetSashPosition(SYMBOL_MAININTERFACE_SASH3_POS);
 	}
 
   	SetIcon(wxICON(scleaner));
@@ -210,13 +214,25 @@ void CMainInterface::CreateControls()
 	m_Split = new wxSplitterWindow( l_Frame, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 	m_Split->SetMinimumPaneSize(0);
 
+	m_Split2 = new wxSplitterWindow(m_Split, ID_SPLITTERWINDOW2, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+	m_Split2->SetMinimumPaneSize(0);
+
 	//Input plugins
 	int l_flags = wxBK_TOP | wxNB_MULTILINE | wxDOUBLE_BORDER;
-	m_Input = new wxNotebook(m_Split, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
+	m_Input = new wxNotebook(m_Split2, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
+	
+	wxArrayString itemCheckListBox12Strings;
+    itemCheckListBox12Strings.Add(_("Users can select "));
+    itemCheckListBox12Strings.Add(_("Folder"));
+    itemCheckListBox12Strings.Add(_("Soon"));
 
+    wxCheckListBox* itemCheckListBox12 = new wxCheckListBox( m_Split2,wxID_ANY, wxDefaultPosition, wxDefaultSize, itemCheckListBox12Strings, wxLB_SINGLE );
 
-	wxSplitterWindow* itemSplitterWindow12 = new wxSplitterWindow(m_Split, ID_SPLITTERWINDOW2, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
-	itemSplitterWindow12->SetMinimumPaneSize(0);
+	//Add the "File selected view" and the "Folders selected view" to a split.
+	m_Split2->SplitHorizontally(itemCheckListBox12, m_Input, 200);
+
+	m_Split3 = new wxSplitterWindow(m_Split, ID_SPLITTERWINDOW3, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+	m_Split3->SetMinimumPaneSize(0);
 
 	//Output plugins
 	wxArrayString l_out;
@@ -228,16 +244,19 @@ void CMainInterface::CreateControls()
 	}
 
 	wxString l_title(wxString(i8n("Output plugins"), wxConvUTF8));
-	m_Output = new wxRadioBox(itemSplitterWindow12, ID_RADIOBOX, l_title, wxDefaultPosition, wxDefaultSize, l_out, 1, wxRA_SPECIFY_COLS);
+	m_Output = new wxRadioBox(m_Split3, ID_RADIOBOX, l_title, wxDefaultPosition, wxDefaultSize, l_out, 1, wxRA_SPECIFY_COLS);
 	m_Output->SetSelection(0);
 
-	m_Html = new wxHtmlWindow(itemSplitterWindow12, wxID_ANY, wxDefaultPosition, wxSize(380, 160), wxHW_SCROLLBAR_NEVER);
+	m_Html = new wxHtmlWindow(m_Split3, wxID_ANY, wxDefaultPosition, wxSize(380, 160), wxHW_SCROLLBAR_NEVER);
 	m_Html->SetBorders(0);
 	m_Html->LoadPage(wxString(i8n("/usr/share/doc/scleaner/about.html"), wxConvUTF8));
 	m_Html->SetSize(m_Html->GetInternalRepresentation()->GetWidth(), m_Html->GetInternalRepresentation()->GetHeight());
 
-	itemSplitterWindow12->SplitHorizontally(m_Output, m_Html, 50);
-	m_Split->SplitVertically(m_Input, itemSplitterWindow12, 200);
+	//Add the "Output plugin view and the "HTML Help view" to another split.
+	m_Split3->SplitHorizontally(m_Output, m_Html, 50);
+
+	//Finally split these splits :D (Now you entered the dark side of the split ...)
+	m_Split->SplitVertically(m_Split2, m_Split3, 200);
 
 	m_StatusBar = new wxStatusBar( l_Frame, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
 	m_StatusBar->SetFieldsCount(6);
