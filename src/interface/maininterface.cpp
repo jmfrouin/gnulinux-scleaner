@@ -253,7 +253,7 @@ void CMainInterface::CreateControls()
 	m_Html->SetSize(m_Html->GetInternalRepresentation()->GetWidth(), m_Html->GetInternalRepresentation()->GetHeight());
 
 	//Add the "Output plugin view and the "HTML Help view" to another split.
-	m_Split3->SplitHorizontally(m_Output, m_Html, 50);
+	m_Split3->SplitHorizontally(m_Html, m_Output, 50);
 
 	//Finally split these splits :D (Now you entered the dark side of the split ...)
 	m_Split->SplitVertically(m_Split2, m_Split3, 200);
