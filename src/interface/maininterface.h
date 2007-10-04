@@ -46,6 +46,7 @@ class IOutPlugin;
 class wxRadioBox;
 class wxHtmlWindow;
 class CEngine;
+class wxCheckListCtrl;
 class wxProgressDialog;
 class wxCheckTreeCtrl;
 
@@ -80,7 +81,9 @@ class CMainInterface: public wxFrame, public IProgressbar
 		void OnScan(wxCommandEvent& WXUNUSED(event));
 		void OnSelect(wxCommandEvent& WXUNUSED(event));
 		//void OnSelRadio(wxCommandEvent& event);
-		//void OnNotebook(wxNotebookEvent& event);
+		void OnNotebook(wxNotebookEvent& event);
+		void OnFolderAdd(wxCommandEvent& WXUNUSED(event));
+		void OnFolderDel(wxCommandEvent& WXUNUSED(event));
 
 		/*!
 		 *@brief Call splash screen
@@ -93,6 +96,11 @@ class CMainInterface: public wxFrame, public IProgressbar
 		 *@param _fl Files list to fill.
 		 */
 		void GetSelectedFiles(std::list<std::string>& _fl);
+
+		/*!
+		*@brief Update folder view :)
+		*/
+		void UpdateFolderList();
 
 		//From IProgressbar
 		void updateProgress(const std::string& _mess, bool _pulse, int _nb);
@@ -113,7 +121,7 @@ class CMainInterface: public wxFrame, public IProgressbar
 		TSmartPtr<CEngine>                  m_Engine;
 
 		//GUI tree list which display input plugins and file list.
-		//wxNotebook*                         m_Input;
+		wxNotebook*                         m_Input;
 
 		//Informations GUI panel
 		//wxHtmlWindow*                       m_Html;
@@ -122,9 +130,10 @@ class CMainInterface: public wxFrame, public IProgressbar
 		//GUI checkbox which display output plugins
 		//wxRadioBox*                         m_Output;
 		wxStatusBar*                        m_StatusBar;
-		//wxSplitterWindow* 					m_Split;
+		wxSplitterWindow* 					m_Split;
 		//wxSplitterWindow* 					m_Split2;
 		//wxSplitterWindow* 					m_Split3;
+		wxCheckListCtrl* 					m_Folders;
 
 		//Progress bar for process part.
 		wxProgressDialog*                   m_Progress;

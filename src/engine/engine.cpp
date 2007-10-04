@@ -41,8 +41,18 @@ $Author$
 CEngine::CEngine():
 m_rootPlugin(0), m_asRoot(false), m_callback(0)
 {
+	m_FoldersList.push_back("/home");
 }
 
+CEngine::~CEngine()
+{
+	std::cout << "List contain : \n";
+	std::list<std::string>::iterator l_it;
+	for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
+	{
+		std::cout << *l_it << '\n';
+	}
+}
 
 int CEngine::loadPlugins(const std::string& _path)
 {
@@ -262,37 +272,60 @@ double CEngine::getFreeSpace(const std::string& _path, std::string& _used, std::
 bool CEngine::scanDisk(IProgressbar* _callback)
 {
 	bool l_ret = false;
-	std::string l_path("/home");
 
-	//If launch as root
-	if(isRoot())
+	m_callback = _callback;
+
+	std::list<std::string>::iterator l_itFolders;
+
+	for(l_itFolders = m_FoldersList.begin(); l_itFolders != m_FoldersList.end(); ++l_itFolders)
 	{
-		std::map<std::string, IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
-		std::map<std::string, IInPlugin*>::iterator l_it;
-		for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
+		//If launch as root
+		if(isRoot())
 		{
-			if(((*l_it).second)->needRoot())
+			std::map<std::string, IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
+			std::map<std::string, IInPlugin*>::iterator l_it;
+			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
 			{
-				IRootPlugin* l_root = dynamic_cast<IRootPlugin*>((*l_it).second);
-				std::string l_dir;
-				l_root->getDirectory(l_dir);
-				_callback->updateProgress(l_dir, true);
-				scanDirectory(l_dir, true, l_root);
+				if(((*l_it).second)->needRoot())
+				{
+					IRootPlugin* l_root = dynamic_cast<IRootPlugin*>((*l_it).second);
+					std::string l_dir;
+					l_root->getDirectory(l_dir);
+					_callback->updateProgress(l_dir, true);
+					scanDirectory(l_dir, true, l_root);
+				}
 			}
 		}
+		else
+		{
+			std::string l_username;
+			getUsername(l_username);
+			(*l_itFolders) += "/" + l_username;
+			#if defined DEBUG
+			std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << (*l_itFolders) << '\n';
+			#endif
+		}
+		scanDirectory(*l_itFolders);
 	}
-	else
-	{
-		std::string l_username;
-		getUsername(l_username);
-		l_path += "/" + l_username;
-		#if defined DEBUG
-		std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << l_path << '\n';
-		#endif
-	}
-	m_callback = _callback;
-	scanDirectory(l_path);
 	return l_ret;
+}
+
+
+void CEngine::addFolder(std::string _dir)
+{
+	m_FoldersList.push_back(_dir);
+}
+
+void CEngine::delFolder(std::string _dir)
+{
+	std::list<std::string>::iterator l_it;
+	for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
+	{
+		if((*l_it) == _dir)
+		{
+			m_FoldersList.erase(l_it);
+		}
+	}
 }
 
 

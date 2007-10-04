@@ -49,8 +49,7 @@ $Author$
 #include <wx/listctrl.h>
 #include <wx/imaglist.h>
 #include "maininterface.h"
-//#include "checklistctrl.h"
-#include "checktreectrl.h"
+#include "checklistctrl.h"
 #include "select_dialog.h"
 
 //App icon
@@ -67,16 +66,18 @@ $Author$
 #include <gfx/scan.xpm>
 #include <gfx/config.xpm>
 
-#include <gfx/checked.xpm>
-#include <gfx/unchecked.xpm>
+#include <gfx/folder-add.xpm>
+#include <gfx/folder-del.xpm>
 
 IMPLEMENT_CLASS( CMainInterface, wxFrame )
 
 BEGIN_EVENT_TABLE( CMainInterface, wxFrame )
-//EVT_NOTEBOOK_PAGE_CHANGED(ID_NOTEBOOK, CMainInterface::OnNotebook)
+EVT_NOTEBOOK_PAGE_CHANGED(ID_NOTEBOOK, CMainInterface::OnNotebook)
 //EVT_RADIOBOX(ID_RADIOBOX, CMainInterface::OnSelRadio)
 EVT_MENU(ID_SCAN, CMainInterface::OnScan)
 EVT_MENU(ID_ABOUT, CMainInterface::OnAbout)
+EVT_MENU(ID_FOLDER_ADD, CMainInterface::OnFolderAdd)
+EVT_MENU(ID_FOLDER_DEL, CMainInterface::OnFolderDel)
 EVT_MENU(wxID_EXIT, CMainInterface::OnQuit)
 EVT_MENU(ID_PROCESS, CMainInterface::OnProcess)
 EVT_MENU(ID_SELECT, CMainInterface::OnSelect)
@@ -89,7 +90,7 @@ CMainInterface::CMainInterface()
 
 
 CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), /*m_Input(0), m_Html(0), m_Output(0), m_StatusBar(0), m_Split(0), m_Split2(0), m_Split3(0),*/m_Tree(0), m_Progress(0)
+m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), m_Input(0), /*m_Html(0), m_Output(0), */m_StatusBar(0), m_Split(0),/* m_Split2(0), m_Split3(0),*/ m_Folders(0), m_Progress(0)
 {
 	Init();
 	Create(parent, id, caption, pos, size, style);
@@ -100,17 +101,17 @@ bool CMainInterface::Create(wxWindow* parent, wxWindowID id, const wxString& cap
 {
 	wxFrame::Create( parent, id, caption, pos, size, style );
 
-	CreateControls();
-	Centre();
-
 	//Retrieve CEngine instance pointer.
 	m_Engine = CEngine::Instance();
 
-	/*if (FindWindow(ID_SPLITTERWINDOW1))
+	CreateControls();
+	Centre();
+
+	if (FindWindow(ID_SPLITTERWINDOW1))
 	{
 		((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW1))->SetSashPosition(SYMBOL_MAININTERFACE_SASH1_POS);
 	}
-	if (FindWindow(ID_SPLITTERWINDOW2))
+	/*if (FindWindow(ID_SPLITTERWINDOW2))
 	{
 		((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW2))->SetSashPosition(SYMBOL_MAININTERFACE_SASH2_POS);
 	}
@@ -205,65 +206,53 @@ void CMainInterface::CreateControls()
 	l_ToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
 	l_ToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
 	l_ToolBar->AddSeparator();
+	l_ToolBar->AddTool(ID_FOLDER_ADD, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), folder_add_xpm , folder_add_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
+	l_ToolBar->AddTool(ID_FOLDER_DEL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), folder_del_xpm , folder_del_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
+	l_ToolBar->AddSeparator();
 	//l_ToolBar->AddTool(ID_CONFIG, wxString(i8n("Configuration"), wxConvUTF8), config_xpm , config_xpm, wxITEM_NORMAL, wxString(i8n("Configuration"), wxConvUTF8), wxEmptyString);
 	//l_ToolBar->AddSeparator();
 	l_ToolBar->AddTool(wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8),exit_xpm , exit_xpm, wxITEM_NORMAL, wxString(i8n("Quit"), wxConvUTF8), wxEmptyString);
 	l_ToolBar->Realize();
 	l_Frame->SetToolBar(l_ToolBar);
 	//________________________________________________________________
-	//GUI : FIXME ID_NOTEBOOK
 
-	long l_style = wxTR_HAS_BUTTONS;
-	m_Tree = new wxCheckTreeCtrl(l_Frame, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, 0);
-	wxTreeItemId l_root(m_Tree->GetRootItem());
-	m_Tree->AddCheckedItem(l_root, wxString(_T("bob")));
-
-	/*m_Split = new wxSplitterWindow( l_Frame, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+	m_Split = new wxSplitterWindow( l_Frame, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 	m_Split->SetMinimumPaneSize(0);
 
-	m_Split2 = new wxSplitterWindow(m_Split, ID_SPLITTERWINDOW2, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
-	m_Split2->SetMinimumPaneSize(0);
+	//m_Split2 = new wxSplitterWindow(m_Split, ID_SPLITTERWINDOW2, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+	//m_Split2->SetMinimumPaneSize(0);
 
 	//Input plugins
 	int l_flags = wxBK_TOP | wxNB_MULTILINE | wxDOUBLE_BORDER;
-	m_Input = new wxNotebook(m_Split2, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
+	m_Input = new wxNotebook(m_Split, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
 	
-	wxArrayString itemCheckListBox12Strings;
-    itemCheckListBox12Strings.Add(_("Users can select "));
-    itemCheckListBox12Strings.Add(_("Folder"));
-    itemCheckListBox12Strings.Add(_("Soon"));
+	UpdateFolderList();
 
-    wxCheckListBox* itemCheckListBox12 = new wxCheckListBox( m_Split2,wxID_ANY, wxDefaultPosition, wxDefaultSize, itemCheckListBox12Strings, wxLB_SINGLE );
-
-	//Add the "File selected view" and the "Folders selected view" to a split.
-	m_Split2->SplitHorizontally(itemCheckListBox12, m_Input, 200);
-
-	m_Split3 = new wxSplitterWindow(m_Split, ID_SPLITTERWINDOW3, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
-	m_Split3->SetMinimumPaneSize(0);
+	m_Split->SplitVertically(m_Folders, m_Input, 200);
 
 	//Output plugins
-	wxArrayString l_out;
-	std::map<std::string, IOutPlugin*>::iterator _it2;
-	for(_it2 = m_OutputPlugs->begin(); _it2 != m_OutputPlugs->end(); ++_it2)
-	{
-		wxString l_name( ((*_it2).second)->getName().c_str(), wxConvUTF8);
-		l_out.Add(l_name);
-	}
+	//wxArrayString l_out;
+	//std::map<std::string, IOutPlugin*>::iterator _it2;
+	//for(_it2 = m_OutputPlugs->begin(); _it2 != m_OutputPlugs->end(); ++_it2)
+	//{
+	//	wxString l_name( ((*_it2).second)->getName().c_str(), wxConvUTF8);
+	//	l_out.Add(l_name);
+	//}
 
-	wxString l_title(wxString(i8n("Output plugins"), wxConvUTF8));
-	m_Output = new wxRadioBox(m_Split3, ID_RADIOBOX, l_title, wxDefaultPosition, wxDefaultSize, l_out, 1, wxRA_SPECIFY_COLS);
-	m_Output->SetSelection(0);
+	//wxString l_title(wxString(i8n("Output plugins"), wxConvUTF8));
+	//m_Output = new wxRadioBox(m_Split3, ID_RADIOBOX, l_title, wxDefaultPosition, wxDefaultSize, l_out, 1, wxRA_SPECIFY_COLS);
+	//m_Output->SetSelection(0);
 
-	m_Html = new wxHtmlWindow(m_Split3, wxID_ANY, wxDefaultPosition, wxSize(380, 160), wxHW_SCROLLBAR_NEVER);
-	m_Html->SetBorders(0);
-	m_Html->LoadPage(wxString(i8n("/usr/share/doc/scleaner/about.html"), wxConvUTF8));
-	m_Html->SetSize(m_Html->GetInternalRepresentation()->GetWidth(), m_Html->GetInternalRepresentation()->GetHeight());
+	//m_Html = new wxHtmlWindow(m_Split3, wxID_ANY, wxDefaultPosition, wxSize(380, 160), wxHW_SCROLLBAR_NEVER);
+	//m_Html->SetBorders(0);
+	//m_Html->LoadPage(wxString(i8n("/usr/share/doc/scleaner/about.html"), wxConvUTF8));
+	//m_Html->SetSize(m_Html->GetInternalRepresentation()->GetWidth(), m_Html->GetInternalRepresentation()->GetHeight());
 
 	//Add the "Output plugin view and the "HTML Help view" to another split.
-	m_Split3->SplitHorizontally(m_Html, m_Output, 50);
+	//m_Split3->SplitHorizontally(m_Html, m_Output, 50);
 
 	//Finally split these splits :D (Now you entered the dark side of the split ...)
-	m_Split->SplitVertically(m_Split2, m_Split3, 200);*/
+	//m_Split->SplitVertically(m_Split2, m_Split3, 200);
 
 	m_StatusBar = new wxStatusBar( l_Frame, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
 	m_StatusBar->SetFieldsCount(6);
@@ -318,15 +307,15 @@ wxIcon CMainInterface::GetIconResource( const wxString& name )
 
 //Callbacks
 //NoteBook
-/*void CMainInterface::OnNotebook(wxNotebookEvent& event)
+void CMainInterface::OnNotebook(wxNotebookEvent& event)
 {
 	wxString l_name;
 	int l_sel = event.GetSelection();
 	l_name  = m_Input->GetPageText(l_sel);
-	if(m_Html != 0 && !l_name.empty())
-	{
-		m_Html->LoadPage(wxT("/usr/share/doc/scleaner/") + l_name + wxString(i8n(".html"), wxConvUTF8));
-	}
+	//if(m_Html != 0 && !l_name.empty())
+	//{
+	//	m_Html->LoadPage(wxT("/usr/share/doc/scleaner/") + l_name + wxString(i8n(".html"), wxConvUTF8));
+	//}
 	std::stringstream l_tot;
 	if(m_TotalSizes.size() > 0)
 	{
@@ -336,7 +325,7 @@ wxIcon CMainInterface::GetIconResource( const wxString& name )
 		SetStatusText(l_totalsize, 0);
 	}
 }
-*/
+
 
 //Menu
 void CMainInterface::OnAbout(wxCommandEvent& WXUNUSED(event))
@@ -354,7 +343,8 @@ void CMainInterface::OnQuit(wxCommandEvent& WXUNUSED(event))
 //Toolbar
 void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 {
-	/*m_Progress = new wxProgressDialog(wxString(i8n("scleaner scan your disk ..."), wxConvUTF8),
+	//m_Input->DeleteAllPages();
+	m_Progress = new wxProgressDialog(wxString(i8n("scleaner scan your disk ..."), wxConvUTF8),
 		wxString(i8n("this is a information"), wxConvUTF8),
 		100,					 // range
 		this,					 // parent
@@ -385,17 +375,11 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 		l_list.sort();
 		std::list<std::string>::iterator _it2;
 
-		#if defined DEBUG
+		
+		//#if defined DEBUG
 		std::cout << i8n("[DBG] Size = ") << l_list.size() << '\n';
-		#endif
-		//FIXME : Manual delete need
-		wxImageList* l_imageListSmall = new wxImageList(16, 16, true);
-		l_imageListSmall->Add(wxIcon(checked_xpm));
-		l_imageListSmall->Add(wxIcon(unchecked_xpm));
-
+		//#endif
 		wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
-
-		l_fileslist->SetImageList(l_imageListSmall, wxIMAGE_LIST_SMALL);
 
 		//Setting header:
 		wxListItem l_itemCol;
@@ -471,14 +455,14 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 		m_TotalSizes.push_back(l_totalsize);
 	}
 
-	m_Input->AdvanceSelection();*/
+	m_Input->AdvanceSelection();
 }
 
 
 void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 {
 	//GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
-	/*#if defined DEBUG
+	#if defined DEBUG
 	std::cout << i8n("[DBG] Process !!! ") << '\n';
 	#endif
 	std::list<std::string> l_selected_files;
@@ -510,7 +494,7 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 
 	std::string l_name;
 	wxString l_nameWX;
-	l_nameWX = m_Output->GetStringSelection();
+	//l_nameWX = m_Output->GetStringSelection();
 	l_name = l_nameWX.char_str();
 
 	#if defined DEBUG
@@ -540,7 +524,53 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 	}
 
 	delete m_Progress;
-	m_Progress = 0;*/
+	m_Progress = 0;
+}
+
+void CMainInterface::UpdateFolderList()
+{
+    if(!m_Folders)
+	{
+		m_Folders = new wxCheckListCtrl(m_Split, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+		//Setting header:
+		wxListItem l_itemCol;
+		l_itemCol.SetText(wxString(i8n("Name"), wxConvUTF8));
+		l_itemCol.SetImage(-1);
+		m_Folders->InsertColumn(0, l_itemCol);
+	}
+	
+	std::list<std::string>* l_fl = m_Engine->getFoldersListPtr();
+	std::list<std::string>::iterator l_it = --l_fl->end();
+	//Maybe an alphabetic sort will be need here : algorithms :D
+	long l_tmp = m_Folders->InsertItem(l_fl->size(), wxString((*l_it).c_str(), wxConvUTF8), 0);
+	m_Folders->SetItemData(l_tmp, 0);
+	m_Folders->SetColumnWidth(0, wxLIST_AUTOSIZE);
+}
+
+
+void CMainInterface::OnFolderAdd(wxCommandEvent& WXUNUSED(event))
+{
+	wxString l_msg(_T("coucouc"));
+	wxDirDialog l_addDlg(this, wxString(i8n("Select a folder to add to scan"), wxConvUTF8), l_msg, wxDD_DIR_MUST_EXIST);
+	if(l_addDlg.ShowModal() == wxID_OK)
+	{
+		std::string l_selPath(l_addDlg.GetPath().char_str()); 
+		m_Engine->addFolder(l_selPath);
+	}
+	UpdateFolderList();	
+}
+
+
+void CMainInterface::OnFolderDel(wxCommandEvent& WXUNUSED(event))
+{
+	wxString l_msg(_T("coucouc"));
+	wxDirDialog l_delDlg(this, wxString(i8n("Select a folder then click here to remove it from scan"), wxConvUTF8), l_msg, wxDD_DIR_MUST_EXIST);
+	if(l_delDlg.ShowModal() == wxID_OK)
+	{
+		std::string l_selPath(l_delDlg.GetPath().char_str()); 
+		m_Engine->delFolder(l_selPath);
+	}
+	UpdateFolderList();
 }
 
 
@@ -588,7 +618,7 @@ void CMainInterface::OnSelect(wxCommandEvent& WXUNUSED(event))
 
 void CMainInterface::GetSelectedFiles(std::list<std::string>& _fl)
 {
-	/*unsigned int l_pagesNb = m_Input->GetPageCount();
+	unsigned int l_pagesNb = m_Input->GetPageCount();
 
 	for(unsigned int i = 0; i < l_pagesNb; ++i)
 	{
@@ -614,13 +644,12 @@ void CMainInterface::GetSelectedFiles(std::list<std::string>& _fl)
 				std::cerr << i8n("[ERR] CMainInterface::GetSelectedFiles GetItem !!") << '\n';
 			}
 		}
-	}*/
+	}
 }
 
-/*
-void CMainInterface::OnSelRadio(wxCommandEvent& event)
+
+/*void CMainInterface::OnSelRadio(wxCommandEvent& event)
 {
 	wxString l_name = event.GetString();
 	m_Html -> LoadPage(wxT("/usr/share/doc/scleaner/") + l_name + wxString(i8n(".html"), wxConvUTF8));
-}
-*/
+}*/

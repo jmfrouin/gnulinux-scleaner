@@ -26,6 +26,7 @@ $Author: snoogie $
 // Include XPM icons
 #include <gfx/checked.xpm>
 #include <gfx/unchecked.xpm>
+#include <gfx/folder.xpm>
 
 #include "checklistctrl.h"
 
@@ -51,11 +52,13 @@ wxListCtrl(parent, id, pt, sz, style)
 /// Load the icons
 bool wxCheckListCtrl::LoadIcons()
 {
+	//FIXME : Manual delete need
 	m_imageList = new wxImageList(16, 16, true);
 	AssignImageList(m_imageList, wxIMAGE_LIST_SMALL);
 
 	m_imageList->Add(wxIcon(checked_xpm));
 	m_imageList->Add(wxIcon(unchecked_xpm));
+	m_imageList->Add(wxIcon(folder_xpm));
 
 	return true;
 }

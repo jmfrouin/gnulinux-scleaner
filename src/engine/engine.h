@@ -27,6 +27,7 @@ $Author$
 #define _ENGINE_H_
 
 #include <string>
+#include <list>
 #include <tools/smart_pointer.h>
 #include <tools/singleton.h>
 #include <plugins/plugin_manager.h>
@@ -50,7 +51,7 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		/*!
 		 *@brief dtor
 		 */
-		~CEngine(){}
+		~CEngine();
 
 	public:
 		/*!
@@ -164,11 +165,30 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 			return m_callback;
 		}
 
+		std::list<std::string>* getFoldersListPtr()
+		{
+			return &m_FoldersList;
+		}
+		
+		//Kind of accessors
+		/*!
+		*@brief Add a folder to m_FoldersList
+		*@param _dir The directory to add (selected by user using wxDirDialog)
+		*/
+		void addFolder(std::string _dir);
+
+		/*!
+		*@brief Remove a folder to m_FoldersList
+		*@param _dir The directory to delete (selected by user using wxDirDialog)
+		*/
+		void delFolder(std::string _dir);
+
 	private:
 		TSmartPtr<CPluginManager>   m_pfm;
 		//Due to this fuck*** callback
 		IRootPlugin*				m_rootPlugin;
 		bool						m_asRoot;
 		IProgressbar*				m_callback;
+		std::list<std::string>		m_FoldersList;
 };
 #endif							 //_ENGINE_H_
