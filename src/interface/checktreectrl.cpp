@@ -27,9 +27,7 @@ $Author$
 
 // Include XPM icons
 #include <gfx/checked.xpm>
-#include <gfx/checked_dis.xpm>
 #include <gfx/unchecked.xpm>
-#include <gfx/unchecked_dis.xpm>
 
 #include "checktreectrl.h"
 
@@ -47,8 +45,7 @@ END_EVENT_TABLE()
 DEFINE_EVENT_TYPE(wxEVT_COMMAND_CHECKTREECTRL_TOGGLED)
 IMPLEMENT_DYNAMIC_CLASS(wxCheckTreeEvent, wxNotifyEvent)
 
-wxCheckTreeCtrl::wxCheckTreeCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
-const wxSize& sz, long style):
+wxCheckTreeCtrl::wxCheckTreeCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt, const wxSize& sz, long style):
 wxTreeCtrl(parent, id, pt, sz, style)
 {
 	LoadIcons();
@@ -62,9 +59,7 @@ bool wxCheckTreeCtrl::LoadIcons()
 	AssignImageList(m_imageList);
 
 	m_imageList->Add(wxIcon(checked_xpm));
-	m_imageList->Add(wxIcon(checked_dis_xpm));
 	m_imageList->Add(wxIcon(unchecked_xpm));
-	m_imageList->Add(wxIcon(unchecked_dis_xpm));
 
 	#if 0
 	m_imageList->Add(wxIcon(closedfolder_xpm), 0, true);

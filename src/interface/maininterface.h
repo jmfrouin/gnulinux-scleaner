@@ -47,6 +47,7 @@ class wxRadioBox;
 class wxHtmlWindow;
 class CEngine;
 class wxProgressDialog;
+class wxCheckTreeCtrl;
 
 /*!
  * CMainInterface class declaration
@@ -78,8 +79,8 @@ class CMainInterface: public wxFrame, public IProgressbar
 		void OnProcess(wxCommandEvent& WXUNUSED(event));
 		void OnScan(wxCommandEvent& WXUNUSED(event));
 		void OnSelect(wxCommandEvent& WXUNUSED(event));
-		void OnSelRadio(wxCommandEvent& event);
-		void OnNotebook(wxNotebookEvent& event);
+		//void OnSelRadio(wxCommandEvent& event);
+		//void OnNotebook(wxNotebookEvent& event);
 
 		/*!
 		 *@brief Call splash screen
@@ -112,17 +113,18 @@ class CMainInterface: public wxFrame, public IProgressbar
 		TSmartPtr<CEngine>                  m_Engine;
 
 		//GUI tree list which display input plugins and file list.
-		wxNotebook*                         m_Input;
+		//wxNotebook*                         m_Input;
 
 		//Informations GUI panel
-		wxHtmlWindow*                       m_Html;
+		//wxHtmlWindow*                       m_Html;
+		wxCheckTreeCtrl*					m_Tree;
 
 		//GUI checkbox which display output plugins
-		wxRadioBox*                         m_Output;
+		//wxRadioBox*                         m_Output;
 		wxStatusBar*                        m_StatusBar;
-		wxSplitterWindow* 					m_Split;
-		wxSplitterWindow* 					m_Split2;
-		wxSplitterWindow* 					m_Split3;
+		//wxSplitterWindow* 					m_Split;
+		//wxSplitterWindow* 					m_Split2;
+		//wxSplitterWindow* 					m_Split3;
 
 		//Progress bar for process part.
 		wxProgressDialog*                   m_Progress;
