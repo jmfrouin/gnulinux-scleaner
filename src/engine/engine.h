@@ -1,4 +1,5 @@
 /*
+Copyright (C) 2000 Yann Guidon (whygee@f-cpu.org)
 Copyright (C) 2007 FROUIN Jean-Michel
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
@@ -143,6 +144,13 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*@param _str The str to fill.
 		*/
 		static void getTimestamp(std::string& _str);
+	
+		/*@
+		*@brief Calc CRC32.
+		*@note http://f-cpu.seul.org/whygee/lm-gdups/article_gdups.html
+		*@param _filename File name :D.
+		*/
+		static void calcCRC32(const std::string& _filename);
 
 		//Accessors
 		CPluginManager*	getPluginManager()

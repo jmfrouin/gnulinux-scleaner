@@ -1,4 +1,5 @@
 /*
+Copyright (C) 2000 Yann Guidon (whygee@f-cpu.org)
 Copyright (C) 2007 FROUIN Jean-Michel
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
@@ -474,4 +475,68 @@ void CEngine::getTimestamp(std::string& _str)
 	std::cout << i8n("[DBG] CEngine::getTimestamp Timestamp: ") << _str << '\n';
 	#endif
 }
+
+#include <sys/stat.h>
+#include <unistd.h> /* pour lstat() */
+#include <stdio.h>  /* pour fprintf() */
+#include <stdlib.h> /* pour malloc() */
+
+#define CRC_POLY_REV 0xEDB88320 /* poly CRC32 inversé CRC32 classique : polynôme = 0x04C11DB7 (32,26,23,22,16,12,11,10,8,7,5,4,2,1,0) */
+
+unsigned long int CRC32tab[256],
+ CRC_val, CRCSeed = 0xffffffff;
+
+#define CRC_BUFFER_CHUNK_SIZE 65536 /* peut être changé */
+unsigned char *CRC_buffer=NULL;
+
+/* calcule la table de CRC32 */
+void mkCRCtab() {
+  int i, j;
+  unsigned long r;
+
+  for (i=0; i<256; i++) {
+    r = i;
+    for (j=0; j<8; j++) {
+      if ( r & 1 )
+         r = (r >> 1) ^ CRC_POLY_REV;
+      else
+         r>>=1;
+    }
+    CRC32tab[i] = r;
+  }
+}
+
+void CEngine::calcCRC32(const std::string& _filename){
+  unsigned char *c;
+  unsigned int i,taille;
+  FILE *in;
+
+  /* init_CRC(); */
+  if (CRC_buffer==NULL) {
+    /* initialisation du buffer */
+    CRC_buffer=malloc(CRC_BUFFER_CHUNK_SIZE);
+    if (CRC_buffer==NULL) {
+      fprintf(stderr,"\nerreur de malloc() dans calcule_CRC\n");
+      exit(6);
+    }
+  }
+  CRC_val=CRCSeed;
+
+  in=fopen(nom_fic,"rb");
+  if (in==NULL) {
+    fprintf(stderr,"CRC impossible, lecture de %s refusée           \n",nom_fic);
+    return;
+  }
+  fprintf(stderr,"CRCing %s%c                        ",nom_fic,0xD);
+
+  while ((taille=fread(CRC_buffer,1,CRC_BUFFER_CHUNK_SIZE,in))!=0) {
+    c=CRC_buffer;
+    while (taille--) {
+      i=(CRC_val&255)^(*c++);
+      CRC_val=CRC32tab[i]^(CRC_val>>8);
+    }
+  }
+  fclose(in);
+}
+
 /* vi:set ts=4: */
