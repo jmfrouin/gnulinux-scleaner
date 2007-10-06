@@ -3,6 +3,7 @@ scleaner (0.32.0) unstable; urgency=low
   * Add a gnome shortcut. scleaner is put under Application;System;
   * David Paleino helps me to fix debian folder ... thanks!
   * You can now add directories in scan.
+  * scleaner now use git (bye bye subversion).
 
  -- Jean-Michel Frouin <jmfrouin@gnu.org>  Fri, 30 Sep 2007 23:44:26 +0200
 
