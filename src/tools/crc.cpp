@@ -33,7 +33,6 @@ $Rev: 132 $
 $Author: snoogie $
 ------------------------------------------------------
 */
-
 #include "crc.h"
 
 void CCRC::calc_UDF_CRC(unsigned int* _data, unsigned int _size, unsigned short& _crc)
