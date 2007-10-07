@@ -48,11 +48,19 @@ class wxCheckListCtrl: public wxListCtrl
 
 		//// Accessors
 
-		/// Load the icons
+		/*!
+		*@brief Load the icons
+		*/
 		bool LoadIcons();
 
 		/// Set the appropriate icon
 		bool SetIcon(long& item);
+		
+		/*!
+		*@brief Callbacks
+		*/
+		void OnContextMenu(wxContextMenuEvent& event);
+		void ShowContextMenu(const wxPoint& pos);
 
 	protected:
 		wxImageList*        m_imageList;

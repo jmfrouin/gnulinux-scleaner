@@ -535,7 +535,7 @@ void CMainInterface::UpdateFolderList()
 	std::list<std::string>::iterator l_it = --l_fl->end();
 	//Maybe an alphabetic sort will be need here : algorithms :D
 	long l_tmp = m_Folders->InsertItem(l_fl->size(), wxString((*l_it).c_str(), wxConvUTF8), 0);
-	m_Folders->SetItemImage(l_tmp, 2)
+	m_Folders->SetItemImage(l_tmp, 2);
 	m_Folders->SetItemData(l_tmp, 0);
 	m_Folders->SetColumnWidth(0, wxLIST_AUTOSIZE);
 }

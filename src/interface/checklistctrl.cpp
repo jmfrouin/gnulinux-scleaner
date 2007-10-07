@@ -28,6 +28,10 @@ $Author: snoogie $
 #include <gfx/unchecked.xpm>
 #include <gfx/folder.xpm>
 
+#include <wx/menu.h>
+
+#include <def.h>
+
 #include "checklistctrl.h"
 
 /*
@@ -37,8 +41,9 @@ $Author: snoogie $
 IMPLEMENT_CLASS(wxCheckListCtrl, wxListCtrl)
 
 BEGIN_EVENT_TABLE(wxCheckListCtrl, wxListCtrl)
-EVT_MOUSE_EVENTS(wxCheckListCtrl::OnMouseEvent)
-EVT_CHAR(wxCheckListCtrl::OnKeyDown)
+	EVT_MOUSE_EVENTS(wxCheckListCtrl::OnMouseEvent)
+	EVT_CHAR(wxCheckListCtrl::OnKeyDown)
+    EVT_CONTEXT_MENU(wxCheckListCtrl::OnContextMenu)
 END_EVENT_TABLE()
 
 wxCheckListCtrl::wxCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
@@ -125,4 +130,30 @@ void wxCheckListCtrl::OnKeyDown(wxKeyEvent& event)
 	{
 		event.Skip();
 	}
+}
+
+
+void wxCheckListCtrl::OnContextMenu(wxContextMenuEvent& event)
+{
+    wxPoint point = event.GetPosition();
+    // If from keyboard
+    if (point.x == -1 && point.y == -1) {
+        wxSize size = GetSize();
+        point.x = size.x / 2;
+        point.y = size.y / 2;
+    } else {
+        point = ScreenToClient(point);
+    }
+    ShowContextMenu(point);
+}
+
+
+void wxCheckListCtrl::ShowContextMenu(const wxPoint& pos)
+{
+    wxMenu menu;
+
+    menu.Append(ID_FOLDER_ADD, wxString(i8n("&Add a folder"), wxConvUTF8));
+    menu.Append(ID_FOLDER_DEL, wxString(i8n("&Remove a folder"), wxConvUTF8));
+
+    PopupMenu(&menu, pos.x, pos.y);
 }

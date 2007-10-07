@@ -316,12 +316,39 @@ bool CEngine::scanDisk(IProgressbar* _callback)
 }
 
 
-void CEngine::addFolder(std::string _dir)
+bool CEngine::addFolder(std::string _dir, std::string& _parent)
 {
-	m_FoldersList.push_back(_dir);
+	bool l_ret = true;
+	
+	//Search a prent folder:
+	std::list<std::string>::iterator l_it;
+	for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
+	{
+		//If a parent is found
+		if(_dir.find(*l_it, 0) != std::string::npos)
+		{
+			_parent = *l_it;
+			l_ret = false;
+			break;
+		}
+	}
+
+	if(l_ret)
+	{
+		m_FoldersList.push_back(_dir);
+	}
+	else
+	{
+		//If a parent folder is found, no need to add is child.
+		#if defined DEBUG
+		std::cerr << "[WRG] Parent folder found : " << (*l_it) << " no need to add " << _dir << '\n';
+		#endif
+	}
+	
+	return l_ret;
 }
 
-void CEngine::delFolder(std::string _dir)
+void CEngine::delFolder(const std::string _dir)
 {
 	std::list<std::string>::iterator l_it;
 	for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
@@ -329,6 +356,7 @@ void CEngine::delFolder(std::string _dir)
 		if((*l_it) == _dir)
 		{
 			m_FoldersList.erase(l_it);
+			break;
 		}
 	}
 }

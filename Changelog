@@ -4,6 +4,7 @@ scleaner (0.32.0) unstable; urgency=low
   * David Paleino helps me to fix debian folder ... thanks!
   * You can now add directories in scan.
   * Add CRC32 calc method in CEngine.
+  * Add accelerators
   * scleaner now use git (bye bye subversion).
 
  -- Jean-Michel Frouin <jmfrouin@gnu.org>  Fri, 30 Sep 2007 23:44:26 +0200

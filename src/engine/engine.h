@@ -190,16 +190,17 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		
 		//Kind of accessors
 		/*!
-		*@brief Add a folder to m_FoldersList
-		*@param _dir The directory to add (selected by user using wxDirDialog)
+		*@brief Add a folder to m_FoldersList.
+		*@param _dir The directory to add (selected by user using wxDirDialog).
+		*@return true if folder added, false otherwise.
 		*/
-		void addFolder(std::string _dir);
+		bool addFolder(const std::string _dir, std::string& _parent);
 
 		/*!
 		*@brief Remove a folder to m_FoldersList
 		*@param _dir The directory to delete (selected by user using wxDirDialog)
 		*/
-		void delFolder(std::string _dir);
+		void delFolder(const std::string _dir);
 
 	private:
 		TSmartPtr<CPluginManager>   m_pfm;

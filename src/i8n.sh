@@ -16,4 +16,4 @@ find . -name "*.h" -o -name "*.cpp" | xargs xgettext --from-code -a -d scleaner 
 #Initialise dico
 #msginit -l fr_FR -o fr.po -i scleaner.pot
 #msginit -l us_US -o us.po -i scleaner.pot
-msgfmt -c -v -o fr.mo fr.po
+#msgfmt -c -v -o fr.mo fr.po
