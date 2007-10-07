@@ -1,4 +1,5 @@
 /*
+Copyright (C) 2000 Yann Guidon (whygee@f-cpu.org)
 Copyright (C) 2007 FROUIN Jean-Michel
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
@@ -105,5 +106,10 @@ $Author$
 
 #include <libintl.h>
 #include <locale.h>
+
+
+//CRC32 stuff
+#define CRC_POLY_REV 0xEDB88320 		/* Reversed CRC32 poly, classic CRC32: poly = 0x04C11DB7 (32,26,23,22,16,12,11,10,8,7,5,4,2,1,0) */
+
 #endif							 // _DEF_H_
 /* vi:set ts=4: */
