@@ -80,9 +80,8 @@ msgid " plugin:"
 msgstr " greffon :"
 
 #: interface/maininterface.cpp:573
-#, fuzzy
 msgid " since "
-msgstr " Ligne : "
+msgstr " car "
 
 #: tools/tar_archive.cpp:52
 msgid " so I skip it !"
@@ -158,9 +157,8 @@ msgid "GB"
 msgstr "Go"
 
 #: interface/maininterface.cpp:571
-#, fuzzy
 msgid "I cannot add "
-msgstr "Ne peut évaluer "
+msgstr "Je ne peux pas ajouter "
 
 #: engine/engine.cpp:196
 msgid "KB"
