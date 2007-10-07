@@ -1,4 +1,5 @@
 /*
+Copyright (C) 2000 Yann Guidon (whygee@f-cpu.org)
 Copyright (C) 2007 FROUIN Jean-Michel
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
@@ -27,7 +28,10 @@ $Author$
 #include <ftw.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h> /* pour lstat() */
+#include <stdlib.h> /* pour malloc() */
 #include <sstream>
+#include <fstream>
 #include <pwd.h>
 #include <dirent.h>
 #include <mntent.h>
@@ -37,6 +41,7 @@ $Author$
 #include <sys/utsname.h>
 #include <interface/maininterface.h>
 #include "engine.h"
+
 
 CEngine::CEngine():
 m_rootPlugin(0), m_asRoot(false), m_callback(0)
@@ -474,4 +479,58 @@ void CEngine::getTimestamp(std::string& _str)
 	std::cout << i8n("[DBG] CEngine::getTimestamp Timestamp: ") << _str << '\n';
 	#endif
 }
+
+
+void CEngine::getCRCTable(std::vector<unsigned long>& _table)
+{
+	unsigned long r;
+	_table.clear();
+  	for(int i=0; i<256; ++i) 
+  	{
+    	r = i;
+    	for(int j=0; j<8; ++j) 
+		{
+      		if ( r & 1 )
+	  		{
+         		r = (r >> 1) ^ CRC_POLY_REV;
+			}
+      		else
+			{
+         		r >>= 1;
+			}
+    	}
+    	_table.push_back(r);
+  	}
+}
+
+
+void CEngine::calcCRC32(const std::string& _filename, unsigned long& _crc){
+	std::ifstream l_in(_filename.c_str(), std::ios::in | std::ios::binary);
+
+	//Push seed.
+  	_crc = 0xffffffff;
+
+  	if(!l_in.good())
+	{
+		std::cerr << i8n("[ERR] Error, canot read ") << _filename << '\n';
+	}
+	else
+	{
+		char l_char;
+		std::vector<unsigned long> l_table;
+		getCRCTable(l_table);
+		while(l_in.get(l_char))
+		{
+			unsigned int l_pos;
+			l_pos = (_crc & 255) ^ l_char;
+			_crc = l_table[l_pos] ^ (_crc >> 8);
+		}
+    }
+	l_in.close();
+	#if defined DEBUG
+	std::cout << "[DBG] calcCRC32 : CRC32 for " << _filename << " = " << _crc << '\n';
+	#endif
+}
+
+
 /* vi:set ts=4: */

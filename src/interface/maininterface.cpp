@@ -40,7 +40,6 @@ $Author$
 #include <plugins/plugin_manager.h>
 #include <plugins/iplugin.h>
 #include <engine/engine.h>
-#include <tools/crc.h>
 #include <wx/radiobox.h>
 #include <wx/progdlg.h>
 #include <wx/dirdlg.h>
@@ -391,7 +390,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 		l_itemCol.SetAlign(wxLIST_FORMAT_CENTRE);
 		l_fileslist->InsertColumn(1, l_itemCol);
 
-		l_itemCol.SetText(wxString(i8n("TODO"), wxConvUTF8));
+		l_itemCol.SetText(wxString(i8n("CRC32"), wxConvUTF8));
 		l_itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
 		l_fileslist->InsertColumn(2, l_itemCol);
 
@@ -422,25 +421,18 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 				wxString l_usize(l_size.c_str(), wxConvUTF8);
 				l_fileslist->SetItem(l_tmp, 1, l_usize);
 
-				//if(l_info.st_size != 0)
-				//{
-				//	std::ifstream l_file(l_filename.c_str());
-				//	char l_buf[4096];
-				//	l_file.get(l_buf, 4096);
-				//	unsigned int l_read = l_file.gcount();
-
-				//	unsigned short l_crc  = 0;
-    			//	CCRC::calc_UDF_CRC((unsigned int*)l_buf, l_read, l_crc);
-				//	l_file.close();
-				//	
-				//	std::stringstream l_crc2;
-				//	l_crc2 << l_crc;
-				//	l_fileslist->SetItem(l_tmp, 2, wxString(std::string(l_crc2.str()).c_str(), wxConvUTF8));
-				//}
-				//else
-				//{
-				//	l_fileslist->SetItem(l_tmp, 2, wxString(_T("No CRC on null size")));
-				//}
+				if(l_info.st_size != 0)
+				{
+					unsigned long l_crc;
+					CEngine::calcCRC32(l_filename, l_crc);
+					std::stringstream l_crc2;
+					l_crc2 << l_crc;
+					l_fileslist->SetItem(l_tmp, 2, wxString(std::string(l_crc2.str()).c_str(), wxConvUTF8));
+				}
+				else
+				{
+					l_fileslist->SetItem(l_tmp, 2, wxString(_T("No CRC32")));
+				}
 			}
 
 			++l_counter;

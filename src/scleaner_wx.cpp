@@ -26,10 +26,8 @@ $Author$
 #include "scleaner_wx.h"
 #include <config.h>
 #include <string>
-#include <list>
 #include <leak/memory_manager.h>
 #include <engine/engine.h>
-#include <tools/crc.h>
 
 CMemoryManager g_mm;
 

@@ -1,4 +1,5 @@
 /*
+Copyright (C) 2000 Yann Guidon (whygee@f-cpu.org)
 Copyright (C) 2007 FROUIN Jean-Michel
 ------------------------------------------------------
 This program is free software; you can redistribute it and/or modify
@@ -28,6 +29,7 @@ $Author$
 
 #include <string>
 #include <list>
+#include <vector>
 #include <tools/smart_pointer.h>
 #include <tools/singleton.h>
 #include <plugins/plugin_manager.h>
@@ -143,7 +145,23 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*@param _str The str to fill.
 		*/
 		static void getTimestamp(std::string& _str);
+	
+		/*@
+		*@brief Calc CRC32.
+		*@note http://f-cpu.seul.org/whygee/lm-gdups/article_gdups.html
+		*@param _filename File name :D.
+		*@param _crc The computed CRC32 for _filename.
+		*/
+		static void calcCRC32(const std::string& _filename, unsigned long& _crc);
 
+	private:
+		/*@
+		*@brief Calc CRC32's table
+		*@param _table The CRC32's table to fill
+		*/
+		static void getCRCTable(std::vector<unsigned long>& _table);
+
+	public:
 		//Accessors
 		CPluginManager*	getPluginManager()
 		{

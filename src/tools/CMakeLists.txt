@@ -22,6 +22,6 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-SET(tools_src crc.cpp name.cpp thread.cpp tar_archive.cpp)
+SET(tools_src name.cpp thread.cpp tar_archive.cpp)
 ADD_LIBRARY(tools ${tools_src})
 TARGET_LINK_LIBRARIES(tools)
