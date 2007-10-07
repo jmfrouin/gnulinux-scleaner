@@ -1,13 +1,3 @@
-# scleaner i8n template
-# Copyright (C) 2007 Frouin Jean-Michel
-#: interface/maininterface.cpp:547
-msgid ""
-"Since for this alpha version, there are only 3 input plugins (and 2 that run "
-"only in root mode), the dialog for selecting input plugins is not yet ready :"
-"D but will be available soon !!"
-msgstr ""
-"Comme cette version alpha ne contient que 3 greffons (dont 2 qui nécessitent le mode superutilsateur), le dialogue pour sélectionner les greffons d'entrée n'est pas pret :D mais il le sera très bientôt !!"
-
 # This file is distributed under the GPL3 license.
 # Jean-Michel FROUIN <jmfrouin@gnu.org>, 2007.
 # 
@@ -16,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: scleaner 0.31\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-30 00:31+0200\n"
-"PO-Revision-Date: 2007-09-30 01:04+0200\n"
+"POT-Creation-Date: 2007-10-07 22:37+0200\n"
+"PO-Revision-Date: 2007-10-07 23:14+0200\n"
 "Last-Translator:  <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -73,6 +63,10 @@ msgstr " greffon d'entrée : "
 msgid " input plugins : "
 msgstr " greffons d'entrée : "
 
+#: interface/maininterface.cpp:575
+msgid " is already in the folders list."
+msgstr " est déjà dans la liste des répertoires."
+
 #: plugins/plugin_manager.cpp:71
 msgid " output plugin : "
 msgstr " greffon de sortie : "
@@ -81,27 +75,32 @@ msgstr " greffon de sortie : "
 msgid " output plugins : "
 msgstr " greffons de sortie : "
 
-#: interface/maininterface.cpp:507
+#: interface/maininterface.cpp:520
 msgid " plugin:"
 msgstr " greffon :"
+
+#: interface/maininterface.cpp:573
+#, fuzzy
+msgid " since "
+msgstr " Ligne : "
 
 #: tools/tar_archive.cpp:52
 msgid " so I skip it !"
 msgstr " ignoré !"
 
+#: interface/checklistctrl.cpp:155 interface/maininterface.cpp:196
+msgid "&Add a folder to scan\tCtrl-A"
+msgstr "&Ajouter un répertoire au scan\tCtrl-A"
+
+#: interface/checklistctrl.cpp:156 interface/maininterface.cpp:198
+msgid "&Remove selected folders from scan\tCtrl-D"
+msgstr "&Supprimer les répertoires sélectionnés au scan\tCtrl-S"
+
 #: tools/tar_archive.cpp:288
 msgid "' hasn't been add to tar archive !"
 msgstr "' n'a pas été ajouté à l'archive tar !"
 
-#: interface/maininterface.cpp:301 interface/maininterface.cpp:585
-msgid ".html"
-msgstr "_fr.html"
-
-#: interface/maininterface.cpp:235
-msgid "/usr/share/doc/scleaner/about.html"
-msgstr "/usr/share/doc/scleaner/about_fr.html"
-
-#: interface/maininterface.cpp:188
+#: interface/maininterface.cpp:203
 msgid "About"
 msgstr "A propos"
 
@@ -109,17 +108,18 @@ msgstr "A propos"
 msgid "Adding\n"
 msgstr "Ajout de\n"
 
-#: interface/maininterface.cpp:200
+#: interface/maininterface.cpp:216 interface/maininterface.cpp:218
+#: interface/maininterface.cpp:219
 msgid "Apply output plugin on selected files."
 msgstr "Appliquer le greffon de sortie aux fichiers sélectionnés."
+
+#: interface/maininterface.cpp:403
+msgid "CRC32"
+msgstr "CRC32"
 
 #: plugins/out/tbz/tbz.cpp:124
 msgid "Cannot stat "
 msgstr "Ne peut évaluer "
-
-#: interface/maininterface.cpp:202
-msgid "Configuration"
-msgstr "Configuration"
 
 #: interface/tray.cpp:65
 msgid "E&xit"
@@ -137,107 +137,131 @@ msgstr "Erreur fichier d'entrée!"
 msgid "Error out file!"
 msgstr "Erreur fichier de sortie!"
 
-#: interface/maininterface.cpp:182
+#: interface/maininterface.cpp:190
 msgid "File"
 msgstr "Fichier"
 
-#: interface/maininterface.cpp:375
+#: interface/maininterface.cpp:395
 msgid "File location"
 msgstr "Emplacement du fichier"
 
-#: interface/maininterface.cpp:261
+#: interface/maininterface.cpp:195
+msgid "Folders"
+msgstr "Répertoires"
+
+#: interface/maininterface.cpp:286
 msgid "Free: "
 msgstr "Libre :"
 
-#: engine/engine.cpp:166
+#: engine/engine.cpp:184
 msgid "GB"
 msgstr "Go"
 
-#: engine/engine.cpp:178
+#: interface/maininterface.cpp:571
+#, fuzzy
+msgid "I cannot add "
+msgstr "Ne peut évaluer "
+
+#: engine/engine.cpp:196
 msgid "KB"
 msgstr "Ko"
 
-#: interface/maininterface.cpp:257
+#: interface/maininterface.cpp:282
 msgid "Kernel : v"
 msgstr "Noyau : v"
 
-#: interface/maininterface.cpp:254
+#: interface/maininterface.cpp:279
 msgid "Launched as "
 msgstr "Lancé en tant que "
 
-#: interface/maininterface.cpp:247
+#: interface/maininterface.cpp:272
 msgid "Launched as root/sudo"
 msgstr "Lancé en tant que superutilisateur"
 
-#: engine/engine.cpp:172
+#: engine/engine.cpp:190
 msgid "MB"
 msgstr "Mo"
 
-#: interface/maininterface.cpp:187
+#: interface/maininterface.cpp:202
 msgid "Misc"
 msgstr "Divers"
 
-#: interface/maininterface.cpp:229
-msgid "Output plugins"
-msgstr "Greffons de sortie"
+#: interface/maininterface.cpp:539
+msgid "Name"
+msgstr "Nom"
 
-#: interface/maininterface.cpp:204
+#: interface/maininterface.cpp:191 interface/maininterface.cpp:223
 msgid "Quit"
 msgstr "Quitter"
 
-#: interface/maininterface.cpp:507
+#: interface/maininterface.cpp:564
+#, fuzzy
+msgid "Select a folder to add to scan"
+msgstr "Selectionnez un plugin de sortie pour "
+
+#: interface/maininterface.cpp:520
 msgid "Select an output folder for "
 msgstr "Selectionnez un plugin de sortie pour "
 
-#: interface/maininterface.cpp:198
+#: interface/maininterface.cpp:641
+#, fuzzy
+msgid "Select input plugins to use"
+msgstr "Selectionnez les greffons d'entrée à utiliser."
+
+#: interface/maininterface.cpp:214
 msgid "Select input plugins to use."
 msgstr "Selectionnez les greffons d'entrée à utiliser."
 
-#: interface/maininterface.cpp:379
+# scleaner i8n template
+# Copyright (C) 2007 Frouin Jean-Michel
+#: interface/maininterface.cpp:631
+msgid ""
+"Since for this alpha version, there are only 3 input plugins (and 2 that run "
+"only in root mode), the dialog for selecting input plugins is not yet ready :"
+"D but will be available soon !!"
+msgstr "Comme cette version alpha ne contient que 3 greffons (dont 2 qui nécessitent le mode superutilsateur), le dialogue pour sélectionner les greffons d'entrée n'est pas pret :D mais il le sera très bientôt !!"
+
+#: interface/maininterface.cpp:399
 msgid "Size (bytes)"
 msgstr "Taille (octets)"
 
-#: interface/maininterface.cpp:383
-msgid "TODO"
-msgstr "TODO"
-
-#: interface/maininterface.cpp:306
+#: interface/maininterface.cpp:331
 msgid "Total size : "
 msgstr "Taille totale : "
 
-#: interface/maininterface.cpp:261
+#: interface/maininterface.cpp:286
 msgid "Total: "
 msgstr "Total : "
 
-#: interface/maininterface.cpp:199
+#: interface/maininterface.cpp:215
 msgid "Use input plugins to find files."
 msgstr "Utilisez les greffons d'entrée pour trouver des fichiers."
 
-#: interface/maininterface.cpp:261
+#: interface/maininterface.cpp:286
 msgid "Used: "
 msgstr "Utilisée : "
 
-#: engine/engine.cpp:440
+#: engine/engine.cpp:538
 msgid "[DBG] CEngine::getTimestamp Timestamp: "
 msgstr "[DBG] CEngine::getTimestamp Timestamp: "
 
-#: engine/engine.cpp:140
+#: engine/engine.cpp:158
 msgid "[DBG] CEngine::getUsername UID: "
 msgstr "[DBG] CEngine::getUsername UID: "
 
-#: engine/engine.cpp:147
+#: engine/engine.cpp:165
 msgid "[DBG] CEngine::getUsername Username: "
 msgstr "[DBG] CEngine::getUsername Nom d'utilisateur: "
 
-#: engine/engine.cpp:290
+#: engine/engine.cpp:313
 msgid "[DBG] CEngine::scanDisk Path : "
 msgstr "[DBG] CEngine::scanDisk Répertoire : "
 
-#: interface/maininterface.cpp:490
+#: interface/maininterface.cpp:503
 msgid "[DBG] CMainInterface : Get selection : "
 msgstr "[DBG] CMainInterface : Get selection : "
 
-#: engine/engine.cpp:308
+#: engine/engine.cpp:405
 msgid "[DBG] FTW_callback : "
 msgstr "[DBG] FTW_callback : "
 
@@ -245,19 +269,19 @@ msgstr "[DBG] FTW_callback : "
 msgid "[DBG] I founded "
 msgstr "[DBG] J'ai trouvé "
 
-#: interface/maininterface.cpp:455
+#: interface/maininterface.cpp:468
 msgid "[DBG] Process !!! "
 msgstr "[DBG] Traitement !!! "
 
-#: interface/maininterface.cpp:362
+#: interface/maininterface.cpp:389
 msgid "[DBG] Size = "
 msgstr "[DBG] Taille = "
 
-#: interface/maininterface.cpp:462
+#: interface/maininterface.cpp:475
 msgid "[DBG] You have selected: "
 msgstr "[DBG] Vous avez selectionné : "
 
-#: scleaner_wx.cpp:53
+#: scleaner_wx.cpp:51
 msgid "[DBG] scleaner starting ...\n"
 msgstr "[DBG] scleaner démarre ...\n"
 
@@ -269,19 +293,20 @@ msgstr "[DBG]Calcul de l'en tête fichier pour "
 msgid "[ERR] : Cannot open "
 msgstr "[ERR] : Ne peut ouvrir "
 
-#: interface/maininterface.cpp:404
+#: interface/maininterface.cpp:424
 msgid "[ERR] : Cannot stat "
 msgstr "[ERR] : Ne peut statuer "
 
 #: plugins/out/tbz/tbz.cpp:69
 msgid "[ERR] An error occured during compression so I left "
-msgstr "[ERR] Une erreur lors de la compression ayant eu lieu, je laisse le fichier "
+msgstr ""
+"[ERR] Une erreur lors de la compression ayant eu lieu, je laisse le fichier "
 
-#: engine/engine.cpp:96
+#: engine/engine.cpp:114
 msgid "[ERR] CEngine::getKernelVersion error !\n"
 msgstr "[ERR] CEngine::getKernelVersion !\n"
 
-#: interface/maininterface.cpp:575
+#: interface/maininterface.cpp:671
 msgid "[ERR] CMainInterface::GetSelectedFiles GetItem !!"
 msgstr "[ERR] CMainInterface::GetSelectedFiles GetItem !!"
 
@@ -289,7 +314,7 @@ msgstr "[ERR] CMainInterface::GetSelectedFiles GetItem !!"
 msgid "[ERR] Cannot open "
 msgstr "[ERR] Impossible d'ouvrir "
 
-#: interface/maininterface.cpp:150
+#: interface/maininterface.cpp:157
 msgid "[ERR] Could not set icon.\n"
 msgstr "[ERR] Impossible de définir l'icone.\n"
 
@@ -305,7 +330,12 @@ msgstr "[ERR] A cause d'erreur(s) dans WriteData, j'efface "
 msgid "[ERR] Error output file: "
 msgstr "[ERR] Erreur sur le fichier de sortie: "
 
-#: engine/engine.cpp:122
+#: engine/engine.cpp:574
+#, fuzzy
+msgid "[ERR] Error, canot read "
+msgstr "[ERR] Erreur sur le fichier de sortie: "
+
+#: engine/engine.cpp:140
 msgid "[WNG] : null"
 msgstr "[WNG] : nul"
 
@@ -329,19 +359,38 @@ msgstr "[WNG] Fichier '"
 msgid "bz2 compression of\n"
 msgstr "Compression bz2 de\n"
 
-#: engine/engine.cpp:184
+#: engine/engine.cpp:202
 msgid "null size"
 msgstr "taille nulle"
 
-#: interface/maininterface.cpp:470
+#: interface/maininterface.cpp:577
+#, fuzzy
+msgid "scleaner information"
+msgstr "ceci est une information"
+
+#: interface/maininterface.cpp:483
 msgid "scleaner process your files ..."
 msgstr "scleaner s'occupe de vos fichiers ..."
 
-#: interface/maininterface.cpp:330
+#: interface/maininterface.cpp:356
 msgid "scleaner scan your disk ..."
 msgstr "scleaner analyse votre disque ..."
 
-#: interface/maininterface.cpp:331 interface/maininterface.cpp:471
+#: interface/maininterface.cpp:357 interface/maininterface.cpp:484
 msgid "this is a information"
 msgstr "ceci est une information"
 
+#~ msgid ".html"
+#~ msgstr "_fr.html"
+
+#~ msgid "/usr/share/doc/scleaner/about.html"
+#~ msgstr "/usr/share/doc/scleaner/about_fr.html"
+
+#~ msgid "Configuration"
+#~ msgstr "Configuration"
+
+#~ msgid "Output plugins"
+#~ msgstr "Greffons de sortie"
+
+#~ msgid "TODO"
+#~ msgstr "TODO"
