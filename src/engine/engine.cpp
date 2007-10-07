@@ -46,7 +46,10 @@ $Author$
 CEngine::CEngine():
 m_rootPlugin(0), m_asRoot(false), m_callback(0)
 {
-	m_FoldersList.push_back("/home");
+	m_FoldersList.push_back("/home/snoogie/git/src/gfx");
+	m_FoldersList.push_back("/home/snoogie/git/src/tools");
+	m_FoldersList.push_back("/home/snoogie/git/src/interface");
+	m_FoldersList.push_back("/home/snoogie/git/gfx");
 }
 
 CEngine::~CEngine()
@@ -322,6 +325,7 @@ bool CEngine::addFolder(std::string _dir, std::string& _parent)
 	
 	//Search a prent folder:
 	std::list<std::string>::iterator l_it;
+	bool l_clean = false;
 	for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
 	{
 		//If a parent is found
@@ -331,8 +335,35 @@ bool CEngine::addFolder(std::string _dir, std::string& _parent)
 			l_ret = false;
 			break;
 		}
+		else
+		{
+			//If _dir is a parent :D
+			if((*l_it).find(_dir, 0) != std::string::npos)
+			{
+				l_clean = true;
+				break;
+			}
+		}
 	}
 
+	if(l_clean)
+	{	
+		l_it = m_FoldersList.begin();
+		do
+		{
+			if((*l_it).find(_dir, 0) != std::string::npos)
+			{
+				std::list<std::string>::iterator l_it2erase = l_it;
+				++l_it;
+				m_FoldersList.erase(l_it2erase);
+			}
+			else
+			{
+				++l_it;
+			}
+		}while(l_it != m_FoldersList.end());
+	}
+	
 	if(l_ret)
 	{
 		m_FoldersList.push_back(_dir);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-07 20:28+0200\n"
+"POT-Creation-Date: 2007-10-07 22:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -153,7 +153,7 @@ msgstr ""
 msgid "Free: "
 msgstr ""
 
-#: engine/engine.cpp:181
+#: engine/engine.cpp:184
 msgid "GB"
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr ""
 msgid "I cannot add "
 msgstr ""
 
-#: engine/engine.cpp:193
+#: engine/engine.cpp:196
 msgid "KB"
 msgstr ""
 
@@ -177,7 +177,7 @@ msgstr ""
 msgid "Launched as root/sudo"
 msgstr ""
 
-#: engine/engine.cpp:187
+#: engine/engine.cpp:190
 msgid "MB"
 msgstr ""
 
@@ -236,19 +236,19 @@ msgstr ""
 msgid "Used: "
 msgstr ""
 
-#: engine/engine.cpp:507
+#: engine/engine.cpp:538
 msgid "[DBG] CEngine::getTimestamp Timestamp: "
 msgstr ""
 
-#: engine/engine.cpp:155
+#: engine/engine.cpp:158
 msgid "[DBG] CEngine::getUsername UID: "
 msgstr ""
 
-#: engine/engine.cpp:162
+#: engine/engine.cpp:165
 msgid "[DBG] CEngine::getUsername Username: "
 msgstr ""
 
-#: engine/engine.cpp:310
+#: engine/engine.cpp:313
 msgid "[DBG] CEngine::scanDisk Path : "
 msgstr ""
 
@@ -256,7 +256,7 @@ msgstr ""
 msgid "[DBG] CMainInterface : Get selection : "
 msgstr ""
 
-#: engine/engine.cpp:374
+#: engine/engine.cpp:405
 msgid "[DBG] FTW_callback : "
 msgstr ""
 
@@ -296,7 +296,7 @@ msgstr ""
 msgid "[ERR] An error occured during compression so I left "
 msgstr ""
 
-#: engine/engine.cpp:111
+#: engine/engine.cpp:114
 msgid "[ERR] CEngine::getKernelVersion error !\n"
 msgstr ""
 
@@ -324,11 +324,11 @@ msgstr ""
 msgid "[ERR] Error output file: "
 msgstr ""
 
-#: engine/engine.cpp:543
+#: engine/engine.cpp:574
 msgid "[ERR] Error, canot read "
 msgstr ""
 
-#: engine/engine.cpp:137
+#: engine/engine.cpp:140
 msgid "[WNG] : null"
 msgstr ""
 
@@ -352,7 +352,7 @@ msgstr ""
 msgid "bz2 compression of\n"
 msgstr ""
 
-#: engine/engine.cpp:199
+#: engine/engine.cpp:202
 msgid "null size"
 msgstr ""
 

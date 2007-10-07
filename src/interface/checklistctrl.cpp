@@ -152,8 +152,8 @@ void wxCheckListCtrl::ShowContextMenu(const wxPoint& pos)
 {
     wxMenu menu;
 
-    menu.Append(ID_FOLDER_ADD, wxString(i8n("&Add a folder"), wxConvUTF8));
-    menu.Append(ID_FOLDER_DEL, wxString(i8n("&Remove a folder"), wxConvUTF8));
+    menu.Append(ID_FOLDER_ADD, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
+    menu.Append(ID_FOLDER_DEL, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
 
     PopupMenu(&menu, pos.x, pos.y);
 }

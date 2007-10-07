@@ -47,6 +47,7 @@ $Author$
 #include <wx/wxhtml.h>
 #include <wx/listctrl.h>
 #include <wx/imaglist.h>
+#include <wx/msgdlg.h>
 #include "maininterface.h"
 #include "checklistctrl.h"
 #include "select_dialog.h"
@@ -182,6 +183,7 @@ void CMainInterface::CreateControls()
 	//MENU
 	wxMenuBar* l_MenuBar = new wxMenuBar;
 	wxMenu* l_File = new wxMenu;
+	wxMenu* l_Folders = new wxMenu;
 	wxMenu* l_Misc = new wxMenu;
 
 	//File menu
@@ -189,12 +191,20 @@ void CMainInterface::CreateControls()
 	wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8));
 	l_File->Append(l_Quit);
 
+	//Folders menu
+	l_MenuBar->Append(l_Folders, wxString(i8n("Folders"), wxConvUTF8));
+	wxMenuItem* l_Add = new wxMenuItem(l_Folders, ID_FOLDER_ADD, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
+	l_Folders->Append(l_Add);
+	wxMenuItem* l_Del = new wxMenuItem(l_Folders, ID_FOLDER_DEL, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
+	l_Folders->Append(l_Del);
+
 	//Misc menu
 	l_MenuBar->Append(l_Misc, wxString(i8n("Misc"), wxConvUTF8));
 	wxMenuItem* l_About = new wxMenuItem(l_Misc, ID_ABOUT, wxString(i8n("About"), wxConvUTF8));
 	l_Misc->Append(l_About);
 
 	l_Frame->SetMenuBar(l_MenuBar);
+
 	//________________________________________________________________
 	//TOOLBAR
 	//l_ToolBar->SetMargins(4, 4);
@@ -378,7 +388,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 		//#if defined DEBUG
 		std::cout << i8n("[DBG] Size = ") << l_list.size() << '\n';
 		//#endif
-		wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+		wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 
 		//Setting header:
 		wxListItem l_itemCol;
@@ -523,21 +533,28 @@ void CMainInterface::UpdateFolderList()
 {
     if(!m_Folders)
 	{
-		m_Folders = new wxCheckListCtrl(m_Split, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+		m_Folders = new wxCheckListCtrl(m_Split, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 		//Setting header:
 		wxListItem l_itemCol;
 		l_itemCol.SetText(wxString(i8n("Name"), wxConvUTF8));
 		l_itemCol.SetImage(-1);
 		m_Folders->InsertColumn(0, l_itemCol);
 	}
+	else
+	{
+		m_Folders->DeleteAllItems();
+	}
 	
 	std::list<std::string>* l_fl = m_Engine->getFoldersListPtr();
-	std::list<std::string>::iterator l_it = --l_fl->end();
-	//Maybe an alphabetic sort will be need here : algorithms :D
-	long l_tmp = m_Folders->InsertItem(l_fl->size(), wxString((*l_it).c_str(), wxConvUTF8), 0);
-	m_Folders->SetItemImage(l_tmp, 2);
-	m_Folders->SetItemData(l_tmp, 0);
-	m_Folders->SetColumnWidth(0, wxLIST_AUTOSIZE);
+	std::list<std::string>::iterator l_it;
+	for(l_it = l_fl->begin(); l_it !=l_fl->end(); ++l_it)
+	{
+		//Maybe an alphabetic sort will be need here : algorithms :D
+		long l_tmp = m_Folders->InsertItem(l_fl->size(), wxString((*l_it).c_str(), wxConvUTF8), 0);
+		m_Folders->SetItemImage(l_tmp, 2);
+		m_Folders->SetItemData(l_tmp, 0);
+		m_Folders->SetColumnWidth(0, wxLIST_AUTOSIZE);
+	}
 }
 
 
@@ -548,7 +565,17 @@ void CMainInterface::OnFolderAdd(wxCommandEvent& WXUNUSED(event))
 	if(l_addDlg.ShowModal() == wxID_OK)
 	{
 		std::string l_selPath(l_addDlg.GetPath().char_str()); 
-		m_Engine->addFolder(l_selPath);
+		std::string l_Parent;
+		if(!m_Engine->addFolder(l_selPath, l_Parent))
+		{
+			wxString l_text(i8n("I cannot add "), wxConvUTF8);
+			l_text += wxString(l_selPath.c_str(), wxConvUTF8);
+			l_text += wxString(i8n(" since "), wxConvUTF8);
+			l_text += wxString(l_Parent.c_str(), wxConvUTF8);
+			l_text += wxString(i8n(" is already in the folders list."), wxConvUTF8);
+			
+			wxMessageBox(l_text, wxString(i8n("scleaner information"), wxConvUTF8), wxICON_INFORMATION);
+		}
 	}
 	UpdateFolderList();	
 }
@@ -556,13 +583,20 @@ void CMainInterface::OnFolderAdd(wxCommandEvent& WXUNUSED(event))
 
 void CMainInterface::OnFolderDel(wxCommandEvent& WXUNUSED(event))
 {
-	wxString l_msg(_T("coucouc"));
-	wxDirDialog l_delDlg(this, wxString(i8n("Select a folder then click here to remove it from scan"), wxConvUTF8), l_msg, wxDD_DIR_MUST_EXIST);
-	if(l_delDlg.ShowModal() == wxID_OK)
+	for(int i = 0; i != m_Folders->GetItemCount(); ++i)
 	{
-		std::string l_selPath(l_delDlg.GetPath().char_str()); 
-		m_Engine->delFolder(l_selPath);
+		long l_Mask;
+		l_Mask = wxLIST_STATE_SELECTED;
+		if(m_Folders->GetItemState(i, l_Mask) == wxLIST_STATE_SELECTED)
+		{
+			wxListItem l_item;
+			l_item.SetId(i);
+			m_Folders->GetItem(l_item);
+			wxString l_text = l_item.GetText();
+			m_Engine->delFolder(std::string(l_text.ToAscii()));
+		}
 	}
+
 	UpdateFolderList();
 }
 

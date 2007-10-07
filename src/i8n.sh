@@ -13,7 +13,7 @@
 
 #!/bin/bash
 find . -name "*.h" -o -name "*.cpp" | xargs xgettext --from-code -a -d scleaner -ki8n -s -o scleaner.pot 
-#Initialise dico
+#Initialise new language
 #msginit -l fr_FR -o fr.po -i scleaner.pot
-#msginit -l us_US -o us.po -i scleaner.pot
-#msgfmt -c -v -o fr.mo fr.po
+msgmerge fr_tr.po.old scleaner.pot > fr_tr.po 
+msgfmt -c -v -o fr.mo fr.po
