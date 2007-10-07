@@ -1,0 +1,2 @@
+If a folder is added (for example /home/snoogie/git/src) but his parent (for example /home/snoogie/) is already in the folder list, then scleaner won't add it with a wxMessageDialog for user notification.
+If a parent folder is added (for example /home/snoogie/) but some childs (for example /home/snoogie/git/, /home/snoogie/git2 or /home/snoogie/git/src) are already in the folder list, then scleaner will remove them from folders list.
