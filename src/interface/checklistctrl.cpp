@@ -72,20 +72,24 @@ wxCheckListCtrl::~wxCheckListCtrl()
 /// Set the appropriate icon
 bool wxCheckListCtrl::SetIcon(long& item)
 {
+	bool l_ret = true;
+
 	wxListItem l_item;
 	l_item.SetId(item);
 	GetItem(l_item);
 
 	if(l_item.GetImage() == 0)
 	{
-		SetItemImage(item, 1);
+		//SetItemImage(item, 1);
 	}
 	else
 	{
-		SetItemImage(item, 0);
+		//SetItemImage(item, 0);
 	}
 
-	return true;
+	SetItemImage(item, 2);
+
+	return l_ret;
 }
 
 
