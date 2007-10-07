@@ -15,5 +15,7 @@
 find . -name "*.h" -o -name "*.cpp" | xargs xgettext --from-code -a -d scleaner -ki8n -s -o scleaner.pot 
 #Initialise new language
 #msginit -l fr_FR -o fr.po -i scleaner.pot
+cp fr_tr.po fr_tr.po.old
 msgmerge fr_tr.po.old scleaner.pot > fr_tr.po 
 msgfmt -c -v -o fr.mo fr.po
+cp fr.mo fr/scleaner.mo
