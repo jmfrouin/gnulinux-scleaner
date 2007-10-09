@@ -21,6 +21,12 @@ RELEASE : Remove debug symbols
 POSTPONED : Decrease or increase m_TotalSize on select/deselect
 
 0.32.0
+Find a way to keep a matrix of file / size / crc 
+Find a way to faster find 2 identical int in a int list, faster than N!
+Improve total file size
+
+
+0.40.0
 Add code to detect a twice selected file.
 Check memory leaks and FIXME in code
 Write dameon to detect free space ?

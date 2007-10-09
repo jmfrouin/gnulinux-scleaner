@@ -29,6 +29,7 @@ $Author$
 
 #include <string>
 #include <list>
+#include <map>
 #include <vector>
 #include <tools/smart_pointer.h>
 #include <tools/singleton.h>
@@ -146,7 +147,7 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*/
 		static void getTimestamp(std::string& _str);
 	
-		/*@
+		/*!
 		*@brief Calc CRC32.
 		*@note http://f-cpu.seul.org/whygee/lm-gdups/article_gdups.html
 		*@param _filename File name :D.
@@ -155,11 +156,19 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		static void calcCRC32(const std::string& _filename, unsigned long& _crc);
 
 	private:
-		/*@
+		/*!
 		*@brief Calc CRC32's table
 		*@param _table The CRC32's table to fill
 		*/
 		static void getCRCTable(std::vector<unsigned long>& _table);
+
+	public:
+		/*!
+		*@brief Add a file to files list
+		*@param _file File name
+		*@param _size File size
+		*/
+		void addFileInfo(const std::string& _file, unsigned long _crc);
 
 	public:
 		//Accessors
@@ -208,6 +217,10 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		IRootPlugin*				m_rootPlugin;
 		bool						m_asRoot;
 		IProgressbar*				m_callback;
+		//Folders infos
 		std::list<std::string>		m_FoldersList;
+		//Files infos
+		std::map<std::string, unsigned long>
+									m_Infos;
 };
 #endif							 //_ENGINE_H_

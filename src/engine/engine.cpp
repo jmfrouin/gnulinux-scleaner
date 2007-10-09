@@ -50,6 +50,7 @@ m_rootPlugin(0), m_asRoot(false), m_callback(0)
 	m_FoldersList.push_back("/home/snoogie/git/src/tools");
 	m_FoldersList.push_back("/home/snoogie/git/src/interface");
 	m_FoldersList.push_back("/home/snoogie/git/gfx");
+	m_FoldersList.push_back("/home/snoogie/git/build");
 }
 
 CEngine::~CEngine()
@@ -285,34 +286,30 @@ bool CEngine::scanDisk(IProgressbar* _callback)
 
 	std::list<std::string>::iterator l_itFolders;
 
-	for(l_itFolders = m_FoldersList.begin(); l_itFolders != m_FoldersList.end(); ++l_itFolders)
+	//If launch as root
+	if(isRoot())
 	{
-		//If launch as root
-		if(isRoot())
+		std::map<std::string, IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
+		std::map<std::string, IInPlugin*>::iterator l_it;
+		for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
 		{
-			std::map<std::string, IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
-			std::map<std::string, IInPlugin*>::iterator l_it;
-			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
+			if(((*l_it).second)->needRoot())
 			{
-				if(((*l_it).second)->needRoot())
-				{
-					IRootPlugin* l_root = dynamic_cast<IRootPlugin*>((*l_it).second);
-					std::string l_dir;
-					l_root->getDirectory(l_dir);
-					_callback->updateProgress(l_dir, true);
-					scanDirectory(l_dir, true, l_root);
-				}
+				IRootPlugin* l_root = dynamic_cast<IRootPlugin*>((*l_it).second);
+				std::string l_dir;
+				l_root->getDirectory(l_dir);
+				_callback->updateProgress(l_dir, true);
+				scanDirectory(l_dir, true, l_root);
 			}
 		}
-		else
-		{
-			std::string l_username;
-			getUsername(l_username);
-			(*l_itFolders) += "/" + l_username;
-			#if defined DEBUG
-			std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << (*l_itFolders) << '\n';
-			#endif
-		}
+	}
+
+	//In both case
+	for(l_itFolders = m_FoldersList.begin(); l_itFolders != m_FoldersList.end(); ++l_itFolders)
+	{
+		#if defined DEBUG
+		std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << (*l_itFolders) << '\n';
+		#endif
 		scanDirectory(*l_itFolders);
 	}
 	return l_ret;
@@ -407,6 +404,7 @@ int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tfl
 		CEngine* l_eng = CEngine::Instance();
 		if(l_eng->asRoot())
 		{
+			std::cout << "root\n";
 			IRootPlugin* l_root = 0;
 			l_root = l_eng->rootPlugin();
 			if(l_root != 0)
@@ -416,6 +414,7 @@ int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tfl
 		}
 		else
 		{
+			std::cout << "non root\n";
 			int l_count = 0;
 			std::map<std::string, IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
 			std::map<std::string, IInPlugin*>::iterator l_it;
@@ -589,6 +588,13 @@ void CEngine::calcCRC32(const std::string& _filename, unsigned long& _crc){
 	#if defined DEBUG
 	std::cout << "[DBG] calcCRC32 : CRC32 for " << _filename << " = " << _crc << '\n';
 	#endif
+}
+
+
+void CEngine::addFileInfo(const std::string& _file, unsigned long _crc)
+{
+	std::cout << "[DBG] addFileInfo : " << _file << " " << _crc << '\n';
+	m_Infos.insert(make_pair(_file, _crc));
 }
 
 

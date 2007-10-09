@@ -352,7 +352,7 @@ void CMainInterface::OnQuit(wxCommandEvent& WXUNUSED(event))
 //Toolbar
 void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 {
-	//m_Input->DeleteAllPages();
+	m_Input->DeleteAllPages();
 	m_Progress = new wxProgressDialog(wxString(i8n("scleaner scan your disk ..."), wxConvUTF8),
 		wxString(i8n("this is a information"), wxConvUTF8),
 		100,					 // range
@@ -425,6 +425,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 			}
 			else
 			{
+				
 				l_totalsize += l_info.st_size;
 				std::string l_size;
 				m_Engine->formatSize(l_info.st_size, l_size);
@@ -438,13 +439,14 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 					std::stringstream l_crc2;
 					l_crc2 << l_crc;
 					l_fileslist->SetItem(l_tmp, 2, wxString(std::string(l_crc2.str()).c_str(), wxConvUTF8));
+					m_Engine->addFileInfo(l_filename, l_crc);
 				}
 				else
 				{
 					l_fileslist->SetItem(l_tmp, 2, wxString(_T("No CRC32")));
+					m_Engine->addFileInfo(l_filename, 0);
 				}
 			}
-
 			++l_counter;
 		}
 
