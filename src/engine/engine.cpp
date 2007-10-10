@@ -44,8 +44,16 @@ $Author$
 
 
 CEngine::CEngine():
-m_rootPlugin(0), m_asRoot(false), m_callback(0)
+m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), m_rootPlugin(0), m_asRoot(false), m_callback(0)
 {
+	//Initialisation
+	m_AvailableInputPlugs = CPluginManager::Instance()->getInputListPtr();
+	m_OutputPlugs = CPluginManager::Instance()->getOutputListPtr();
+	if(!m_AvailableInputPlugs || !m_OutputPlugs)
+	{
+		return;
+	}
+
 	m_FoldersList.push_back("/home/snoogie/git/src/gfx");
 	m_FoldersList.push_back("/home/snoogie/git/src/tools");
 	m_FoldersList.push_back("/home/snoogie/git/src/interface");
@@ -289,7 +297,7 @@ bool CEngine::scanDisk(IProgressbar* _callback)
 	//If launch as root
 	if(isRoot())
 	{
-		std::map<std::string, IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
+		std::map<std::string, IInPlugin*>* l_input = m_pfm->getInputListPtr();
 		std::map<std::string, IInPlugin*>::iterator l_it;
 		for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
 		{

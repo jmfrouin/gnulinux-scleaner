@@ -90,7 +90,7 @@ CMainInterface::CMainInterface()
 
 
 CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), m_Input(0), /*m_Html(0), m_Output(0), */m_StatusBar(0), m_Split(0),/* m_Split2(0), m_Split3(0),*/ m_Folders(0), m_Progress(0)
+m_Input(0), /*m_Html(0), m_Output(0), */m_StatusBar(0), m_Split(0),/* m_Split2(0), m_Split3(0),*/ m_Folders(0), m_Progress(0)
 {
 	Init();
 	Create(parent, id, caption, pos, size, style);
@@ -136,14 +136,6 @@ CMainInterface::~CMainInterface()
 
 void CMainInterface::Init()
 {
-	//Initialisation
-	m_AvailableInputPlugs = CPluginManager::Instance()->getInputListPtr();
-	m_OutputPlugs = CPluginManager::Instance()->getOutputListPtr();
-	if(!m_AvailableInputPlugs || !m_OutputPlugs)
-	{
-		return;
-	}
-
 	//Tray icon !!
 	m_Icon = new CTrayIcon();
 	#if defined(__WXCOCOA__)
@@ -375,7 +367,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 	double l_totalsize = 0;
 	// Happend plugins' name available
 	std::map<std::string, IInPlugin*>::iterator _it;
-	for(_it = m_AvailableInputPlugs->begin(); _it != m_AvailableInputPlugs->end(); ++_it)
+	for(_it = m_Engine->getAvailableInputPlugs()->begin(); _it != m_Engine->getAvailableInputPlugs()->end(); ++_it)
 	{
 		wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
 
@@ -635,7 +627,7 @@ void CMainInterface::OnSelect(wxCommandEvent& WXUNUSED(event))
 	std::list<std::string> l_pluginList;
 
 	std::map<std::string, IInPlugin*>::iterator l_it;
-	for(l_it = m_AvailableInputPlugs->begin(); l_it != m_AvailableInputPlugs->end(); ++l_it)
+	for(l_it = m_Engine->getAvailableInputPlugs()->begin(); l_it != m_Engine->getAvailableInputPlugs()->end(); ++l_it)
 	{
 		l_pluginList.push_back((*l_it).first);
 	}

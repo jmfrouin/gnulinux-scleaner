@@ -37,6 +37,9 @@ $Author$
 #include <plugins/root_plugin.h>
 #include "iprogress.h"
 
+class IInPlugin;
+class IOutPlugin;
+
 #define FSTAB "/etc/fstab"
 #define ROUND(x) ((x-(int)x>0)?(int)x+1:(int)x) //Mainly wrote for formatSize
 
@@ -172,6 +175,7 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 
 	public:
 		//Accessors
+		//For the FTW callback ... it sucks !!!
 		CPluginManager*	getPluginManager()
 		{
 			return m_pfm;
@@ -196,6 +200,11 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		{
 			return &m_FoldersList;
 		}
+
+		std::map<std::string, IInPlugin*>*  getAvailableInputPlugs()
+		{
+			return m_AvailableInputPlugs;
+		}
 		
 		//Kind of accessors
 		/*!
@@ -211,8 +220,18 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*/
 		void delFolder(const std::string _dir);
 
+
+
 	private:
 		TSmartPtr<CPluginManager>   m_pfm;
+
+		//Input plugins
+		std::map<std::string, IInPlugin*>*  m_AvailableInputPlugs;
+		std::map<std::string, IInPlugin*>*  m_SelectedInputPlugs;
+
+		//Output plugins
+		std::map<std::string, IOutPlugin*>* m_OutputPlugs;
+
 		//Due to this fuck*** callback
 		IRootPlugin*				m_rootPlugin;
 		bool						m_asRoot;

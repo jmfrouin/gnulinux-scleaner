@@ -22,7 +22,6 @@
 #define _MAININTERFACE_H_
 
 #include <config.h>
-#include <map>
 #include <list>
 #include <string>
 #include <vector>
@@ -36,8 +35,6 @@
 #include <tools/smart_pointer.h>
 #include "tray.h"
 
-class IInPlugin;
-class IOutPlugin;
 class wxRadioBox;
 class wxHtmlWindow;
 class CEngine;
@@ -105,13 +102,6 @@ class CMainInterface: public wxFrame, public IProgressbar
 	#if defined(__WXCOCOA__)
 		CTrayIcon*  m_DockIcon;
 	#endif
-		//Input plugins
-		std::map<std::string, IInPlugin*>*  m_AvailableInputPlugs;
-		std::map<std::string, IInPlugin*>*  m_SelectedInputPlugs;
-
-		//Output plugins
-		std::map<std::string, IOutPlugin*>* m_OutputPlugs;
-
 		//Engine
 		TSmartPtr<CEngine>                  m_Engine;
 
