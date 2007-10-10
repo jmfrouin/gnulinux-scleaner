@@ -2,12 +2,13 @@ scleaner (0.32.0) unstable; urgency=low
 
   * Add a gnome shortcut. scleaner is put under Application;System;
   * David Paleino helps me to fix debian folder ... thanks!
-  * You can now add directories in scan, 2 rules : 
+  * You can now add directories in scan, there are 2 rules to know : 
   * 1) If a folder is added (for example /home/snoogie/git/src) but his parent (for example /home/snoogie/) is already in the folder list, then scleaner won't add it with a wxMessageDialog for user notification.
   * 2) If a parent folder is added (for example /home/snoogie/) but some childs (for example /home/snoogie/git/, /home/snoogie/git2 or /home/snoogie/git/src) are already in the folder list, then scleaner will remove them from folders list.
   * Add CRC32 calc method in CEngine.
   * Add accelerators
   * scleaner now use git (bye bye subversion).
+  * Moving all non GUI code from maininterface to engine.
 
  -- Jean-Michel Frouin <jmfrouin@gnu.org>  Fri, 30 Sep 2007 23:44:26 +0200
 
