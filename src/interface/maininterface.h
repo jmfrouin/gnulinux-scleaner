@@ -1,5 +1,5 @@
 /**
- * Project : scleaner
+ * This file is part of scleaner project.
 
  * Copyright (C) 2007 FROUIN Jean-Michel
 
