@@ -40,6 +40,7 @@ $Author$
 #include <sys/vfs.h>
 #include <sys/utsname.h>
 #include <interface/maininterface.h>
+#include <plugins/root_plugin.h>
 #include "engine.h"
 
 

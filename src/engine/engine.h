@@ -34,11 +34,11 @@ $Author$
 #include <tools/smart_pointer.h>
 #include <tools/singleton.h>
 #include <plugins/plugin_manager.h>
-#include <plugins/root_plugin.h>
 #include "iprogress.h"
 
 class IInPlugin;
 class IOutPlugin;
+class IRootPlugin;
 
 #define FSTAB "/etc/fstab"
 #define ROUND(x) ((x-(int)x>0)?(int)x+1:(int)x) //Mainly wrote for formatSize
