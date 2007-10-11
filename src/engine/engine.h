@@ -168,6 +168,12 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*/
 		void addFileInfo(const std::string& _file, unsigned long _crc);
 
+		/*!
+		*@brief Check for duplicates (and identicals) files
+		*@return Number of duplicates files. (Count each once)
+		*/
+		int detectDuplicates();
+
 	public:
 		//Accessors
 		//For the FTW callback ... it sucks !!!
@@ -215,26 +221,28 @@ class CEngine: public CSmartCpt, public TSingleton<CEngine>
 		*/
 		void delFolder(const std::string _dir);
 
-
-
 	private:
-		TSmartPtr<CPluginManager>   m_pfm;
+		TSmartPtr<CPluginManager>   			m_pfm;
 
 		//Input plugins
-		std::map<std::string, IInPlugin*>*  m_AvailableInputPlugs;
-		std::map<std::string, IInPlugin*>*  m_SelectedInputPlugs;
+		std::map<std::string, IInPlugin*>*  	m_AvailableInputPlugs;
+		std::map<std::string, IInPlugin*>*  	m_SelectedInputPlugs;
 
 		//Output plugins
-		std::map<std::string, IOutPlugin*>* m_OutputPlugs;
+		std::map<std::string, IOutPlugin*>* 	m_OutputPlugs;
 
 		//Due to this fuck*** callback
-		IRootPlugin*				m_rootPlugin;
-		bool						m_asRoot;
-		IProgressbar*				m_callback;
+		IRootPlugin*							m_rootPlugin;
+		bool									m_asRoot;
+		IProgressbar*							m_callback;
+
 		//Folders infos
-		std::list<std::string>		m_FoldersList;
+		std::list<std::string>					m_FoldersList;
+
 		//Files infos
-		std::map<std::string, unsigned long>
-									m_Infos;
+		std::map<std::string, unsigned long>	m_Infos;
+
+		//Duplicates files list
+		std::map<unsigned long, std::string>	m_DuplicatesFilesList;
 };
 #endif							 //_ENGINE_H_

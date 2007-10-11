@@ -371,9 +371,9 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 		std::list<std::string>::iterator _it2;
 
 		
-		//#if defined DEBUG
+		#if defined DEBUG
 		std::cout << i8n("[DBG] Size = ") << l_list.size() << '\n';
-		//#endif
+		#endif
 		wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 
 		//Setting header:
@@ -446,6 +446,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 	}
 
 	m_Input->AdvanceSelection();
+	m_Engine->detectDuplicates();
 }
 
 

@@ -59,12 +59,12 @@ m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), m_rootPlugi
 
 CEngine::~CEngine()
 {
-	std::cout << "List contain : \n";
-	std::list<std::string>::iterator l_it;
-	for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
-	{
-		std::cout << *l_it << '\n';
-	}
+	//std::cout << "List contain : \n";
+	//std::list<std::string>::iterator l_it;
+	//for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
+	//{
+	//	std::cout << *l_it << '\n';
+	//}
 }
 
 int CEngine::loadPlugins(const std::string& _path)
@@ -408,7 +408,6 @@ int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tfl
 		CEngine* l_eng = CEngine::Instance();
 		if(l_eng->asRoot())
 		{
-			std::cout << "root\n";
 			IRootPlugin* l_root = 0;
 			l_root = l_eng->rootPlugin();
 			if(l_root != 0)
@@ -418,7 +417,6 @@ int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tfl
 		}
 		else
 		{
-			std::cout << "non root\n";
 			int l_count = 0;
 			std::map<std::string, IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
 			std::map<std::string, IInPlugin*>::iterator l_it;
@@ -430,7 +428,6 @@ int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tfl
 				{
 					if(l_count++ == 10)
 					{
-						std::cout << l_count << '\n';
 						l_prog->updateProgress(l_path, true);
 						l_count = 0;
 					}
@@ -597,9 +594,44 @@ void CEngine::calcCRC32(const std::string& _filename, unsigned long& _crc){
 
 void CEngine::addFileInfo(const std::string& _file, unsigned long _crc)
 {
+	#if defined DEBUG
 	std::cout << "[DBG] addFileInfo : " << _file << " " << _crc << '\n';
+	#endif
 	m_Infos.insert(make_pair(_file, _crc));
 }
 
+
+int CEngine::detectDuplicates()
+{
+	int l_ret = 0;
+
+	#if defined DEBUG
+	std::cout << "DBG detectDuplicates : Detect duplicate " << std::endl;
+	#endif
+
+	std::map<std::string, unsigned long>::iterator l_it;
+	
+	for(l_it = m_Infos.begin(); l_it != m_Infos.end(); ++l_it)
+	{
+		if(l_it->second != 0)
+		{
+			std::map<std::string, unsigned long>::iterator l_it2 = l_it;
+			for(++l_it2; l_it2 != m_Infos.end(); ++l_it2)
+			{
+				if(l_it->second == l_it2->second)
+				{
+					if(m_DuplicatesFilesList[l_it->second] == "")
+					{
+						m_DuplicatesFilesList.insert(make_pair(l_it->second, l_it->first));
+						l_ret++;
+					}
+				}
+			}
+		}
+	}
+	std::cout << "Founded " << l_ret << " duplicates files" << std::endl;
+
+	return l_ret;
+}
 
 /* vi:set ts=4: */
