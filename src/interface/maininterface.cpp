@@ -45,6 +45,7 @@
 #include "maininterface.h"
 #include "checklistctrl.h"
 #include "select_dialog.h"
+#include "preferences.h"
 
 //App icon
 #include <gfx/scleaner.xpm>
@@ -72,6 +73,7 @@ EVT_MENU(ID_SCAN, CMainInterface::OnScan)
 EVT_MENU(ID_ABOUT, CMainInterface::OnAbout)
 EVT_MENU(ID_FOLDER_ADD, CMainInterface::OnFolderAdd)
 EVT_MENU(ID_FOLDER_DEL, CMainInterface::OnFolderDel)
+EVT_MENU(ID_PREFS, CMainInterface::OnPrefs)
 EVT_MENU(wxID_EXIT, CMainInterface::OnQuit)
 EVT_MENU(ID_PROCESS, CMainInterface::OnProcess)
 EVT_MENU(ID_SELECT, CMainInterface::OnSelect)
@@ -169,20 +171,23 @@ void CMainInterface::CreateControls()
 	//MENU
 	wxMenuBar* l_MenuBar = new wxMenuBar;
 	wxMenu* l_File = new wxMenu;
-	wxMenu* l_Folders = new wxMenu;
+	wxMenu* l_Edit = new wxMenu;
 	wxMenu* l_Misc = new wxMenu;
 
 	//File menu
 	l_MenuBar->Append(l_File, wxString(i8n("File"), wxConvUTF8));
+	wxMenuItem* l_Add = new wxMenuItem(l_File, ID_FOLDER_ADD, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
+	wxMenuItem* l_Del = new wxMenuItem(l_File, ID_FOLDER_DEL, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
+	l_File->Append(l_Add);
+	l_File->Append(l_Del);
+	l_File->AppendSeparator();
 	wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8));
 	l_File->Append(l_Quit);
 
 	//Folders menu
-	l_MenuBar->Append(l_Folders, wxString(i8n("Folders"), wxConvUTF8));
-	wxMenuItem* l_Add = new wxMenuItem(l_Folders, ID_FOLDER_ADD, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
-	l_Folders->Append(l_Add);
-	wxMenuItem* l_Del = new wxMenuItem(l_Folders, ID_FOLDER_DEL, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
-	l_Folders->Append(l_Del);
+	l_MenuBar->Append(l_Edit, wxString(i8n("Edit"), wxConvUTF8));
+	wxMenuItem* l_Prefs = new wxMenuItem(l_Edit, ID_PREFS, wxString(i8n("Preferences\tCtrl-P"), wxConvUTF8));
+	l_Edit->Append(l_Prefs);
 
 	//Misc menu
 	l_MenuBar->Append(l_Misc, wxString(i8n("Misc"), wxConvUTF8));
@@ -587,6 +592,12 @@ void CMainInterface::OnFolderDel(wxCommandEvent& WXUNUSED(event))
 	}
 
 	UpdateFolderList();
+}
+
+
+void CMainInterface::OnPrefs(wxCommandEvent& WXUNUSED(event))
+{
+	CPreferences(this, wxID_ANY, wxString(i8n("Preferences"), wxConvUTF8), wxDefaultPosition, wxDefaultSize).ShowModal();
 }
 
 

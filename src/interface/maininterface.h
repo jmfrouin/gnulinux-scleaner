@@ -76,6 +76,7 @@ class CMainInterface: public wxFrame, public IProgressbar
 		void OnNotebook(wxNotebookEvent& event);
 		void OnFolderAdd(wxCommandEvent& WXUNUSED(event));
 		void OnFolderDel(wxCommandEvent& WXUNUSED(event));
+		void OnPrefs(wxCommandEvent& WXUNUSED(event));
 
 		/*!
 		 *@brief Call splash screen
