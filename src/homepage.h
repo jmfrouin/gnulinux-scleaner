@@ -33,11 +33,7 @@ $Author$
  *
  * Get last version : http://download.savannah.nongnu.org/releases/scleaner/
  *
- *  @image html gfx/scleaner_tar.png
- *
- *  @image html gfx/scleaner_process.png
- *
- *  @image html gfx/scleaner0.31.0.3.png
+ *  @image html gfx/scleaner0.32.0.png
  *
  * @section intro_whatis What is scleaner ?
  *
