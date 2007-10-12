@@ -64,6 +64,8 @@
 #include <gfx/folder-add.xpm>
 #include <gfx/folder-del.xpm>
 
+#include <gfx/prefs.xpm>
+
 IMPLEMENT_CLASS( CMainInterface, wxFrame )
 
 BEGIN_EVENT_TABLE( CMainInterface, wxFrame )
@@ -209,8 +211,8 @@ void CMainInterface::CreateControls()
 	l_ToolBar->AddTool(ID_FOLDER_ADD, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), folder_add_xpm , folder_add_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
 	l_ToolBar->AddTool(ID_FOLDER_DEL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), folder_del_xpm , folder_del_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
 	l_ToolBar->AddSeparator();
-	//l_ToolBar->AddTool(ID_CONFIG, wxString(i8n("Configuration"), wxConvUTF8), config_xpm , config_xpm, wxITEM_NORMAL, wxString(i8n("Configuration"), wxConvUTF8), wxEmptyString);
-	//l_ToolBar->AddSeparator();
+	l_ToolBar->AddTool(ID_PREFS, wxString(i8n("Preferences"), wxConvUTF8), prefs_xpm , prefs_xpm, wxITEM_NORMAL, wxString(i8n("Preferences"), wxConvUTF8), wxEmptyString);
+	l_ToolBar->AddSeparator();
 	l_ToolBar->AddTool(wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8),exit_xpm , exit_xpm, wxITEM_NORMAL, wxString(i8n("Quit"), wxConvUTF8), wxEmptyString);
 	l_ToolBar->Realize();
 	l_Frame->SetToolBar(l_ToolBar);

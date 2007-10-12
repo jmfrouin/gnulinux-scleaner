@@ -2,5 +2,3 @@ build
 interfaceapp.cpp
 interfaceapp.h
 interface.pjd.bak
-maininterface.cpp
-maininterface.h
