@@ -43,7 +43,7 @@ $Author: snoogie $
 #include <config.h>
 #include <plugins/in_plugin.h>
 
-class CbackfilesPlugin : public IInPlugin
+class CbackfilesPlugin : public Plugins::IInPlugin
 {
 	public:
 		CbackfilesPlugin();
@@ -55,7 +55,7 @@ class CbackfilesPlugin : public IInPlugin
 		eType Type();
 
 		/*!
-		 *@brief From IInPlugin
+		 *@brief From Plugins::IInPlugin
 		 */
 		void processFile(const std::string& _filename);
 		bool needRoot();

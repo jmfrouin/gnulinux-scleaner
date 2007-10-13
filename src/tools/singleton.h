@@ -28,55 +28,58 @@ $Author$
 
 #include <leak/leak_detector.h>
 
-/*!
- *@brief A singleton template.
- *@note Tips : A good idea is to use a CSmartPtr to grab Instance() to avoid memory leak.
- */
-template <class T>
-class TSingleton
+namespace Tools
 {
-	public:
-		/*!
-		 *@brief Singleton accessor.
-		 */
-		static T* Instance()
-		{
-			T* l_ret = m_Inst;
-
-			if(!l_ret)
+	/*!
+	 *@brief A singleton template.
+	 *@note Tips : A good idea is to use a CSmartPtr to grab Instance() to avoid memory leak.
+	 */
+	template <class T>
+	class TSingleton
+	{
+		public:
+			/*!
+			 *@brief Singleton accessor.
+			 */
+			static T* Instance()
 			{
-				m_Inst = l_ret = new T;
+				T* l_ret = m_Inst;
+	
+				if(!l_ret)
+				{
+					m_Inst = l_ret = new T;
+				}
+	
+				return l_ret;
 			}
-
-			return l_ret;
-		}
-
-	protected:
-		/*!
-		 *@brief Default constructor
-		 *
-		 *Made constructor private to avoid problem.
-		 *
-		 *Nobody except itself can create it.
-		 */
-		TSingleton()
-		{
-		}
-
-		/*!
-		 *@brief Destructor
-		 *@note Made destructor private to avoid problem.
-		 *@note Nobody except itself can create it.
-		 */
-		virtual ~TSingleton()
-		{
-		}
-
-	private:
-		static T*   m_Inst;		 ///< The only single instance.
-};
+	
+		protected:
+			/*!
+			 *@brief Default constructor
+			 *
+			 *Made constructor private to avoid problem.
+			 *
+			 *Nobody except itself can create it.
+			 */
+			TSingleton()
+			{
+			}
+	
+			/*!
+			 *@brief Destructor
+			 *@note Made destructor private to avoid problem.
+			 *@note Nobody except itself can create it.
+			 */
+			virtual ~TSingleton()
+			{
+			}
+	
+		private:
+			static T*   m_Inst;		 ///< The only single instance.
+	};
+} //namespace
 
 template <class T>
-T* TSingleton<T>::m_Inst = 0;
+T* Tools::TSingleton<T>::m_Inst = 0;
 #endif							 //_SINGLETON_H_
 /* vi:set ts=4: */

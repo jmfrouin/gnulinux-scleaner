@@ -32,16 +32,19 @@ $Author: snoogie $
 
 #include "plugin_manager.h"
 
-template <class T>
-class CPluginInitializerOut
+namespace Plugins
 {
-	public:
-		CPluginInitializerOut()
-		{
-			CPluginManager* l_pfm = CPluginManager::Instance();
-			T* l_obj = new T;
-			l_pfm->add(l_obj);
-		}
-};
+	template <class T>
+	class CPluginInitializerOut
+	{
+		public:
+			CPluginInitializerOut()
+			{
+				CPluginManager* l_pfm = CPluginManager::Instance();
+				T* l_obj = new T;
+				l_pfm->add(l_obj);
+			}
+	};
+}
 #endif							 //_OUTPLUGIN_INITIALIZER_H_
 /* vi:set ts=4: */

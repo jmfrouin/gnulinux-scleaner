@@ -6,6 +6,8 @@ Clean source code.
 Replace CRC32 by MD5 or SHA, and add an option to limit checksum control on first 10 Kb.
 A preferences menu is now need, design it too 
 Add a tab for duplicate using a treeCtrl
+ERROR CODE
+Check memory leaks and FIXME in code
 
 0.31.0:
 PARTIAL : Add CRC in checklistbox
@@ -30,9 +32,6 @@ RELEASE : Remove debug symbols
 POSTPONED : Decrease or increase m_TotalSize on select/deselect
 
 0.40.0
-Add code to detect a twice selected file.
-Check memory leaks and FIXME in code
 Write dameon to detect free space ?
 Desktop notification
 CLI support
-

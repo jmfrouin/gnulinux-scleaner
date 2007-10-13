@@ -45,7 +45,7 @@ $Author$
 /*!
  *@brief Find unused kernels.
  */
-class CkernelsPlugin : public IRootPlugin
+class CkernelsPlugin : public Plugins::IRootPlugin
 {
 	public:
 		CkernelsPlugin();
@@ -57,7 +57,7 @@ class CkernelsPlugin : public IRootPlugin
 		eType Type();
 
 		/*!
-		*@brief From IRootPlugin
+		*@brief From Plugins::IRootPlugin
 		*/
 		void getDirectory(std::string& _path);
 

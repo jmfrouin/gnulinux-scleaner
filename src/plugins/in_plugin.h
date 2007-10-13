@@ -29,42 +29,45 @@ $Author$
 #include <config.h>
 #include "iplugin.h"
 
-/*!
- *@brief Input plugin interface.
- */
-class IInPlugin : public IPlugin
+namespace Plugins
 {
-	public:
-		/*!
-		 *@brief ctor
-		 */
-		IInPlugin() {}
-		/*!
-		 *@brief dtor
-		 */
-		virtual ~IInPlugin() {}
-
-		/*!
-		 *@brief Does it need to be run as root (sudo) ?
-		 */
-		virtual bool needRoot() = 0;
-
-		/*!
-		 *@brief Return a std::list of files targeted by plugin.
-		 *@param _fl The files list to fill.
-		 */
-		void getFileList(std::list<std::string>& _fl)
-		{
-			_fl.merge(m_fl);
-		}
-
-		/*!
-		*@brief This method add, or not, _filename to m_fl.
-		*@param _filename The file name to process.
-		*/
-		virtual void processFile(const std::string& _filename) = 0;
+	/*!
+	 *@brief Input plugin interface.
+	 */
+	class IInPlugin : public IPlugin
+	{
+		public:
+			/*!
+			 *@brief ctor
+			 */
+			IInPlugin() {}
+			/*!
+			 *@brief dtor
+			 */
+			virtual ~IInPlugin() {}
 	
-	protected:
-		std::list<std::string>		m_fl;
-};
+			/*!
+			 *@brief Does it need to be run as root (sudo) ?
+			 */
+			virtual bool needRoot() = 0;
+	
+			/*!
+			 *@brief Return a std::list of files targeted by plugin.
+			 *@param _fl The files list to fill.
+			 */
+			void getFileList(std::list<std::string>& _fl)
+			{
+				_fl.merge(m_fl);
+			}
+	
+			/*!
+			*@brief This method add, or not, _filename to m_fl.
+			*@param _filename The file name to process.
+			*/
+			virtual void processFile(const std::string& _filename) = 0;
+		
+		protected:
+			std::list<std::string>		m_fl;
+	};
+} //namespace Plugins
 #endif							 // _IN_PLUGIN_H_

@@ -31,42 +31,48 @@ $Author$
 #include <list>
 #include <tools/name.h>
 
-/**
- * @brief Plugin Interface
- */
-class IPlugin : public CName
+/*!
+*@brief Plugins namespace. Contain all code to manage plugins.
+*/
+namespace Plugins
 {
-	public:
-		enum eType
-		{
-			eInput,
-			eOutput
-		};
-
-	public:
-		/*!
-		 * @brief ctor
-		 */
-		IPlugin(){}
-
-		/*!
-		 * @brief dtor.
-		 */
-		virtual ~IPlugin(){}
-
-		/*!
-		 *@brief This plugin is threadable ?
-		 */
-		virtual bool isThreadable()
-		{
-			bool l_ret = false;
-			return l_ret;
-		}
-
-		/*!
-		 *@brief Input or output plugin ?
-		 */
-		virtual eType Type() = 0;
-};
+	/**
+	 * @brief Plugin Interface
+	 */
+	class IPlugin : public Tools::CName
+	{
+		public:
+			enum eType
+			{
+				eInput,
+				eOutput
+			};
+	
+		public:
+			/*!
+			 * @brief ctor
+			 */
+			IPlugin(){}
+	
+			/*!
+			 * @brief dtor.
+			 */
+			virtual ~IPlugin(){}
+	
+			/*!
+			 *@brief This plugin is threadable ?
+			 */
+			virtual bool isThreadable()
+			{
+				bool l_ret = false;
+				return l_ret;
+			}
+	
+			/*!
+			 *@brief Input or output plugin ?
+			 */
+			virtual eType Type() = 0;
+	};
+} //namespace Plugins
 #endif							 //_IPLUGIN_H_
 /* vi:set ts=4: */

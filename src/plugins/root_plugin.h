@@ -29,25 +29,29 @@ $Author: snoogie $
 #include <config.h>
 #include "in_plugin.h"
 
-/*!
- *@brief Root input plugin interface.
- */
-class IRootPlugin : public IInPlugin
+namespace Plugins
 {
-	public:
-		/*!
-		 *@brief ctor
-		 */
-		IRootPlugin() {}
-		/*!
-		 *@brief dtor
-		 */
-		virtual ~IRootPlugin() {}
-
-		/*!
-		*@brief This method fill the directory to process.
-		*@param _filename The directory name to process.
-		*/
-		virtual void getDirectory(std::string& _path) = 0;
-};
+	/*!
+	 *@brief Root input plugin interface.
+	 */
+	class IRootPlugin : public IInPlugin
+	{
+		public:
+			/*!
+			 *@brief ctor
+			 */
+			IRootPlugin() {}
+			/*!
+			 *@brief dtor
+			 */
+			virtual ~IRootPlugin() {}
+	
+			/*!
+			*@brief This method fill the directory to process.
+			*@param _filename The directory name to process.
+			*/
+			virtual void getDirectory(std::string& _path) = 0;
+	};
+} //namespace Plugins
 #endif							 // _ROOT_PLUGROOT_H_
+/* vi:set ts=4: */

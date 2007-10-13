@@ -26,49 +26,51 @@ $Author$
 #include <iostream>
 #include "thread.h"
 
-IThread::IThread()
+namespace Tools
 {
-
-}
-
-
-IThread::~IThread()
-{
-	std::cout << "Waiting end of thread ..." << '\n';
-	pthread_join(m_Thread, 0);
-}
-
-
-int IThread::Run()
-{
-	int l_ret;
-
-	int l_tmp;
-	std::cout << "Launching thread ..." << '\n';
-	l_tmp = pthread_create(&m_Thread, 0, link, this);
-
-	if(l_tmp != 0)
+	IThread::IThread()
 	{
-		std::cerr <<  l_ret << strerror(l_ret) << '\n';
-		l_ret = EXIT_FAILURE;
+	
 	}
-	return l_ret;
+	
+	
+	IThread::~IThread()
+	{
+		std::cout << "Waiting end of thread ..." << '\n';
+		pthread_join(m_Thread, 0);
+	}
+	
+	
+	int IThread::Run()
+	{
+		int l_ret;
+	
+		int l_tmp;
+		std::cout << "Launching thread ..." << '\n';
+		l_tmp = pthread_create(&m_Thread, 0, link, this);
+	
+		if(l_tmp != 0)
+		{
+			std::cerr <<  l_ret << strerror(l_ret) << '\n';
+			l_ret = EXIT_FAILURE;
+		}
+		return l_ret;
+	}
+	
+	
+	/*void IThread::__Run()
+	{
+		std::cout << "I am in the thread !!" << '\n';
+		std::cout << "But I am very tired I ll sleep a bit !!" << '\n';
+		usleep(500000);
+		std::cout << "Ok ready to ... quit :) !!" << '\n';
+		__End();
+	}*/
+	
+	void IThread::__End()
+	{
+		pthread_exit(0);
+	}
 }
-
-
-/*void IThread::__Run()
-{
-	std::cout << "I am in the thread !!" << '\n';
-	std::cout << "But I am very tired I ll sleep a bit !!" << '\n';
-	usleep(500000);
-	std::cout << "Ok ready to ... quit :) !!" << '\n';
-	__End();
-}*/
-
-void IThread::__End()
-{
-	pthread_exit(0);
-}
-
 
 /* vi:set ts=4: */

@@ -28,7 +28,7 @@ $Author$
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-CPluginInitializerIn<ClogsPlugin> g_logs;
+Plugins::CPluginInitializerIn<ClogsPlugin> g_logs;
 
 ClogsPlugin::ClogsPlugin()
 {
@@ -41,7 +41,7 @@ ClogsPlugin::~ClogsPlugin()
 }
 
 
-IPlugin::eType ClogsPlugin::Type()
+Plugins::IPlugin::eType ClogsPlugin::Type()
 {
 	eType l_ret;
 	l_ret = eInput;

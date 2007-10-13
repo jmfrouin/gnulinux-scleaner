@@ -48,14 +48,16 @@ bool CSClean::OnInit(void)
 	bool l_ret = false;
 	wxImage::AddHandler(new wxPNGHandler);
 
-	//Retrieve CEngine instance pointer.
-	m_engine = CEngine::Instance();
+	//Retrieve Engine::CEngine instance pointer.
+	m_engine = Engine::CEngine::Instance();
 
 	//Load plugins
 	m_engine->loadPlugins(PLUG_FOLDER);
 
 	//Load GFX interface
 	l_ret = m_engine->loadInterface();
+
+	m_engine->findPackage("linux*");
 
 	return l_ret;
 }

@@ -42,7 +42,7 @@ $Author$
 #include <config.h>
 #include <plugins/root_plugin.h>
 
-class ClogsPlugin : public IRootPlugin
+class ClogsPlugin : public Plugins::IRootPlugin
 {
 	public:
 		ClogsPlugin();
@@ -54,7 +54,7 @@ class ClogsPlugin : public IRootPlugin
 		eType Type();
 
 		/*!
-		*@brief From IRootPlugin
+		*@brief From Plugins::IRootPlugin
 		*/
 		void getDirectory(std::string& _path);
 

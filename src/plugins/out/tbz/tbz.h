@@ -44,7 +44,7 @@ $Author$
 #include <config.h>
 #include <plugins/out_plugin.h>
 
-class CtbzPlugin : public IOutPlugin
+class CtbzPlugin : public Plugins::IOutPlugin
 {
 	public:
 		CtbzPlugin();

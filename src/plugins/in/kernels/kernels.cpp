@@ -31,7 +31,7 @@ $Author$
 #include <wx/dir.h>
 #include <leak/leak_detector.h>
 
-CPluginInitializerIn<CkernelsPlugin> g_kernels;
+Plugins::CPluginInitializerIn<CkernelsPlugin> g_kernels;
 
 CkernelsPlugin::CkernelsPlugin()
 {
@@ -44,7 +44,7 @@ CkernelsPlugin::~CkernelsPlugin()
 }
 
 
-IPlugin::eType CkernelsPlugin::Type()
+Plugins::IPlugin::eType CkernelsPlugin::Type()
 {
 	eType l_ret;
 	l_ret = eInput;

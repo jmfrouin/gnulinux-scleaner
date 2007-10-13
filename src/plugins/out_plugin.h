@@ -30,27 +30,30 @@ $Author$
 #include <engine/iprogress.h>
 #include "iplugin.h"
 
-/*!
- *@brief Output plugin interface.
- */
-class IOutPlugin : public IPlugin
+namespace Plugins
 {
-	public:
-		/*!
-		 *@brief ctor
-		 */
-		IOutPlugin() {}
-		/*!
-		 *@brief dtor
-		 */
-		virtual ~IOutPlugin() {}
-
-		/*!
-		 *@brief Process all files selected by user.
-		 *@param _fl Files list to fill.
-		 *@param _path Where to write output files (if applicable).
-		 *@param _callback For progress bar support.
-		 */
-		virtual void processFileList(std::list<std::string>& _fl, const std::string& _path, IProgressbar* _callback) = 0;
-};
+	/*!
+	 *@brief Output plugin interface.
+	 */
+	class IOutPlugin : public IPlugin
+	{
+		public:
+			/*!
+			 *@brief ctor
+			 */
+			IOutPlugin() {}
+			/*!
+			 *@brief dtor
+			 */
+			virtual ~IOutPlugin() {}
+	
+			/*!
+			 *@brief Process all files selected by user.
+			 *@param _fl Files list to fill.
+			 *@param _path Where to write output files (if applicable).
+			 *@param _callback For progress bar support.
+			 */
+			virtual void processFileList(std::list<std::string>& _fl, const std::string& _path, IProgressbar* _callback) = 0;
+	};
+}
 #endif							 // _OUT_PLUGIN_H_

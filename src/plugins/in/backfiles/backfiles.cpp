@@ -30,7 +30,7 @@ $Author: snoogie $
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-CPluginInitializerIn<CbackfilesPlugin> g_backfiles;
+Plugins::CPluginInitializerIn<CbackfilesPlugin> g_backfiles;
 
 CbackfilesPlugin::CbackfilesPlugin()
 {
@@ -43,7 +43,7 @@ CbackfilesPlugin::~CbackfilesPlugin()
 }
 
 
-IPlugin::eType CbackfilesPlugin::Type()
+Plugins::IPlugin::eType CbackfilesPlugin::Type()
 {
 	eType l_ret;
 	l_ret = eInput;

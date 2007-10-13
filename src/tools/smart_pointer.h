@@ -34,124 +34,127 @@ $Author$
 
 typedef unsigned int t_SmartCpt;
 
-/*!
- * @brief Simple counter used by Smart pointer.
- */
-class CSmartCpt
+namespace Tools
 {
-	public:
-		/*!
-		 *@brief Default constructor
-		 */
-		CSmartCpt(): m_Counter(0) {}
-
-		/*!
-		 *@brief Destructor
-		 */
-		virtual ~CSmartCpt() {}
-
-		/*!
-		 * @brief Increment counter.
-		 */
-		t_SmartCpt _incRef() { return ++m_Counter; }
-
-		/*!
-		 * @brief Decrement counter.
-		 */
-		t_SmartCpt _decRef() { return --m_Counter; }
-	private:
-		t_SmartCpt m_Counter;	 ///< Reference counter.
-};
-
-/*!
- * @brief Pointer which can handle multireference.
- *
- * This smart pointer erase the object only when nobody use it anymore by maintaining a reference counter.
- *
- * Be careful : This implementation is written for SAPI project and is not yet fully implemented.
- *
- * For the moment, this smart pointer doesn't support array object.
- */
-template <class T>
-class TSmartPtr
-{
-	public:
-		/*!
-		 *@brief Default constructor.
-		 */
-		TSmartPtr(): m_Object(0) {}
-
-		/*!
-		 *@brief Destructor.
-		 */
-		~TSmartPtr() { *this = 0; }
-
-		/*!
-		 * @brief Simple pointer affectation.
-		 */
-		TSmartPtr<T>& operator=(T* _Object)
-		{
-			if(_Object)
+	/*!
+	 * @brief Simple counter used by Smart pointer.
+	 */
+	class CSmartCpt
+	{
+		public:
+			/*!
+			 *@brief Default constructor
+			 */
+			CSmartCpt(): m_Counter(0) {}
+	
+			/*!
+			 *@brief Destructor
+			 */
+			virtual ~CSmartCpt() {}
+	
+			/*!
+			 * @brief Increment counter.
+			 */
+			t_SmartCpt _incRef() { return ++m_Counter; }
+	
+			/*!
+			 * @brief Decrement counter.
+			 */
+			t_SmartCpt _decRef() { return --m_Counter; }
+		private:
+			t_SmartCpt m_Counter;	 ///< Reference counter.
+	};
+	
+	/*!
+	 * @brief Pointer which can handle multireference.
+	 *
+	 * This smart pointer erase the object only when nobody use it anymore by maintaining a reference counter.
+	 *
+	 * Be careful : This implementation is written for SAPI project and is not yet fully implemented.
+	 *
+	 * For the moment, this smart pointer doesn't support array object.
+	 */
+	template <class T>
+	class TSmartPtr
+	{
+		public:
+			/*!
+			 *@brief Default constructor.
+			 */
+			TSmartPtr(): m_Object(0) {}
+	
+			/*!
+			 *@brief Destructor.
+			 */
+			~TSmartPtr() { *this = 0; }
+	
+			/*!
+			 * @brief Simple pointer affectation.
+			 */
+			TSmartPtr<T>& operator=(T* _Object)
 			{
-				_Object->_incRef();
-			}
-
-			if(m_Object)
-			{
-				t_SmartCpt l_cpt;
-				l_cpt = m_Object->_decRef();
-				if(l_cpt == 0)
+				if(_Object)
 				{
-					delete m_Object;
+					_Object->_incRef();
 				}
+	
+				if(m_Object)
+				{
+					t_SmartCpt l_cpt;
+					l_cpt = m_Object->_decRef();
+					if(l_cpt == 0)
+					{
+						delete m_Object;
+					}
+				}
+				m_Object = _Object;
+				return *this;
 			}
-			m_Object = _Object;
-			return *this;
-		}
-
-		/*!
-		 * @brief Smart pointer affectation.
-		 */
-		TSmartPtr<T>& operator=(TSmartPtr<T>& _Object)
-		{
-			*this = _Object.m_Object;
-			return *this;
-		}
-
-		/*!
-		 *@brief In order to use it, as a dumb pointer.
-		 */
-		operator T*()
-		{
-			return m_Object;
-		}
-
-		bool operator==(const int& _Value) const
-		{
-			bool l_ret;
-			l_ret = ((int)this == _Value);
-			return l_ret;
-		}
-
-		bool operator!=(const int& _Value) const
-		{
-			bool l_ret;
-			l_ret = ((int)this != _Value);
-			return l_ret;
-		}
-
-		/*!
-		 *@brief Dereferencement operators for object.
-		 */
-		T& operator*() { return *m_Object; }
-
-		/*!
-		 *@brief Dereferencement operators for pointer on object.
-		 */
-		T* operator->() { return m_Object; }
-
-	private:
-		T* m_Object;			 ///< Object handle by this pointer.
-};
+	
+			/*!
+			 * @brief Smart pointer affectation.
+			 */
+			TSmartPtr<T>& operator=(TSmartPtr<T>& _Object)
+			{
+				*this = _Object.m_Object;
+				return *this;
+			}
+	
+			/*!
+			 *@brief In order to use it, as a dumb pointer.
+			 */
+			operator T*()
+			{
+				return m_Object;
+			}
+	
+			bool operator==(const int& _Value) const
+			{
+				bool l_ret;
+				l_ret = ((int)this == _Value);
+				return l_ret;
+			}
+	
+			bool operator!=(const int& _Value) const
+			{
+				bool l_ret;
+				l_ret = ((int)this != _Value);
+				return l_ret;
+			}
+	
+			/*!
+			 *@brief Dereferencement operators for object.
+			 */
+			T& operator*() { return *m_Object; }
+	
+			/*!
+			 *@brief Dereferencement operators for pointer on object.
+			 */
+			T* operator->() { return m_Object; }
+	
+		private:
+			T* m_Object;			 ///< Object handle by this pointer.
+	};
+} //namespace
 #endif							 //_SMART_POINTER_
 /* vi:set ts=4: */

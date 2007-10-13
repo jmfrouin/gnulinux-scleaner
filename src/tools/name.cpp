@@ -26,26 +26,27 @@ $Author$
 #include "name.h"
 #include <leak/leak_detector.h>
 
-CName::CName()
+namespace Tools
 {
+	CName::CName()
+	{
+	}
+	
+	
+	CName::~CName()
+	{
+	}
+	
+	
+	const std::string& CName::getName()
+	{
+		return m_Name;
+	}
+	
+	
+	void CName::setName(const std::string& _Name)
+	{
+		m_Name.assign(_Name);
+	}
 }
-
-
-CName::~CName()
-{
-}
-
-
-const std::string& CName::getName()
-{
-	return m_Name;
-}
-
-
-void CName::setName(const std::string& _Name)
-{
-	m_Name.assign(_Name);
-}
-
-
 /* vi:set ts=4: */

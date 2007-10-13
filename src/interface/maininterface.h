@@ -35,9 +35,13 @@
 #include <tools/smart_pointer.h>
 #include "tray.h"
 
+namespace Engine
+{
+	class CEngine;
+}
+
 class wxRadioBox;
 class wxHtmlWindow;
-class CEngine;
 class wxCheckListCtrl;
 class wxProgressDialog;
 class wxCheckTreeCtrl;
@@ -104,7 +108,7 @@ class CMainInterface: public wxFrame, public IProgressbar
 		CTrayIcon*  m_DockIcon;
 	#endif
 		//Engine
-		TSmartPtr<CEngine>                  m_Engine;
+		Tools::TSmartPtr<Engine::CEngine>   m_Engine;
 
 		//GUI tree list which display input plugins and file list.
 		wxNotebook*                         m_Input;

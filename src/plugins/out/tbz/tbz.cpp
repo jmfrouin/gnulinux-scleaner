@@ -36,7 +36,7 @@ $Author$
 #include <plugins/outplugin_initializer.h>
 #include <leak/leak_detector.h>
 
-CPluginInitializerOut<CtbzPlugin> g_tbz;
+Plugins::CPluginInitializerOut<CtbzPlugin> g_tbz;
 
 CtbzPlugin::CtbzPlugin()
 {
@@ -51,10 +51,10 @@ CtbzPlugin::~CtbzPlugin()
 
 void CtbzPlugin::processFileList(std::list<std::string>& _fl, const std::string& _path, IProgressbar* _callback)
 {
-	CTarArchive l_tar;
+	Tools::CTarArchive l_tar;
 
 	std::string l_date;
-	CEngine::getTimestamp(l_date);
+	Engine::CEngine::getTimestamp(l_date);
 
 	if(l_tar.Create(_fl, _path + "/backup_" + l_date + ".tar" , _callback))
 	{
@@ -72,7 +72,7 @@ void CtbzPlugin::processFileList(std::list<std::string>& _fl, const std::string&
 }
 
 
-IPlugin::eType CtbzPlugin::Type()
+Plugins::IPlugin::eType CtbzPlugin::Type()
 {
 	eType l_ret;
 	l_ret = eInput;

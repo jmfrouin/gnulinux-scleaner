@@ -28,41 +28,44 @@ $Author$
 
 #include <pthread.h>
 
-/*!
- *@brief Thread another class by heritage.
- */
-class IThread
+namespace Tools
 {
-	public:
-		IThread();
-		virtual ~IThread();
-
-		/*!
-		 *@brief Launch thread
-		 */
-		int Run();
-
-		/*!
-		 *@brief The function to run to be pure virtual.
-		 */
-		virtual void __Run() = 0;
-
-		/*!
-		 *@brief Need to be call when __Run has end.
-		 */
-		void __End();
-
-	private:
-		pthread_t m_Thread;
-
-};
-
-static void* link(void* _context)
-{
-	//IThread* l_Thread = dynamic_cast<IThread*>(_context);
-	IThread* l_Thread = (IThread*)_context;
-	l_Thread->__Run();
-	return 0;
+	/*!
+	 *@brief Thread another class by heritage.
+	 */
+	class IThread
+	{
+		public:
+			IThread();
+			virtual ~IThread();
+	
+			/*!
+			 *@brief Launch thread
+			 */
+			int Run();
+	
+			/*!
+			 *@brief The function to run to be pure virtual.
+			 */
+			virtual void __Run() = 0;
+	
+			/*!
+			 *@brief Need to be call when __Run has end.
+			 */
+			void __End();
+	
+		private:
+			pthread_t m_Thread;
+	
+	};
+	
+	static void* link(void* _context)
+	{
+		//IThread* l_Thread = dynamic_cast<IThread*>(_context);
+		IThread* l_Thread = (IThread*)_context;
+		l_Thread->__Run();
+		return 0;
+	}
 }
 #endif							 //_THREAD_H_
 /* vi:set ts=4: */

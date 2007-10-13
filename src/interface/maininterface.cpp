@@ -105,8 +105,8 @@ bool CMainInterface::Create(wxWindow* parent, wxWindowID id, const wxString& cap
 {
 	wxFrame::Create( parent, id, caption, pos, size, style );
 
-	//Retrieve CEngine instance pointer.
-	m_Engine = CEngine::Instance();
+	//Retrieve Engine::CEngine instance pointer.
+	m_Engine = Engine::CEngine::Instance();
 
 	CreateControls();
 	Centre();
@@ -244,7 +244,7 @@ void CMainInterface::CreateControls()
 
 	//Output plugins
 	//wxArrayString l_out;
-	//std::map<std::string, IOutPlugin*>::iterator _it2;
+	//std::map<std::string, Plugins::IOutPlugin*>::iterator _it2;
 	//for(_it2 = m_OutputPlugs->begin(); _it2 != m_OutputPlugs->end(); ++_it2)
 	//{
 	//	wxString l_name( ((*_it2).second)->getName().c_str(), wxConvUTF8);
@@ -332,7 +332,7 @@ void CMainInterface::OnNotebook(wxNotebookEvent& event)
 	if(m_TotalSizes.size() > 0)
 	{
 		std::string l_total(i8n("Total size : "));
-		CEngine::Instance()->formatSize(m_TotalSizes[l_sel], l_total);
+		Engine::CEngine::Instance()->formatSize(m_TotalSizes[l_sel], l_total);
 		wxString l_totalsize(l_total.c_str(), wxConvUTF8);
 		SetStatusText(l_totalsize, 0);
 	}
@@ -377,7 +377,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 
 	double l_totalsize = 0;
 	// Happend plugins' name available
-	std::map<std::string, IInPlugin*>::iterator _it;
+	std::map<std::string, Plugins::IInPlugin*>::iterator _it;
 	for(_it = m_Engine->getAvailableInputPlugs()->begin(); _it != m_Engine->getAvailableInputPlugs()->end(); ++_it)
 	{
 		wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
@@ -438,7 +438,7 @@ void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 				if(l_info.st_size != 0)
 				{
 					unsigned long l_crc;
-					CEngine::calcCRC32(l_filename, l_crc);
+					Engine::CEngine::calcCRC32(l_filename, l_crc);
 					std::stringstream l_crc2;
 					l_crc2 << l_crc;
 					l_fileslist->SetItem(l_tmp, 2, wxString(std::string(l_crc2.str()).c_str(), wxConvUTF8));
@@ -510,7 +510,7 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 	#endif
 
 	wxString l_msg;
-	if(CEngine::isRoot())
+	if(Engine::CEngine::isRoot())
 	{
 		l_msg = _T("/root/");
 	}
@@ -518,7 +518,7 @@ void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
 	{
 		std::string l_path("/home");
 		std::string l_username;
-		CEngine::getUsername(l_username);
+		Engine::CEngine::getUsername(l_username);
 		l_path += "/" + l_username;
 		l_msg.FromUTF8(l_path.c_str());
 	}
@@ -644,7 +644,7 @@ void CMainInterface::OnSelect(wxCommandEvent& WXUNUSED(event))
 
 	std::list<std::string> l_pluginList;
 
-	std::map<std::string, IInPlugin*>::iterator l_it;
+	std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
 	for(l_it = m_Engine->getAvailableInputPlugs()->begin(); l_it != m_Engine->getAvailableInputPlugs()->end(); ++l_it)
 	{
 		l_pluginList.push_back((*l_it).first);

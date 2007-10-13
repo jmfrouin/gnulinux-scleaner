@@ -31,7 +31,7 @@ $Author$
 
 class CMainInterface;
 
-class CTrayIcon: public wxTaskBarIcon, public CSmartCpt
+class CTrayIcon: public wxTaskBarIcon, public Tools::CSmartCpt
 {
 	private:
 		enum

@@ -32,27 +32,30 @@ $Author: snoogie $
 
 #include "plugin_manager.h"
 
-template <class T>
-class CPluginInitializerIn
+namespace Plugins
 {
-	public:
-		CPluginInitializerIn()
-		{
-			CPluginManager* l_pfm = CPluginManager::Instance();
-			T* l_obj = new T;
-			if(!CEngine::isRoot())
+	template <class T>
+	class CPluginInitializerIn
+	{
+		public:
+			CPluginInitializerIn()
 			{
-				if(!l_obj->needRoot())
+				CPluginManager* l_pfm = CPluginManager::Instance();
+				T* l_obj = new T;
+				if(!Engine::CEngine::isRoot())
+				{
+					if(!l_obj->needRoot())
+					{
+						l_pfm->add(l_obj);
+					}
+				}
+				else
 				{
 					l_pfm->add(l_obj);
 				}
+	
 			}
-			else
-			{
-				l_pfm->add(l_obj);
-			}
-
-		}
-};
+	};
+} //namespace Plugins
 #endif							 //_INPLUGIN_INITIALIZER_H_
 /* vi:set ts=4: */
