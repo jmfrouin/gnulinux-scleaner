@@ -9,6 +9,9 @@ scleaner (0.32.0) unstable; urgency=low
   * Add accelerators
   * scleaner now use git (bye bye subversion).
   * Moving all non GUI code from maininterface to engine.
+  * Adding namespace to source code.
+  * Adding menu icons.
+  * New set of icons.
 
  -- Jean-Michel Frouin <jmfrouin@gnu.org>  Fri, 30 Sep 2007 23:44:26 +0200
 
