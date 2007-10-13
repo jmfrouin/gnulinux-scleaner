@@ -66,6 +66,12 @@
 
 #include <gfx/prefs.xpm>
 
+//Menu icons
+#include <gfx/menu_add_folder.xpm>
+#include <gfx/menu_del_folder.xpm>
+#include <gfx/menu_prefs.xpm>
+#include <gfx/menu_about.xpm>
+
 IMPLEMENT_CLASS( CMainInterface, wxFrame )
 
 BEGIN_EVENT_TABLE( CMainInterface, wxFrame )
@@ -142,7 +148,7 @@ void CMainInterface::Init()
 
 	m_Icon->setParent(this);
 
-	if (!m_Icon->SetIcon(full_xpm, wxT(NAME)))
+	if (!m_Icon->SetIcon(scleaner_xpm, wxT(NAME)))
 	{
 		std::cout << i8n("[ERR] Could not set icon.\n");
 	}
@@ -179,7 +185,9 @@ void CMainInterface::CreateControls()
 	//File menu
 	l_MenuBar->Append(l_File, wxString(i8n("File"), wxConvUTF8));
 	wxMenuItem* l_Add = new wxMenuItem(l_File, ID_FOLDER_ADD, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
+    l_Add->SetBitmap(menu_add_folder_xpm);
 	wxMenuItem* l_Del = new wxMenuItem(l_File, ID_FOLDER_DEL, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
+    l_Del->SetBitmap(menu_del_folder_xpm);
 	l_File->Append(l_Add);
 	l_File->Append(l_Del);
 	l_File->AppendSeparator();
@@ -189,11 +197,13 @@ void CMainInterface::CreateControls()
 	//Folders menu
 	l_MenuBar->Append(l_Edit, wxString(i8n("Edit"), wxConvUTF8));
 	wxMenuItem* l_Prefs = new wxMenuItem(l_Edit, ID_PREFS, wxString(i8n("Preferences\tCtrl-P"), wxConvUTF8));
+    l_Prefs->SetBitmap(menu_prefs_xpm);
 	l_Edit->Append(l_Prefs);
 
 	//Misc menu
 	l_MenuBar->Append(l_Misc, wxString(i8n("Misc"), wxConvUTF8));
 	wxMenuItem* l_About = new wxMenuItem(l_Misc, ID_ABOUT, wxString(i8n("About"), wxConvUTF8));
+    l_About->SetBitmap(menu_about_xpm);
 	l_Misc->Append(l_About);
 
 	l_Frame->SetMenuBar(l_MenuBar);
