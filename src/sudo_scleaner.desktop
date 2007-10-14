@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=scleaner (root)
+GenericName=
+Comment=Clean your system
+Icon=scleaner.xpm
+Exec=gksu scleaner
+Terminal=false
+Categories=Application;System;
