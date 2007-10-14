@@ -36,7 +36,7 @@
 #include <sys/utsname.h>
 #include <interface/maininterface.h>
 #include <plugins/root_plugin.h>
-//#include "dpkg-db.h"
+#include "dpkg-db.h"
 #include "engine.h"
 
 namespace Engine
@@ -642,7 +642,10 @@ namespace Engine
 	{
 		int l_ret = 0;
 		//struct pkginfo** l_p = 0;
-		
+  		//pointerp= bins + (hash(name) % (BINS));
+  		//while (*pointerp && strcasecmp((*pointerp)->name,name))
+    	//	pointerp= &(*pointerp)->next;
+  		//if (*pointerp) { free(name); return *pointerp; }
 		
 		return l_ret;
 	}

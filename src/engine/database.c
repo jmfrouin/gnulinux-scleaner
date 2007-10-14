@@ -21,10 +21,10 @@
 #include <config.h>
 
 #include <ctype.h>
-#include <string.h>
+#include <string>
 
-#include <dpkg.h>
-#include <dpkg-db.h>
+#include "dpkg.h"
+#include "dpkg-db.h"
 
 #define BINS 8191
  /* This must always be a prime for optimal performance.

@@ -239,7 +239,7 @@ struct varbuf;
 
 extern void varbufaddc(struct varbuf *v, int c);
 extern void varbufdupc(struct varbuf *v, int c, ssize_t s);
-int varbufprintf(struct varbuf *v, const char *fmt, ...) PRINTFFORMAT(2,3);
+int varbufprintf(struct varbuf *v, const char *fmt, ...);
 int varbufvprintf(struct varbuf *v, const char *fmt, va_list va);
 void varbufinit(struct varbuf *v);
 void varbufreset(struct varbuf *v);
