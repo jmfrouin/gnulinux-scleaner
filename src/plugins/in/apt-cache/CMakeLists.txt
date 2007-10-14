@@ -22,8 +22,9 @@
 # $Author: snoogie_sf $
 # ------------------------------------------------------
 
-SET(folder apt-cache backfiles logs kernels)
-
-FOREACH(fold ${folder})
-	ADD_SUBDIRECTORY(${fold})
-ENDFOREACH(fold ${folder})
+SET(apt-cache_src apt-cache.cpp)
+ADD_LIBRARY(apt-cache SHARED ${apt-cache_src}) 
+TARGET_LINK_LIBRARIES(apt-cache plugins tools)
+INSTALL(TARGETS apt-cache DESTINATION ${PLUGSDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/plugins/in/apt-cache/apt-cache.html DESTINATION ${SHAREDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/plugins/in/apt-cache/apt-cache_fr.html DESTINATION ${SHAREDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
