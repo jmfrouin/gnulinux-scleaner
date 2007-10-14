@@ -52,10 +52,6 @@ class CbackfilesPlugin : public Plugins::IInPlugin
 		{
 			return false;
 		}
-		bool grabNullFolder()
-		{
-			return false;
-		}
 
 		/*!
 		 *@brief From Plugins::IInPlugin

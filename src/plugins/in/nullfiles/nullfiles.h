@@ -51,10 +51,6 @@ class CnullfilesPlugin : public Plugins::IInPlugin
 		{
 			return true;
 		}
-		bool grabNullFolder()
-		{
-			return false;
-		}
 
 		/*!
 		*@brief From Plugins::IRootPlugin

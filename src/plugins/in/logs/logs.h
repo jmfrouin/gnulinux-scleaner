@@ -51,10 +51,6 @@ class ClogsPlugin : public Plugins::IRootPlugin
 		{
 			return false;
 		}
-		bool grabNullFolder()
-		{
-			return false;
-		}
 
 		/*!
 		*@brief From Plugins::IRootPlugin
