@@ -54,12 +54,7 @@ void Capt_cachePlugin::getDirectory(std::string& _path)
 
 void Capt_cachePlugin::processFile(const std::string& _filename)
 {
-	if(	(_filename.find("abi", 0) != std::string::npos) || (_filename.find("config", 0) != std::string::npos) ||
-		(_filename.find("initrd", 0) != std::string::npos) || (_filename.find("System.map", 0) != std::string::npos) ||
-		(_filename.find("vmlinuz", 0) != std::string::npos))
-	{
-		m_fl.push_back(_filename);
-	}
+	m_fl.push_back(_filename);
 }
 
 bool Capt_cachePlugin::needRoot()
