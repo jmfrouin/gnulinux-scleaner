@@ -29,6 +29,13 @@
 #define SYMBOL_CPREFERENCES_SIZE wxSize(400, 300)
 #define SYMBOL_CPREFERENCES_POSITION wxDefaultPosition
 
+#include <tools/smart_pointer.h>
+
+namespace Engine
+{
+	class CEngine;
+}
+
 namespace GUI
 {
 	/*!
@@ -72,8 +79,9 @@ namespace GUI
 	    /// Should we show tooltips?
 	    static bool ShowToolTips();
 	
-	////@begin CPreferences member variables
-	////@end CPreferences member variables
+	private:
+		//Engine
+		Tools::TSmartPtr<Engine::CEngine>   m_Engine;
 	};
 }
 #endif // _PREFERENCES_H_

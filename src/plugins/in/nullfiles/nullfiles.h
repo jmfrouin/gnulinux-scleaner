@@ -47,7 +47,13 @@ class CnullfilesPlugin : public Plugins::IInPlugin
 		 *@brief From IPlugin.
 		 */
 		eType Type();
+
 		bool grabNullFile()
+		{
+			return true;
+		}
+
+		bool getDefaultSelection()
 		{
 			return true;
 		}

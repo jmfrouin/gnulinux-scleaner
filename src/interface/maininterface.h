@@ -113,9 +113,9 @@ namespace GUI
 			void updateProgress(const std::string& _mess, bool _pulse, int _nb);
 	
 		protected:
-			CTrayIcon*  m_Icon;
+			CTrayIcon*  						m_Icon;
 		#if defined(__WXCOCOA__)
-			CTrayIcon*  m_DockIcon;
+			CTrayIcon*  						m_DockIcon;
 		#endif
 			//Engine
 			Tools::TSmartPtr<Engine::CEngine>   m_Engine;

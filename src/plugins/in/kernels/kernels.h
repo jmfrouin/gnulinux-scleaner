@@ -50,7 +50,13 @@ class CkernelsPlugin : public Plugins::IRootPlugin
 		 *@brief From IPlugin.
 		 */
 		eType Type();
+
 		bool grabNullFile()
+		{
+			return false;
+		}
+
+		bool getDefaultSelection()
 		{
 			return false;
 		}

@@ -43,14 +43,22 @@ namespace Plugins
 	
 			/*!
 			 *@brief Does it need to be run as root (sudo) ?
+			 *@return true if root is required, false otherwise.
 			 */
 			virtual bool needRoot() = 0;
 	
 			/*!
 			 *@brief Does it need to grab null file size;
+			 *@return true if this plugin can grab null file size, false otherwise.
 			 */
 			virtual bool grabNullFile() = 0;
 	
+			/*!
+			 *@brief Selected by default configuration ?
+			 *@return true if "founded files" have to been pre"set" to Yes, false otherwise
+			 */
+			virtual bool getDefaultSelection() = 0;
+
 			/*!
 			 *@brief Return a std::list of files targeted by plugin.
 			 *@param _fl The files list to fill.

@@ -28,6 +28,8 @@
 #include "wx/wx.h"
 #endif
 
+#include <iostream>
+#include <engine/engine.h>
 #include "preferences.h"
 
 namespace GUI
@@ -43,17 +45,12 @@ namespace GUI
 	 */
 	
 	BEGIN_EVENT_TABLE( CPreferences, wxDialog )
-	
-	////@begin CPreferences event table entries
-	////@end CPreferences event table entries
-	
 	END_EVENT_TABLE()
 	
 	
 	/*!
 	 * CPreferences constructors
 	 */
-	
 	CPreferences::CPreferences()
 	{
 	    Init();
@@ -104,8 +101,7 @@ namespace GUI
 	
 	void CPreferences::Init()
 	{
-	////@begin CPreferences member initialisation
-	////@end CPreferences member initialisation
+		m_Engine = Engine::CEngine::Instance();
 	}
 	
 	
@@ -121,14 +117,24 @@ namespace GUI
 	    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
 	    itemDialog1->SetSizer(itemBoxSizer2);
 	
+		std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
+		for(l_it = m_Engine->getAvailableInputPlugs()->begin(); l_it != m_Engine->getAvailableInputPlugs()->end(); ++l_it)
+		{
+	    	wxArrayString l_Choice;
+			l_Choice.Add(wxString(i8n("Yes"), wxConvUTF8));
+			l_Choice.Add(wxString(i8n("No"), wxConvUTF8));
+			wxRadioBox* l_pluginRadio = new wxRadioBox(itemDialog1, wxID_ANY, wxString(l_it->first.c_str(), wxConvUTF8), wxDefaultPosition, wxDefaultSize, l_Choice, 1, wxRA_SPECIFY_ROWS);
+			l_pluginRadio->SetSelection(l_it->second->getDefaultSelection());
+			itemBoxSizer2->Add(l_pluginRadio, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+		}
+
 	    wxArrayString itemRadioBox3Strings;
 	    itemRadioBox3Strings.Add(_("&CRC32"));
 	    itemRadioBox3Strings.Add(_("&MD5"));
 	    wxRadioBox* itemRadioBox3 = new wxRadioBox( itemDialog1, ID_RADIOBOX2, _("Duplicates files method"), wxDefaultPosition, wxDefaultSize, itemRadioBox3Strings, 1, wxRA_SPECIFY_ROWS );
 	    itemRadioBox3->SetSelection(0);
 	    itemBoxSizer2->Add(itemRadioBox3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-	
-	////@end CPreferences content construction
+		
 	}
 	
 	

@@ -249,7 +249,7 @@ namespace GUI
 		//std::map<std::string, Plugins::IOutPlugin*>::iterator _it2;
 		//for(_it2 = m_OutputPlugs->begin(); _it2 != m_OutputPlugs->end(); ++_it2)
 		//{
-		//	wxString l_name( ((*_it2).second)->getName().c_str(), wxConvUTF8);
+		//	wxString l_name((*_it2).second)->getName().c_str(), wxConvUTF8);
 		//	l_out.Add(l_name);
 		//}
 	
