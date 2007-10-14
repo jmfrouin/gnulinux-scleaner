@@ -51,7 +51,9 @@ namespace GUI
 	class wxCheckTreeCtrl;
 }
 
-
+/*!
+*@brief All GUI related stuff
+*/
 namespace GUI
 {
 	/*!

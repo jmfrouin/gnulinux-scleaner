@@ -42,6 +42,9 @@ namespace Plugins
 #define FSTAB "/etc/fstab"
 #define ROUND(x) ((x-(int)x>0)?(int)x+1:(int)x) //Mainly wrote for formatSize
 
+/*!
+*@brief Contain all scleaner core related stuff.
+*/
 namespace Engine
 {
 	/*!
