@@ -52,6 +52,16 @@ namespace Plugins
 			virtual bool needRoot() = 0;
 	
 			/*!
+			 *@brief Does it need to grab null file size;
+			 */
+			virtual bool grabNullFile() = 0;
+	
+			/*!
+			 *@brief Does it need to grab null folder size;
+			 */
+			virtual bool grabNullFolder() = 0;
+	
+			/*!
 			 *@brief Return a std::list of files targeted by plugin.
 			 *@param _fl The files list to fill.
 			 */

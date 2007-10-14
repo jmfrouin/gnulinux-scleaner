@@ -18,8 +18,9 @@
 # 
 
 
-SET(folder apt-cache backfiles kernels logs nullfiles nullfolders)
-
-FOREACH(fold ${folder})
-	ADD_SUBDIRECTORY(${fold})
-ENDFOREACH(fold ${folder})
+SET(nullfiles_src nullfiles.cpp)
+ADD_LIBRARY(nullfiles SHARED ${nullfiles_src}) 
+TARGET_LINK_LIBRARIES(nullfiles plugins tools)
+INSTALL(TARGETS nullfiles DESTINATION ${PLUGSDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/plugins/in/nullfiles/nullfiles.html DESTINATION ${SHAREDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/plugins/in/nullfiles/nullfiles_fr.html DESTINATION ${SHAREDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)

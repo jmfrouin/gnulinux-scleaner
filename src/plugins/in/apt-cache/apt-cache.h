@@ -50,6 +50,14 @@ class Capt_cachePlugin : public Plugins::IRootPlugin
 		 *@brief From IPlugin.
 		 */
 		eType Type();
+		bool grabNullFile()
+		{
+			return false;
+		}
+		bool grabNullFolder()
+		{
+			return false;
+		}
 
 		/*!
 		*@brief From Plugins::IRootPlugin

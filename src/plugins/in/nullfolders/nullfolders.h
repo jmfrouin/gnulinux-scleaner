@@ -19,29 +19,30 @@
 */
 
 /*! @page page3 Plugins documentations.
- * - @subpage logs
+ * - @subpage nullfolders
  */
 
-/*! @page logs logs: input plugin.
+/*! @page nullfolders nullfolders: input plugin.
  * @section desc Description
- * This plugin allow user to clean <b>logs</b> files.
+ * This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
  * <br>
- * In fact it just scan <b>/var/log/</b> and its subfolders.
+ * In fact it just scan <b>/home/user/</b> and its subfolders.
  * @section param Parameters
  * @section pb Knows bugs
+ * @todo Support both modes, simple user & root/sudo.
  */
 
-#ifndef _LOGS_H_
-#define _LOGS_H_
+#ifndef _NULLFOLDERS_H_
+#define _NULLFOLDERS_H_
 
 #include <config.h>
-#include <plugins/root_plugin.h>
+#include <plugins/in_plugin.h>
 
-class ClogsPlugin : public Plugins::IRootPlugin
+class CnullfoldersPlugin : public Plugins::IInPlugin
 {
 	public:
-		ClogsPlugin();
-		~ClogsPlugin();
+		CnullfoldersPlugin();
+		~CnullfoldersPlugin();
 
 		/*!
 		 *@brief From IPlugin.
@@ -53,19 +54,14 @@ class ClogsPlugin : public Plugins::IRootPlugin
 		}
 		bool grabNullFolder()
 		{
-			return false;
+			return true;
 		}
 
 		/*!
-		*@brief From Plugins::IRootPlugin
-		*/
-		void getDirectory(std::string& _path);
-
-		/*!
-		 *@brief From IInPlugin
+		 *@brief From Plugins::IInPlugin
 		 */
 		void processFile(const std::string& _filename);
 		bool needRoot();
 };
-#endif							 //_LOGS_H_
+#endif							 //_NULLFOLDERS_H_
 /* vi:set ts=4: */

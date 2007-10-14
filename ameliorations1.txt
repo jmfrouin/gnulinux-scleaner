@@ -2,7 +2,9 @@ bonsoir,
 
 je viens de tester en vitesse l'application. Voici le genre de chose que j'aimerais y trouver :
 
-- filtre de recherche de fichiers temps dans des répertoires suivant divers critères : dossiers perso, dossiers systèmes, exclure un répertoire, inclure seulement quelques répertoires.
+- filtre de recherche de fichiers temps dans des répertoires suivant divers critères : dossiers perso, dossiers systèmes, exclure un répertoire, 
+
+OK : inclure seulement quelques répertoires.
 
 - recherche d'un type d'extension de fichiers particulier (genre : .doc, .xls, à jeter :) ou alors les fichiers temps pour latex, .aux, ou les immondes ._dstore de mac os x etc)
 

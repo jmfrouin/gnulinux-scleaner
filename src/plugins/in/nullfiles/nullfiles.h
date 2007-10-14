@@ -19,12 +19,12 @@
 */
 
 /*! @page page3 Plugins documentations.
- * - @subpage logs
+ * - @subpage nullfiles
  */
 
-/*! @page logs logs: input plugin.
+/*! @page nullfiles nullfiles: input plugin.
  * @section desc Description
- * This plugin allow user to clean <b>logs</b> files.
+ * This plugin allow user to clean <b>nullfiles</b> files.
  * <br>
  * In fact it just scan <b>/var/log/</b> and its subfolders.
  * @section param Parameters
@@ -35,13 +35,13 @@
 #define _LOGS_H_
 
 #include <config.h>
-#include <plugins/root_plugin.h>
+#include <plugins/in_plugin.h>
 
-class ClogsPlugin : public Plugins::IRootPlugin
+class CnullfilesPlugin : public Plugins::IInPlugin
 {
 	public:
-		ClogsPlugin();
-		~ClogsPlugin();
+		CnullfilesPlugin();
+		~CnullfilesPlugin();
 
 		/*!
 		 *@brief From IPlugin.
@@ -49,7 +49,7 @@ class ClogsPlugin : public Plugins::IRootPlugin
 		eType Type();
 		bool grabNullFile()
 		{
-			return false;
+			return true;
 		}
 		bool grabNullFolder()
 		{

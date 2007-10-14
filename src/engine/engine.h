@@ -255,6 +255,7 @@ namespace Engine
 	
 			//Folders infos
 			std::list<std::string>							m_FoldersList;
+			std::list<std::string>							m_BlacklistFoldersList;
 	
 			//Files infos
 			std::map<std::string, unsigned long>			m_Infos;

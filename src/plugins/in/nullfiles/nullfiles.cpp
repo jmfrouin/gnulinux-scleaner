@@ -18,25 +18,26 @@
 
 */
 
-#include <iostream>
+
 #include <plugins/inplugin_initializer.h>
-#include "apt-cache.h"
+#include "nullfiles.h"
 #include <leak/leak_detector.h>
+#include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<Capt_cachePlugin> g_apt_cache;
+Plugins::CPluginInitializerIn<CnullfilesPlugin> g_nullfiles;
 
-Capt_cachePlugin::Capt_cachePlugin()
+CnullfilesPlugin::CnullfilesPlugin()
 {
-	setName("apt cache");
+	setName("null files");
 }
 
 
-Capt_cachePlugin::~Capt_cachePlugin()
+CnullfilesPlugin::~CnullfilesPlugin()
 {
 }
 
 
-Plugins::IPlugin::eType Capt_cachePlugin::Type()
+Plugins::IPlugin::eType CnullfilesPlugin::Type()
 {
 	eType l_ret;
 	l_ret = eInput;
@@ -44,23 +45,16 @@ Plugins::IPlugin::eType Capt_cachePlugin::Type()
 }
 
 
-void Capt_cachePlugin::getDirectory(std::string& _path)
-{
-	_path = "/var/cache/apt/archives/";
-}
-
-
-void Capt_cachePlugin::processFile(const std::string& _filename)
+void CnullfilesPlugin::processFile(const std::string& _filename)
 {
 	m_fl.push_back(_filename);
 }
 
-bool Capt_cachePlugin::needRoot()
+
+bool CnullfilesPlugin::needRoot()
 {
-	bool l_ret = false;
-	l_ret = true;				 // /boot/ cannot be access by simple user
+	bool l_ret;
+	l_ret = false;				 // In order to access /var/log/ we need root access.
 	return l_ret;
 }
-
-
 /* vi:set ts=4: */

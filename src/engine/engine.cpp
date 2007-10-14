@@ -151,8 +151,6 @@ namespace Engine
 	}
 	
 	
-	
-	
 	bool CEngine::getUsername(std::string& _username)
 	{
 		bool l_ret = false;
@@ -415,7 +413,19 @@ namespace Engine
 				l_root = l_eng->rootPlugin();
 				if(l_root != 0)
 				{
-					l_root->processFile(l_path);
+					struct stat l_info;
+					//Try to stat file.
+					if(stat(l_path.c_str(), &l_info) == -1)
+					{
+						std::cout << i8n("[ERR] : Cannot stat ") << l_path << '\n';
+					}
+					else
+					{
+						if(l_info.st_size != 0)
+						{
+							l_root->processFile(l_path);
+						}
+					}
 				}
 			}
 			else
@@ -438,7 +448,20 @@ namespace Engine
 	
 					if(!((*l_it).second)->needRoot())
 					{
-						((*l_it).second)->processFile(l_path);
+						struct stat l_info;
+						//Try to stat file.
+						if(stat(l_path.c_str(), &l_info) == -1)
+						{
+							std::cout << i8n("[ERR] : Cannot stat ") << l_path << '\n';
+						}
+						else
+						{
+							std::cout << l_it->first << '\n';
+							if(l_info.st_size != 0)
+							{
+								((*l_it).second)->processFile(l_path);
+							}
+						}
 					}
 				}
 			}
