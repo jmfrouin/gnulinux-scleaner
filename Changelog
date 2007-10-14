@@ -12,6 +12,9 @@ scleaner (0.32.0) unstable; urgency=low
   * Adding namespace to source code.
   * Adding menu icons.
   * New set of icons.
+  * Add a null file size plugin.
+  * Add an empty folder plugin.
+  * Plugins can now pre-select founded files.
 
  -- Jean-Michel Frouin <jmfrouin@gnu.org>  Fri, 30 Sep 2007 23:44:26 +0200
 

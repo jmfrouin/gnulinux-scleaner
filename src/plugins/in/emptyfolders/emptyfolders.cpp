@@ -24,22 +24,22 @@
 #include <engine/engine.h>
 #include <leak/leak_detector.h>
 #include <plugins/inplugin_initializer.h>
-#include "nullfolders.h"
+#include "emptyfolders.h"
 
-Plugins::CPluginInitializerIn<CnullfoldersPlugin> g_nullfolders;
+Plugins::CPluginInitializerIn<CemptyfoldersPlugin> g_emptyfolders;
 
-CnullfoldersPlugin::CnullfoldersPlugin()
+CemptyfoldersPlugin::CemptyfoldersPlugin()
 {
 	setName("null folders");
 }
 
 
-CnullfoldersPlugin::~CnullfoldersPlugin()
+CemptyfoldersPlugin::~CemptyfoldersPlugin()
 {
 }
 
 
-Plugins::IPlugin::eType CnullfoldersPlugin::Type()
+Plugins::IPlugin::eType CemptyfoldersPlugin::Type()
 {
 	eType l_ret;
 	l_ret = eInput;
@@ -47,7 +47,7 @@ Plugins::IPlugin::eType CnullfoldersPlugin::Type()
 }
 
 
-void CnullfoldersPlugin::processFile(const std::string& _filename)
+void CemptyfoldersPlugin::processFile(const std::string& _filename)
 {
 	struct stat l_stat;
 
@@ -64,7 +64,7 @@ void CnullfoldersPlugin::processFile(const std::string& _filename)
 			struct dirent** l_namelist;
 			int l_nb = scandir(_filename.c_str(), &l_namelist, 0, alphasort);
 			std::cout << "File : " << _filename << '\n';
-			std::cout << "CnullfoldersPlugin : " << l_nb << '\n';
+			std::cout << "CemptyfoldersPlugin : " << l_nb << '\n';
 			if(l_nb == 2) //So contain only : . and ..
 			{
 				m_fl.push_back(_filename);
@@ -79,7 +79,7 @@ void CnullfoldersPlugin::processFile(const std::string& _filename)
 }
 
 
-bool CnullfoldersPlugin::needRoot()
+bool CemptyfoldersPlugin::needRoot()
 {
 	bool l_ret;
 	l_ret = false;				 // This plugin will work in both (user/root) mode.

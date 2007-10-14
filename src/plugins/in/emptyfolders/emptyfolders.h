@@ -19,10 +19,10 @@
 */
 
 /*! @page page3 Plugins documentations.
- * - @subpage nullfolders
+ * - @subpage emptyfolders
  */
 
-/*! @page nullfolders nullfolders: input plugin.
+/*! @page emptyfolders emptyfolders: input plugin.
  * @section desc Description
  * This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
  * <br>
@@ -38,11 +38,11 @@
 #include <config.h>
 #include <plugins/in_plugin.h>
 
-class CnullfoldersPlugin : public Plugins::IInPlugin
+class CemptyfoldersPlugin : public Plugins::IInPlugin
 {
 	public:
-		CnullfoldersPlugin();
-		~CnullfoldersPlugin();
+		CemptyfoldersPlugin();
+		~CemptyfoldersPlugin();
 
 		/*!
 		 *@brief From IPlugin.
