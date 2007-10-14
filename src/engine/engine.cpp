@@ -457,9 +457,16 @@ namespace Engine
 						else
 						{
 							std::cout << l_it->first << '\n';
-							if(l_info.st_size != 0)
+							if(l_info.st_size == 0)
 							{
-								((*l_it).second)->processFile(l_path);
+								if(l_it->second->grabNullFile() || l_it->second->grabNullFolder())
+								{
+									l_it->second->processFile(l_path);
+								}
+							}
+							else
+							{
+								l_it->second->processFile(l_path);
 							}
 						}
 					}
