@@ -401,17 +401,52 @@ namespace Engine
 		std::string l_path(_fpath);
 	
 		//Check if it is a folder ?
-		if (_stat->st_mode > 23420)
+		//if(S_ISDIR(l_stat.st_mode))
+		//{
+		#if defined DEBUG
+		std::cout << i8n("[DBG] FTW_callback : ") << l_path << '\n';
+		#endif
+		CEngine* l_eng = CEngine::Instance();
+		if(l_eng->asRoot())
 		{
-			#if defined DEBUG
-			std::cout << i8n("[DBG] FTW_callback : ") << l_path << '\n';
-			#endif
-			CEngine* l_eng = CEngine::Instance();
-			if(l_eng->asRoot())
+			Plugins::IRootPlugin* l_root = 0;
+			l_root = l_eng->rootPlugin();
+			if(l_root != 0)
 			{
-				Plugins::IRootPlugin* l_root = 0;
-				l_root = l_eng->rootPlugin();
-				if(l_root != 0)
+				struct stat l_info;
+				//Try to stat file.
+				if(stat(l_path.c_str(), &l_info) == -1)
+				{
+					std::cout << i8n("[ERR] : Cannot stat ") << l_path << '\n';
+				}
+				else
+				{
+					if(l_info.st_size != 0)
+					{
+						l_root->processFile(l_path);
+					}
+				}
+			}
+		}
+		else
+		{
+			int l_count = 0;
+			std::map<std::string, Plugins::IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
+			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
+			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
+			{
+				IProgressbar* l_prog = l_eng->getCallback();
+	
+				if(l_prog != 0)
+				{
+					if(l_count++ == 10)
+					{
+						l_prog->updateProgress(l_path, true);
+						l_count = 0;
+					}
+				}
+	
+				if(!((*l_it).second)->needRoot())
 				{
 					struct stat l_info;
 					//Try to stat file.
@@ -421,61 +456,25 @@ namespace Engine
 					}
 					else
 					{
-						if(l_info.st_size != 0)
+						if(l_info.st_size == 0)
 						{
-							l_root->processFile(l_path);
-						}
-					}
-				}
-			}
-			else
-			{
-				int l_count = 0;
-				std::map<std::string, Plugins::IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
-				std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
-				for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
-				{
-					IProgressbar* l_prog = l_eng->getCallback();
-	
-					if(l_prog != 0)
-					{
-						if(l_count++ == 10)
-						{
-							l_prog->updateProgress(l_path, true);
-							l_count = 0;
-						}
-					}
-	
-					if(!((*l_it).second)->needRoot())
-					{
-						struct stat l_info;
-						//Try to stat file.
-						if(stat(l_path.c_str(), &l_info) == -1)
-						{
-							std::cout << i8n("[ERR] : Cannot stat ") << l_path << '\n';
+							if(l_it->second->grabNullFile())
+							{
+								l_it->second->processFile(l_path);
+							}
 						}
 						else
 						{
-							if(l_info.st_size == 0)
+							if(!l_it->second->grabNullFile())
 							{
-								if(l_it->second->grabNullFile())
-								{
-									l_it->second->processFile(l_path);
-								}
-							}
-							else
-							{
-								if(!l_it->second->grabNullFile())
-								{
-									l_it->second->processFile(l_path);
-								}
+								l_it->second->processFile(l_path);
 							}
 						}
 					}
 				}
 			}
 		}
-	
+	//}
 		return l_ret;				 // To tell nftw() to continue
 	}
 	

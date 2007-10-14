@@ -19,10 +19,12 @@
 */
 
 #include <iostream>
+#include <dirent.h>				 ///For path manipulation.
+#include <sys/stat.h>
+#include <engine/engine.h>
+#include <leak/leak_detector.h>
 #include <plugins/inplugin_initializer.h>
 #include "nullfolders.h"
-#include <leak/leak_detector.h>
-#include <engine/engine.h>
 
 Plugins::CPluginInitializerIn<CnullfoldersPlugin> g_nullfolders;
 
@@ -47,7 +49,33 @@ Plugins::IPlugin::eType CnullfoldersPlugin::Type()
 
 void CnullfoldersPlugin::processFile(const std::string& _filename)
 {
-	m_fl.push_back(_filename);
+	struct stat l_stat;
+
+	//Try to stat file.
+	if(stat(_filename.c_str(), &l_stat) == -1)
+	{
+		std::cout << i8n("[ERR] : Cannot stat ") << _filename << '\n';
+	}
+	else
+	{
+		//std::cout << "Stat : " << l_stat.st_mode << '\n';
+		if(S_ISDIR(l_stat.st_mode))
+		{
+			struct dirent** l_namelist;
+			int l_nb = scandir(_filename.c_str(), &l_namelist, 0, alphasort);
+			std::cout << "File : " << _filename << '\n';
+			std::cout << "CnullfoldersPlugin : " << l_nb << '\n';
+			if(l_nb == 2) //So contain only : . and ..
+			{
+				m_fl.push_back(_filename);
+			}
+			while (l_nb-- > 0)
+			{
+				free(l_namelist[l_nb]);
+			}
+			free(l_namelist);
+		}
+	}
 }
 
 
