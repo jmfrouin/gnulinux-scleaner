@@ -1,26 +1,21 @@
-/*
-Copyright (C) 2007 FROUIN Jean-Michel
-------------------------------------------------------
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
+/**
+ * This file is part of scleaner project.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ * Copyright (C) 2007 FROUIN Jean-Michel
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
 
-------------------------------------------------------
-Project : scleaner
-------------------------------------------------------
-$Date: 2007-09-30 18:15:32 +0200 (dim, 30 sep 2007) $
-$Rev: 157 $
-$Author: snoogie $
-------------------------------------------------------
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 */
 
 #ifndef _SELECT_DIALOG_H_
@@ -33,32 +28,34 @@ $Author: snoogie $
 class wxCheckListBox;
 class wxPanel;
 
-/*!
-*@brief Dialog to select input plugins.
-*/
-class CSelectDialog : public wxFrame
+namespace GUI
 {
-	public:
-		/*!
-		*@brief Constructor
-		*@param _title The dialog box title.
-		*@param _pluginList Available plugin list.
-		*/
-		CSelectDialog(const wxString& _title, std::list<std::string>& _pluginList);
-
-		/*!
-		*@brief Destructor
-		*/
-		virtual ~CSelectDialog();
-
-		//Callbacks
-		void OnListbox(wxCommandEvent& event);
-
-	protected:
-    	wxCheckListBox*	m_Input;
-		wxPanel*		m_Panel;
-
-    DECLARE_EVENT_TABLE()
-};
-
+	/*!
+	*@brief Dialog to select input plugins.
+	*/
+	class CSelectDialog : public wxFrame
+	{
+		public:
+			/*!
+			*@brief Constructor
+			*@param _title The dialog box title.
+			*@param _pluginList Available plugin list.
+			*/
+			CSelectDialog(const wxString& _title, std::list<std::string>& _pluginList);
+	
+			/*!
+			*@brief Destructor
+			*/
+			virtual ~CSelectDialog();
+	
+			//Callbacks
+			void OnListbox(wxCommandEvent& event);
+	
+		protected:
+	    	wxCheckListBox*	m_Input;
+			wxPanel*		m_Panel;
+	
+	    DECLARE_EVENT_TABLE()
+	};
+}
 #endif// _SELECT_DIALOG_H_

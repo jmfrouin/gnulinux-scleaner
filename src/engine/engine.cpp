@@ -86,8 +86,8 @@ namespace Engine
 	{
 		bool l_ret = false;
 	
-		CMainInterface* l_Main = 0;
-		l_Main = new CMainInterface(NULL, wxID_ANY, wxT(NAME), SYMBOL_MAININTERFACE_POSITION, SYMBOL_MAININTERFACE_SIZE);
+		GUI::CMainInterface* l_Main = 0;
+		l_Main = new GUI::CMainInterface(NULL, wxID_ANY, wxT(NAME), SYMBOL_MAININTERFACE_POSITION, SYMBOL_MAININTERFACE_SIZE);
 		if(l_Main)
 		{
 			l_Main->Show(true);
