@@ -30,7 +30,7 @@ Plugins::CPluginInitializerIn<CemptyfoldersPlugin> g_emptyfolders;
 
 CemptyfoldersPlugin::CemptyfoldersPlugin()
 {
-	setName("null folders");
+	setName("empty folders");
 }
 
 
@@ -63,8 +63,6 @@ void CemptyfoldersPlugin::processFile(const std::string& _filename)
 		{
 			struct dirent** l_namelist;
 			int l_nb = scandir(_filename.c_str(), &l_namelist, 0, alphasort);
-			std::cout << "File : " << _filename << '\n';
-			std::cout << "CemptyfoldersPlugin : " << l_nb << '\n';
 			if(l_nb == 2) //So contain only : . and ..
 			{
 				m_fl.push_back(_filename);
