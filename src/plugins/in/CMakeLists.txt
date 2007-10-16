@@ -18,7 +18,7 @@
 # 
 
 
-SET(folder apt-cache backfiles kernels logs nullfiles nullfolders)
+SET(folder apt-cache backfiles emptyfolders kernels logs nullfiles)
 
 FOREACH(fold ${folder})
 	ADD_SUBDIRECTORY(${fold})
