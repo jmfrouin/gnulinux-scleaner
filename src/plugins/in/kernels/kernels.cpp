@@ -123,7 +123,9 @@ bool CkernelsPlugin::Search(const std::string& _name, std::string& _result)
 
 	regex_t* l_pattern = new regex_t;
 
-	if(regcomp(l_pattern, _name.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
+	std::string l_filename = "linux-image-" + _name.substr(_name.find_first_of('-')+1, _name.length());
+
+	if(regcomp(l_pattern, l_filename.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
 	{
 		std::cerr << "Regex error !\n";
 		regfree(l_pattern);
@@ -131,10 +133,11 @@ bool CkernelsPlugin::Search(const std::string& _name, std::string& _result)
 
    	for (pkgCache::PkgIterator l_it = m_Cache->PkgBegin(); l_it.end() == false; ++l_it)
    	{
+			std::cout << l_it.Name() << "=" << l_filename << '\n';
 	 	if (regexec(l_pattern,l_it.Name(),0,0,0) == 0)
 		{
-			std::cout << _result << '\n';
 			_result = l_it.Name();
+			std::cout << _result << '\n';
 			l_ret = true;
 			break;
 		}

@@ -177,7 +177,7 @@ namespace GUI
 	    	wxArrayString l_Choice;
 			l_Choice.Add(wxString(i8n("Yes"), wxConvUTF8));
 			l_Choice.Add(wxString(i8n("No"), wxConvUTF8));
-			wxRadioBox* l_pluginRadio = new wxRadioBox(itemDialog1, wxID_ANY, wxString(l_it->first.c_str(), wxConvUTF8), wxDefaultPosition, wxDefaultSize, l_Choice, 1, wxRA_SPECIFY_ROWS);
+			wxRadioBox* l_pluginRadio = new wxRadioBox(itemDialog1, wxID_ANY, wxString(l_it->first.c_str(), wxConvUTF8) + wxString(i8n(" default selection"), wxConvUTF8), wxDefaultPosition, wxDefaultSize, l_Choice, 1, wxRA_SPECIFY_ROWS);
 			l_pluginRadio->SetSelection(l_it->second->getDefaultSelection());
 			itemBoxSizer2->Add(l_pluginRadio, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 		}
