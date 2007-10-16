@@ -1,46 +1,85 @@
-/*
-Copyright (C) 2007 FROUIN Jean-Michel
-------------------------------------------------------
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
+/**
+ * This file is part of scleaner project.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ * Copyright (C) 2007 FROUIN Jean-Michel
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
 
-------------------------------------------------------
-Project : scleaner
-------------------------------------------------------
-$Date$
-$Rev$
-$Author$
-------------------------------------------------------
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
 #include <iostream>
 #include <sys/utsname.h>
+#include <string>
+#include <regex.h>
+#include <apt-pkg/pkgcache.h>		//For pkgCache
+#include <apt-pkg/sourcelist.h> 	//For pkgSourceList
+#include <apt-pkg/pkgcachegen.h>	//For pkgMakeStatusCache
+#include <apt-pkg/progress.h>		//OpProgress
+#include <apt-pkg/init.h>			//For configuration
+#include <apt-pkg/error.h>			//_error
 #include <plugins/inplugin_initializer.h>
-#include "kernels.h"
-#include <wx/dir.h>
 #include <leak/leak_detector.h>
+#include "kernels.h"
 
 Plugins::CPluginInitializerIn<CkernelsPlugin> g_kernels;
 
-CkernelsPlugin::CkernelsPlugin()
+CkernelsPlugin::CkernelsPlugin():
+m_Cache(0), m_SrcList(0), m_Map(0)
 {
 	setName("kernels");
+
+   	if (pkgInitConfig(*_config) == false || pkgInitSystem(*_config,_system) == false)
+   	{
+		std::cerr << "[ERR] CkernelsPlugin() pkgInitConfig || pkgInitSystem\n";
+	}
+
+	if (_config->FindB("APT::Cache::Generate",true) == false)
+    {
+		m_Map = new MMap(*new FileFd(_config->FindFile("Dir::Cache::pkgcache"), FileFd::ReadOnly),MMap::Public|MMap::ReadOnly);
+	}
+	else
+	{
+		// Open the cache file
+		m_SrcList = new pkgSourceList;
+		m_SrcList->ReadMainList();
+	
+		// Generate it and map it
+		OpProgress l_Prog;
+		pkgMakeStatusCache(*m_SrcList, l_Prog, &m_Map, true);
+	}
+
+	if (_error->PendingError() == false)
+    {
+		m_Cache = new pkgCache(m_Map);
+	}
+	else
+	{
+		std::cerr << "[ERR] CkernelsPlugin(): Errors occured\n";
+	}
 }
 
 
 CkernelsPlugin::~CkernelsPlugin()
 {
+	if(m_Map != 0)
+	{
+		delete m_Map;
+	}
+	if(m_Cache != 0)
+	{
+		delete m_Cache;
+	}
 }
 
 
@@ -60,11 +99,13 @@ void CkernelsPlugin::getDirectory(std::string& _path)
 
 void CkernelsPlugin::processFile(const std::string& _filename)
 {
-	if(	(_filename.find("abi", 0) != std::string::npos) || (_filename.find("config", 0) != std::string::npos) ||
-		(_filename.find("initrd", 0) != std::string::npos) || (_filename.find("System.map", 0) != std::string::npos) ||
-		(_filename.find("vmlinuz", 0) != std::string::npos))
+	if(_filename.find("vmlinuz", 0) != std::string::npos)
 	{
-		m_fl.push_back(_filename);
+		std::string l_res;
+		if(Search(_filename, l_res))
+		{
+			m_fl.push_back(l_res);
+		}
 	}
 }
 
@@ -73,6 +114,34 @@ bool CkernelsPlugin::needRoot()
 	bool l_ret = false;
 	l_ret = true;				 // /boot/ cannot be access by simple user
 	return l_ret;
+}
+
+
+bool CkernelsPlugin::Search(const std::string& _name, std::string& _result)
+{
+	bool l_ret = false;
+
+	regex_t* l_pattern = new regex_t;
+
+	if(regcomp(l_pattern, _name.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
+	{
+		std::cerr << "Regex error !\n";
+		regfree(l_pattern);
+	}
+
+   	for (pkgCache::PkgIterator l_it = m_Cache->PkgBegin(); l_it.end() == false; ++l_it)
+   	{
+	 	if (regexec(l_pattern,l_it.Name(),0,0,0) == 0)
+		{
+			std::cout << _result << '\n';
+			_result = l_it.Name();
+			l_ret = true;
+			break;
+		}
+   	}
+      
+	regfree(l_pattern);
+   	return l_ret;
 }
 
 

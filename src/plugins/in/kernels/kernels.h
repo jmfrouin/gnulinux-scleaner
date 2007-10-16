@@ -1,26 +1,21 @@
-/*
-Copyright (C) 2007 FROUIN Jean-Michel
-------------------------------------------------------
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
+/**
+ * This file is part of scleaner project.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ * Copyright (C) 2007 FROUIN Jean-Michel
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
 
-------------------------------------------------------
-Project : scleaner
-------------------------------------------------------
-$Date$
-$Rev$
-$Author$
-------------------------------------------------------
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 */
 
 /*! @page page3 Plugins documentations.
@@ -41,6 +36,10 @@ $Author$
 
 #include <config.h>
 #include <plugins/root_plugin.h>
+
+class pkgCache;
+class pkgSourceList;
+class MMap;
 
 /*!
  *@brief Find unused kernels.
@@ -66,6 +65,18 @@ class CkernelsPlugin : public Plugins::IRootPlugin
 		 */
 		void processFile(const std::string& _filename);
 		bool needRoot();
+
+		/*!
+		 *@brief Search for a package in cache.
+		 *@param _name The package name.
+		 *@param _result A string containing the first found package.
+		 */
+		bool Search(const std::string& _name, std::string& _result);
+
+	private:
+		pkgCache* 		m_Cache;
+		pkgSourceList* 	m_SrcList;
+		MMap*			m_Map;
 };
 #endif							 //_KERN_H_
 /* vi:set ts=4: */
