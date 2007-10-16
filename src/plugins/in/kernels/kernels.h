@@ -37,6 +37,10 @@
 #include <config.h>
 #include <plugins/root_plugin.h>
 
+class pkgCache;
+class pkgSourceList;
+class MMap;
+
 /*!
  *@brief Find unused kernels.
  */
@@ -71,6 +75,18 @@ class CkernelsPlugin : public Plugins::IRootPlugin
 		 */
 		void processFile(const std::string& _filename);
 		bool needRoot();
+
+		/*!
+		 *@brief Search for a package in cache.
+		 *@param _name The package name.
+		 *@param _result A string containing the first found package.
+		 */
+		bool Search(const std::string& _name, std::string& _result);
+
+	private:
+		pkgCache* 		m_Cache;
+		pkgSourceList* 	m_SrcList;
+		MMap*			m_Map;
 };
 #endif							 //_KERN_H_
 /* vi:set ts=4: */

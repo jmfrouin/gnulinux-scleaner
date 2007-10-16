@@ -1,5 +1,5 @@
 wx Build:
 ./configure --enable-monolithic --disable-shared --enable-unicode
 
-
+/var/lib/dpkg/info
 sed -i "s/#DATE#/`date`/" debian/changelog
