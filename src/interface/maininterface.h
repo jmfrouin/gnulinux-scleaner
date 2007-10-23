@@ -58,6 +58,8 @@ namespace GUI
 {
 	/*!
 	 * CMainInterface class declaration
+	 * @version 23.10.2007
+	 * @author Jean-Michel Frouin (jmfrouin@gnu.org)
 	 */
 	class CMainInterface: public wxFrame, public IProgressbar
 	{

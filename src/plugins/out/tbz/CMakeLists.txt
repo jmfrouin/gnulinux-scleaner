@@ -1,4 +1,6 @@
-#
+# 
+# This file is part of scleaner project.
+# 
 # Copyright (C) 2007 FROUIN Jean-Michel
 # 
 # This program is free software; you can redistribute it and/or modify
@@ -13,14 +15,7 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
-# ------------------------------------------------------
-# Project : scleaner
-# ------------------------------------------------------
-# $Date: 2007-08-13 21:09:03 +0200 (lun, 13 aoû 2007) $
-# $Rev: 14 $
-# $Author: snoogie_sf $
-# ------------------------------------------------------
+#
 
 SET(tbz_src tbz.cpp)
 ADD_LIBRARY(tbz SHARED ${tbz_src}) 
