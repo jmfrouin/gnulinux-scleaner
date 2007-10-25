@@ -1,0 +1,41 @@
+#
+# CMakeLists.txt
+# v1.0 2005-05-27
+# Jerry Fath 2005
+# Based on work by Jorgen Bodde
+#
+
+#
+# Rename this file CMakeLists.txt and edit with information specific to
+# your project, then copy to the project source directory.
+#
+
+#Required project specific settings
+PROJECT( myprojectname )
+SET(PROJECT_SOURCE_FILES  myfile.cpp myfile2.cpp)
+IF( WIN32)
+    SET(PROJECT_RC_FILE myresfile.rc)
+ELSE( WIN32)
+    SET(PROJECT_RC_FILE "")
+ENDIF( WIN32)
+
+#Optional project specific settings
+#SET(PROJECT_DEFINITIONS -D_MYPROJECT_ -D_MYPROJECT2_)
+#SET(PROJECT_INCLUDE_PATH e:/myproject/include e:/myproject2/include)
+#SET(PROJECT_LINK_DIRECTORIES e:/myproject/lib e:/myproject2/lib)
+#SET(PROJECT_LIBRARIES myprojectlib myproject2lib)
+
+#wxWidgets build related stuff
+SET(WXW_USE_DEBUG OFF)
+SET(WXW_USE_UNICODE OFF)
+SET(WXW_USE_SHARED OFF)
+SET(WXW_USE_UNIV OFF)
+SET(WXW_USE_MONO OFF)
+SET(WXW_FILE_VERSION "26")
+SET(WXW_VERSION "2.6")
+
+#CMake Options
+SET(CMAKE_VERBOSE_MAKEFILE TRUE)
+
+INCLUDE (FindwxW)
+INCLUDE (UsewxW)
