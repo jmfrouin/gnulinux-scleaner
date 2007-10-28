@@ -230,10 +230,9 @@ namespace GUI
 		
 		UpdateFolderList();
     	m_Aui->AddPage(m_Folders, wxString(i8n("Folders"), wxConvUTF8), false);
-		std::cout << "m_Folder = " << m_Folders << "\n";
 
 		m_Input = new wxNotebook(m_Aui, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
-    	m_Aui->AddPage(m_Input, wxString(i8n("Founded files"), wxConvUTF8), false);
+    	m_Aui->AddPage(m_Input, wxString(i8n("Found files"), wxConvUTF8), false);
 	
 		m_StatusBar = new wxStatusBar(l_Frame, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
 		m_StatusBar->SetFieldsCount(6);
@@ -502,9 +501,11 @@ namespace GUI
 	
 	void CMainInterface::UpdateFolderList()
 	{
+		std::cout << "[DBG] CMainInterface : UpdateFolderList\n";
 		//wxTreeMultiCtrl
 	    if(!m_Folders)
 		{
+			std::cout << "[DBG] CMainInterface : wxTreeMultiCtrl creation\n";
 			m_Folders = new wxTreeMultiCtrl(m_Aui, -1);
 			m_Folders->SetBackgroundColour(*wxWHITE);
 			
@@ -518,14 +519,19 @@ namespace GUI
 		}
 		else
 		{
+			std::cout << "[DBG] CMainInterface : Cleaning wxTreeMultiCtrl\n";
 			m_Folders->DeleteAllItems();
+			m_AddedFolders = 0;
+			m_ExcludedFolders = 0;
 		}
 
 		wxTreeMultiWindowInfo l_wndinfo(wxTMC_BG_ADJUST_ALL, 8, 0);
-		wxTreeMultiItem item = m_Folders->AddRoot(_T("Folders add to scan"), _T("Folders add to scan"));
+		std::cout << "[DBG] CMainInterface : Adding folders added to scan\n";
+		wxTreeMultiItem item = m_Folders->AddRoot(_T("Folders added to scan"), _T("Folders added to scan"));
 
 	    if(!m_AddedFolders)
 		{
+			std::cout << "[DBG] CMainInterface : Creating m_AddedFolders wxCheckListCtrl\n";
 			m_AddedFolders = new GUI::wxCheckListCtrl(m_Folders, wxID_ANY, wxDefaultPosition, wxSize(400,200), wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 			//Setting header:
 			wxListItem l_itemCol;
@@ -535,13 +541,18 @@ namespace GUI
 		}
 		else
 		{
-			m_AddedFolders->DeleteAllItems();
+			std::cout << "[DBG] CMainInterface : Cleaning m_AddedFolders wxCheckListCtrl\n";
+			std::cout << "m_AddedFolders = " << m_AddedFolders << '\n';
+			//m_AddedFolders->DeleteAllItems();
+			std::cout << "[DBG] CMainInterface : Cleaned m_AddedFolders wxCheckListCtrl\n";
 		}
 		
 		std::list<std::string>* l_fl = m_Engine->getFoldersListPtr();
 		std::list<std::string>::iterator l_it;
+		std::cout << "[DBG] CMainInterface : FoldersList size = " << l_fl->size() << "\n";
 		for(l_it = l_fl->begin(); l_it !=l_fl->end(); ++l_it)
 		{
+			std::cout << "[DBG] CMainInterface : Filling m_AddedFolders wxCheckListCtrl\n";
 			//Maybe an alphabetic sort will be need here : algorithms :D
 			long l_tmp = m_AddedFolders->InsertItem(l_fl->size(), wxString((*l_it).c_str(), wxConvUTF8), 0);
 			m_AddedFolders->SetItemImage(l_tmp, 2);
@@ -551,7 +562,7 @@ namespace GUI
 
 		m_Folders->AppendWindow(item, m_AddedFolders, _T(""), l_wndinfo, wxTMC_SPAN_WIDTH);
 
-		item = 0;
+		std::cout << "[DBG] CMainInterface : Adding folders excluded from scan\n";
 		item = m_Folders->AddRoot(_T("Folders excluded from scan"), _T("Folders excluded from scan"));
 
 	    if(!m_ExcludedFolders)
@@ -579,6 +590,7 @@ namespace GUI
 		}
 
 		m_Folders->AppendWindow(item, m_ExcludedFolders, _T(""), l_wndinfo, wxTMC_SPAN_WIDTH);
+		std::cout << "[DBG] CMainInterface : UpdateFolderList end\n";
 	}
 	
 	
