@@ -42,6 +42,7 @@
 #include <wx/listctrl.h>
 #include <wx/imaglist.h>
 #include <wx/msgdlg.h>
+#include <wx/treectrl.h>
 #include <wx/aui/auibook.h>
 #include <wx/statline.h>
 #include "maininterface.h"
@@ -73,6 +74,12 @@
 #include <gfx/menu_del_folder.xpm>
 #include <gfx/menu_prefs.xpm>
 #include <gfx/menu_about.xpm>
+
+#include <gfx/icon1.xpm>
+#include <gfx/icon2.xpm>
+#include <gfx/icon3.xpm>
+#include <gfx/icon4.xpm>
+#include <gfx/icon5.xpm>
 
 namespace GUI
 {
@@ -333,7 +340,19 @@ namespace GUI
 		// Happend plugins' name available
 		std::map<std::string, Plugins::IInPlugin*>::iterator _it;
 		for(_it = m_Engine->getAvailableInputPlugs()->begin(); _it != m_Engine->getAvailableInputPlugs()->end(); ++_it)
-		{
+		{ 
+			wxPanel* l_Panel = new wxPanel(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL);
+    		wxBoxSizer* l_Sizer = new wxBoxSizer(wxHORIZONTAL);
+    		l_Panel->SetSizer(l_Sizer);
+
+    		wxTreeCtrl* itemTreeCtrl3 = new wxTreeCtrl( l_Panel, wxID_ANY, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE);
+			wxTreeItemId l_Parent = itemTreeCtrl3->AddRoot(wxT("What if machine :"));
+            itemTreeCtrl3->AppendItem(l_Parent, wxT("what if bender was human ?!"), -1, -1);
+    		l_Sizer->Add(itemTreeCtrl3, 1, wxGROW | wxALL, 5);
+
+    		wxBoxSizer* l_Sizer2 = new wxBoxSizer(wxVERTICAL);
+    		l_Sizer->Add(l_Sizer2, 1, wxGROW | wxALL, 5);
+
 			wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
 	
 			std::list<std::string> l_list;
@@ -345,8 +364,16 @@ namespace GUI
 			#if defined DEBUG
 			std::cout << i8n("[DBG] Size = ") << l_list.size() << '\n';
 			#endif
-			wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
-	
+			wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(l_Panel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+
+    		l_Sizer2->Add(l_fileslist, 1, wxGROW|wxALL, 5);
+
+    		wxBoxSizer* l_Sizer3 = new wxBoxSizer(wxHORIZONTAL);
+    		l_Sizer2->Add(l_Sizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    		l_Sizer3->Add(new wxButton( l_Panel, wxID_ANY, wxString(i8n("Select all"), wxConvUTF8), wxDefaultPosition, wxDefaultSize, 0 ), 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    		l_Sizer3->Add(new wxButton( l_Panel, wxID_ANY, wxString(i8n("Unselect all"), wxConvUTF8), wxDefaultPosition, wxDefaultSize, 0 ), 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
 			//Setting header:
 			wxListItem l_itemCol;
 			l_itemCol.SetText(wxString(i8n("File location"), wxConvUTF8));
@@ -412,7 +439,7 @@ namespace GUI
 			l_fileslist->SetColumnWidth(2, wxLIST_AUTOSIZE);
 	
 			l_fileslist->Show();
-			m_Input->AddPage(l_fileslist, l_str, true);
+			m_Input->AddPage(l_Panel, l_str, true);
 			m_TotalSizes.push_back(l_totalsize);
 		}
 	
