@@ -221,6 +221,11 @@ namespace Engine
 				return &m_FoldersList;
 			}
 	
+			std::list<std::string>* getExcludedFoldersListPtr()
+			{
+				return &m_ExcludedFoldersList;
+			}
+	
 			std::map<std::string, Plugins::IInPlugin*>*  getAvailableInputPlugs()
 			{
 				return m_AvailableInputPlugs;
@@ -257,7 +262,7 @@ namespace Engine
 	
 			//Folders infos
 			std::list<std::string>							m_FoldersList;
-			std::list<std::string>							m_BlacklistFoldersList;
+			std::list<std::string>							m_ExcludedFoldersList;
 	
 			//Files infos
 			std::map<std::string, unsigned long>			m_Infos;

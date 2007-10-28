@@ -22,7 +22,7 @@
     #pragma hdrstop
 #endif
 
-#include "wx/treemultictrl/TreeMultiItemRoot.h"
+#include "TreeMultiItemRoot.h"
 
 /** TreeMultiItemRoot
  * This class is the class you use to create a tree. It contains all the

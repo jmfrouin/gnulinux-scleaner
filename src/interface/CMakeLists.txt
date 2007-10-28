@@ -17,4 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 SET(interface_src checklistctrl.cpp preferences.cpp maininterface.cpp select_dialog.cpp tray.cpp)
-ADD_LIBRARY(interface ${interface_src})
+
+SET(wxTreeMultiCtrl TreeMultiItemBase.cpp TreeMultiItemNode.cpp TreeMultiItemWindow.cpp TreeMultiItemRoot.cpp wxTreeMultiCtrl.cpp wxTreeMultiEvent.cpp)
+
+ADD_LIBRARY(interface ${interface_src} ${wxTreeMultiCtrl})

@@ -22,7 +22,7 @@
     #pragma hdrstop
 #endif
 
-#include "wx/treemultictrl/TreeMultiItemWindow.h"
+#include "TreeMultiItemWindow.h"
 
 /** TreeMultiItemWindow
   *	This class is a possible end node for the tree. If you want multiple

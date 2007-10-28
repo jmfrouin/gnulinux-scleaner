@@ -4,7 +4,7 @@
 
 #include "wx/event.h"
 
-#include "wx/treemultictrl/wxTreeMultiCtrl.h"
+#include "wxTreeMultiCtrl.h"
 
 
 /**

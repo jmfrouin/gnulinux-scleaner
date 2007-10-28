@@ -264,7 +264,7 @@
           <bool name="proxy-wxRESIZE_BORDER">1</bool>
           <bool name="proxy-wxSYSTEM_MENU">1</bool>
           <bool name="proxy-wxMINIMIZE">0</bool>
-          <bool name="proxy-wxMAXIMIZE">1</bool>
+          <bool name="proxy-wxMAXIMIZE">0</bool>
           <bool name="proxy-wxMINIMIZE_BOX">1</bool>
           <bool name="proxy-wxMAXIMIZE_BOX">1</bool>
           <bool name="proxy-wxCLOSE_BOX">1</bool>
@@ -374,7 +374,7 @@
             <bool name="proxy-wxTB_VERTICAL">0</bool>
             <bool name="proxy-wxTB_TEXT">0</bool>
             <bool name="proxy-wxTB_NOICONS">0</bool>
-            <bool name="proxy-wxTB_NODIVIDER">1</bool>
+            <bool name="proxy-wxTB_NODIVIDER">0</bool>
             <bool name="proxy-wxTB_NOALIGN">0</bool>
             <bool name="proxy-wxTB_HORZ_LAYOUT">0</bool>
             <bool name="proxy-wxNO_BORDER">0</bool>

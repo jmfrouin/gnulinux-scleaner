@@ -23,8 +23,8 @@
 
 #include "wx/arrimpl.cpp"
 
-#include "wx/treemultictrl/wxTreeMultiCtrl.h"
-#include "wx/treemultictrl/wxTreeMultiEvent.h"
+#include "wxTreeMultiCtrl.h"
+#include "wxTreeMultiEvent.h"
 #include "tmcimages.h"
 
 

@@ -241,6 +241,7 @@ MyAppFrame::MyAppFrame(const wxString& title, const wxPoint& pos, const wxSize& 
 	pnl->SetBackgroundColour(*wxWHITE);
 
 	_tmc->AppendWindow(item, pnl, _T(""), wndinfo, wxTMC_SPAN_WIDTH);
+	
 
 	pnl = new wxPanel(_tmc, -1);
 	sizer = new wxBoxSizer(wxHORIZONTAL);

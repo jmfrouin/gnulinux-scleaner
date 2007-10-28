@@ -22,7 +22,7 @@
     #pragma hdrstop
 #endif
 
-#include "wx/treemultictrl/TreeMultiItemNode.h"
+#include "TreeMultiItemNode.h"
 
 #include "wx/arrimpl.cpp"
 WX_DEFINE_OBJARRAY(TreeMultiItemBaseArray);

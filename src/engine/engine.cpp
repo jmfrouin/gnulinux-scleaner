@@ -58,6 +58,9 @@ namespace Engine
 		m_FoldersList.push_back("/home/snoogie/git/src/interface");
 		m_FoldersList.push_back("/home/snoogie/git/gfx");
 		m_FoldersList.push_back("/home/snoogie/git/build");
+
+		m_ExcludedFoldersList.push_back("/home");
+		m_ExcludedFoldersList.push_back("/root");
 	}
 	
 	CEngine::~CEngine()

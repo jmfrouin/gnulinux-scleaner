@@ -27,7 +27,6 @@
 #include <vector>
 #include <wx/frame.h>
 #include <wx/toolbar.h>
-#include <wx/splitter.h>
 #include <wx/notebook.h>
 #include <wx/statusbr.h>
 #include <wx/stattext.h>
@@ -43,13 +42,15 @@ namespace Engine
 class wxRadioBox;
 class wxHtmlWindow;
 class wxProgressDialog;
-
+class wxAuiNotebook;
 
 namespace GUI
 {
 	class wxCheckListCtrl;
 	class wxCheckTreeCtrl;
 }
+
+class wxTreeMultiCtrl;
 
 /*!
 *@brief All GUI related stuff
@@ -82,13 +83,11 @@ namespace GUI
 			static bool ShowToolTips();
 	
 			//Callbacks
-			//void OnSelChanged(wxTreeEvent& event);
 			void OnAbout(wxCommandEvent& WXUNUSED(event));
 			void OnQuit(wxCommandEvent& WXUNUSED(event));
 			void OnProcess(wxCommandEvent& WXUNUSED(event));
 			void OnScan(wxCommandEvent& WXUNUSED(event));
 			void OnSelect(wxCommandEvent& WXUNUSED(event));
-			//void OnSelRadio(wxCommandEvent& event);
 			void OnNotebook(wxNotebookEvent& event);
 			void OnFolderAdd(wxCommandEvent& WXUNUSED(event));
 			void OnFolderDel(wxCommandEvent& WXUNUSED(event));
@@ -126,16 +125,14 @@ namespace GUI
 			wxNotebook*                         m_Input;
 	
 			//Informations GUI panel
-			//wxHtmlWindow*                       m_Html;
 			wxCheckTreeCtrl*					m_Tree;
 	
 			//GUI checkbox which display output plugins
-			//wxRadioBox*                         m_Output;
 			wxStatusBar*                        m_StatusBar;
-			wxSplitterWindow* 					m_Split;
-			//wxSplitterWindow* 					m_Split2;
-			//wxSplitterWindow* 					m_Split3;
-			wxCheckListCtrl*	 				m_Folders;
+			wxAuiNotebook* 						m_Aui;
+			wxTreeMultiCtrl*	 				m_Folders;
+			wxCheckListCtrl*					m_AddedFolders;
+			wxCheckListCtrl*					m_ExcludedFolders;
 	
 			//Progress bar for process part.
 			wxProgressDialog*                   m_Progress;
