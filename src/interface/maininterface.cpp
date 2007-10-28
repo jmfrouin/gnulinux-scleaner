@@ -44,7 +44,6 @@
 #include <wx/msgdlg.h>
 #include <wx/aui/auibook.h>
 #include <wx/statline.h>
-#include "wxTreeMultiCtrl.h"
 #include "maininterface.h"
 #include "checklistctrl.h"
 #include "select_dialog.h"

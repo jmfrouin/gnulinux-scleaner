@@ -18,6 +18,4 @@
 
 SET(interface_src checklistctrl.cpp preferences.cpp maininterface.cpp select_dialog.cpp tray.cpp)
 
-SET(wxTreeMultiCtrl TreeMultiItemBase.cpp TreeMultiItemNode.cpp TreeMultiItemWindow.cpp TreeMultiItemRoot.cpp wxTreeMultiCtrl.cpp wxTreeMultiEvent.cpp)
-
-ADD_LIBRARY(interface ${interface_src} ${wxTreeMultiCtrl})
+ADD_LIBRARY(interface ${interface_src})
