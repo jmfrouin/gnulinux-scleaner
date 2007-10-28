@@ -43,6 +43,7 @@
 #include <wx/imaglist.h>
 #include <wx/msgdlg.h>
 #include <wx/aui/auibook.h>
+#include <wx/statline.h>
 #include "wxTreeMultiCtrl.h"
 #include "maininterface.h"
 #include "checklistctrl.h"
@@ -114,11 +115,6 @@ namespace GUI
 		CreateControls();
 		Centre();
 	
-		//if (FindWindow(ID_SPLITTERWINDOW1))
-		//{
-		//	((wxSplitterWindow*) FindWindow(ID_SPLITTERWINDOW1))->SetSashPosition(SYMBOL_MAININTERFACE_SASH1_POS);
-		//}
-	
 	  	SetIcon(wxICON(scleaner));
 		return true;
 	}
@@ -170,7 +166,6 @@ namespace GUI
 	{
 		CMainInterface* l_Frame = this;
 	
-		//________________________________________________________________
 		//MENU
 		wxMenuBar* l_MenuBar = new wxMenuBar;
 		wxMenu* l_File = new wxMenu;
@@ -203,7 +198,6 @@ namespace GUI
 	
 		l_Frame->SetMenuBar(l_MenuBar);
 	
-		//________________________________________________________________
 		//TOOLBAR
 		//l_ToolBar->SetMargins(4, 4);
 	
@@ -213,22 +207,19 @@ namespace GUI
 		l_ToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
 		l_ToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
 		l_ToolBar->AddSeparator();
-		l_ToolBar->AddTool(ID_FOLDER_ADD, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), folder_add_xpm , folder_add_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
-		l_ToolBar->AddTool(ID_FOLDER_DEL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), folder_del_xpm , folder_del_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
-		l_ToolBar->AddSeparator();
 		l_ToolBar->AddTool(ID_PREFS, wxString(i8n("Preferences"), wxConvUTF8), prefs_xpm , prefs_xpm, wxITEM_NORMAL, wxString(i8n("Preferences"), wxConvUTF8), wxEmptyString);
 		l_ToolBar->AddSeparator();
 		l_ToolBar->AddTool(wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8),exit_xpm , exit_xpm, wxITEM_NORMAL, wxString(i8n("Quit"), wxConvUTF8), wxEmptyString);
 		l_ToolBar->Realize();
 		l_Frame->SetToolBar(l_ToolBar);
-		//________________________________________________________________
 	
-    	m_Aui = new wxAuiNotebook(l_Frame, ID_AUI, wxDefaultPosition, wxDefaultSize, wxAUI_NB_DEFAULT_STYLE );
+    	m_Aui = new wxAuiNotebook(l_Frame, ID_AUI, wxDefaultPosition, wxDefaultSize, wxAUI_NB_TOP|wxAUI_NB_TAB_SPLIT|wxAUI_NB_TAB_MOVE|wxAUI_NB_SCROLL_BUTTONS);
 	
 		//Input plugins
 		int l_flags = wxBK_TOP | wxNB_MULTILINE | wxDOUBLE_BORDER;
 		
 		UpdateFolderList();
+
     	m_Aui->AddPage(m_Folders, wxString(i8n("Folders"), wxConvUTF8), false);
 
 		m_Input = new wxNotebook(m_Aui, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
@@ -501,58 +492,35 @@ namespace GUI
 	
 	void CMainInterface::UpdateFolderList()
 	{
-		std::cout << "[DBG] CMainInterface : UpdateFolderList\n";
-		//wxTreeMultiCtrl
+		wxSizer* l_Sizer = new wxBoxSizer(wxVERTICAL);
+
 	    if(!m_Folders)
 		{
-			std::cout << "[DBG] CMainInterface : wxTreeMultiCtrl creation\n";
-			m_Folders = new wxTreeMultiCtrl(m_Aui, -1);
-			m_Folders->SetBackgroundColour(*wxWHITE);
-			
-			// make it a bit bigger
-			wxFont l_Font;
-			l_Font = m_Folders->GetCaptionFont();
-			l_Font.SetFamily(wxMODERN);
-			l_Font.SetWeight(wxBOLD);
-			l_Font.SetPointSize(l_Font.GetPointSize()+2);
-			m_Folders->SetCaptionFont(l_Font);
+			m_Folders = new wxPanel(m_Aui, -1);
 		}
 		else
 		{
-			std::cout << "[DBG] CMainInterface : Cleaning wxTreeMultiCtrl\n";
-			m_Folders->DeleteAllItems();
-			m_AddedFolders = 0;
-			m_ExcludedFolders = 0;
-		}
 
-		wxTreeMultiWindowInfo l_wndinfo(wxTMC_BG_ADJUST_ALL, 8, 0);
-		std::cout << "[DBG] CMainInterface : Adding folders added to scan\n";
-		wxTreeMultiItem item = m_Folders->AddRoot(_T("Folders added to scan"), _T("Folders added to scan"));
+		}
+	
+		m_Folders->SetSizer(l_Sizer);
+
+		l_Sizer->Add(new wxStaticText(m_Folders, -1, _T("Folders added to scan :")), 0, wxALIGN_LEFT | wxALL, 5);
 
 	    if(!m_AddedFolders)
 		{
-			std::cout << "[DBG] CMainInterface : Creating m_AddedFolders wxCheckListCtrl\n";
-			m_AddedFolders = new GUI::wxCheckListCtrl(m_Folders, wxID_ANY, wxDefaultPosition, wxSize(400,200), wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+			m_AddedFolders = new GUI::wxCheckListCtrl(m_Folders, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 			//Setting header:
 			wxListItem l_itemCol;
 			l_itemCol.SetText(wxString(i8n("Name"), wxConvUTF8));
 			l_itemCol.SetImage(-1);
 			m_AddedFolders->InsertColumn(0, l_itemCol);
 		}
-		else
-		{
-			std::cout << "[DBG] CMainInterface : Cleaning m_AddedFolders wxCheckListCtrl\n";
-			std::cout << "m_AddedFolders = " << m_AddedFolders << '\n';
-			//m_AddedFolders->DeleteAllItems();
-			std::cout << "[DBG] CMainInterface : Cleaned m_AddedFolders wxCheckListCtrl\n";
-		}
 		
 		std::list<std::string>* l_fl = m_Engine->getFoldersListPtr();
 		std::list<std::string>::iterator l_it;
-		std::cout << "[DBG] CMainInterface : FoldersList size = " << l_fl->size() << "\n";
 		for(l_it = l_fl->begin(); l_it !=l_fl->end(); ++l_it)
 		{
-			std::cout << "[DBG] CMainInterface : Filling m_AddedFolders wxCheckListCtrl\n";
 			//Maybe an alphabetic sort will be need here : algorithms :D
 			long l_tmp = m_AddedFolders->InsertItem(l_fl->size(), wxString((*l_it).c_str(), wxConvUTF8), 0);
 			m_AddedFolders->SetItemImage(l_tmp, 2);
@@ -560,23 +528,27 @@ namespace GUI
 			m_AddedFolders->SetColumnWidth(0, wxLIST_AUTOSIZE);
 		}
 
-		m_Folders->AppendWindow(item, m_AddedFolders, _T(""), l_wndinfo, wxTMC_SPAN_WIDTH);
+		l_Sizer->Add(m_AddedFolders, 1, wxGROW | wxALL, 5);
 
-		std::cout << "[DBG] CMainInterface : Adding folders excluded from scan\n";
-		item = m_Folders->AddRoot(_T("Folders excluded from scan"), _T("Folders excluded from scan"));
+		wxSizer* l_Sizer2 = new wxBoxSizer(wxHORIZONTAL);
+		l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
+		l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
+
+		l_Sizer->Add(l_Sizer2, 0, wxGROW | wxALL, 5);
+
+		wxStaticLine* l_Line = new wxStaticLine(m_Folders, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
+    	l_Sizer->Add(l_Line, 0, wxGROW|wxALL, 5);
+
+		l_Sizer->Add(new wxStaticText(m_Folders, -1, _T("Folders excluded from scan :")), 0, wxALIGN_LEFT | wxALL, 5);
 
 	    if(!m_ExcludedFolders)
 		{
-			m_ExcludedFolders = new GUI::wxCheckListCtrl(m_Folders, wxID_ANY, wxDefaultPosition, wxSize(400,200), wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+			m_ExcludedFolders = new GUI::wxCheckListCtrl(m_Folders, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 			//Setting header:
 			wxListItem l_itemCol;
 			l_itemCol.SetText(wxString(i8n("Name"), wxConvUTF8));
 			l_itemCol.SetImage(-1);
 			m_ExcludedFolders->InsertColumn(0, l_itemCol);
-		}
-		else
-		{
-			m_ExcludedFolders->DeleteAllItems();
 		}
 		
 		l_fl = m_Engine->getExcludedFoldersListPtr();
@@ -589,8 +561,13 @@ namespace GUI
 			m_ExcludedFolders->SetColumnWidth(0, wxLIST_AUTOSIZE);
 		}
 
-		m_Folders->AppendWindow(item, m_ExcludedFolders, _T(""), l_wndinfo, wxTMC_SPAN_WIDTH);
-		std::cout << "[DBG] CMainInterface : UpdateFolderList end\n";
+		l_Sizer->Add(m_ExcludedFolders, 1, wxGROW | wxALL, 5);
+
+		l_Sizer2 = new wxBoxSizer(wxHORIZONTAL);
+		l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
+		l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
+
+		l_Sizer->Add(l_Sizer2, 0, wxGROW | wxALL, 5);
 	}
 	
 	

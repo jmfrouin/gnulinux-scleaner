@@ -43,6 +43,7 @@ class wxRadioBox;
 class wxHtmlWindow;
 class wxProgressDialog;
 class wxAuiNotebook;
+class wxPanel;
 
 namespace GUI
 {
@@ -130,7 +131,7 @@ namespace GUI
 			//GUI checkbox which display output plugins
 			wxStatusBar*                        m_StatusBar;
 			wxAuiNotebook* 						m_Aui;
-			wxTreeMultiCtrl*	 				m_Folders;
+			wxPanel*			 				m_Folders;
 			wxCheckListCtrl*					m_AddedFolders;
 			wxCheckListCtrl*					m_ExcludedFolders;
 	
