@@ -1,4 +1,5 @@
 0.32.0
+Add multiplatform (windows, solaris, bsd)
 Daemon analysant les fichiers du systeme pour maintenir une liste a jour
 Utiliser wxConfig pour sauvegarder les prefs.
 Ajouter un compteur de build.
