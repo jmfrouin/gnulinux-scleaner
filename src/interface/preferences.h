@@ -29,6 +29,7 @@
 #define SYMBOL_CPREFERENCES_SIZE wxSize(400, 300)
 #define SYMBOL_CPREFERENCES_POSITION wxDefaultPosition
 
+#include <wx/listbook.h>
 #include <tools/smart_pointer.h>
 
 namespace Engine

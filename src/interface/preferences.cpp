@@ -168,7 +168,17 @@ namespace GUI
 	////@begin CPreferences content construction
 	    CPreferences* itemDialog1 = this;
 	
-	    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
+    	wxListbook* itemListbook2 = new wxListbook( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
+
+    	wxPanel* itemPanel3 = new wxPanel( itemListbook2, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+
+    	itemListbook2->AddPage(itemPanel3, _("Plugins"));
+
+    	wxScrolledWindow* itemScrolledWindow4 = new wxScrolledWindow( itemListbook2, wxID_ANY, wxDefaultPosition, wxSize(100, 100), wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    	itemScrolledWindow4->SetScrollbars(1, 1, 0, 0);
+    	itemListbook2->AddPage(itemScrolledWindow4, _("Application"));
+	
+	    /*wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
 	    itemDialog1->SetSizer(itemBoxSizer2);
 	
 		std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
@@ -187,8 +197,8 @@ namespace GUI
 	    itemRadioBox3Strings.Add(_("&MD5"));
 	    wxRadioBox* itemRadioBox3 = new wxRadioBox( itemDialog1, ID_RADIOBOX2, _("Duplicates files method"), wxDefaultPosition, wxDefaultSize, itemRadioBox3Strings, 1, wxRA_SPECIFY_ROWS );
 	    itemRadioBox3->SetSelection(0);
-	    itemBoxSizer2->Add(itemRadioBox3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-		
+	    itemBoxSizer2->Add(itemRadioBox3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);*/
+
 	}
 	
 	
