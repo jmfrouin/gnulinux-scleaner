@@ -224,11 +224,11 @@ namespace GUI
 		m_InputPlugins = new wxCheckListCtrl(m_Aui, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 		//Setting header:
 		wxListItem l_itemCol;
-		l_itemCol.SetText(wxString(i8n("File location"), wxConvUTF8));
+		l_itemCol.SetText(wxString(i8n("Plugin name"), wxConvUTF8));
 		l_itemCol.SetImage(-1);
 		m_InputPlugins->InsertColumn(0, l_itemCol);
 	
-		l_itemCol.SetText(wxString(i8n("Size (bytes)"), wxConvUTF8));
+		l_itemCol.SetText(wxString(i8n("Description"), wxConvUTF8));
 		l_itemCol.SetAlign(wxLIST_FORMAT_CENTRE);
 		m_InputPlugins->InsertColumn(1, l_itemCol);
 
@@ -239,7 +239,10 @@ namespace GUI
 			m_InputPlugins->Hide();
 	
 			wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
-			m_InputPlugins->InsertItem(l_counter++, l_str, 0);
+			wxString l_des(((*_it).second)->Description().c_str(), wxConvUTF8);
+			std::cout << ((*_it).second)->Description().c_str() << '\n';
+			long l_tmp = m_InputPlugins->InsertItem(l_counter++, l_str, 0);
+			m_InputPlugins->SetItem(l_tmp, 1, l_des); 
 		}
 		m_InputPlugins->Show();
 		m_InputPlugins->SetColumnWidth(0, wxLIST_AUTOSIZE);

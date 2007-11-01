@@ -57,4 +57,10 @@ bool CnullfilesPlugin::needRoot()
 	l_ret = false;				 // In order to access /var/log/ we need root access.
 	return l_ret;
 }
+
+
+std::string CnullfilesPlugin::Description()
+{
+	return "Find empty file size";
+}
 /* vi:set ts=4: */
