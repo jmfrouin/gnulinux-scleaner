@@ -65,4 +65,8 @@ bool ClogsPlugin::needRoot()
 }
 
 
+std::string ClogsPlugin::Description()
+{
+	return "Find old logs";
+}
 /* vi:set ts=4: */

@@ -63,4 +63,8 @@ bool Capt_cachePlugin::needRoot()
 }
 
 
+std::string Capt_cachePlugin::Description()
+{
+	return "Find apt cache archives";
+}
 /* vi:set ts=4: */

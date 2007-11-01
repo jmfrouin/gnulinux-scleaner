@@ -71,6 +71,11 @@ class Capt_cachePlugin : public Plugins::IRootPlugin
 		 */
 		void processFile(const std::string& _filename);
 		bool needRoot();
+
+		/*!
+		 *@brief From IPlugin
+		 */
+		std::string Description();
 };
 #endif							 //_APT_CACHE_H_
 /* vi:set ts=4: */

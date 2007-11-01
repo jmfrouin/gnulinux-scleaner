@@ -83,6 +83,11 @@ class CkernelsPlugin : public Plugins::IRootPlugin
 		 */
 		bool Search(const std::string& _name, std::string& _result);
 
+		/*!
+		 *@brief From IPlugin
+		 */
+		std::string Description();
+
 	private:
 		pkgCache* 		m_Cache;
 		pkgSourceList* 	m_SrcList;

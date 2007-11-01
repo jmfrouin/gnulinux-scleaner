@@ -64,6 +64,11 @@ class CbackfilesPlugin : public Plugins::IInPlugin
 		 */
 		void processFile(const std::string& _filename);
 		bool needRoot();
+
+		/*!
+		 *@brief From IPlugin
+		 */
+		std::string Description();
 };
 #endif							 //_BACKFILES_H_
 /* vi:set ts=4: */

@@ -63,6 +63,11 @@ class CtbzPlugin : public Plugins::IOutPlugin
 		 *@return true on success, false otherwise.
 		 */
 		bool Compress(const std::string& _input, const std::string& _output, IProgressbar* _callback);
+
+		/*!
+		 *@brief From IPlugin
+		 */
+		std::string Description();
 };
 #endif							 //_TBZ_H_
 /* vi:set ts=4: */

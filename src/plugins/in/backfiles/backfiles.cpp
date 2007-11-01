@@ -64,4 +64,8 @@ bool CbackfilesPlugin::needRoot()
 }
 
 
+std::string CbackfilesPlugin::Description()
+{
+	return "Find backup files (*~ and *bak files)";
+}
 /* vi:set ts=4: */

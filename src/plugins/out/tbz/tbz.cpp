@@ -164,4 +164,8 @@ bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output,
 }
 
 
+std::string CtbzPlugin::Description()
+{
+	return "Create a tar + bzip2 archive";
+}
 /* vi:set ts=4: */

@@ -64,6 +64,11 @@ namespace Plugins
 			}
 	
 			/*!
+			 *@brief Description.
+			 */
+			virtual std::string Description() = 0;
+
+			/*!
 			 *@brief Input or output plugin ?
 			 */
 			virtual eType Type() = 0;

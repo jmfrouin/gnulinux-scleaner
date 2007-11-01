@@ -83,4 +83,10 @@ bool CemptyfoldersPlugin::needRoot()
 	l_ret = false;				 // This plugin will work in both (user/root) mode.
 	return l_ret;
 }
+
+
+std::string CemptyfoldersPlugin::Description()
+{
+	return "Find empty folder size";
+}
 /* vi:set ts=4: */
