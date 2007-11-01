@@ -97,7 +97,7 @@ namespace GUI
 	
 	
 	CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-	m_Input(0), m_StatusBar(0), m_Aui(0), m_Folders(0), m_AddedFolders(0), m_ExcludedFolders(0), m_Progress(0)
+	m_FoundFiles(0), m_StatusBar(0), m_Aui(0), m_Folders(0), m_AddedFolders(0), m_ExcludedFolders(0), m_InputPlugins(0), m_Progress(0)
 	{
 		Init();
 		Create(parent, id, caption, pos, size, style);
@@ -221,8 +221,35 @@ namespace GUI
 
     	m_Aui->AddPage(m_Folders, wxString(i8n("Folders"), wxConvUTF8), false);
 
-		m_Input = new wxNotebook(m_Aui, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
-    	m_Aui->AddPage(m_Input, wxString(i8n("Found files"), wxConvUTF8), false);
+		m_InputPlugins = new wxCheckListCtrl(m_Aui, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+		//Setting header:
+		wxListItem l_itemCol;
+		l_itemCol.SetText(wxString(i8n("File location"), wxConvUTF8));
+		l_itemCol.SetImage(-1);
+		m_InputPlugins->InsertColumn(0, l_itemCol);
+	
+		l_itemCol.SetText(wxString(i8n("Size (bytes)"), wxConvUTF8));
+		l_itemCol.SetAlign(wxLIST_FORMAT_CENTRE);
+		m_InputPlugins->InsertColumn(1, l_itemCol);
+
+		int l_counter=0;
+		std::map<std::string, Plugins::IInPlugin*>::iterator _it;
+		for(_it = m_Engine->getAvailableInputPlugs()->begin(); _it != m_Engine->getAvailableInputPlugs()->end(); ++_it)
+		{
+			m_InputPlugins->Hide();
+	
+			wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
+			m_InputPlugins->InsertItem(l_counter++, l_str, 0);
+		}
+		m_InputPlugins->Show();
+		m_InputPlugins->SetColumnWidth(0, wxLIST_AUTOSIZE);
+		m_InputPlugins->SetColumnWidth(1, wxLIST_AUTOSIZE);
+	
+    	m_Aui->AddPage(m_InputPlugins, wxString(i8n("Input plugins"), wxConvUTF8), false);
+
+		m_FoundFiles = new wxNotebook(m_Aui, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
+    	m_Aui->AddPage(m_FoundFiles, wxString(i8n("Found files"), wxConvUTF8), false);
+    	//m_Aui->AddPage(m_Folders, wxString(i8n("Output plugins"), wxConvUTF8), false);
 	
 		m_StatusBar = new wxStatusBar(l_Frame, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
 		m_StatusBar->SetFieldsCount(6);
@@ -281,7 +308,7 @@ namespace GUI
 	{
 		wxString l_name;
 		int l_sel = event.GetSelection();
-		l_name  = m_Input->GetPageText(l_sel);
+		l_name  = m_FoundFiles->GetPageText(l_sel);
 		std::stringstream l_tot;
 		if(m_TotalSizes.size() > 0)
 		{
@@ -309,7 +336,7 @@ namespace GUI
 	//Toolbar
 	void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 	{
-		m_Input->DeleteAllPages();
+		m_FoundFiles->DeleteAllPages();
 		m_Progress = new wxProgressDialog(wxString(i8n("scleaner scan your disk ..."), wxConvUTF8),
 			wxString(i8n("this is a information"), wxConvUTF8),
 			100,					 // range
@@ -345,7 +372,7 @@ namespace GUI
 			#if defined DEBUG
 			std::cout << i8n("[DBG] Size = ") << l_list.size() << '\n';
 			#endif
-			wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(m_Input, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+			wxCheckListCtrl* l_fileslist = new wxCheckListCtrl(m_FoundFiles, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 	
 			//Setting header:
 			wxListItem l_itemCol;
@@ -412,11 +439,11 @@ namespace GUI
 			l_fileslist->SetColumnWidth(2, wxLIST_AUTOSIZE);
 	
 			l_fileslist->Show();
-			m_Input->AddPage(l_fileslist, l_str, true);
+			m_FoundFiles->AddPage(l_fileslist, l_str, true);
 			m_TotalSizes.push_back(l_totalsize);
 		}
 	
-		m_Input->AdvanceSelection();
+		m_FoundFiles->AdvanceSelection();
 		m_Engine->detectDuplicates();
 	}
 	
@@ -428,7 +455,7 @@ namespace GUI
 		std::cout << i8n("[DBG] Process !!! ") << '\n';
 		#endif
 		std::list<std::string> l_selected_files;
-		//GetSelectedFilesRecursively(m_Input->GetRootItem(), l_selected_files);
+		//GetSelectedFilesRecursively(m_FoundFiles->GetRootItem(), l_selected_files);
 		GetSelectedFiles(l_selected_files);
 	
 		#if defined DEBUG
@@ -662,11 +689,11 @@ namespace GUI
 	
 	void CMainInterface::GetSelectedFiles(std::list<std::string>& _fl)
 	{
-		unsigned int l_pagesNb = m_Input->GetPageCount();
+		unsigned int l_pagesNb = m_FoundFiles->GetPageCount();
 	
 		for(unsigned int i = 0; i < l_pagesNb; ++i)
 		{
-			wxWindow* l_win = m_Input->GetPage(i);
+			wxWindow* l_win = m_FoundFiles->GetPage(i);
 			wxCheckListCtrl* l_list = (wxCheckListCtrl*) l_win;
 			int l_itemsNb = l_list->GetItemCount();
 	

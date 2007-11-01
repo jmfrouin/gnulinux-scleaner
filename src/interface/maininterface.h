@@ -123,7 +123,7 @@ namespace GUI
 			Tools::TSmartPtr<Engine::CEngine>   m_Engine;
 	
 			//GUI tree list which display input plugins and file list.
-			wxNotebook*                         m_Input;
+			wxNotebook*                         m_FoundFiles;
 	
 			//Informations GUI panel
 			wxCheckTreeCtrl*					m_Tree;
@@ -134,6 +134,7 @@ namespace GUI
 			wxPanel*			 				m_Folders;
 			wxCheckListCtrl*					m_AddedFolders;
 			wxCheckListCtrl*					m_ExcludedFolders;
+			wxCheckListCtrl*					m_InputPlugins;
 	
 			//Progress bar for process part.
 			wxProgressDialog*                   m_Progress;
