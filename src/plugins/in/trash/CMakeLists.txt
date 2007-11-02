@@ -15,11 +15,9 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
+#
 
-
-SET(folder apt-cache backfiles emptyfolders kernels logs nullfiles trash)
-
-FOREACH(fold ${folder})
-	ADD_SUBDIRECTORY(${fold})
-ENDFOREACH(fold ${folder})
+SET(trash_src trash.cpp)
+ADD_LIBRARY(trash SHARED ${trash_src}) 
+TARGET_LINK_LIBRARIES(trash plugins tools)
+INSTALL(TARGETS trash DESTINATION ${PLUGSDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
