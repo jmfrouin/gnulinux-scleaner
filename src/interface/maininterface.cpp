@@ -97,7 +97,7 @@ namespace GUI
 	
 	
 	CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-	m_FoundFiles(0), m_StatusBar(0), m_Aui(0), m_Folders(0), m_AddedFolders(0), m_ExcludedFolders(0), m_InputPlugins(0), m_Progress(0)
+	m_FoundFiles(0), m_StatusBar(0), m_Aui(0), m_Folders(0), m_AddedFolders(0), m_ExcludedFolders(0), m_InputPlugins(0), m_OutputPlugins(0), m_Progress(0)
 	{
 		Init();
 		Create(parent, id, caption, pos, size, style);
@@ -173,13 +173,13 @@ namespace GUI
 	
 		//File menu
 		l_MenuBar->Append(l_File, wxString(i8n("File"), wxConvUTF8));
-		wxMenuItem* l_Add = new wxMenuItem(l_File, ID_FOLDER_ADD, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
-	    l_Add->SetBitmap(menu_add_folder_xpm);
-		wxMenuItem* l_Del = new wxMenuItem(l_File, ID_FOLDER_DEL, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
-	    l_Del->SetBitmap(menu_del_folder_xpm);
-		l_File->Append(l_Add);
-		l_File->Append(l_Del);
-		l_File->AppendSeparator();
+		//wxMenuItem* l_Add = new wxMenuItem(l_File, ID_FOLDER_ADD, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
+	    //l_Add->SetBitmap(menu_add_folder_xpm);
+		//wxMenuItem* l_Del = new wxMenuItem(l_File, ID_FOLDER_DEL, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
+	    //l_Del->SetBitmap(menu_del_folder_xpm);
+		//l_File->Append(l_Add);
+		//l_File->Append(l_Del);
+		//l_File->AppendSeparator();
 		wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8));
 		l_File->Append(l_Quit);
 	
@@ -202,7 +202,7 @@ namespace GUI
 	
 		//l_Frame->SetToolBar(l_ToolBar);
 		wxToolBar* l_ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-		l_ToolBar->AddTool(ID_SELECT, wxString(i8n("Select input plugins to use."), wxConvUTF8), select_xpm, select_xpm, wxITEM_NORMAL, wxString(i8n("Select input plugins to use."), wxConvUTF8), wxEmptyString);
+		//l_ToolBar->AddTool(ID_SELECT, wxString(i8n("Select input plugins to use."), wxConvUTF8), select_xpm, select_xpm, wxITEM_NORMAL, wxString(i8n("Select input plugins to use."), wxConvUTF8), wxEmptyString);
 		l_ToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
 		l_ToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
 		l_ToolBar->AddSeparator();
@@ -212,17 +212,18 @@ namespace GUI
 		l_ToolBar->Realize();
 		l_Frame->SetToolBar(l_ToolBar);
 	
+		//AuiNotebook
     	m_Aui = new wxAuiNotebook(l_Frame, ID_AUI, wxDefaultPosition, wxDefaultSize, wxAUI_NB_TOP|wxAUI_NB_TAB_SPLIT|wxAUI_NB_TAB_MOVE|wxAUI_NB_SCROLL_BUTTONS);
-	
-		//Input plugins
-		int l_flags = wxBK_TOP | wxNB_MULTILINE | wxDOUBLE_BORDER;
 		
+		//Folder AuiNotebook page
+		int l_flags = wxBK_TOP | wxNB_MULTILINE | wxDOUBLE_BORDER;
 		UpdateFolderList();
 
     	m_Aui->AddPage(m_Folders, wxString(i8n("Folders"), wxConvUTF8), false);
 
+		//Input plugins
 		m_InputPlugins = new wxCheckListCtrl(m_Aui, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
-		//Setting header:
+
 		wxListItem l_itemCol;
 		l_itemCol.SetText(wxString(i8n("Plugin name"), wxConvUTF8));
 		l_itemCol.SetImage(-1);
@@ -250,9 +251,28 @@ namespace GUI
 	
     	m_Aui->AddPage(m_InputPlugins, wxString(i8n("Input plugins"), wxConvUTF8), false);
 
+		//Output plugins
+    	wxString l_output[1];
+		l_output[0] = _("tbz");
+		m_OutputPlugins = new wxRadioBox(m_Aui, wxID_ANY, wxString(i8n("Output plugins :"), wxConvUTF8), wxDefaultPosition, wxDefaultSize, 1, l_output);
+
+		/*std::map<std::string, Plugins::IInPlugin*>::iterator _it;
+		for(_it = m_Engine->getAvailableInputPlugs()->begin(); _it != m_Engine->getAvailableInputPlugs()->end(); ++_it)
+		{
+			m_InputPlugins->Hide();
+	
+			wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
+			wxString l_des(((*_it).second)->Description().c_str(), wxConvUTF8);
+			std::cout << ((*_it).second)->Description().c_str() << '\n';
+			long l_tmp = m_InputPlugins->InsertItem(l_counter++, l_str, 0);
+			m_InputPlugins->SetItem(l_tmp, 1, l_des); 
+		}*/
+    	m_Aui->AddPage(m_OutputPlugins, wxString(i8n("Output plugins"), wxConvUTF8), false);
+
+		//Found files AuiNotebook page
+		//FIXME: Display it only when "scan" has been launched
 		m_FoundFiles = new wxNotebook(m_Aui, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
     	m_Aui->AddPage(m_FoundFiles, wxString(i8n("Found files"), wxConvUTF8), false);
-    	//m_Aui->AddPage(m_Folders, wxString(i8n("Output plugins"), wxConvUTF8), false);
 	
 		m_StatusBar = new wxStatusBar(l_Frame, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
 		m_StatusBar->SetFieldsCount(6);

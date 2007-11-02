@@ -135,6 +135,7 @@ namespace GUI
 			wxCheckListCtrl*					m_AddedFolders;
 			wxCheckListCtrl*					m_ExcludedFolders;
 			wxCheckListCtrl*					m_InputPlugins;
+			wxRadioBox*							m_OutputPlugins;
 	
 			//Progress bar for process part.
 			wxProgressDialog*                   m_Progress;

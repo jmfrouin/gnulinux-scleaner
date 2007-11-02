@@ -57,8 +57,6 @@ bool CSClean::OnInit(void)
 	//Load GFX interface
 	l_ret = m_engine->loadInterface();
 
-	m_engine->findPackage("linux*");
-
 	return l_ret;
 }
 

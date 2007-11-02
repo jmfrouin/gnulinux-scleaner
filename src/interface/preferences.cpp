@@ -123,7 +123,6 @@ namespace GUI
 	
 	bool CPreferences::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 	{
-	////@begin CPreferences creation
 	    SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
 	    wxDialog::Create( parent, id, caption, pos, size, style );
 	
@@ -133,7 +132,6 @@ namespace GUI
 	        GetSizer()->SetSizeHints(this);
 	    }
 	    Centre();
-	////@end CPreferences creation
 	    return true;
 	}
 	
@@ -141,18 +139,14 @@ namespace GUI
 	/*!
 	 * CPreferences destructor
 	 */
-	
 	CPreferences::~CPreferences()
 	{
-	////@begin CPreferences destruction
-	////@end CPreferences destruction
 	}
 	
 	
 	/*!
 	 * Member initialisation
 	 */
-	
 	void CPreferences::Init()
 	{
 		m_Engine = Engine::CEngine::Instance();
@@ -162,24 +156,29 @@ namespace GUI
 	/*!
 	 * Control creation for CPreferences
 	 */
-	
 	void CPreferences::CreateControls()
 	{    
-	////@begin CPreferences content construction
-	    CPreferences* itemDialog1 = this;
-	
-    	wxListbook* itemListbook2 = new wxListbook( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
+    	wxPanel* l_MainPanel = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
 
-    	wxPanel* itemPanel3 = new wxPanel( itemListbook2, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+	    wxBoxSizer* l_Sizer0 = new wxBoxSizer(wxVERTICAL);
+	    l_MainPanel->SetSizer(l_Sizer0);
 
-    	itemListbook2->AddPage(itemPanel3, _("Plugins"));
+		//Preferences ListBook
+		//FIXME : Need to add bitmap
+    	wxListbook* l_PrefListbook = new wxListbook(l_MainPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
+		l_Sizer0->Add(l_PrefListbook, 1, wxGROW | wxALL, 5);
 
-    	wxScrolledWindow* itemScrolledWindow4 = new wxScrolledWindow( itemListbook2, wxID_ANY, wxDefaultPosition, wxSize(100, 100), wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
-    	itemScrolledWindow4->SetScrollbars(1, 1, 0, 0);
-    	itemListbook2->AddPage(itemScrolledWindow4, _("Application"));
-	
-	    /*wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-	    itemDialog1->SetSizer(itemBoxSizer2);
+		wxBoxSizer* l_ButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+		l_ButtonSizer->Add(new wxButton(l_MainPanel, wxID_ANY, _T("Apply")), 1, wxGROW | wxALL, 2);
+		l_ButtonSizer->Add(new wxButton(l_MainPanel, wxID_ANY, _T("Cancel")), 1, wxGROW | wxALL, 2);
+
+		l_Sizer0->Add(l_ButtonSizer, 0, wxGROW | wxALL, 1);
+
+
+    	wxPanel* l_PluginsPanel = new wxPanel(l_PrefListbook, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+
+	    wxBoxSizer* l_Sizer = new wxBoxSizer(wxVERTICAL);
+	    l_PluginsPanel->SetSizer(l_Sizer);
 	
 		std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
 		for(l_it = m_Engine->getAvailableInputPlugs()->begin(); l_it != m_Engine->getAvailableInputPlugs()->end(); ++l_it)
@@ -187,25 +186,46 @@ namespace GUI
 	    	wxArrayString l_Choice;
 			l_Choice.Add(wxString(i8n("Yes"), wxConvUTF8));
 			l_Choice.Add(wxString(i8n("No"), wxConvUTF8));
-			wxRadioBox* l_pluginRadio = new wxRadioBox(itemDialog1, wxID_ANY, wxString(l_it->first.c_str(), wxConvUTF8) + wxString(i8n(" default selection"), wxConvUTF8), wxDefaultPosition, wxDefaultSize, l_Choice, 1, wxRA_SPECIFY_ROWS);
-			l_pluginRadio->SetSelection(l_it->second->getDefaultSelection());
-			itemBoxSizer2->Add(l_pluginRadio, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+			wxRadioBox* l_PluginRadio = new wxRadioBox(l_PluginsPanel, wxID_ANY, wxString(l_it->first.c_str(), wxConvUTF8) + wxString(i8n(" default selection"), wxConvUTF8), wxDefaultPosition, wxDefaultSize, l_Choice, 1, wxRA_SPECIFY_ROWS);
+			l_PluginRadio->SetSelection(l_it->second->getDefaultSelection());
+			l_Sizer->Add(l_PluginRadio, 1, wxGROW | wxALL, 5);
 		}
 
+    	l_PrefListbook->AddPage(l_PluginsPanel, _("Plugins"));
+
+    	wxPanel* l_PrefPanel = new wxPanel(l_PrefListbook, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+
+	    wxBoxSizer* l_Sizer2 = new wxBoxSizer(wxVERTICAL);
+	    l_PrefPanel->SetSizer(l_Sizer2);
+
+		//Duplicate file method.
 	    wxArrayString itemRadioBox3Strings;
 	    itemRadioBox3Strings.Add(_("&CRC32"));
 	    itemRadioBox3Strings.Add(_("&MD5"));
-	    wxRadioBox* itemRadioBox3 = new wxRadioBox( itemDialog1, ID_RADIOBOX2, _("Duplicates files method"), wxDefaultPosition, wxDefaultSize, itemRadioBox3Strings, 1, wxRA_SPECIFY_ROWS );
+	    wxRadioBox* itemRadioBox3 = new wxRadioBox(l_PrefPanel, ID_RADIOBOX2, _("Duplicates files method"), wxDefaultPosition, wxDefaultSize, itemRadioBox3Strings, 1, wxRA_SPECIFY_ROWS );
 	    itemRadioBox3->SetSelection(0);
-	    itemBoxSizer2->Add(itemRadioBox3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);*/
+	    l_Sizer2->Add(itemRadioBox3, 1, wxGROW | wxALL, 5);
 
+		//Show splashscreen ?
+		wxCheckBox* l_Splashscreen = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show splash screen on startup"), wxDefaultPosition);
+	    l_Sizer2->Add(l_Splashscreen, 1, wxGROW | wxALL, 5);
+
+		//Show toolbar ?
+		wxCheckBox* l_Toolbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show toolbar"), wxDefaultPosition);
+	    l_Sizer2->Add(l_Toolbar, 1, wxGROW | wxALL, 5);
+
+		//Show statusbar ?
+		wxCheckBox* l_Statusbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show status bar"), wxDefaultPosition);
+	    l_Sizer2->Add(l_Statusbar, 1, wxGROW | wxALL, 5);
+
+    	l_PrefListbook->AddPage(l_PrefPanel, _("Application"));
 	}
+	
 	
 	
 	/*!
 	 * Should we show tooltips?
 	 */
-	
 	bool CPreferences::ShowToolTips()
 	{
 	    return true;
@@ -214,26 +234,20 @@ namespace GUI
 	/*!
 	 * Get bitmap resources
 	 */
-	
 	wxBitmap CPreferences::GetBitmapResource( const wxString& name )
 	{
 	    // Bitmap retrieval
-	////@begin CPreferences bitmap retrieval
 	    wxUnusedVar(name);
 	    return wxNullBitmap;
-	////@end CPreferences bitmap retrieval
 	}
 	
 	/*!
 	 * Get icon resources
 	 */
-	
 	wxIcon CPreferences::GetIconResource( const wxString& name )
 	{
 	    // Icon retrieval
-	////@begin CPreferences icon retrieval
 	    wxUnusedVar(name);
 	    return wxNullIcon;
-	////@end CPreferences icon retrieval
 	}
 }

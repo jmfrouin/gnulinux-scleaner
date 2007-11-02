@@ -53,13 +53,9 @@ namespace Engine
 			return;
 		}
 	
-		m_FoldersList.push_back("/home/snoogie/git/src/gfx");
-		m_FoldersList.push_back("/home/snoogie/git/src/tools");
-		m_FoldersList.push_back("/home/snoogie/git/src/interface");
-		m_FoldersList.push_back("/home/snoogie/git/gfx");
-		m_FoldersList.push_back("/home/snoogie/git/build");
+		m_FoldersList.push_back("/home/snoogie/");
 
-		m_ExcludedFoldersList.push_back("/home");
+		m_ExcludedFoldersList.push_back("/home/laure");
 		m_ExcludedFoldersList.push_back("/root");
 	}
 	
