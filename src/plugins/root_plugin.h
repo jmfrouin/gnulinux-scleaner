@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _ROOT_PLUGROOT_H_
-#define _ROOT_PLUGROOT_H_
+#ifndef _ROOT_PLUGIN_H_
+#define _ROOT_PLUGIN_H_
 
 #include <config.h>
 #include "in_plugin.h"
@@ -35,6 +35,7 @@ namespace Plugins
 			 *@brief ctor
 			 */
 			IRootPlugin() {}
+
 			/*!
 			 *@brief dtor
 			 */
@@ -47,5 +48,5 @@ namespace Plugins
 			virtual void getDirectory(std::string& _path) = 0;
 	};
 } //namespace Plugins
-#endif							 // _ROOT_PLUGROOT_H_
+#endif							 // _ROOT_PLUGIN_H_
 /* vi:set ts=4: */

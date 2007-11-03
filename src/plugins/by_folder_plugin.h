@@ -15,66 +15,37 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 */
 
-#ifndef _IPLUGIN_H_
-#define _IPLUGIN_H_
+#ifndef _BY_FOLDER_PLUGIN_H_
+#define _BY_FOLDER_PLUGIN_H_
 
 #include <config.h>
-#include <string>
-#include <list>
-#include <tools/name.h>
 
-/*!
-*@brief Plugins namespace. Contain all code to manage plugins.
-*/
 namespace Plugins
 {
-	/**
-	 * @brief Plugin Interface
+	/*!
+	 *@brief Plugin which work on a directory.
 	 */
-	class IPlugin : public Tools::CName
+	class IByFolderPlugin : public IInPlugin
 	{
 		public:
-			enum eType
-			{
-				eInput,
-				eByFolder,
-				eRoot,
-				eOutput
-			};
-	
-		public:
 			/*!
-			 * @brief ctor
+			 *@brief ctor
 			 */
-			IPlugin(){}
+			IByFolderPlugin() {}
+			/*!
+			 *@brief dtor
+			 */
+			virtual ~IByFolderPlugin() {}
 	
 			/*!
-			 * @brief dtor.
-			 */
-			virtual ~IPlugin(){}
-	
-			/*!
-			 *@brief This plugin is threadable ?
-			 */
-			virtual bool isThreadable()
-			{
-				bool l_ret = false;
-				return l_ret;
-			}
-	
-			/*!
-			 *@brief Description.
-			 */
-			virtual std::string Description() = 0;
-
-			/*!
-			 *@brief Input or output plugin ?
-			 */
-			virtual eType Type() = 0;
+			*@brief This method fill the directory to process.
+			*@param _filename The directory name to process.
+			*/
+			virtual void getDirectory(std::string& _path) = 0;
 	};
 } //namespace Plugins
-#endif							 //_IPLUGIN_H_
+#endif							 // _BY_FOLDER_PLUGIN_H_
 /* vi:set ts=4: */
+
