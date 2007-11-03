@@ -28,8 +28,6 @@
  *
  * Get last version : http://download.savannah.nongnu.org/releases/scleaner/
  *
- *  @image html gfx/scleaner0.32.0.png
- *
  * @section intro_whatis What is scleaner ?
  *
  * scleaner will be able to clean your GNU/Linux desktop (developped under Ubuntu 7.04 Feisty) by removing for example all unwanted log, orphan or duplicate files ...
@@ -44,12 +42,7 @@
  *
  * You can download the last version here : http://download.savannah.nongnu.org/releases/scleaner/ (get *.deb files)
  *
- *
- *
- *
  *  @image html gfx/gpl.png
- *
- * $Rev$
  */
 
 /*! @page page3 Plugins documentations
