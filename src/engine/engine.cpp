@@ -35,7 +35,6 @@
 #include <sys/vfs.h>
 #include <sys/utsname.h>
 #include <interface/maininterface.h>
-#include <plugins/root_plugin.h>
 #include "dpkg-db.h"
 #include "engine.h"
 
@@ -297,13 +296,12 @@ namespace Engine
 			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
 			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
 			{
-				if(((*l_it).second)->needRoot())
+				if(((*l_it).second)->Type() == Plugins::IPlugin::eRootByFolderInput)
 				{
-					Plugins::IRootPlugin* l_root = dynamic_cast<Plugins::IRootPlugin*>((*l_it).second);
 					std::string l_dir;
-					l_root->getDirectory(l_dir);
+					(l_it->second)->getDirectory(l_dir);
 					_callback->updateProgress(l_dir, true);
-					scanDirectory(l_dir, true, l_root);
+					scanDirectory(l_dir, true, l_it->second);
 				}
 			}
 		}
@@ -408,7 +406,7 @@ namespace Engine
 		CEngine* l_eng = CEngine::Instance();
 		if(l_eng->asRoot())
 		{
-			Plugins::IRootPlugin* l_root = 0;
+			Plugins::IInPlugin* l_root = 0;
 			l_root = l_eng->rootPlugin();
 			if(l_root != 0)
 			{
@@ -445,7 +443,7 @@ namespace Engine
 					}
 				}
 	
-				if(!((*l_it).second)->needRoot())
+				if( (((*l_it).second)->Type() != Plugins::IPlugin::eRootInput) && (((*l_it).second)->Type() != Plugins::IPlugin::eRootByFolderInput))
 				{
 					struct stat l_info;
 					//Try to stat file.
@@ -478,7 +476,7 @@ namespace Engine
 	}
 	
 	
-	bool CEngine::scanDirectory(const std::string& _path, bool _asRoot, Plugins::IRootPlugin* _rootPlugin, bool _recursive)
+	bool CEngine::scanDirectory(const std::string& _path, bool _asRoot, Plugins::IInPlugin* _rootPlugin, bool _recursive)
 	{
 		bool l_ret = false;
 	

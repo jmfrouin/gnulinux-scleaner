@@ -108,7 +108,7 @@ namespace Engine
 			 *@param _recursive If true, enter subfolders.
 			 *@return true on success, false otherwise.
 			 */
-			bool scanDirectory(const std::string& _path, bool _asRoot = false, Plugins::IRootPlugin* _rootPlugin = 0, bool _recursive = true);
+			bool scanDirectory(const std::string& _path, bool _asRoot = false, Plugins::IInPlugin* _rootPlugin = 0, bool _recursive = true);
 	
 			/*!
 			 *@brief Callback : man ftw.
@@ -206,7 +206,7 @@ namespace Engine
 				return m_asRoot;
 			}
 	
-			Plugins::IRootPlugin* rootPlugin()
+			Plugins::IInPlugin* rootPlugin()
 			{
 				return m_rootPlugin;
 			}
@@ -256,7 +256,7 @@ namespace Engine
 			std::map<std::string, Plugins::IOutPlugin*>* 	m_OutputPlugs;
 	
 			//Due to this fuck*** callback
-			Plugins::IRootPlugin*							m_rootPlugin;
+			Plugins::IInPlugin*								m_rootPlugin;
 			bool											m_asRoot;
 			IProgressbar*									m_callback;
 	

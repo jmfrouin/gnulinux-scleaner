@@ -39,25 +39,9 @@ CtrashPlugin::~CtrashPlugin()
 }
 
 
-Plugins::IPlugin::eType CtrashPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
-}
-
-
 void CtrashPlugin::processFile(const std::string& _filename)
 {
 	m_fl.push_back(_filename);
-}
-
-
-bool CtrashPlugin::needRoot()
-{
-	bool l_ret;
-	l_ret = false;				 // This plugin will work in both (user/root) mode.
-	return l_ret;
 }
 
 

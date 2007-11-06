@@ -15,11 +15,9 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
+#
 
-
-SET(folder apt-cache backfiles emptyfolders kernels logs nullfiles trash crimosoft latex mac)
-
-FOREACH(fold ${folder})
-	ADD_SUBDIRECTORY(${fold})
-ENDFOREACH(fold ${folder})
+SET(crimosoft_src crimosoft.cpp)
+ADD_LIBRARY(crimosoft SHARED ${crimosoft_src}) 
+TARGET_LINK_LIBRARIES(crimosoft plugins tools)
+INSTALL(TARGETS crimosoft DESTINATION ${PLUGSDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)

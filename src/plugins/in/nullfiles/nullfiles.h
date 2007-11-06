@@ -43,11 +43,6 @@ class CnullfilesPlugin : public Plugins::IInPlugin
 		CnullfilesPlugin();
 		~CnullfilesPlugin();
 
-		/*!
-		 *@brief From IPlugin.
-		 */
-		eType Type();
-
 		bool grabNullFile()
 		{
 			return true;
@@ -59,19 +54,15 @@ class CnullfilesPlugin : public Plugins::IInPlugin
 		}
 
 		/*!
-		*@brief From Plugins::IRootPlugin
-		*/
-		void getDirectory(std::string& _path);
-
-		/*!
 		 *@brief From IInPlugin
 		 */
 		void processFile(const std::string& _filename);
-		bool needRoot();
+		void getDirectory(std::string& _path) {_path = ""; }
 
 		/*!
 		 *@brief From IPlugin
 		 */
+		eType Type() { return eUserInput; }
 		std::string Description();
 };
 #endif							 //_LOGS_H_

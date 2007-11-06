@@ -45,15 +45,15 @@ namespace Plugins
 		for(_it = m_InputPlugins.begin(); _it != m_InputPlugins.end(); ++_it)
 		{
 			std::cout << "[DBG] " << (*_it).first << ": ";
-			bool l_threadable = ((*_it).second)->isThreadable();
-			if(l_threadable)
-			{
-				std::cout << "[DBG] [Threadable]" << '\n';
-			}
-			else
-			{
-				std::cout << "[DBG] [Standard]" << '\n';
-			}
+			//bool l_threadable = ((*_it).second)->isThreadable();
+			//if(l_threadable)
+			//{
+			//	std::cout << "[DBG] [Threadable]" << '\n';
+			//}
+			//else
+			//{
+			//	std::cout << "[DBG] [Standard]" << '\n';
+			//}
 		}
 	
 		//Output plugins
@@ -71,15 +71,15 @@ namespace Plugins
 		for(_it2 = m_OutputPlugins.begin(); _it2 != m_OutputPlugins.end(); ++_it2)
 		{
 			std::cout << "[DBG] " << (*_it2).first << ": ";
-			bool l_threadable = ((*_it2).second)->isThreadable();
-			if(l_threadable)
-			{
-				std::cout << "[DBG] [Threadable]" << '\n';
-			}
-			else
-			{
-				std::cout << "[DBG] [Standard]" << '\n';
-			}
+			//bool l_threadable = ((*_it2).second)->isThreadable();
+			//if(l_threadable)
+			//{
+			//	std::cout << "[DBG] [Threadable]" << '\n';
+			//}
+			//else
+			//{
+			//	std::cout << "[DBG] [Standard]" << '\n';
+			//}
 		}
 		#endif
 	}

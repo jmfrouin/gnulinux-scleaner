@@ -83,14 +83,6 @@ CkernelsPlugin::~CkernelsPlugin()
 }
 
 
-Plugins::IPlugin::eType CkernelsPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
-}
-
-
 void CkernelsPlugin::getDirectory(std::string& _path)
 {
 	_path = "/boot/";
@@ -108,14 +100,6 @@ void CkernelsPlugin::processFile(const std::string& _filename)
 		}
 	}
 }
-
-bool CkernelsPlugin::needRoot()
-{
-	bool l_ret = false;
-	l_ret = true;				 // /boot/ cannot be access by simple user
-	return l_ret;
-}
-
 
 bool CkernelsPlugin::Search(const std::string& _name, std::string& _result)
 {

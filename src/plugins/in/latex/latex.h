@@ -19,10 +19,10 @@
 */
 
 /*! @page page3 Plugins documentations.
- * - @subpage backfiles
+ * - @subpage latex
  */
 
-/*! @page backfiles backfiles: input plugin.
+/*! @page latex latex: input plugin.
  * @section desc Description
  * This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
  * <br>
@@ -32,17 +32,17 @@
  * @todo Support both modes, simple user & root/sudo.
  */
 
-#ifndef _BACKFILES_H_
-#define _BACKFILES_H_
+#ifndef _LATEX_H_
+#define _LATEX_H_
 
 #include <config.h>
 #include <plugins/in_plugin.h>
 
-class CbackfilesPlugin : public Plugins::IInPlugin
+class ClatexPlugin : public Plugins::IInPlugin
 {
 	public:
-		CbackfilesPlugin();
-		~CbackfilesPlugin();
+		ClatexPlugin();
+		~ClatexPlugin();
 
 
 		bool grabNullFile()
@@ -67,5 +67,5 @@ class CbackfilesPlugin : public Plugins::IInPlugin
 		eType Type() { return eUserInput; }
 		std::string Description();
 };
-#endif							 //_BACKFILES_H_
+#endif							 //_LATEX_H_
 /* vi:set ts=4: */

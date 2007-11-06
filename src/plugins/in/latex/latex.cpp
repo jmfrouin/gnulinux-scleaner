@@ -15,38 +15,41 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 */
 
-#ifndef _ROOT_PLUGIN_H_
-#define _ROOT_PLUGIN_H_
 
-#include <config.h>
-#include "in_plugin.h"
+#include <iostream>
+#include <plugins/inplugin_initializer.h>
+#include "latex.h"
+#include <sys/stat.h>			 ///Get file size.
+#include <leak/leak_detector.h>
+#include <engine/engine.h>
 
-namespace Plugins
+Plugins::CPluginInitializerIn<ClatexPlugin> g_latex;
+
+ClatexPlugin::ClatexPlugin()
 {
-	/*!
-	 *@brief Root input plugin interface.
-	 */
-	class IRootPlugin : public IInPlugin
-	{
-		public:
-			/*!
-			 *@brief ctor
-			 */
-			IRootPlugin() {}
+	setName("latex");
+}
 
-			/*!
-			 *@brief dtor
-			 */
-			virtual ~IRootPlugin() {}
-	
-			/*!
-			*@brief This method fill the directory to process.
-			*@param _filename The directory name to process.
-			*/
-			virtual void getDirectory(std::string& _path) = 0;
-	};
-} //namespace Plugins
-#endif							 // _ROOT_PLUGIN_H_
+
+ClatexPlugin::~ClatexPlugin()
+{
+}
+
+
+void ClatexPlugin::processFile(const std::string& _filename)
+{
+	if((_filename.find(".aux", 0) == (_filename.length()-4)) || (_filename.find(".toc", 0) == (_filename.length()-4)))
+	{
+		m_fl.push_back(_filename);
+	}
+}
+
+
+std::string ClatexPlugin::Description()
+{
+	return "Find LaTeX temp files (*.aux and *.toc files)";
+}
 /* vi:set ts=4: */

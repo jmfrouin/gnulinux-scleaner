@@ -39,14 +39,6 @@ CemptyfoldersPlugin::~CemptyfoldersPlugin()
 }
 
 
-Plugins::IPlugin::eType CemptyfoldersPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
-}
-
-
 void CemptyfoldersPlugin::processFile(const std::string& _filename)
 {
 	struct stat l_stat;
@@ -74,14 +66,6 @@ void CemptyfoldersPlugin::processFile(const std::string& _filename)
 			free(l_namelist);
 		}
 	}
-}
-
-
-bool CemptyfoldersPlugin::needRoot()
-{
-	bool l_ret;
-	l_ret = false;				 // This plugin will work in both (user/root) mode.
-	return l_ret;
 }
 
 

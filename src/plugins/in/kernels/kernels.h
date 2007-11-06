@@ -35,7 +35,7 @@
 #define _KERN_H_
 
 #include <config.h>
-#include <plugins/root_plugin.h>
+#include <plugins/in_plugin.h>
 
 class pkgCache;
 class pkgSourceList;
@@ -44,16 +44,11 @@ class MMap;
 /*!
  *@brief Find unused kernels.
  */
-class CkernelsPlugin : public Plugins::IRootPlugin
+class CkernelsPlugin : public Plugins::IInPlugin
 {
 	public:
 		CkernelsPlugin();
 		~CkernelsPlugin();
-
-		/*!
-		 *@brief From IPlugin.
-		 */
-		eType Type();
 
 		bool grabNullFile()
 		{
@@ -65,16 +60,6 @@ class CkernelsPlugin : public Plugins::IRootPlugin
 			return false;
 		}
 
-		/*!
-		*@brief From Plugins::IRootPlugin
-		*/
-		void getDirectory(std::string& _path);
-
-		/*!
-		 *@brief From IInPlugin
-		 */
-		void processFile(const std::string& _filename);
-		bool needRoot();
 
 		/*!
 		 *@brief Search for a package in cache.
@@ -83,9 +68,18 @@ class CkernelsPlugin : public Plugins::IRootPlugin
 		 */
 		bool Search(const std::string& _name, std::string& _result);
 
+
+		/*!
+		 *@brief From IInPlugin
+		 */
+		void processFile(const std::string& _filename);
+		void getDirectory(std::string& _path);
+
+
 		/*!
 		 *@brief From IPlugin
 		 */
+		eType Type() { return eRootByFolderInput; }
 		std::string Description();
 
 	private:

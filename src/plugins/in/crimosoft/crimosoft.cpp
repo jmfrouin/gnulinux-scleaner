@@ -18,39 +18,38 @@
 
 */
 
-#ifndef _INPLUGIN_INITIALIZER_H_
-#define _INPLUGIN_INITIALIZER_H_
 
-#include <config.h>
 #include <iostream>
+#include <plugins/inplugin_initializer.h>
+#include "crimosoft.h"
+#include <sys/stat.h>			 ///Get file size.
+#include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-#include "plugin_manager.h"
+Plugins::CPluginInitializerIn<CcrimosoftPlugin> g_crimosoft;
 
-namespace Plugins
+CcrimosoftPlugin::CcrimosoftPlugin()
 {
-	template <class T>
-	class CPluginInitializerIn
+	setName("crimosoft");
+}
+
+
+CcrimosoftPlugin::~CcrimosoftPlugin()
+{
+}
+
+
+void CcrimosoftPlugin::processFile(const std::string& _filename)
+{
+	if((_filename.find(".doc", 0) == (_filename.length()-4)) || (_filename.find(".xls", 0) == (_filename.length()-4)))
 	{
-		public:
-			CPluginInitializerIn()
-			{
-				CPluginManager* l_pfm = CPluginManager::Instance();
-				T* l_obj = new T;
-				if(!Engine::CEngine::isRoot())
-				{
-					if( (l_obj->Type() != Plugins::IPlugin::eRootInput) && (l_obj->Type() != Plugins::IPlugin::eRootByFolderInput) )
-					{
-						l_pfm->add(l_obj);
-					}
-				}
-				else
-				{
-					l_pfm->add(l_obj);
-				}
-	
-			}
-	};
-} //namespace Plugins
-#endif							 //_INPLUGIN_INITIALIZER_H_
+		m_fl.push_back(_filename);
+	}
+}
+
+
+std::string CcrimosoftPlugin::Description()
+{
+	return "Find Crimosoft (C) files (*.doc & *.xls)";
+}
 /* vi:set ts=4: */

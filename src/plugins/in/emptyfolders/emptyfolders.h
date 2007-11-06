@@ -44,15 +44,12 @@ class CemptyfoldersPlugin : public Plugins::IInPlugin
 		CemptyfoldersPlugin();
 		~CemptyfoldersPlugin();
 
-		/*!
-		 *@brief From IPlugin.
-		 */
-		eType Type();
 
 		bool grabNullFile()
 		{
 			return false;
 		}
+
 
 		bool getDefaultSelection()
 		{
@@ -63,11 +60,12 @@ class CemptyfoldersPlugin : public Plugins::IInPlugin
 		 *@brief From Plugins::IInPlugin
 		 */
 		void processFile(const std::string& _filename);
-		bool needRoot();
+		void getDirectory(std::string& _path) {_path = ""; }
 
 		/*!
 		 *@brief From IPlugin
 		 */
+		eType Type() { return eUserInput; }
 		std::string Description();
 };
 #endif							 //_NULLFOLDERS_H_

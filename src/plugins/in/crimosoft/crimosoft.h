@@ -19,10 +19,10 @@
 */
 
 /*! @page page3 Plugins documentations.
- * - @subpage backfiles
+ * - @subpage crimosoft
  */
 
-/*! @page backfiles backfiles: input plugin.
+/*! @page crimosoft crimosoft: input plugin.
  * @section desc Description
  * This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
  * <br>
@@ -32,17 +32,17 @@
  * @todo Support both modes, simple user & root/sudo.
  */
 
-#ifndef _BACKFILES_H_
-#define _BACKFILES_H_
+#ifndef _CRIMOSOFT_H_
+#define _CRIMOSOFT_H_
 
 #include <config.h>
 #include <plugins/in_plugin.h>
 
-class CbackfilesPlugin : public Plugins::IInPlugin
+class CcrimosoftPlugin : public Plugins::IInPlugin
 {
 	public:
-		CbackfilesPlugin();
-		~CbackfilesPlugin();
+		CcrimosoftPlugin();
+		~CcrimosoftPlugin();
 
 
 		bool grabNullFile()
@@ -67,5 +67,5 @@ class CbackfilesPlugin : public Plugins::IInPlugin
 		eType Type() { return eUserInput; }
 		std::string Description();
 };
-#endif							 //_BACKFILES_H_
+#endif							 //_CRIMOSOFT_H_
 /* vi:set ts=4: */

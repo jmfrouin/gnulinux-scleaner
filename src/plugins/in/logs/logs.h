@@ -35,43 +35,37 @@
 #define _LOGS_H_
 
 #include <config.h>
-#include <plugins/root_plugin.h>
+#include <plugins/in_plugin.h>
 
-class ClogsPlugin : public Plugins::IRootPlugin
+class ClogsPlugin : public Plugins::IInPlugin
 {
 	public:
 		ClogsPlugin();
 		~ClogsPlugin();
 
-		/*!
-		 *@brief From IPlugin.
-		 */
-		eType Type();
 
 		bool grabNullFile()
 		{
 			return false;
 		}
 
+
 		bool getDefaultSelection()
 		{
 			return true;
 		}
 
-		/*!
-		*@brief From Plugins::IRootPlugin
-		*/
-		void getDirectory(std::string& _path);
 
 		/*!
 		 *@brief From IInPlugin
 		 */
 		void processFile(const std::string& _filename);
-		bool needRoot();
+		void getDirectory(std::string& _path);
 
 		/*!
 		 *@brief From IPlugin
 		 */
+		eType Type() { return eRootByFolderInput; }
 		std::string Description();
 };
 #endif							 //_LOGS_H_

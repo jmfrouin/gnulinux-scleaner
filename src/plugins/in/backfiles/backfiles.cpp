@@ -39,28 +39,12 @@ CbackfilesPlugin::~CbackfilesPlugin()
 }
 
 
-Plugins::IPlugin::eType CbackfilesPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
-}
-
-
 void CbackfilesPlugin::processFile(const std::string& _filename)
 {
 	if((_filename.find("~", 0) == (_filename.length()-1)) || (_filename.find("bak", 0) == (_filename.length()-3)))
 	{
 		m_fl.push_back(_filename);
 	}
-}
-
-
-bool CbackfilesPlugin::needRoot()
-{
-	bool l_ret;
-	l_ret = false;				 // This plugin will work in both (user/root) mode.
-	return l_ret;
 }
 
 

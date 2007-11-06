@@ -44,10 +44,6 @@ class CtrashPlugin : public Plugins::IInPlugin
 		CtrashPlugin();
 		~CtrashPlugin();
 
-		/*!
-		 *@brief From IPlugin.
-		 */
-		eType Type();
 
 		bool grabNullFile()
 		{
@@ -63,11 +59,12 @@ class CtrashPlugin : public Plugins::IInPlugin
 		 *@brief From Plugins::IInPlugin
 		 */
 		void processFile(const std::string& _filename);
-		bool needRoot();
+		void getDirectory(std::string& _path) {_path = ""; }
 
 		/*!
 		 *@brief From IPlugin
 		 */
+		eType Type() { return eUserByFolderInput; }
 		std::string Description();
 };
 #endif							 //_TRASH_H_

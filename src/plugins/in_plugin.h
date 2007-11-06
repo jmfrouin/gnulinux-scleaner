@@ -36,16 +36,11 @@ namespace Plugins
 			 *@brief ctor
 			 */
 			IInPlugin() {}
+
 			/*!
 			 *@brief dtor
 			 */
 			virtual ~IInPlugin() {}
-	
-			/*!
-			 *@brief Does it need to be run as root (sudo) ?
-			 *@return true if root is required, false otherwise.
-			 */
-			virtual bool needRoot() = 0;
 	
 			/*!
 			 *@brief Does it need to grab null file size;
@@ -73,6 +68,17 @@ namespace Plugins
 			*@param _filename The file name to process.
 			*/
 			virtual void processFile(const std::string& _filename) = 0;
+
+			/*!
+			*@brief This method fill the directory to process.
+			*@note Usable only if plugin's type is e*ByFolderInput.
+			*@param _filename The directory name to process.
+			*/
+			virtual void getDirectory(std::string& _path) = 0;
+
+
+			//From IPlugin
+			virtual eType Type() { return eUserInput; }
 		
 		protected:
 			std::list<std::string>		m_fl;

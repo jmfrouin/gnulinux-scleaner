@@ -37,25 +37,9 @@ CnullfilesPlugin::~CnullfilesPlugin()
 }
 
 
-Plugins::IPlugin::eType CnullfilesPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
-}
-
-
 void CnullfilesPlugin::processFile(const std::string& _filename)
 {
 	m_fl.push_back(_filename);
-}
-
-
-bool CnullfilesPlugin::needRoot()
-{
-	bool l_ret;
-	l_ret = false;				 // In order to access /var/log/ we need root access.
-	return l_ret;
 }
 
 

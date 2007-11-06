@@ -37,14 +37,6 @@ ClogsPlugin::~ClogsPlugin()
 }
 
 
-Plugins::IPlugin::eType ClogsPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
-}
-
-
 void ClogsPlugin::getDirectory(std::string& _path)
 {
 	_path = "/var/log/";
@@ -54,14 +46,6 @@ void ClogsPlugin::getDirectory(std::string& _path)
 void ClogsPlugin::processFile(const std::string& _filename)
 {
 	m_fl.push_back(_filename);
-}
-
-
-bool ClogsPlugin::needRoot()
-{
-	bool l_ret;
-	l_ret = true;				 // In order to access /var/log/ we need root access.
-	return l_ret;
 }
 
 

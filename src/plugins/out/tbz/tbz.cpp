@@ -68,14 +68,6 @@ void CtbzPlugin::processFileList(std::list<std::string>& _fl, const std::string&
 }
 
 
-Plugins::IPlugin::eType CtbzPlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
-}
-
-
 //Private methods
 bool CtbzPlugin::Compress(const std::string& _input, const std::string& _output, IProgressbar* _callback)
 {

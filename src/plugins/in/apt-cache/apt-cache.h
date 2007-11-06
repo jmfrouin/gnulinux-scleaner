@@ -35,21 +35,16 @@
 #define _APT_CACHE_H_
 
 #include <config.h>
-#include <plugins/root_plugin.h>
+#include <plugins/in_plugin.h>
 
 /*!
  *@brief Find unused apt_cache.
  */
-class Capt_cachePlugin : public Plugins::IRootPlugin
+class Capt_cachePlugin : public Plugins::IInPlugin
 {
 	public:
 		Capt_cachePlugin();
 		~Capt_cachePlugin();
-
-		/*!
-		 *@brief From IPlugin.
-		 */
-		eType Type();
 
 		bool grabNullFile()
 		{
@@ -62,19 +57,15 @@ class Capt_cachePlugin : public Plugins::IRootPlugin
 		}
 
 		/*!
-		*@brief From Plugins::IRootPlugin
-		*/
-		void getDirectory(std::string& _path);
-
-		/*!
 		 *@brief From IInPlugin
 		 */
+		void getDirectory(std::string& _path);
 		void processFile(const std::string& _filename);
-		bool needRoot();
 
 		/*!
 		 *@brief From IPlugin
 		 */
+		eType Type() { return eRootByFolderInput; }
 		std::string Description();
 };
 #endif							 //_APT_CACHE_H_

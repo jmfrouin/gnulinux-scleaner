@@ -15,37 +15,41 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 */
 
-#ifndef _BY_FOLDER_PLUGIN_H_
-#define _BY_FOLDER_PLUGIN_H_
 
-#include <config.h>
+#include <iostream>
+#include <plugins/inplugin_initializer.h>
+#include "mac.h"
+#include <sys/stat.h>			 ///Get file size.
+#include <leak/leak_detector.h>
+#include <engine/engine.h>
 
-namespace Plugins
+Plugins::CPluginInitializerIn<CmacPlugin> g_mac;
+
+CmacPlugin::CmacPlugin()
 {
-	/*!
-	 *@brief Plugin which work on a directory.
-	 */
-	class IByFolderPlugin : public IInPlugin
-	{
-		public:
-			/*!
-			 *@brief ctor
-			 */
-			IByFolderPlugin() {}
-			/*!
-			 *@brief dtor
-			 */
-			virtual ~IByFolderPlugin() {}
-	
-			/*!
-			*@brief This method fill the directory to process.
-			*@param _filename The directory name to process.
-			*/
-			virtual void getDirectory(std::string& _path) = 0;
-	};
-} //namespace Plugins
-#endif							 // _BY_FOLDER_PLUGIN_H_
-/* vi:set ts=4: */
+	setName("mac");
+}
 
+
+CmacPlugin::~CmacPlugin()
+{
+}
+
+
+void CmacPlugin::processFile(const std::string& _filename)
+{
+	if(_filename.find(".dstore", 0) == (_filename.length()-7))
+	{
+		m_fl.push_back(_filename);
+	}
+}
+
+
+std::string CmacPlugin::Description()
+{
+	return "Find .dstore file";
+}
+/* vi:set ts=4: */

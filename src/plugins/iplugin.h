@@ -39,9 +39,10 @@ namespace Plugins
 		public:
 			enum eType
 			{
-				eInput,
-				eByFolder,
-				eRoot,
+				eUserInput,
+				eUserByFolderInput,
+				eRootInput,
+				eRootByFolderInput,
 				eOutput
 			};
 	
@@ -55,15 +56,6 @@ namespace Plugins
 			 * @brief dtor.
 			 */
 			virtual ~IPlugin(){}
-	
-			/*!
-			 *@brief This plugin is threadable ?
-			 */
-			virtual bool isThreadable()
-			{
-				bool l_ret = false;
-				return l_ret;
-			}
 	
 			/*!
 			 *@brief Description.

@@ -36,14 +36,6 @@ Capt_cachePlugin::~Capt_cachePlugin()
 }
 
 
-Plugins::IPlugin::eType Capt_cachePlugin::Type()
-{
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
-}
-
-
 void Capt_cachePlugin::getDirectory(std::string& _path)
 {
 	_path = "/var/cache/apt/archives/";
@@ -53,13 +45,6 @@ void Capt_cachePlugin::getDirectory(std::string& _path)
 void Capt_cachePlugin::processFile(const std::string& _filename)
 {
 	m_fl.push_back(_filename);
-}
-
-bool Capt_cachePlugin::needRoot()
-{
-	bool l_ret = false;
-	l_ret = true;				 // /boot/ cannot be access by simple user
-	return l_ret;
 }
 
 
