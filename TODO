@@ -1,4 +1,6 @@
 0.32.0
+Clean doxygen files to remove warnings
+Add entries in wikipedia fr / en
 Add multiplatform (windows, solaris, bsd)
 Daemon analysant les fichiers du systeme pour maintenir une liste a jour
 Utiliser wxConfig pour sauvegarder les prefs.

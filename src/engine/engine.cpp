@@ -1,9 +1,11 @@
 /**
  * This file is part of scleaner project.
 
+ * Visit scleaner website : http://www.scleaner.fr
  * Copyright (C) 2000 Yann Guidon <whygee@f-cpu.org>
  * Copyright (C) 2007 FROUIN Jean-Michel
 
+ * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -35,6 +37,7 @@
 #include <sys/vfs.h>
 #include <sys/utsname.h>
 #include <interface/maininterface.h>
+#include "settings_manager.h"
 #include "dpkg-db.h"
 #include "engine.h"
 
@@ -47,11 +50,14 @@ namespace Engine
 		//Initialisation
 		m_AvailableInputPlugs = Plugins::CPluginManager::Instance()->getInputListPtr();
 		m_OutputPlugs = Plugins::CPluginManager::Instance()->getOutputListPtr();
-		if(!m_AvailableInputPlugs || !m_OutputPlugs)
+		m_Settings = CSettingsManager::Instance();
+
+		if(!m_AvailableInputPlugs || !m_OutputPlugs || !m_Settings)
 		{
 			return;
 		}
 	
+		//FIXME : To remove by settings defined ones.
 		m_FoldersList.push_back("/home/snoogie/");
 
 		m_ExcludedFoldersList.push_back("/home/laure");
@@ -65,6 +71,10 @@ namespace Engine
 		//for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
 		//{
 		//	std::cout << *l_it << '\n';
+		//}
+		//if(m_Settings != NULL)
+		//{
+		//	delete m_Settings;
 		//}
 	}
 	
@@ -677,5 +687,5 @@ namespace Engine
 		
 		return l_ret;
 	}
-}
+} //namespace Engine
 /* vi:set ts=4: */

@@ -3,6 +3,7 @@
 
  * Copyright (C) 2007 FROUIN Jean-Michel
 
+ * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -27,12 +28,14 @@
 #include <tools/name.h>
 
 /*!
-*@brief Plugins namespace. Contain all code to manage plugins.
+*@brief Contain all code to manage plugins.
 */
 namespace Plugins
 {
 	/**
 	 * @brief Plugin Interface
+	 * @version 06.05.2007
+	 * @author Jean-Michel Frouin (jmfrouin@gnu.org)
 	 */
 	class IPlugin : public Tools::CName
 	{

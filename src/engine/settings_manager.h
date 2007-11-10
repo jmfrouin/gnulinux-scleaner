@@ -19,44 +19,51 @@
 
 */
 
-#ifndef _SELECT_DIALOG_H_
-#define _SELECT_DIALOG_H_
+#ifndef _SETTINGS_MANAGER_H_
+#define _SETTINGS_MANAGER_H_
 
-#include <list>
-#include <string>
-#include <wx/frame.h>
+#include <tools/smart_pointer.h>
+#include <tools/singleton.h>
 
-class wxCheckListBox;
-class wxPanel;
+#define PREFFILE "~/.scleaner/prefs.conf"
 
-namespace GUI
+namespace Engine
 {
 	/*!
-	*@brief Dialog to select input plugins.
+	* @brief Manage all settings.
+	* Load them on creation
+	* Save them on destruction (or Apply)
+	* @version 09.11.2007
+	* @author Jean-Michel Frouin (jmfrouin@gnu.org)
 	*/
-	class CSelectDialog : public wxFrame
+	class CSettingsManager: public Tools::CSmartCpt, public Tools::TSingleton<CSettingsManager>
 	{
 		public:
 			/*!
-			*@brief Constructor
-			*@param _title The dialog box title.
-			*@param _pluginList Available plugin list.
+			* Construstor : Load preferences.
 			*/
-			CSelectDialog(const wxString& _title, std::list<std::string>& _pluginList);
+			CSettingsManager();
+			
+			/*!
+			* Destructor : Save preferences.
+			*/
+			~CSettingsManager();
 	
 			/*!
-			*@brief Destructor
+			* Accessors
 			*/
-			virtual ~CSelectDialog();
+			bool getShowSplash() { return m_ShowSplash; }
 	
-			//Callbacks
-			void OnListbox(wxCommandEvent& event);
+			/*!
+			* Mutators
+			*/
+			void setShowSplash(bool _val) { m_ShowSplash = _val; }
 	
-		protected:
-	    	wxCheckListBox*	m_Input;
-			wxPanel*		m_Panel;
 	
-	    DECLARE_EVENT_TABLE()
+		private:
+			bool				m_ShowSplash;	///Display splash (only in GUI) ?
+	
 	};
-}
-#endif// _SELECT_DIALOG_H_
+} //namespace Engine
+
+#endif //_SETTINGS_MANAGER_H_

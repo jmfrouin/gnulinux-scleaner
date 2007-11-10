@@ -3,6 +3,7 @@
 
  * Copyright (C) 2007 FROUIN Jean-Michel
 
+ * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -30,61 +31,9 @@
 
 #include <iostream>
 #include <engine/engine.h>
+#include <engine/settings_manager.h>
 #include <wx/config.h>
 #include "preferences.h"
-
-//6.3 Load/save of preferences
-//
-//Preferences are usually stored with in the registry (Windows) or config file (Linux, etc.). wxWidgets supports this through wxConfig choosing the platform specific solution itself. Be carefully when keeping the preferences open over a longer time period. For safety reasons keep this period as small as possible.
-//
-//One might use wxFileConfig instead to force the use of config file even on Windows. The default location of the config file is based on the $HOME variable on Linux, etc. and $HOMEDRIVE + HOMEPATH on Windows. The file will only be written back to disk when the config objected is deleted or the Flush() method is called.
-//Sample code
-//
-//#include <wx/config.h>   // configuration support
-//
-//const wxString PAGE_COMMON = _T("Common");
-//...
-//const wxString NOSPLASH = _T("NoSplashScreen");
-//const wxString SHOWTOOLBAR = _T("ShowToolbar");
-//const wxString SHOWSTATUSBAR = _T("ShowStatusbar");
-//const wxString USEPAGES = _T("UsePages");
-//
-//CommonPrefs g_CommonPrefs = {
-//    // application prefs
-//    false, // noSplash
-//    true,  // showToolbar
-//    true,  // showStatusbar
-//    false, // usePages
-//};
-//...
-//
-//void PreferenceDlg::LoadValuesPageCommon () {
-//    wxString key = PAGE_COMMON;
-//    key.Append (_T("/"));
-//
-//    // common prefs
-//    wxConfig *cfg = new wxConfig (wxTheApp->GetAppName());
-//    cfg->Read (key + NOSPLASH, &g_CommonPrefs.noSplash);
-//    cfg->Read (key + SHOWTOOLBAR, &g_CommonPrefs.showToolbar);
-//    cfg->Read (key + SHOWSTATUSBAR, &g_CommonPrefs.showStatusbar);
-//    cfg->Read (key + USEPAGES, &g_CommonPrefs.usePages);
-//    delete cfg;
-//}
-//
-//void PreferenceDlg::SaveValuesPageCommon () {
-//    wxString key = PAGE_COMMON;
-//    key.Append (_T("/"));
-//
-//    // common prefs
-//    wxConfig *cfg = new wxConfig (wxTheApp->GetAppName());
-//    cfg->Write (key + NOSPLASH, g_CommonPrefs.noSplash);
-//    cfg->Write (key + SHOWTOOLBAR, g_CommonPrefs.showToolbar);
-//    cfg->Write (key + SHOWSTATUSBAR, g_CommonPrefs.showStatusbar);
-//    cfg->Write (key + USEPAGES, g_CommonPrefs.usePages);
-//    delete cfg;
-//}
-
-
 
 namespace GUI
 {
@@ -150,6 +99,7 @@ namespace GUI
 	void CPreferences::Init()
 	{
 		m_Engine = Engine::CEngine::Instance();
+		m_Settings = Engine::CSettingsManager::Instance();
 	}
 	
 	
@@ -208,6 +158,7 @@ namespace GUI
 
 		//Show splashscreen ?
 		wxCheckBox* l_Splashscreen = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show splash screen on startup"), wxDefaultPosition);
+		l_Splashscreen->SetValue(m_Settings->getShowSplash());
 	    l_Sizer2->Add(l_Splashscreen, 1, wxGROW | wxALL, 5);
 
 		//Show toolbar ?

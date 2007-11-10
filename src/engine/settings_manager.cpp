@@ -16,30 +16,40 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 */
 
-#ifndef _FILELOG_H
-#define _FILELOG_H
-
 #include <fstream>
-#include <sstream>
+#include "settings_manager.h"
 
-class CFileLog
+namespace Engine
 {
-	public :
-		CFileLog(const std::string& Filename = "output.log");
-		~CFileLog();
+	CSettingsManager::CSettingsManager():
+	m_ShowSplash(true)
+	{
+		std::ifstream l_File("/home/snoogie/.scleaner/prefs.conf");
+		std::string l_temp;
 
-		template <class T> CFileLog& operator <<(const T& ToLog)
-		{
-			std::ostringstream Stream;
-			Stream << ToLog;
-			m_File << Stream.str();
-			return *this;
-		}
+		//chomp field descriptor
+		l_File >> l_temp;
+		//chomp '=' 
+		l_File >> l_temp;
+		l_File >> m_ShowSplash;
 
-	private:
-		std::ofstream m_File;
-};
-#endif							 // _FILELOG_H
-/* vi:set ts=4: */
+		#if defined DEBUG
+		std::cout << "Loading pref : \n";
+		std::cout << "m_ShowSplash = " << m_ShowSplash << '\n';
+		#endif
+	}
+	
+	CSettingsManager::~CSettingsManager()
+	{
+		std::ofstream l_File("/home/snoogie/.scleaner/prefs.conf");
+		l_File << "showsplash = " << m_ShowSplash;
+
+		#if defined DEBUG
+		std::cout << "Saving pref\n";
+		std::cout << "m_ShowSplash = " << m_ShowSplash << '\n';
+		#endif
+	}
+} //namespace Engine

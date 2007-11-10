@@ -3,6 +3,7 @@
 
  * Copyright (C) 2007 FROUIN Jean-Michel
 
+ * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -24,7 +25,7 @@
 #include <iostream>
 
 #if defined LEAKS
-#include <leak_detector.h>
+#include <leak/leak_detector.h>
 #endif
 
 typedef unsigned int t_SmartCpt;

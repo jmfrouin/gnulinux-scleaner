@@ -5,6 +5,7 @@
  * Copyright (C) 2000 Yann Guidon <whygee@f-cpu.org>
  * Copyright (C) 2007 FROUIN Jean-Michel
 
+ * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -38,6 +39,8 @@ namespace Plugins
 	class IOutPlugin;
 	class IRootPlugin;
 }
+
+class CSettingsManager;
 
 #define FSTAB "/etc/fstab"
 #define ROUND(x) ((x-(int)x>0)?(int)x+1:(int)x) //Mainly wrote for formatSize
@@ -269,6 +272,9 @@ namespace Engine
 	
 			//Duplicates files list
 			std::map<unsigned long, std::string>			m_DuplicatesFilesList;
+
+			//Settings manager
+			Tools::TSmartPtr<CSettingsManager>   			m_Settings;
 	};
 } //namespace Engine
 #endif							 //_ENGINE_H_

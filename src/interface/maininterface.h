@@ -3,6 +3,7 @@
 
  * Copyright (C) 2007 FROUIN Jean-Michel
 
+ * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -37,6 +38,7 @@
 namespace Engine
 {
 	class CEngine;
+	class CSettingsManager;
 }
 
 class wxRadioBox;
@@ -142,6 +144,9 @@ namespace GUI
 	
 			//Total sizes
 			std::vector<double>                 m_TotalSizes;
+
+			//Settings manager
+			Engine::CSettingsManager*			m_Settings;
 	};
 }
 #endif

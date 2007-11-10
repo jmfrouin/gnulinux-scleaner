@@ -3,6 +3,7 @@
 
  * Copyright (C) 2007 FROUIN Jean-Michel
 
+ * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -34,6 +35,7 @@
 #include <plugins/plugin_manager.h>
 #include <plugins/iplugin.h>
 #include <engine/engine.h>
+#include <engine/settings_manager.h>
 #include <wx/radiobox.h>
 #include <wx/progdlg.h>
 #include <wx/dirdlg.h>
@@ -97,7 +99,7 @@ namespace GUI
 	
 	
 	CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-	m_FoundFiles(0), m_StatusBar(0), m_Aui(0), m_Folders(0), m_AddedFolders(0), m_ExcludedFolders(0), m_InputPlugins(0), m_OutputPlugins(0), m_Progress(0)
+	m_FoundFiles(0), m_StatusBar(0), m_Aui(0), m_Folders(0), m_AddedFolders(0), m_ExcludedFolders(0), m_InputPlugins(0), m_OutputPlugins(0), m_Progress(0), m_Settings(false)
 	{
 		Init();
 		Create(parent, id, caption, pos, size, style);
@@ -107,9 +109,6 @@ namespace GUI
 	bool CMainInterface::Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
 	{
 		wxFrame::Create( parent, id, caption, pos, size, style );
-	
-		//Retrieve Engine::CEngine instance pointer.
-		m_Engine = Engine::CEngine::Instance();
 	
 		CreateControls();
 		Centre();
@@ -130,6 +129,12 @@ namespace GUI
 	
 	void CMainInterface::Init()
 	{
+		//Retrieve Engine::CEngine instance pointer.
+		m_Engine = Engine::CEngine::Instance();
+
+		//Retrieve settings manager pointer
+		m_Settings = Engine::CSettingsManager::Instance();
+	
 		//Tray icon !!
 		m_Icon = new CTrayIcon();
 		#if defined(__WXCOCOA__)
@@ -142,7 +147,12 @@ namespace GUI
 		{
 			std::cout << i8n("[ERR] Could not set icon.\n");
 		}
-		launchSplash(1000);
+
+		//Show splash
+		if(m_Settings->getShowSplash() == true)
+		{
+			launchSplash(1000);
+		}
 	}
 	
 	

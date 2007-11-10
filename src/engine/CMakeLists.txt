@@ -16,5 +16,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SET(engine_src engine.cpp)
+SET(engine_src engine.cpp settings_manager.cpp)
 ADD_LIBRARY(engine ${engine_src})
