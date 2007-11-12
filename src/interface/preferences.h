@@ -39,6 +39,8 @@ namespace Engine
 	class CSettingsManager;
 }
 
+class wxCheckBox;
+
 namespace GUI
 {
 	/*!
@@ -66,27 +68,30 @@ namespace GUI
 	    /// Creates the controls and sizers
 	    void CreateControls();
 	
-	////@begin CPreferences event handler declarations
-	
-	////@end CPreferences event handler declarations
-	
-	////@begin CPreferences member function declarations
-	
 	    /// Retrieves bitmap resources
 	    wxBitmap GetBitmapResource( const wxString& name );
 	
 	    /// Retrieves icon resources
 	    wxIcon GetIconResource( const wxString& name );
-	////@end CPreferences member function declarations
 	
 	    /// Should we show tooltips?
 	    static bool ShowToolTips();
+
+		/// User click Cancel button
+		void OnCancel(wxCommandEvent& WXUNUSED(event));
+	
+		/// User click Apply button
+		void OnApply(wxCommandEvent& WXUNUSED(event));
 	
 	private:
 		//Engine
-		Tools::TSmartPtr<Engine::CEngine>   m_Engine;
+		Tools::TSmartPtr<Engine::CEngine>   			m_Engine;
+
 		//Settings manager
-		Tools::TSmartPtr<Engine::CSettingsManager>   m_Settings;
+		Tools::TSmartPtr<Engine::CSettingsManager>   	m_Settings;
+
+		//Preferences 
+		wxCheckBox*										m_SplashScreen;
 	};
 }
 #endif // _PREFERENCES_H_

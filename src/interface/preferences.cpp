@@ -33,6 +33,7 @@
 #include <engine/engine.h>
 #include <engine/settings_manager.h>
 #include <wx/config.h>
+#include <wx/spinbutt.h>
 #include "preferences.h"
 
 namespace GUI
@@ -46,15 +47,17 @@ namespace GUI
 	/*!
 	 * CPreferences event table definition
 	 */
-	
 	BEGIN_EVENT_TABLE( CPreferences, wxDialog )
+        EVT_BUTTON(wxOK, CPreferences::OnApply)
+        EVT_BUTTON(wxCANCEL, CPreferences::OnCancel)
 	END_EVENT_TABLE()
 	
 	
 	/*!
 	 * CPreferences constructors
 	 */
-	CPreferences::CPreferences()
+	CPreferences::CPreferences():
+	m_SplashScreen(0)
 	{
 	    Init();
 	}
@@ -119,8 +122,8 @@ namespace GUI
 		l_Sizer0->Add(l_PrefListbook, 1, wxGROW | wxALL, 5);
 
 		wxBoxSizer* l_ButtonSizer = new wxBoxSizer(wxHORIZONTAL);
-		l_ButtonSizer->Add(new wxButton(l_MainPanel, wxID_ANY, _T("Apply")), 1, wxGROW | wxALL, 2);
-		l_ButtonSizer->Add(new wxButton(l_MainPanel, wxID_ANY, _T("Cancel")), 1, wxGROW | wxALL, 2);
+		l_ButtonSizer->Add(new wxButton(l_MainPanel, wxOK, _T("Apply")), 1, wxGROW | wxALL, 2);
+		l_ButtonSizer->Add(new wxButton(l_MainPanel, wxCANCEL, _T("Cancel")), 1, wxGROW | wxALL, 2);
 
 		l_Sizer0->Add(l_ButtonSizer, 0, wxGROW | wxALL, 1);
 
@@ -157,9 +160,13 @@ namespace GUI
 	    l_Sizer2->Add(itemRadioBox3, 1, wxGROW | wxALL, 5);
 
 		//Show splashscreen ?
-		wxCheckBox* l_Splashscreen = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show splash screen on startup"), wxDefaultPosition);
-		l_Splashscreen->SetValue(m_Settings->getShowSplash());
-	    l_Sizer2->Add(l_Splashscreen, 1, wxGROW | wxALL, 5);
+		m_SplashScreen = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show splash screen on startup"), wxDefaultPosition);
+		m_SplashScreen->SetValue(m_Settings->getShowSplash());
+	    l_Sizer2->Add(m_SplashScreen, 1, wxGROW | wxALL, 5);
+
+		//Progress bar refresh's delay
+		wxSpinButton* l_PBDelay = new wxSpinButton(l_PrefPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_HORIZONTAL, _T("Progress bar update's delay"));
+	    l_Sizer2->Add(l_PBDelay, 1, wxGROW | wxALL, 5);
 
 		//Show toolbar ?
 		wxCheckBox* l_Toolbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show toolbar"), wxDefaultPosition);
@@ -200,5 +207,16 @@ namespace GUI
 	    // Icon retrieval
 	    wxUnusedVar(name);
 	    return wxNullIcon;
+	}
+
+	void CPreferences::OnCancel(wxCommandEvent& WXUNUSED(event))
+	{	
+    	Close(true);
+	}
+
+	void CPreferences::OnApply(wxCommandEvent& WXUNUSED(event))
+	{	
+		m_Settings->setShowSplash(m_SplashScreen->GetValue());
+    	Close(true);
 	}
 }

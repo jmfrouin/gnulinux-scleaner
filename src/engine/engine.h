@@ -233,6 +233,16 @@ namespace Engine
 			{
 				return m_AvailableInputPlugs;
 			}
+
+			unsigned int getCount()
+			{
+				return m_Count;
+			}
+
+			void setCount(unsigned int _Nb)
+			{
+				m_Count = _Nb;
+			}
 			
 			//Kind of accessors
 			/*!
@@ -262,6 +272,7 @@ namespace Engine
 			Plugins::IInPlugin*								m_rootPlugin;
 			bool											m_asRoot;
 			IProgressbar*									m_callback;
+			unsigned int									m_Count;
 	
 			//Folders infos
 			std::list<std::string>							m_FoldersList;

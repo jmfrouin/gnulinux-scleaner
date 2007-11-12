@@ -45,7 +45,7 @@ namespace Engine
 {
 
 	CEngine::CEngine():
-	m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), m_rootPlugin(0), m_asRoot(false), m_callback(0)
+	m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), m_rootPlugin(0), m_asRoot(false), m_callback(0), m_Count(0)
 	{
 		//Initialisation
 		m_AvailableInputPlugs = Plugins::CPluginManager::Instance()->getInputListPtr();
@@ -322,7 +322,8 @@ namespace Engine
 			#if defined DEBUG
 			std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << (*l_itFolders) << '\n';
 			#endif
-			scanDirectory(*l_itFolders);
+			_callback->updateProgress(*l_itFolders, true);
+			scanDirectory(*l_itFolders, _callback);
 		}
 		return l_ret;
 	}
@@ -406,14 +407,30 @@ namespace Engine
 	{
 		int l_ret = 0;
 		std::string l_path(_fpath);
+		std::cout << "Looking : " << l_path << '\n';
+
+		CEngine* l_eng = CEngine::Instance();
+
+		IProgressbar* l_prog = l_eng->getCallback();
 	
-		//Check if it is a folder ?
-		//if(S_ISDIR(l_stat.st_mode))
-		//{
+		//Update progress bar to show progression :
+		if(l_prog != 0)
+		{
+			if(l_eng->getCount() > 9)
+			{
+				l_prog->updateProgress(l_path, true);
+				l_eng->setCount(0);
+			}
+			else
+			{
+				l_eng->setCount(l_eng->getCount()+1);
+			}
+		}
+	
 		#if defined DEBUG
 		std::cout << i8n("[DBG] FTW_callback : ") << l_path << '\n';
 		#endif
-		CEngine* l_eng = CEngine::Instance();
+
 		if(l_eng->asRoot())
 		{
 			Plugins::IInPlugin* l_root = 0;
@@ -437,22 +454,10 @@ namespace Engine
 		}
 		else
 		{
-			int l_count = 0;
 			std::map<std::string, Plugins::IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
 			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
 			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
 			{
-				IProgressbar* l_prog = l_eng->getCallback();
-	
-				if(l_prog != 0)
-				{
-					if(l_count++ == 10)
-					{
-						l_prog->updateProgress(l_path, true);
-						l_count = 0;
-					}
-				}
-	
 				if( (((*l_it).second)->Type() != Plugins::IPlugin::eRootInput) && (((*l_it).second)->Type() != Plugins::IPlugin::eRootByFolderInput))
 				{
 					struct stat l_info;
