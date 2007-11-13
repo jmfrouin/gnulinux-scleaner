@@ -57,25 +57,10 @@ namespace Engine
 			return;
 		}
 	
-		//FIXME : To remove by settings defined ones.
-		m_FoldersList.push_back("/home/snoogie/");
-
-		m_ExcludedFoldersList.push_back("/home/laure");
-		m_ExcludedFoldersList.push_back("/root");
 	}
 	
 	CEngine::~CEngine()
 	{
-		//std::cout << "List contain : \n";
-		//std::list<std::string>::iterator l_it;
-		//for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
-		//{
-		//	std::cout << *l_it << '\n';
-		//}
-		//if(m_Settings != NULL)
-		//{
-		//	delete m_Settings;
-		//}
 	}
 	
 	int CEngine::loadPlugins(const std::string& _path)
@@ -297,7 +282,6 @@ namespace Engine
 	
 		m_callback = _callback;
 	
-		std::list<std::string>::iterator l_itFolders;
 	
 		//If launch as root
 		if(isRoot())
@@ -317,90 +301,23 @@ namespace Engine
 		}
 	
 		//In both case
-		for(l_itFolders = m_FoldersList.begin(); l_itFolders != m_FoldersList.end(); ++l_itFolders)
+		std::list<std::string>* l_FoldersList = m_Settings->getFoldersListPtr();
+		std::list<std::string>::iterator l_itFolders;
+		for(l_itFolders = l_FoldersList->begin(); l_itFolders != l_FoldersList->end(); ++l_itFolders)
 		{
 			#if defined DEBUG
 			std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << (*l_itFolders) << '\n';
 			#endif
-			_callback->updateProgress(*l_itFolders, true);
-			scanDirectory(*l_itFolders, _callback);
+			if(_callback != 0)
+			{
+				_callback->updateProgress(*l_itFolders, true);
+			}
+			scanDirectory(*l_itFolders);
 		}
 		return l_ret;
 	}
 	
 	
-	bool CEngine::addFolder(std::string _dir, std::string& _parent)
-	{
-		bool l_ret = true;
-		
-		//Search a prent folder:
-		std::list<std::string>::iterator l_it;
-		bool l_clean = false;
-		for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
-		{
-			//If a parent is found
-			if(_dir.find(*l_it, 0) != std::string::npos)
-			{
-				_parent = *l_it;
-				l_ret = false;
-				break;
-			}
-			else
-			{
-				//If _dir is a parent :D
-				if((*l_it).find(_dir, 0) != std::string::npos)
-				{
-					l_clean = true;
-					break;
-				}
-			}
-		}
-	
-		if(l_clean)
-		{	
-			l_it = m_FoldersList.begin();
-			do
-			{
-				if((*l_it).find(_dir, 0) != std::string::npos)
-				{
-					std::list<std::string>::iterator l_it2erase = l_it;
-					++l_it;
-					m_FoldersList.erase(l_it2erase);
-				}
-				else
-				{
-					++l_it;
-				}
-			}while(l_it != m_FoldersList.end());
-		}
-		
-		if(l_ret)
-		{
-			m_FoldersList.push_back(_dir);
-		}
-		else
-		{
-			//If a parent folder is found, no need to add is child.
-			#if defined DEBUG
-			std::cerr << "[WRG] Parent folder found : " << (*l_it) << " no need to add " << _dir << '\n';
-			#endif
-		}
-		
-		return l_ret;
-	}
-	
-	void CEngine::delFolder(const std::string _dir)
-	{
-		std::list<std::string>::iterator l_it;
-		for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
-		{
-			if((*l_it) == _dir)
-			{
-				m_FoldersList.erase(l_it);
-				break;
-			}
-		}
-	}
 	
 	
 	int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf)
@@ -433,6 +350,7 @@ namespace Engine
 
 		if(l_eng->asRoot())
 		{
+			std::cout << "if\n";
 			Plugins::IInPlugin* l_root = 0;
 			l_root = l_eng->rootPlugin();
 			if(l_root != 0)
@@ -454,6 +372,7 @@ namespace Engine
 		}
 		else
 		{
+			std::cout << "else\n";
 			std::map<std::string, Plugins::IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
 			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
 			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
@@ -486,7 +405,6 @@ namespace Engine
 				}
 			}
 		}
-	//}
 		return l_ret;				 // To tell nftw() to continue
 	}
 	

@@ -151,7 +151,7 @@ namespace Engine
 			*@brief Launch a scan and pass each file to input plugin, to allow them to build file list.
 			 *@param _callback For progress bar.
 			*/
-			bool scanDisk(IProgressbar* _callback);
+			bool scanDisk(IProgressbar* _callback = 0);
 			
 			/*!
 			*@brief Get a timestamp.
@@ -219,16 +219,6 @@ namespace Engine
 				return m_callback;
 			}
 	
-			std::list<std::string>* getFoldersListPtr()
-			{
-				return &m_FoldersList;
-			}
-	
-			std::list<std::string>* getExcludedFoldersListPtr()
-			{
-				return &m_ExcludedFoldersList;
-			}
-	
 			std::map<std::string, Plugins::IInPlugin*>*  getAvailableInputPlugs()
 			{
 				return m_AvailableInputPlugs;
@@ -244,20 +234,6 @@ namespace Engine
 				m_Count = _Nb;
 			}
 			
-			//Kind of accessors
-			/*!
-			*@brief Add a folder to m_FoldersList.
-			*@param _dir The directory to add (selected by user using wxDirDialog).
-			*@return true if folder added, false otherwise.
-			*/
-			bool addFolder(const std::string _dir, std::string& _parent);
-	
-			/*!
-			*@brief Remove a folder to m_FoldersList
-			*@param _dir The directory to delete (selected by user using wxDirDialog)
-			*/
-			void delFolder(const std::string _dir);
-	
 		private:
 			Tools::TSmartPtr<Plugins::CPluginManager>  		m_pfm;
 	
@@ -273,10 +249,6 @@ namespace Engine
 			bool											m_asRoot;
 			IProgressbar*									m_callback;
 			unsigned int									m_Count;
-	
-			//Folders infos
-			std::list<std::string>							m_FoldersList;
-			std::list<std::string>							m_ExcludedFoldersList;
 	
 			//Files infos
 			std::map<std::string, unsigned long>			m_Infos;

@@ -81,15 +81,20 @@ namespace GUI
 	IMPLEMENT_CLASS( CMainInterface, wxFrame )
 
 	BEGIN_EVENT_TABLE( CMainInterface, wxFrame )
+
 	EVT_NOTEBOOK_PAGE_CHANGED(ID_NOTEBOOK, CMainInterface::OnNotebook)
 	EVT_MENU(ID_SCAN, CMainInterface::OnScan)
 	EVT_MENU(ID_ABOUT, CMainInterface::OnAbout)
-	EVT_MENU(ID_FOLDER_ADD, CMainInterface::OnFolderAdd)
-	EVT_MENU(ID_FOLDER_DEL, CMainInterface::OnFolderDel)
 	EVT_MENU(ID_PREFS, CMainInterface::OnPrefs)
 	EVT_MENU(wxID_EXIT, CMainInterface::OnQuit)
 	EVT_MENU(ID_PROCESS, CMainInterface::OnProcess)
 	EVT_MENU(ID_SELECT, CMainInterface::OnSelect)
+	//ListBook
+    EVT_BUTTON(ID_FOLDER_INC_ADD, CMainInterface::OnFolderIncAdd)
+    EVT_BUTTON(ID_FOLDER_INC_DEL, CMainInterface::OnFolderIncDel)
+    EVT_BUTTON(ID_FOLDER_EX_ADD, CMainInterface::OnFolderExAdd)
+    EVT_BUTTON(ID_FOLDER_EX_DEL, CMainInterface::OnFolderExDel)
+
 	END_EVENT_TABLE()
 	
 	CMainInterface::CMainInterface()
@@ -183,13 +188,6 @@ namespace GUI
 	
 		//File menu
 		l_MenuBar->Append(l_File, wxString(i8n("File"), wxConvUTF8));
-		//wxMenuItem* l_Add = new wxMenuItem(l_File, ID_FOLDER_ADD, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
-	    //l_Add->SetBitmap(menu_add_folder_xpm);
-		//wxMenuItem* l_Del = new wxMenuItem(l_File, ID_FOLDER_DEL, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
-	    //l_Del->SetBitmap(menu_del_folder_xpm);
-		//l_File->Append(l_Add);
-		//l_File->Append(l_Del);
-		//l_File->AppendSeparator();
 		wxMenuItem* l_Quit = new wxMenuItem(l_File, wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8));
 		l_File->Append(l_Quit);
 	
@@ -208,11 +206,7 @@ namespace GUI
 		l_Frame->SetMenuBar(l_MenuBar);
 	
 		//TOOLBAR
-		//l_ToolBar->SetMargins(4, 4);
-	
-		//l_Frame->SetToolBar(l_ToolBar);
 		wxToolBar* l_ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-		//l_ToolBar->AddTool(ID_SELECT, wxString(i8n("Select input plugins to use."), wxConvUTF8), select_xpm, select_xpm, wxITEM_NORMAL, wxString(i8n("Select input plugins to use."), wxConvUTF8), wxEmptyString);
 		l_ToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
 		l_ToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
 		l_ToolBar->AddSeparator();
@@ -251,7 +245,7 @@ namespace GUI
 	
 			wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
 			wxString l_des(((*_it).second)->Description().c_str(), wxConvUTF8);
-			std::cout << ((*_it).second)->Description().c_str() << '\n';
+			//std::cout << ((*_it).second)->Description().c_str() << '\n';
 			long l_tmp = m_InputPlugins->InsertItem(l_counter++, l_str, 0);
 			m_InputPlugins->SetItem(l_tmp, 1, l_des); 
 		}
@@ -266,17 +260,6 @@ namespace GUI
 		l_output[0] = _("tbz");
 		m_OutputPlugins = new wxRadioBox(m_Aui, wxID_ANY, wxString(i8n("Output plugins :"), wxConvUTF8), wxDefaultPosition, wxDefaultSize, 1, l_output);
 
-		/*std::map<std::string, Plugins::IInPlugin*>::iterator _it;
-		for(_it = m_Engine->getAvailableInputPlugs()->begin(); _it != m_Engine->getAvailableInputPlugs()->end(); ++_it)
-		{
-			m_InputPlugins->Hide();
-	
-			wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
-			wxString l_des(((*_it).second)->Description().c_str(), wxConvUTF8);
-			std::cout << ((*_it).second)->Description().c_str() << '\n';
-			long l_tmp = m_InputPlugins->InsertItem(l_counter++, l_str, 0);
-			m_InputPlugins->SetItem(l_tmp, 1, l_des); 
-		}*/
     	m_Aui->AddPage(m_OutputPlugins, wxString(i8n("Output plugins"), wxConvUTF8), false);
 
 		//Found files AuiNotebook page
@@ -374,7 +357,7 @@ namespace GUI
 			wxString(i8n("this is a information"), wxConvUTF8),
 			100,					 // range
 			this,					 // parent
-			//wxPD_CAN_ABORT |
+			wxPD_CAN_ABORT |
 			// wxPD_CAN_SKIP |
 			wxPD_APP_MODAL |
 		 	wxPD_AUTO_HIDE | 
@@ -421,7 +404,7 @@ namespace GUI
 			l_itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
 			l_fileslist->InsertColumn(2, l_itemCol);
 	
-			// to speed up inserting we hide the control temporarily
+			// to speed up inserting, we hide the control temporarily
 			l_fileslist->Hide();
 	
 			int l_counter = 0;
@@ -551,33 +534,74 @@ namespace GUI
 	
 	void CMainInterface::UpdateFolderList()
 	{
-		wxSizer* l_Sizer = new wxBoxSizer(wxVERTICAL);
-
+		//If folders panel not created, we created it here !
 	    if(!m_Folders)
 		{
 			m_Folders = new wxPanel(m_Aui, -1);
+			wxSizer* l_Sizer = new wxBoxSizer(wxVERTICAL);
+			m_Folders->SetSizer(l_Sizer);
+
+			l_Sizer->Add(new wxStaticText(m_Folders, -1, _T("Folders added to scan :")), 0, wxALIGN_LEFT | wxALL, 5);
+
+	    	if(!m_AddedFolders)
+			{
+				m_AddedFolders = new GUI::wxCheckListCtrl(m_Folders, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+				//Setting header:
+				wxListItem l_itemCol;
+				l_itemCol.SetText(wxString(i8n("Name"), wxConvUTF8));
+				l_itemCol.SetImage(-1);
+				m_AddedFolders->InsertColumn(0, l_itemCol);
+			}
+			
+			l_Sizer->Add(m_AddedFolders, 1, wxGROW | wxALL, 5);
+
+			wxSizer* l_Sizer2 = new wxBoxSizer(wxHORIZONTAL);
+			l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_INC_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
+			l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_INC_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
+
+			l_Sizer->Add(l_Sizer2, 0, wxGROW | wxALL, 5);
+
+			wxStaticLine* l_Line = new wxStaticLine(m_Folders, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
+    		l_Sizer->Add(l_Line, 0, wxGROW|wxALL, 5);
+
+			l_Sizer->Add(new wxStaticText(m_Folders, -1, _T("Folders excluded from scan :")), 0, wxALIGN_LEFT | wxALL, 5);
+
+	    	if(!m_ExcludedFolders)
+			{
+				m_ExcludedFolders = new GUI::wxCheckListCtrl(m_Folders, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+				//Setting header:
+				wxListItem l_itemCol;
+				l_itemCol.SetText(wxString(i8n("Name"), wxConvUTF8));
+				l_itemCol.SetImage(-1);
+				m_ExcludedFolders->InsertColumn(0, l_itemCol);
+			}
+
+			l_Sizer->Add(m_ExcludedFolders, 1, wxGROW | wxALL, 5);
+
+			l_Sizer2 = new wxBoxSizer(wxHORIZONTAL);
+			l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_EX_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
+			l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_EX_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
+
+			l_Sizer->Add(l_Sizer2, 0, wxGROW | wxALL, 5);
 		}
-		else
+
+		//First clear lists
+		if(m_AddedFolders != 0)
 		{
-
+			m_AddedFolders->DeleteAllItems();
 		}
-	
-		m_Folders->SetSizer(l_Sizer);
 
-		l_Sizer->Add(new wxStaticText(m_Folders, -1, _T("Folders added to scan :")), 0, wxALIGN_LEFT | wxALL, 5);
-
-	    if(!m_AddedFolders)
+		if(m_ExcludedFolders != 0)
 		{
-			m_AddedFolders = new GUI::wxCheckListCtrl(m_Folders, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-			//Setting header:
-			wxListItem l_itemCol;
-			l_itemCol.SetText(wxString(i8n("Name"), wxConvUTF8));
-			l_itemCol.SetImage(-1);
-			m_AddedFolders->InsertColumn(0, l_itemCol);
+			m_ExcludedFolders->DeleteAllItems();
 		}
-		
-		std::list<std::string>* l_fl = m_Engine->getFoldersListPtr();
+
+		//The, fill panel
+
+		//Declare common iterator
 		std::list<std::string>::iterator l_it;
+
+		std::list<std::string>* l_fl = m_Settings->getFoldersListPtr();
 		for(l_it = l_fl->begin(); l_it !=l_fl->end(); ++l_it)
 		{
 			//Maybe an alphabetic sort will be need here : algorithms :D
@@ -587,30 +611,7 @@ namespace GUI
 			m_AddedFolders->SetColumnWidth(0, wxLIST_AUTOSIZE);
 		}
 
-		l_Sizer->Add(m_AddedFolders, 1, wxGROW | wxALL, 5);
-
-		wxSizer* l_Sizer2 = new wxBoxSizer(wxHORIZONTAL);
-		l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
-		l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
-
-		l_Sizer->Add(l_Sizer2, 0, wxGROW | wxALL, 5);
-
-		wxStaticLine* l_Line = new wxStaticLine(m_Folders, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
-    	l_Sizer->Add(l_Line, 0, wxGROW|wxALL, 5);
-
-		l_Sizer->Add(new wxStaticText(m_Folders, -1, _T("Folders excluded from scan :")), 0, wxALIGN_LEFT | wxALL, 5);
-
-	    if(!m_ExcludedFolders)
-		{
-			m_ExcludedFolders = new GUI::wxCheckListCtrl(m_Folders, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-			//Setting header:
-			wxListItem l_itemCol;
-			l_itemCol.SetText(wxString(i8n("Name"), wxConvUTF8));
-			l_itemCol.SetImage(-1);
-			m_ExcludedFolders->InsertColumn(0, l_itemCol);
-		}
-		
-		l_fl = m_Engine->getExcludedFoldersListPtr();
+		l_fl = m_Settings->getExcludedFoldersListPtr();
 		for(l_it = l_fl->begin(); l_it !=l_fl->end(); ++l_it)
 		{
 			//Maybe an alphabetic sort will be need here : algorithms :D
@@ -619,18 +620,10 @@ namespace GUI
 			m_ExcludedFolders->SetItemData(l_tmp, 0);
 			m_ExcludedFolders->SetColumnWidth(0, wxLIST_AUTOSIZE);
 		}
-
-		l_Sizer->Add(m_ExcludedFolders, 1, wxGROW | wxALL, 5);
-
-		l_Sizer2 = new wxBoxSizer(wxHORIZONTAL);
-		l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
-		l_Sizer2->Add(new wxButton(m_Folders, ID_FOLDER_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
-
-		l_Sizer->Add(l_Sizer2, 0, wxGROW | wxALL, 5);
 	}
 	
 	
-	void CMainInterface::OnFolderAdd(wxCommandEvent& WXUNUSED(event))
+	void CMainInterface::OnFolderIncAdd(wxCommandEvent& WXUNUSED(event))
 	{
 		wxString l_msg(_T("coucou"));
 		wxDirDialog l_addDlg(this, wxString(i8n("Select a folder to add to scan"), wxConvUTF8), l_msg, wxDD_DIR_MUST_EXIST);
@@ -638,7 +631,8 @@ namespace GUI
 		{
 			std::string l_selPath(l_addDlg.GetPath().char_str()); 
 			std::string l_Parent;
-			if(!m_Engine->addFolder(l_selPath, l_Parent))
+			//std::cout << l_selPath << '\n';
+			if(!m_Settings->addFolder(l_selPath, l_Parent, Engine::CSettingsManager::eFoldersInc))
 			{
 				wxString l_text(i8n("I cannot add "), wxConvUTF8);
 				l_text += wxString(l_selPath.c_str(), wxConvUTF8);
@@ -648,27 +642,89 @@ namespace GUI
 				
 				wxMessageBox(l_text, wxString(i8n("scleaner information"), wxConvUTF8), wxICON_INFORMATION);
 			}
+			else
+			{
+				UpdateFolderList();
+			}
 		}
-		UpdateFolderList();
 	}
 	
 	
-	void CMainInterface::OnFolderDel(wxCommandEvent& WXUNUSED(event))
+	void CMainInterface::OnFolderIncDel(wxCommandEvent& WXUNUSED(event))
 	{
+		bool l_Refresh = false;
+
 		for(int i = 0; i != m_AddedFolders->GetItemCount(); ++i)
 		{
 			long l_Mask;
 			l_Mask = wxLIST_STATE_SELECTED;
-			if(m_AddedFolders->GetItemState(i, l_Mask) == wxLIST_STATE_SELECTED)
+			if(m_AddedFolders->GetItemState(i, l_Mask) == l_Mask)
 			{
 				wxListItem l_item;
 				l_item.SetId(i);
 				m_AddedFolders->GetItem(l_item);
 				wxString l_text = l_item.GetText();
-				m_Engine->delFolder(std::string(l_text.ToAscii()));
+				m_Settings->delFolder(std::string(l_text.ToAscii()), Engine::CSettingsManager::eFoldersInc);
+				l_Refresh = true;
 			}
 		}
-		UpdateFolderList();
+
+		if(l_Refresh)
+		{
+			UpdateFolderList();
+		}
+	}
+	
+	
+	void CMainInterface::OnFolderExAdd(wxCommandEvent& WXUNUSED(event))
+	{
+		wxString l_msg(_T("coucou"));
+		wxDirDialog l_addDlg(this, wxString(i8n("Select a folder to add to scan"), wxConvUTF8), l_msg, wxDD_DIR_MUST_EXIST);
+		if(l_addDlg.ShowModal() == wxID_OK)
+		{
+			std::string l_selPath(l_addDlg.GetPath().char_str()); 
+			std::string l_Parent;
+			if(!m_Settings->addFolder(l_selPath, l_Parent, Engine::CSettingsManager::eFoldersEx))
+			{
+				wxString l_text(i8n("I cannot add "), wxConvUTF8);
+				l_text += wxString(l_selPath.c_str(), wxConvUTF8);
+				l_text += wxString(i8n(" since "), wxConvUTF8);
+				l_text += wxString(l_Parent.c_str(), wxConvUTF8);
+				l_text += wxString(i8n(" is already in the folders list."), wxConvUTF8);
+				
+				wxMessageBox(l_text, wxString(i8n("scleaner information"), wxConvUTF8), wxICON_INFORMATION);
+			}
+			else
+			{
+				UpdateFolderList();
+			}
+		}
+	}
+	
+	
+	void CMainInterface::OnFolderExDel(wxCommandEvent& WXUNUSED(event))
+	{
+		bool l_Refresh = false;
+
+		for(int i = 0; i != m_ExcludedFolders->GetItemCount(); ++i)
+		{
+			long l_Mask;
+			l_Mask = wxLIST_STATE_SELECTED;
+			if(m_ExcludedFolders->GetItemState(i, l_Mask) == l_Mask)
+			{
+				wxListItem l_item;
+				l_item.SetId(i);
+				m_ExcludedFolders->GetItem(l_item);
+				wxString l_text = l_item.GetText();
+				m_Settings->delFolder(std::string(l_text.ToAscii()), Engine::CSettingsManager::eFoldersEx);
+				l_Refresh = true;
+			}
+		}
+
+		if(l_Refresh)
+		{
+			UpdateFolderList();
+		}
 	}
 	
 	
@@ -750,11 +806,4 @@ namespace GUI
 			}
 		}
 	}
-	
-	
-	/*void CMainInterface::OnSelRadio(wxCommandEvent& event)
-	{
-		wxString l_name = event.GetString();
-		m_Html -> LoadPage(wxT("/usr/share/doc/scleaner/") + l_name + wxString(i8n(".html"), wxConvUTF8));
-	}*/
 }

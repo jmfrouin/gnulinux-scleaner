@@ -92,9 +92,11 @@ namespace GUI
 			void OnScan(wxCommandEvent& WXUNUSED(event));
 			void OnSelect(wxCommandEvent& WXUNUSED(event));
 			void OnNotebook(wxNotebookEvent& event);
-			void OnFolderAdd(wxCommandEvent& WXUNUSED(event));
-			void OnFolderDel(wxCommandEvent& WXUNUSED(event));
 			void OnPrefs(wxCommandEvent& WXUNUSED(event));
+			void OnFolderIncAdd(wxCommandEvent& WXUNUSED(event));
+			void OnFolderIncDel(wxCommandEvent& WXUNUSED(event));
+			void OnFolderExAdd(wxCommandEvent& WXUNUSED(event));
+			void OnFolderExDel(wxCommandEvent& WXUNUSED(event));
 	
 			/*!
 			 *@brief Call splash screen

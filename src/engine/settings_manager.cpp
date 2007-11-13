@@ -20,6 +20,7 @@
 */
 
 #include <fstream>
+#include "engine.h"
 #include "settings_manager.h"
 
 namespace Engine
@@ -27,14 +28,62 @@ namespace Engine
 	CSettingsManager::CSettingsManager():
 	m_ShowSplash(true)
 	{
-		std::ifstream l_File("/home/snoogie/.scleaner/prefs.conf");
-		std::string l_temp;
+		std::string l_path;
 
-		//chomp field descriptor
-		l_File >> l_temp;
-		//chomp '=' 
-		l_File >> l_temp;
-		l_File >> m_ShowSplash;
+		if(CEngine::isRoot())
+		{
+			l_path += "/root";
+		}
+		else
+		{
+			l_path += "/home/";
+			std::string l_user;
+			CEngine::getUsername(l_user);
+			l_path += l_user;
+		}
+		
+		std::string l_config(l_path);
+		l_config += "/.scleaner/prefs.conf";
+
+
+		std::ifstream l_File(l_config.c_str());
+		unsigned int l_Label;
+
+		if(l_File.good())
+		{
+			while(1)
+			{
+				l_File >> l_Label;
+				if(l_File.eof() == true)
+				{
+					break;
+				}
+				std::string l_folder;
+				switch(l_Label)
+				{
+					case eShowSplash:
+						l_File >> m_ShowSplash;
+						break;
+					case eFolderInc:
+						l_File >> l_folder;
+						m_FoldersList.push_back(l_folder);
+						break;
+					case eFolderEx:
+						l_File >> l_folder;
+						m_ExcludedFoldersList.push_back(l_folder);
+						break;
+					default:
+						continue;
+				}
+			}		
+		}
+		else
+		{
+			//Default configuration
+			m_ShowSplash = true;
+			m_FoldersList.push_back("/home");
+			m_ExcludedFoldersList.push_back(l_path);
+		}
 
 		#if defined DEBUG
 		std::cout << "Loading pref : \n";
@@ -42,14 +91,161 @@ namespace Engine
 		#endif
 	}
 	
+
 	CSettingsManager::~CSettingsManager()
 	{
-		std::ofstream l_File("/home/snoogie/.scleaner/prefs.conf");
-		l_File << "showsplash = " << m_ShowSplash;
+		std::string l_path;
 
+		if(CEngine::isRoot())
+		{
+			l_path += "/root";
+		}
+		else
+		{
+			l_path += "/home/";
+			std::string l_user;
+			CEngine::getUsername(l_user);
+			l_path += l_user;
+		}
+		
+		std::string l_config(l_path);
+		l_config += "/.scleaner/prefs.conf";
+
+		std::ofstream l_File(l_config.c_str());
+
+		//Splash screen
+		l_File << eShowSplash << ' ' << m_ShowSplash << '\n';
+
+		//Debug
 		#if defined DEBUG
 		std::cout << "Saving pref\n";
 		std::cout << "m_ShowSplash = " << m_ShowSplash << '\n';
 		#endif
+
+		//Folders include in scan
+		std::list<std::string>::iterator l_it;
+		for(l_it = m_FoldersList.begin(); l_it != m_FoldersList.end(); ++l_it)
+		{
+			#if defined DEBUG
+			std::cout << "Adding :" << *l_it << '\n';
+			#endif
+			l_File << eFolderInc << ' ' << *l_it << '\n';
+		}
+
+		//Folders exclude from scan
+		for(l_it = m_ExcludedFoldersList.begin(); l_it != m_ExcludedFoldersList.end(); ++l_it)
+		{
+			#if defined DEBUG
+			std::cout << "Excluding :" << *l_it << '\n';
+			#endif
+			l_File << eFolderEx << ' ' << *l_it << '\n';
+		}
+	}
+
+
+	bool CSettingsManager::addFolder(std::string _dir, std::string& _parent, eFoldersType _type)
+	{
+		bool l_ret = true;
+
+		std::list<std::string>* l_fl;
+
+		switch(_type)
+		{
+			case eFoldersInc:
+				l_fl = &m_FoldersList;
+				break;
+			case eFoldersEx:
+				l_fl = &m_ExcludedFoldersList;
+				break;
+			default:
+				l_fl = 0;
+				break;
+		}
+		
+		//Search a parent folder:
+		std::list<std::string>::iterator l_it;
+		bool l_clean = false;
+		for(l_it = l_fl->begin(); l_it != l_fl->end(); ++l_it)
+		{
+			//If a parent is found
+			if(_dir.find(*l_it, 0) != std::string::npos)
+			{
+				_parent = *l_it;
+				l_ret = false;
+				break;
+			}
+			else
+			{
+				//If _dir is a parent :D
+				if((*l_it).find(_dir, 0) != std::string::npos)
+				{
+					l_clean = true;
+					break;
+				}
+			}
+		}
+	
+		if(l_clean)
+		{	
+			l_it = l_fl->begin();
+			do
+			{
+				if((*l_it).find(_dir, 0) != std::string::npos)
+				{
+					std::list<std::string>::iterator l_it2erase = l_it;
+					++l_it;
+					l_fl->erase(l_it2erase);
+				}
+				else
+				{
+					++l_it;
+				}
+			}while(l_it != l_fl->end());
+		}
+		
+		if(l_ret)
+		{
+			l_fl->push_back(_dir);
+		}
+		else
+		{
+			//If a parent folder is found, no need to add is child.
+			#if defined DEBUG
+			std::cerr << "[WRG] Parent folder found : " << (*l_it) << " no need to add " << _dir << '\n';
+			#endif
+		}
+		
+		return l_ret;
+	}
+	
+	void CSettingsManager::delFolder(const std::string _dir, eFoldersType _type)
+	{
+		std::list<std::string>::iterator l_it;
+		std::list<std::string>* l_fl;
+
+		switch(_type)
+		{
+			case eFoldersInc:
+				l_fl = &m_FoldersList;
+				break;
+			case eFoldersEx:
+				l_fl = &m_ExcludedFoldersList;
+				break;
+			default:
+				l_fl = 0;
+				break;
+		}
+
+		if(l_fl != 0)
+		{
+			for(l_it = l_fl->begin(); l_it != l_fl->end(); ++l_it)
+			{
+				if((*l_it) == _dir)
+				{
+					l_fl->erase(l_it);
+					break;
+				}
+			}
+		}
 	}
 } //namespace Engine

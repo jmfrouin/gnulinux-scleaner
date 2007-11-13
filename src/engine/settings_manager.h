@@ -24,6 +24,8 @@
 
 #include <tools/smart_pointer.h>
 #include <tools/singleton.h>
+#include <string>
+#include <list>
 
 #define PREFFILE "~/.scleaner/prefs.conf"
 
@@ -33,11 +35,26 @@ namespace Engine
 	* @brief Manage all settings.
 	* Load them on creation
 	* Save them on destruction (or Apply)
-	* @version 09.11.2007
+	* @version 13.11.2007
 	* @author Jean-Michel Frouin (jmfrouin@gnu.org)
 	*/
 	class CSettingsManager: public Tools::CSmartCpt, public Tools::TSingleton<CSettingsManager>
 	{
+		public:
+			enum eSettings
+			{
+				eShowSplash = 10,
+				eFolderInc,
+				eFolderEx
+			};
+
+			enum eFoldersType
+			{
+				eNone = 0,
+				eFoldersInc,
+				eFoldersEx
+			};
+
 		public:
 			/*!
 			* Construstor : Load preferences.
@@ -49,19 +66,50 @@ namespace Engine
 			*/
 			~CSettingsManager();
 	
+			//Kind of accessors
+			/*!
+			*@brief Add a folder to m_FoldersList.
+			*@param _dir The directory to add (selected by user using wxDirDialog).
+			*@param _parent The parent directory.
+			*@param _type We add a folder to include or exclude ?.
+			*@return true if folder added, false otherwise.
+			*/
+			bool addFolder(const std::string _dir, std::string& _parent, eFoldersType _type = eNone);
+	
+			/*!
+			*@brief Remove a folder to m_FoldersList
+			*@param _dir The directory to delete (selected by user using wxDirDialog)
+			*@param _type We remove a folder to include or exclude ?.
+			*/
+			void delFolder(const std::string _dir, eFoldersType _type = eNone);
+	
+
 			/*!
 			* Accessors
 			*/
 			bool getShowSplash() { return m_ShowSplash; }
+
+			std::list<std::string>* getFoldersListPtr()
+			{
+				return &m_FoldersList;
+			}
+	
+			std::list<std::string>* getExcludedFoldersListPtr()
+			{
+				return &m_ExcludedFoldersList;
+			}
 	
 			/*!
 			* Mutators
 			*/
 			void setShowSplash(bool _val) { m_ShowSplash = _val; }
 	
-	
 		private:
-			bool				m_ShowSplash;	///Display splash (only in GUI) ?
+			bool					m_ShowSplash;	///Display splash (only in GUI) ?
+
+			//Folders infos
+			std::list<std::string>	m_FoldersList;
+			std::list<std::string>	m_ExcludedFoldersList;
 	
 	};
 } //namespace Engine
