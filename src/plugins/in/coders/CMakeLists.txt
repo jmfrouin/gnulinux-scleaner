@@ -15,11 +15,9 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
+#
 
-
-SET(folder apt-cache backfiles coders emptyfolders kernels logs nullfiles trash crimosoft latex mac)
-
-FOREACH(fold ${folder})
-	ADD_SUBDIRECTORY(${fold})
-ENDFOREACH(fold ${folder})
+SET(coders_src coders.cpp)
+ADD_LIBRARY(coders SHARED ${coders_src}) 
+TARGET_LINK_LIBRARIES(coders plugins tools)
+INSTALL(TARGETS coders DESTINATION ${PLUGSDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
