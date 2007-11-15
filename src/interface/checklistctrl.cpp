@@ -26,6 +26,7 @@
 
 #include <wx/menu.h>
 #include <def.h>
+#include <engine/engine.h>
 #include "checklistctrl.h"
 
 namespace GUI
@@ -78,17 +79,17 @@ namespace GUI
 		wxListItem l_item;
 		l_item.SetId(item);
 		GetItem(l_item);
-	
+		wxString l_text = l_item.GetText();
+
 		if(l_item.GetImage() == 0)
 		{
-			//SetItemImage(item, 1);
+			Engine::CEngine::Instance()->setUnselectedInputPlugs(std::string(l_text.ToAscii()));
+			SetItemImage(item, 1);
 		}
 		else
 		{
-			//SetItemImage(item, 0);
+			SetItemImage(item, 0);
 		}
-	
-		SetItemImage(item, 2);
 	
 		return l_ret;
 	}

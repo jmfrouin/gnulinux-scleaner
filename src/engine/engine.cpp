@@ -45,7 +45,7 @@ namespace Engine
 {
 
 	CEngine::CEngine():
-	m_AvailableInputPlugs(0), m_SelectedInputPlugs(0), m_OutputPlugs(0), m_rootPlugin(0), m_asRoot(false), m_callback(0), m_Count(0)
+	m_AvailableInputPlugs(0), m_OutputPlugs(0), m_rootPlugin(0), m_asRoot(false), m_callback(0), m_Count(0), m_SelInPlugins(false)
 	{
 		//Initialisation
 		m_AvailableInputPlugs = Plugins::CPluginManager::Instance()->getInputListPtr();
@@ -61,6 +61,14 @@ namespace Engine
 	
 	CEngine::~CEngine()
 	{
+		#if defined DEBUG
+		std::cout << "~CEngine\n";
+		std::list<std::string>::iterator l_it;
+		for(l_it = m_UnselectedInputPlugs.begin(); l_it != m_UnselectedInputPlugs.end(); ++l_it)
+		{
+			std::cout << *l_it << '\n';
+		}
+		#endif
 	}
 	
 	int CEngine::loadPlugins(const std::string& _path)
@@ -286,11 +294,11 @@ namespace Engine
 		//If launch as root
 		if(isRoot())
 		{
-			std::map<std::string, Plugins::IInPlugin*>* l_input = m_pfm->getInputListPtr();
+			std::map<std::string, Plugins::IInPlugin*>* l_input = getSelectedInputPlugs(true);
 			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
 			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
 			{
-				if(((*l_it).second)->Type() == Plugins::IPlugin::eRootByFolderInput)
+				if(l_it->second->Type() == Plugins::IPlugin::eRootByFolderInput)
 				{
 					std::string l_dir;
 					(l_it->second)->getDirectory(l_dir);
@@ -305,9 +313,9 @@ namespace Engine
 		std::list<std::string>::iterator l_itFolders;
 		for(l_itFolders = l_FoldersList->begin(); l_itFolders != l_FoldersList->end(); ++l_itFolders)
 		{
-			#if defined DEBUG
-			std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << (*l_itFolders) << '\n';
-			#endif
+			//#if defined DEBUG
+			std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << *l_itFolders << '\n';
+			//#endif
 			if(_callback != 0)
 			{
 				_callback->updateProgress(*l_itFolders, true);
@@ -324,7 +332,6 @@ namespace Engine
 	{
 		int l_ret = 0;
 		std::string l_path(_fpath);
-		std::cout << "Looking : " << l_path << '\n';
 
 		CEngine* l_eng = CEngine::Instance();
 
@@ -350,7 +357,6 @@ namespace Engine
 
 		if(l_eng->asRoot())
 		{
-			std::cout << "if\n";
 			Plugins::IInPlugin* l_root = 0;
 			l_root = l_eng->rootPlugin();
 			if(l_root != 0)
@@ -372,7 +378,6 @@ namespace Engine
 		}
 		else
 		{
-			std::cout << "else\n";
 			std::map<std::string, Plugins::IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
 			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
 			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
@@ -610,5 +615,43 @@ namespace Engine
 		
 		return l_ret;
 	}
+
+	std::map<std::string, Plugins::IInPlugin*>* CEngine::getSelectedInputPlugs(bool _refresh)
+	{
+		std::cout << "getSelectedInputPlugs\n";
+		if(_refresh || !m_SelInPlugins)
+		{
+			std::cout << "getSelectedInputPlugs : refresh\n";
+
+			//First clear the map
+			m_SelectedInputPlugs.clear();
+
+			//For each available plugin
+			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
+			for(l_it = m_AvailableInputPlugs->begin(); l_it != m_AvailableInputPlugs->end(); ++l_it)
+			{
+				std::cout << "I compare " << l_it->first; 
+				bool l_unsel = false;
+				//If it is no unselected
+				std::list<std::string>::iterator l_it2;
+				for(l_it2 = m_UnselectedInputPlugs.begin(); l_it2 != m_UnselectedInputPlugs.end(); ++l_it2)
+				{
+					std::cout << " and " << *l_it2 << '\n';
+					if((*l_it2) == (l_it->first))
+					{
+						l_unsel = true;
+						break;
+					}
+				}
+				if(!l_unsel)
+				{
+					m_SelectedInputPlugs.insert(make_pair(l_it->first, l_it->second));	
+				}
+			}
+			m_SelInPlugins = true;
+		}
+		return &m_SelectedInputPlugs;
+	}
+
 } //namespace Engine
 /* vi:set ts=4: */

@@ -20,15 +20,15 @@
 */
 
 /*
- * @brief :      Commons definition file
- * @author :     Jean-Michel Frouin
- * @date :       09/01/2007
+ *@brief :      Commons definition file
+ *@version 15.11.2007
+ *@author Jean-Michel Frouin (jmfrouin@gnu.org)
  */
 
 #ifndef _DEF_H_
 #define _DEF_H_
 
-#define BUILD 237
+#define BUILD 265
 
 //Bash Colors
 #define VERT "\e[0;32m"

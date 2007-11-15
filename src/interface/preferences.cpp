@@ -133,15 +133,15 @@ namespace GUI
 	    wxBoxSizer* l_Sizer = new wxBoxSizer(wxVERTICAL);
 	    l_PluginsPanel->SetSizer(l_Sizer);
 	
+		wxStaticText* l_Title = new wxStaticText(l_PluginsPanel, wxID_ANY, wxString(i8n("Plugin default selection : "), wxConvUTF8));
+		l_Sizer->Add(l_Title, 1, wxGROW | wxALL, 5);
+
 		std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
 		for(l_it = m_Engine->getAvailableInputPlugs()->begin(); l_it != m_Engine->getAvailableInputPlugs()->end(); ++l_it)
 		{
-	    	wxArrayString l_Choice;
-			l_Choice.Add(wxString(i8n("Yes"), wxConvUTF8));
-			l_Choice.Add(wxString(i8n("No"), wxConvUTF8));
-			wxRadioBox* l_PluginRadio = new wxRadioBox(l_PluginsPanel, wxID_ANY, wxString(l_it->first.c_str(), wxConvUTF8) + wxString(i8n(" default selection"), wxConvUTF8), wxDefaultPosition, wxDefaultSize, l_Choice, 1, wxRA_SPECIFY_ROWS);
-			l_PluginRadio->SetSelection(l_it->second->getDefaultSelection());
-			l_Sizer->Add(l_PluginRadio, 1, wxGROW | wxALL, 5);
+			wxCheckBox* l_PluginCB = new wxCheckBox(l_PluginsPanel, wxID_ANY, wxString(l_it->first.c_str(), wxConvUTF8) + wxString(i8n(" default selection"), wxConvUTF8));
+			l_PluginCB->SetValue(l_it->second->getDefaultSelection());
+			l_Sizer->Add(l_PluginCB, 1, wxGROW | wxALL, 5);
 		}
 
     	l_PrefListbook->AddPage(l_PluginsPanel, _("Plugins"));
@@ -151,30 +151,32 @@ namespace GUI
 	    wxBoxSizer* l_Sizer2 = new wxBoxSizer(wxVERTICAL);
 	    l_PrefPanel->SetSizer(l_Sizer2);
 
-		//Duplicate file method.
-	    wxArrayString itemRadioBox3Strings;
-	    itemRadioBox3Strings.Add(_("&CRC32"));
-	    itemRadioBox3Strings.Add(_("&MD5"));
-	    wxRadioBox* itemRadioBox3 = new wxRadioBox(l_PrefPanel, ID_RADIOBOX2, _("Duplicates files method"), wxDefaultPosition, wxDefaultSize, itemRadioBox3Strings, 1, wxRA_SPECIFY_ROWS );
-	    itemRadioBox3->SetSelection(0);
-	    l_Sizer2->Add(itemRadioBox3, 1, wxGROW | wxALL, 5);
+		//Duplicate file method : Not fully implemented !
+	    //wxArrayString itemRadioBox3Strings;
+	    //itemRadioBox3Strings.Add(_("&CRC32"));
+	    //itemRadioBox3Strings.Add(_("&MD5"));
+	    //wxRadioBox* itemRadioBox3 = new wxRadioBox(l_PrefPanel, ID_RADIOBOX2, _("Duplicates files method"), wxDefaultPosition, wxDefaultSize, itemRadioBox3Strings, 1, wxRA_SPECIFY_ROWS );
+	    //itemRadioBox3->SetSelection(0);
+	    //l_Sizer2->Add(itemRadioBox3, 1, wxGROW | wxALL, 5);
 
 		//Show splashscreen ?
 		m_SplashScreen = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show splash screen on startup"), wxDefaultPosition);
 		m_SplashScreen->SetValue(m_Settings->getShowSplash());
 	    l_Sizer2->Add(m_SplashScreen, 1, wxGROW | wxALL, 5);
 
+		//Show toolbar ?
+		m_Toolbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show toolbar (need reboot)"), wxDefaultPosition);
+		m_Toolbar->SetValue(m_Settings->getShowToolbar());
+	    l_Sizer2->Add(m_Toolbar, 1, wxGROW | wxALL, 5);
+
+		//Show statusbar ?
+		m_Statusbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show status bar (need reboot)"), wxDefaultPosition);
+		m_Statusbar->SetValue(m_Settings->getShowStatusbar());
+	    l_Sizer2->Add(m_Statusbar, 1, wxGROW | wxALL, 5);
+
 		//Progress bar refresh's delay
 		wxSpinButton* l_PBDelay = new wxSpinButton(l_PrefPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_HORIZONTAL, _T("Progress bar update's delay"));
 	    l_Sizer2->Add(l_PBDelay, 1, wxGROW | wxALL, 5);
-
-		//Show toolbar ?
-		wxCheckBox* l_Toolbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show toolbar"), wxDefaultPosition);
-	    l_Sizer2->Add(l_Toolbar, 1, wxGROW | wxALL, 5);
-
-		//Show statusbar ?
-		wxCheckBox* l_Statusbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show status bar"), wxDefaultPosition);
-	    l_Sizer2->Add(l_Statusbar, 1, wxGROW | wxALL, 5);
 
     	l_PrefListbook->AddPage(l_PrefPanel, _("Application"));
 	}
@@ -217,6 +219,8 @@ namespace GUI
 	void CPreferences::OnApply(wxCommandEvent& WXUNUSED(event))
 	{	
 		m_Settings->setShowSplash(m_SplashScreen->GetValue());
+		m_Settings->setShowToolbar(m_Toolbar->GetValue());
+		m_Settings->setShowStatusbar(m_Statusbar->GetValue());
     	Close(true);
 	}
 }

@@ -45,6 +45,8 @@ namespace GUI
 {
 	/*!
 	 *@brief CPreferences class declaration
+	* @version 15.11.2007
+	* @author Jean-Michel Frouin (jmfrouin@gnu.org)
 	 */
 	class CPreferences: public wxDialog
 	{    
@@ -92,6 +94,8 @@ namespace GUI
 
 		//Preferences 
 		wxCheckBox*										m_SplashScreen;
+		wxCheckBox*										m_Toolbar;
+		wxCheckBox*										m_Statusbar;
 	};
 }
 #endif // _PREFERENCES_H_

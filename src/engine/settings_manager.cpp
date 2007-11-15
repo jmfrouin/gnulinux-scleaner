@@ -26,7 +26,7 @@
 namespace Engine
 {
 	CSettingsManager::CSettingsManager():
-	m_ShowSplash(true)
+	m_ShowSplash(true), m_ShowToolbar(true), m_ShowStatusbar(true)
 	{
 		std::string l_path;
 
@@ -72,6 +72,12 @@ namespace Engine
 						l_File >> l_folder;
 						m_ExcludedFoldersList.push_back(l_folder);
 						break;
+					case eShowToolbar:
+						l_File >> m_ShowToolbar;
+						break;
+					case eShowStatusbar:
+						l_File >> m_ShowStatusbar;
+						break;
 					default:
 						continue;
 				}
@@ -80,7 +86,6 @@ namespace Engine
 		else
 		{
 			//Default configuration
-			m_ShowSplash = true;
 			m_FoldersList.push_back("/home");
 			m_ExcludedFoldersList.push_back(l_path);
 		}
@@ -88,6 +93,8 @@ namespace Engine
 		#if defined DEBUG
 		std::cout << "Loading pref : \n";
 		std::cout << "m_ShowSplash = " << m_ShowSplash << '\n';
+		std::cout << "m_ShowToolbar = " << m_ShowToolbar << '\n';
+		std::cout << "m_ShowStatusbar = " << m_ShowStatusbar << '\n';
 		#endif
 	}
 	
@@ -120,6 +127,8 @@ namespace Engine
 		#if defined DEBUG
 		std::cout << "Saving pref\n";
 		std::cout << "m_ShowSplash = " << m_ShowSplash << '\n';
+		std::cout << "m_ShowToolbar = " << m_ShowToolbar << '\n';
+		std::cout << "m_ShowStatusbar = " << m_ShowStatusbar << '\n';
 		#endif
 
 		//Folders include in scan
@@ -140,6 +149,12 @@ namespace Engine
 			#endif
 			l_File << eFolderEx << ' ' << *l_it << '\n';
 		}
+
+		//Show toolbar
+		l_File << eShowToolbar << ' ' << m_ShowToolbar << '\n';
+
+		//Show status bar
+		l_File << eShowStatusbar << ' ' << m_ShowStatusbar << '\n';
 	}
 
 

@@ -104,7 +104,7 @@ namespace GUI
 	
 	
 	CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-	m_FoundFiles(0), m_StatusBar(0), m_Aui(0), m_Folders(0), m_AddedFolders(0), m_ExcludedFolders(0), m_InputPlugins(0), m_OutputPlugins(0), m_Progress(0), m_Settings(false)
+	m_FoundFiles(0), m_StatusBar(0), m_Aui(0), m_Folders(0), m_AddedFolders(0), m_ExcludedFolders(0), m_InputPlugins(0), m_OutputPlugins(0), m_Progress(0), m_Settings(0)
 	{
 		Init();
 		Create(parent, id, caption, pos, size, style);
@@ -205,16 +205,19 @@ namespace GUI
 	
 		l_Frame->SetMenuBar(l_MenuBar);
 	
-		//TOOLBAR
-		wxToolBar* l_ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-		l_ToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
-		l_ToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
-		l_ToolBar->AddSeparator();
-		l_ToolBar->AddTool(ID_PREFS, wxString(i8n("Preferences"), wxConvUTF8), prefs_xpm , prefs_xpm, wxITEM_NORMAL, wxString(i8n("Preferences"), wxConvUTF8), wxEmptyString);
-		l_ToolBar->AddSeparator();
-		l_ToolBar->AddTool(wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8),exit_xpm , exit_xpm, wxITEM_NORMAL, wxString(i8n("Quit"), wxConvUTF8), wxEmptyString);
-		l_ToolBar->Realize();
-		l_Frame->SetToolBar(l_ToolBar);
+		//Toolbar
+		if(m_Settings->getShowToolbar() == true)
+		{
+			wxToolBar* l_ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
+			l_ToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
+			l_ToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
+			l_ToolBar->AddSeparator();
+			l_ToolBar->AddTool(ID_PREFS, wxString(i8n("Preferences"), wxConvUTF8), prefs_xpm , prefs_xpm, wxITEM_NORMAL, wxString(i8n("Preferences"), wxConvUTF8), wxEmptyString);
+			l_ToolBar->AddSeparator();
+			l_ToolBar->AddTool(wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8),exit_xpm , exit_xpm, wxITEM_NORMAL, wxString(i8n("Quit"), wxConvUTF8), wxEmptyString);
+			l_ToolBar->Realize();
+			l_Frame->SetToolBar(l_ToolBar);
+		}
 	
 		//AuiNotebook
     	m_Aui = new wxAuiNotebook(l_Frame, ID_AUI, wxDefaultPosition, wxDefaultSize, wxAUI_NB_TOP|wxAUI_NB_TAB_SPLIT|wxAUI_NB_TAB_MOVE|wxAUI_NB_SCROLL_BUTTONS);
@@ -245,7 +248,6 @@ namespace GUI
 	
 			wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
 			wxString l_des(((*_it).second)->Description().c_str(), wxConvUTF8);
-			//std::cout << ((*_it).second)->Description().c_str() << '\n';
 			long l_tmp = m_InputPlugins->InsertItem(l_counter++, l_str, 0);
 			m_InputPlugins->SetItem(l_tmp, 1, l_des); 
 		}
@@ -267,34 +269,37 @@ namespace GUI
 		m_FoundFiles = new wxNotebook(m_Aui, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, l_flags);
     	m_Aui->AddPage(m_FoundFiles, wxString(i8n("Found files"), wxConvUTF8), false);
 	
-		m_StatusBar = new wxStatusBar(l_Frame, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
-		m_StatusBar->SetFieldsCount(6);
-		l_Frame->SetStatusBar(m_StatusBar);
-	
-		if(m_Engine->isRoot())
+		if(m_Settings->getShowStatusbar() == true)
 		{
-			SetStatusText(wxString(i8n("Launched as root/sudo"), wxConvUTF8), 2);
-		}
-		else
-		{
-			std::string l_username;
-			m_Engine->getUsername(l_username);
-			wxString l_uusername(l_username.c_str(), wxConvUTF8);
-			SetStatusText(wxString(i8n("Launched as "), wxConvUTF8) + l_uusername, 2);
-		}
+			m_StatusBar = new wxStatusBar(l_Frame, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
+			m_StatusBar->SetFieldsCount(6);
+			l_Frame->SetStatusBar(m_StatusBar);
 	
-		std::string l_version = i8n("Kernel : v");
-		m_Engine->getKernelVersion(l_version);
-		wxString l_uversion(l_version.c_str(), wxConvUTF8);
-		SetStatusText(l_uversion, 1);
-		std::string l_path, l_used(i8n("Used: ")), l_free(i8n("Free: ")), l_total(i8n("Total: "));
-		m_Engine->getFreeSpace(l_path, l_used, l_free, l_total);
-		wxString l_utotal(l_total.c_str(), wxConvUTF8);
-		SetStatusText(l_utotal, 3);
-		wxString l_uused(l_used.c_str(), wxConvUTF8);
-		SetStatusText(l_uused, 4);
-		wxString l_ufree(l_free.c_str(), wxConvUTF8);
-		SetStatusText(l_ufree, 5);
+			if(m_Engine->isRoot())
+			{
+				SetStatusText(wxString(i8n("Launched as root/sudo"), wxConvUTF8), 2);
+			}
+			else
+			{
+				std::string l_username;
+				m_Engine->getUsername(l_username);
+				wxString l_uusername(l_username.c_str(), wxConvUTF8);
+				SetStatusText(wxString(i8n("Launched as "), wxConvUTF8) + l_uusername, 2);
+			}
+	
+			std::string l_version = i8n("Kernel : v");
+			m_Engine->getKernelVersion(l_version);
+			wxString l_uversion(l_version.c_str(), wxConvUTF8);
+			SetStatusText(l_uversion, 1);
+			std::string l_path, l_used(i8n("Used: ")), l_free(i8n("Free: ")), l_total(i8n("Total: "));
+			m_Engine->getFreeSpace(l_path, l_used, l_free, l_total);
+			wxString l_utotal(l_total.c_str(), wxConvUTF8);
+			SetStatusText(l_utotal, 3);
+			wxString l_uused(l_used.c_str(), wxConvUTF8);
+			SetStatusText(l_uused, 4);
+			wxString l_ufree(l_free.c_str(), wxConvUTF8);
+			SetStatusText(l_ufree, 5);
+		}
 	}
 	
 	
@@ -352,22 +357,15 @@ namespace GUI
 	//Toolbar
 	void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
 	{
+		std::cout << "OnScan\n";
 		m_FoundFiles->DeleteAllPages();
 		m_Progress = new wxProgressDialog(wxString(i8n("scleaner scan your disk ..."), wxConvUTF8),
-			wxString(i8n("this is a information"), wxConvUTF8),
-			100,					 // range
-			this,					 // parent
-			wxPD_CAN_ABORT |
-			// wxPD_CAN_SKIP |
-			wxPD_APP_MODAL |
-		 	wxPD_AUTO_HIDE | 
-			wxPD_ELAPSED_TIME |
-			wxPD_ESTIMATED_TIME |
-			wxPD_REMAINING_TIME
-			| wxPD_SMOOTH			 // - makes indeterminate mode bar on WinXP very small
+			wxString(i8n("this is a information"), wxConvUTF8), 100, this,
+			wxPD_CAN_ABORT | wxPD_APP_MODAL | wxPD_AUTO_HIDE | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME | wxPD_SMOOTH			 // - makes indeterminate mode bar on WinXP very small
 			);
 	
 		m_Engine->scanDisk(this);
+		std::cout << "scanDisk\n";
 	
 		delete m_Progress;
 		m_Progress = 0;
@@ -375,7 +373,7 @@ namespace GUI
 		double l_totalsize = 0;
 		// Happend plugins' name available
 		std::map<std::string, Plugins::IInPlugin*>::iterator _it;
-		for(_it = m_Engine->getAvailableInputPlugs()->begin(); _it != m_Engine->getAvailableInputPlugs()->end(); ++_it)
+		for(_it = m_Engine->getSelectedInputPlugs()->begin(); _it != m_Engine->getSelectedInputPlugs()->end(); ++_it)
 		{
 			wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
 	

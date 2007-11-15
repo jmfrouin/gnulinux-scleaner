@@ -24,6 +24,11 @@
 #include <fstream>
 #include <sstream>
 
+/*!
+ * @brief File log
+ * @version 15.11.2007
+ * @author Jean-Michel Frouin (jmforuin@gnu.org)
+ */
 class CFileLog
 {
 	public :

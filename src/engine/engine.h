@@ -52,7 +52,7 @@ namespace Engine
 {
 	/*!
 	 *@brief Manage all operations
-	 *@version 23.10.2007
+	 *@version 15.11.2007
 	 *@author Jean-Michel Frouin (jmfrouin@gnu.org)
 	 */
 	class CEngine: public Tools::CSmartCpt, public Tools::TSingleton<CEngine>
@@ -196,6 +196,12 @@ namespace Engine
 			@return Error codes (to implement).
 			*/
 			int findPackage(const std::string& _name);
+
+			/*!
+			*@brief Retrieve a pointer on selected plugins list.
+			*@param _refresh Did engine need to refresh the list ?
+			*/
+			std::map<std::string, Plugins::IInPlugin*>* getSelectedInputPlugs(bool _refresh = false);
 	
 		public:
 			//For the FTW callback ... it sucks !!!
@@ -219,9 +225,15 @@ namespace Engine
 				return m_callback;
 			}
 	
+			//Accessors
 			std::map<std::string, Plugins::IInPlugin*>*  getAvailableInputPlugs()
 			{
 				return m_AvailableInputPlugs;
+			}
+	
+			void setUnselectedInputPlugs(std::string _name)
+			{
+				m_UnselectedInputPlugs.push_back(_name);
 			}
 
 			unsigned int getCount()
@@ -239,7 +251,8 @@ namespace Engine
 	
 			//Input plugins
 			std::map<std::string, Plugins::IInPlugin*>*  	m_AvailableInputPlugs;
-			std::map<std::string, Plugins::IInPlugin*>*  	m_SelectedInputPlugs;
+			std::map<std::string, Plugins::IInPlugin*>  	m_SelectedInputPlugs;
+			std::list<std::string>  						m_UnselectedInputPlugs;
 	
 			//Output plugins
 			std::map<std::string, Plugins::IOutPlugin*>* 	m_OutputPlugs;
@@ -258,6 +271,9 @@ namespace Engine
 
 			//Settings manager
 			Tools::TSmartPtr<CSettingsManager>   			m_Settings;
+
+			//Selected plugins up to date ?
+			bool											m_SelInPlugins;
 	};
 } //namespace Engine
 #endif							 //_ENGINE_H_

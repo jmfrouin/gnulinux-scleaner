@@ -42,7 +42,6 @@ CbackfilesPlugin::~CbackfilesPlugin()
 
 void CbackfilesPlugin::processFile(const std::string& _filename)
 {
-	std::cout << "As CbackfilesPlugin I processed : " << _filename << '\n';
 	if((_filename.find("~", 0) == (_filename.length()-1)) || (_filename.find("bak", 0) == (_filename.length()-3)))
 	{
 		m_fl.push_back(_filename);

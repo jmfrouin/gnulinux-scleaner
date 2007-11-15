@@ -35,7 +35,7 @@ namespace Engine
 	* @brief Manage all settings.
 	* Load them on creation
 	* Save them on destruction (or Apply)
-	* @version 13.11.2007
+	* @version 15.11.2007
 	* @author Jean-Michel Frouin (jmfrouin@gnu.org)
 	*/
 	class CSettingsManager: public Tools::CSmartCpt, public Tools::TSingleton<CSettingsManager>
@@ -45,7 +45,9 @@ namespace Engine
 			{
 				eShowSplash = 10,
 				eFolderInc,
-				eFolderEx
+				eFolderEx,
+				eShowToolbar,
+				eShowStatusbar
 			};
 
 			enum eFoldersType
@@ -89,28 +91,32 @@ namespace Engine
 			*/
 			bool getShowSplash() { return m_ShowSplash; }
 
-			std::list<std::string>* getFoldersListPtr()
-			{
-				return &m_FoldersList;
-			}
+			std::list<std::string>* getFoldersListPtr() { return &m_FoldersList; }
+
+			std::list<std::string>* getExcludedFoldersListPtr() { return &m_ExcludedFoldersList; }
 	
-			std::list<std::string>* getExcludedFoldersListPtr()
-			{
-				return &m_ExcludedFoldersList;
-			}
-	
+			bool getShowToolbar() { return m_ShowToolbar; }
+
+			bool getShowStatusbar() { return m_ShowStatusbar; }
+
 			/*!
 			* Mutators
 			*/
 			void setShowSplash(bool _val) { m_ShowSplash = _val; }
+
+			void setShowToolbar(bool _val) { m_ShowToolbar = _val; }
+
+			void setShowStatusbar(bool _val) { m_ShowStatusbar = _val; }
 	
 		private:
-			bool					m_ShowSplash;	///Display splash (only in GUI) ?
+			bool					m_ShowSplash;		///Display splash (only in GUI) ?
 
 			//Folders infos
 			std::list<std::string>	m_FoldersList;
 			std::list<std::string>	m_ExcludedFoldersList;
-	
+
+			bool					m_ShowToolbar;		///Display toolbar (only in GUI) ?
+			bool					m_ShowStatusbar;	///Display statusbar (only in GUI) ?
 	};
 } //namespace Engine
 
