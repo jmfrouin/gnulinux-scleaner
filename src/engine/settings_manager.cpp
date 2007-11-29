@@ -42,6 +42,7 @@ namespace Engine
 			l_path += l_user;
 		}
 		
+		//Fixme : need to create folder : bug 5
 		std::string l_config(l_path);
 		l_config += "/.scleaner/prefs.conf";
 

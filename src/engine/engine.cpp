@@ -540,7 +540,7 @@ namespace Engine
 	
 	  	if(!l_in.good())
 		{
-			std::cerr << i8n("[ERR] Error, canot read ") << _filename << '\n';
+			std::cerr << i8n("[ERR] Error, cannot read ") << _filename << " during calcCRC32" << '\n';
 		}
 		else
 		{
@@ -636,13 +636,14 @@ namespace Engine
 				std::list<std::string>::iterator l_it2;
 				for(l_it2 = m_UnselectedInputPlugs.begin(); l_it2 != m_UnselectedInputPlugs.end(); ++l_it2)
 				{
-					std::cout << " and " << *l_it2 << '\n';
+					std::cout << " and " << *l_it2;
 					if((*l_it2) == (l_it->first))
 					{
 						l_unsel = true;
 						break;
 					}
 				}
+				std::cout << '\n';
 				if(!l_unsel)
 				{
 					m_SelectedInputPlugs.insert(make_pair(l_it->first, l_it->second));	
