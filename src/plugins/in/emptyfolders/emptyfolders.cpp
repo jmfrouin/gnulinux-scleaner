@@ -51,20 +51,23 @@ void CemptyfoldersPlugin::processFile(const std::string& _filename)
 	}
 	else
 	{
-		//std::cout << "Stat : " << l_stat.st_mode << '\n';
+		//std::cout << "Stat : " << "[" << _filename << "]" << l_stat.st_mode << '\n';
 		if(S_ISDIR(l_stat.st_mode))
 		{
 			struct dirent** l_namelist;
 			int l_nb = scandir(_filename.c_str(), &l_namelist, 0, alphasort);
-			if(l_nb == 2) //So contain only : . and ..
+			if(l_nb != -1) //Fix Bug 4 : If no error append.
 			{
-				m_fl.push_back(_filename);
+				if(l_nb == 2) //So contain only : . and ..
+				{
+					m_fl.push_back(_filename);
+				}
+				while (l_nb-- > 0)
+				{
+					free(l_namelist[l_nb]);
+				}
+				free(l_namelist);
 			}
-			while (l_nb-- > 0)
-			{
-				free(l_namelist[l_nb]);
-			}
-			free(l_namelist);
 		}
 	}
 }
