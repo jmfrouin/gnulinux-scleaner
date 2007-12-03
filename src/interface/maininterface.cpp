@@ -372,8 +372,8 @@ namespace GUI
 	
 		double l_totalsize = 0;
 		// Happend plugins' name available
-		std::map<std::string, Plugins::IInPlugin*>::iterator _it;
-		for(_it = m_Engine->getSelectedInputPlugs(true)->begin(); _it != m_Engine->getSelectedInputPlugs()->end(); ++_it)
+		std::map<std::string, Plugins::IInPlugin*>::iterator _it = m_Engine->getSelectedInputPlugs(true)->begin();
+		for(; _it != m_Engine->getSelectedInputPlugs()->end(); ++_it)
 		{
 			wxString l_str(((*_it).second)->getName().c_str(), wxConvUTF8);
 	
