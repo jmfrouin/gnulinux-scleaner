@@ -630,16 +630,15 @@ namespace Engine
 			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
 			for(l_it = m_AvailableInputPlugs->begin(); l_it != m_AvailableInputPlugs->end(); ++l_it)
 			{
-				std::cout << "I compare " << l_it->first; 
 				bool l_unsel = false;
 				//If it is no unselected
 				std::list<std::string>::iterator l_it2;
 				for(l_it2 = m_UnselectedInputPlugs.begin(); l_it2 != m_UnselectedInputPlugs.end(); ++l_it2)
 				{
-					std::cout << " and " << *l_it2;
 					if((*l_it2) == (l_it->first))
 					{
 						l_unsel = true;
+						std::cout << *l_it2 << " is unselected !!\n";
 						break;
 					}
 				}

@@ -42,7 +42,7 @@ CtrashPlugin::~CtrashPlugin()
 
 void CtrashPlugin::processFile(const std::string& _filename)
 {
-	m_fl.push_back(_filename);
+	//m_fl.push_back(_filename);
 }
 
 
