@@ -184,22 +184,28 @@
 	<Files>
 		<Folder
 			Name="Source Files"
-			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl"/>
+			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl">
+			<Folder
+				Name="engine"
+				Filters="">
+				<F N="src/engine/CMakeLists.txt"/>
+				<F N="src/engine/database.c"/>
+				<F N="src/engine/dpkg-db.h"/>
+				<F N="src/engine/dpkg.h"/>
+				<F N="src/engine/engine.cpp"/>
+				<F N="src/engine/engine.h"/>
+				<F N="src/engine/iprogress.h"/>
+				<F N="src/engine/settings_manager.cpp"/>
+				<F N="src/engine/settings_manager.h"/>
+			</Folder>
+			<F N="src/def.h"/>
+		</Folder>
 		<Folder
 			Name="Header Files"
 			Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.inc;*.sh;*.cpy;*.if"/>
 		<Folder
-			Name="Resource Files"
-			Filters="*.ico;*.cur;*.dlg"/>
-		<Folder
-			Name="Bitmaps"
-			Filters="*.bmp"/>
-		<Folder
 			Name="Other Files"
 			Filters="">
-			<F
-				N="Makefile"
-				Type="Makefile"/>
 		</Folder>
 	</Files>
 </Project>

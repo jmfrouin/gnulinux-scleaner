@@ -28,7 +28,7 @@
 #ifndef _DEF_H_
 #define _DEF_H_
 
-#define BUILD 285
+#define BUILD 289
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -40,7 +40,7 @@
 
 //General app infos
 #define MAJOR 0
-#define MINOR 32
+#define MINOR 40
 #define BUG 0
 #define t(u) #u
 #define VERSION(M,m,b,B) t(M) "." t(m) "." t(b) "." t(B)

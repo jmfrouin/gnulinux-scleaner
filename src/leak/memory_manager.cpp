@@ -77,7 +77,7 @@ void CMemoryManager::Report()
 	#endif
 
 	std::size_t TotalSize = 0;
-	for (TBlockMap::iterator i = m_Blocks.begin(); i != m_Blocks.end(); ++i)
+	for (TBlockMap::iterator i = m_Blocks.end(); --i != m_Blocks.begin();)
 	{
 		TotalSize += i->second.Size;
 		m_File << "-> 0x" << i->first

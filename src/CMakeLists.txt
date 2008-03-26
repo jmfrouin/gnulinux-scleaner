@@ -57,7 +57,7 @@ TARGET_LINK_LIBRARIES(scleaner dl engine interface leaks log plugins tools `wx-c
 ADD_CUSTOM_TARGET(valgrind COMMAND  valgrind -v --show-reachable=yes --leak-check=full scleaner)
 
 #cscope
-ADD_CUSTOM_TARGET(cscope ALL COMMAND find ${CMAKE_SOURCE_DIR} -name "*.h" -o -name "*.cpp" > ${CMAKE_SOURCE_DIR}/cscope.files && cscope -b -f${CMAKE_SOURCE_DIR}/cscope.out)
+#ADD_CUSTOM_TARGET(cscope ALL COMMAND find ${CMAKE_SOURCE_DIR} -name "*.h" -o -name "*.cpp" > ${CMAKE_SOURCE_DIR}/cscope.files && cscope -b -f${CMAKE_SOURCE_DIR}/cscope.out)
 
 #build counter
 ADD_CUSTOM_TARGET(update_counter ALL COMMAND bash ${CMAKE_SOURCE_DIR}/update_build.sh ${CMAKE_SOURCE_DIR}/def.h)
