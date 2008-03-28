@@ -21,8 +21,8 @@
 
 */
 
-#ifndef _ENGINE_H_
-#define _ENGINE_H_
+#ifndef __ENGINE_H__
+#define __ENGINE_H__
 
 #include <string>
 #include <list>
@@ -74,34 +74,34 @@ namespace Engine
 			 *@param path The folder location.
 			 *@return Number of plugins founded.
 			 */
-			int loadPlugins (const std::string& path);
+			int LoadPlugins (const std::string& path);
 	
 			/*!
 			 *@brief Load GFX interface build on wxWidgets
 			 *@return true is everything is OK, false otherwise.
 			 */
-			bool loadInterface();
+			bool LoadInterface();
 	
 			/*!
 			 *@brief Detect if launch as root
 			 */
-			static bool isRoot();
+			static bool IsRoot();
 	
 			/*!
 			 *@brief Detect kernel version
 			 */
-			static bool getKernelVersion(std::string& _version);
+			static bool GetKernelVersion(std::string& version);
 	
 			/*!
 			 *@brief callOutputPlugins with a list of files
-			 *@param _list A files list.
-			 *@param _name Name of plugin.
-			 *@param _path Path to save (if applicable) the output file.
-			 *@param _callback For progress bar.
+			 *@param list A files list.
+			 *@param name Name of plugin.
+			 *@param path Path to save (if applicable) the output file.
+			 *@param callback For progress bar.
 			 *@return true on success, false otherwise.
 			 *@todo Implement errors code.
 			 */
-			bool callOutputPlugin(std::list<std::string>& _list, std::string& _name, const std::string& _path, IProgressbar* _callback);
+			bool CallOutputPlugin(std::list<std::string>& list, std::string& name, const std::string& path, IProgressbar* callback);
 	
 			/*!
 			 *@brief Replace wxDir usage.
