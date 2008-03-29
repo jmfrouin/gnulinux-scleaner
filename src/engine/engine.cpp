@@ -3,7 +3,7 @@
 
  * Visit scleaner website : http://www.scleaner.fr
  * Copyright (C) 2000 Yann Guidon <whygee@f-cpu.org>
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007-2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -25,8 +25,8 @@
 #include <ftw.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h> /* pour lstat() */
-#include <stdlib.h> /* pour malloc() */
+#include <unistd.h> /* for lstat() */
+#include <stdlib.h> /* for malloc() */
 #include <sstream>
 #include <fstream>
 #include <pwd.h>
@@ -43,615 +43,612 @@
 
 namespace Engine
 {
+    CEngine::CEngine():
+    fAvailableInputPlugs(0), fOutputPlugs(0), fRootPlugin(0), fAsRoot(false),
+    fCallback(0), fCount(0), fSelInPlugins(false)
+    {
+        //Initialisation
+        fAvailableInputPlugs = Plugins::CPluginManager::Instance()->GetInputListPtr();
+        fOutputPlugs = Plugins::CPluginManager::Instance()->GetOutputListPtr();
+        fSettings = CSettingsManager::Instance();
+    }
 
-	CEngine::CEngine():
-	m_AvailableInputPlugs(0), m_OutputPlugs(0), m_rootPlugin(0), m_asRoot(false), m_callback(0), m_Count(0), m_SelInPlugins(false)
-	{
-		//Initialisation
-		m_AvailableInputPlugs = Plugins::CPluginManager::Instance()->getInputListPtr();
-		m_OutputPlugs = Plugins::CPluginManager::Instance()->getOutputListPtr();
-		m_Settings = CSettingsManager::Instance();
+    CEngine::~CEngine()
+    {
+        #if defined DEBUG
+        std::cout << "~CEngine\n";
+        std::list<std::string>::iterator It;
+        for(It = fUnselectedInputPlugs.begin(); It != fUnselectedInputPlugs.end(); ++It)
+        {
+            std::cout << *It << '\n';
+        }
+        #endif
+    }
 
-		if(!m_AvailableInputPlugs || !m_OutputPlugs || !m_Settings)
-		{
-			return;
-		}
-	
-	}
-	
-	CEngine::~CEngine()
-	{
-		#if defined DEBUG
-		std::cout << "~CEngine\n";
-		std::list<std::string>::iterator l_it;
-		for(l_it = m_UnselectedInputPlugs.begin(); l_it != m_UnselectedInputPlugs.end(); ++l_it)
-		{
-			std::cout << *l_it << '\n';
-		}
-		#endif
-	}
-	
-	int CEngine::loadPlugins(const std::string& _path)
-	{
-		int l_ret=0;
-	
-		//Plugins manager
-		m_pfm = Plugins::CPluginManager::Instance();
-	
-		l_ret = m_pfm->loadPlugins(_path);
-		return l_ret;
-	}
-	
-	
-	bool CEngine::loadInterface()
-	{
-		bool l_ret = false;
-	
-		GUI::CMainInterface* l_Main = 0;
-		l_Main = new GUI::CMainInterface(NULL, wxID_ANY, wxT(NAME), SYMBOL_MAININTERFACE_POSITION, SYMBOL_MAININTERFACE_SIZE);
-		if(l_Main)
-		{
-			l_Main->Show(true);
-			l_ret = true;
-		}
-	
-		return l_ret;
-	}
-	
-	
-	bool CEngine::isRoot()
-	{
-		bool l_ret;
-		if((getuid() != 0) || (geteuid() != 0))
-		{
-			l_ret = false;
-		}
-		else
-		{
-			l_ret = true;
-		}
-		return l_ret;
-	}
-	
-	
-	bool CEngine::getKernelVersion(std::string& _version)
-	{
-		bool l_ret = false;
-		utsname l_temp;
-		if(uname(&l_temp) != 0)
-		{
-			std::cerr << i8n("[ERR] CEngine::getKernelVersion error !\n");
-		}
-		else
-		{
-			_version += l_temp.release;
-	
-			l_ret = true;
-		}
-	
-		return l_ret;
-	}
-	
-	
-	bool CEngine::callOutputPlugin(std::list<std::string>& _list, std::string& _name, const std::string& _path, IProgressbar* _callback)
-	{
-		bool l_ret = false;
-		std::map<std::string, Plugins::IOutPlugin*>* l_OutputPlugs;
-		l_OutputPlugs = m_pfm->getOutputListPtr();
-		Plugins::IOutPlugin* l_plug = (*l_OutputPlugs)[_name];
-		if(l_plug != 0)
-		{
-			l_plug->processFileList(_list, _path, _callback);
-			l_ret = true;
-		}
-		else
-		{
-			std::cout << i8n("[WNG] : null") << '\n';
-		}
-		return l_ret;
-	}
-	
-	
-	bool CEngine::getUsername(std::string& _username)
-	{
-		bool l_ret = false;
-	
-		uid_t l_uid = geteuid();
-	
-		struct passwd* l_passwd = 0;
-		l_passwd = getpwuid(l_uid);
-	
-		#if defined DEBUG
-		std::cout << i8n("[DBG] CEngine::getUsername UID: ") << l_uid << '\n';
-		#endif
-	
-		if (l_passwd)
-		{
-			_username = l_passwd->pw_name;
-			#if defined DEBUG
-			std::cout << i8n("[DBG] CEngine::getUsername Username: ") << _username << '\n';
-			#endif
-			l_ret = true;
-		}
-		else
-		{
-			l_ret = false;
-		}
-	
-		return l_ret;
-	}
-	
-	
-	void CEngine::formatSize(double _size, std::string& _str)
-	{
-		std::stringstream l_temp;
-	
-		if(_size > (1024*1024*1024))
-		{
-			l_temp << ROUND((_size / (1024*1024*1024))) << i8n("GB");
-		}
-		else
-		{
-			if(_size > (1024*1024))
-			{
-				l_temp << ROUND(_size / (1024*1024)) << i8n("MB");
-			}
-			else
-			{
-				if(_size > 1024)
-				{
-					l_temp << ROUND(_size / 1024) << i8n("KB");
-				}
-				else
-				{
-					if(_size == 0)
-					{
-						l_temp << i8n("null size");
-					}
-					else
-					{
-						l_temp << _size;
-					}
-				}
-			}
-		}
-		_str += l_temp.str();
-	}
-	
-	
-	double CEngine::getFreeSpace(const std::string& _path, std::string& _used, std::string& _free, std::string& _total)
-	{
-		double l_ret = 0;
-		
-		FILE* l_mountTable;
-		struct mntent* l_mountEntry;
-	
-		l_mountTable = setmntent(FSTAB, "r");
-	
-		if (l_mountTable == 0) 
-		{
-			perror(FSTAB);
-		}
-		else
-		{
-			double l_free, l_used, l_total;
-			l_free = l_used = l_total = 0;
-	
-			while ((l_mountEntry = getmntent(l_mountTable))) 
-			{
-				struct statfs l_stat;
-				double l_blocks_used;
-				double l_blocks_percent_used;
-	
-				if (statfs(l_mountEntry->mnt_dir, &l_stat) != 0) 
-				{
-					perror(l_mountEntry->mnt_dir);
-				}
-				else
-				{
-					if (l_stat.f_blocks > 0) 
-					{
-						l_blocks_used = l_stat.f_blocks - l_stat.f_bfree;
-						l_blocks_percent_used = (double)(l_blocks_used * 100.0 / (l_blocks_used + l_stat.f_bavail) + 0.5);
-						if (strcmp(l_mountEntry->mnt_fsname, "/dev/root") == 0) 
-						{
-							/* Adjusts l_mountEntry->mnt_fsname to be the real root l_mountEntry->mnt_fsname,
-							 * or leaves l_mountEntry->mnt_fsname alone if it can't find it */
-							//find_real_root_l_mountEntry->mnt_fsname_name( l_mountEntry->mnt_fsname);
-						}
-						else
-						{
-							l_free += l_stat.f_bavail*(l_stat.f_bsize);
-							l_used += (l_stat.f_blocks - l_stat.f_bfree)*(l_stat.f_bsize);
-							l_total += l_stat.f_blocks*(l_stat.f_bsize); 
-						}
-					}
-				}
-			}
-	
-				std::string l_size;
-				formatSize(l_free, l_size);
-				_free += l_size;
-				l_size.clear();
-				formatSize(l_total, l_size);
-				_total += l_size;
-				l_size.clear();
-				formatSize(l_used, l_size);
-				_used += l_size;
-				endmntent(l_mountTable);
-		}
-	
-		return l_ret;
-	}
-	
-	bool CEngine::scanDisk(IProgressbar* _callback)
-	{
-		bool l_ret = false;
-	
-		m_callback = _callback;
-	
-	
-		//If launch as root
-		if(isRoot())
-		{
-			std::map<std::string, Plugins::IInPlugin*>* l_input = getSelectedInputPlugs(true);
-			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
-			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
-			{
-				if(l_it->second->Type() == Plugins::IPlugin::eRootByFolderInput)
-				{
-					std::string l_dir;
-					(l_it->second)->getDirectory(l_dir);
-					_callback->updateProgress(l_dir, true);
-					scanDirectory(l_dir, true, l_it->second);
-				}
-			}
-		}
-	
-		//In both case
-		std::list<std::string>* l_FoldersList = m_Settings->getFoldersListPtr();
-		std::list<std::string>::iterator l_itFolders;
-		for(l_itFolders = l_FoldersList->begin(); l_itFolders != l_FoldersList->end(); ++l_itFolders)
-		{
-			//#if defined DEBUG
-			std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << *l_itFolders << '\n';
-			//#endif
-			if(_callback != 0)
-			{
-				_callback->updateProgress(*l_itFolders, true);
-			}
-			scanDirectory(*l_itFolders);
-		}
-		return l_ret;
-	}
-	
-	
-	
-	
-	int CEngine::FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf)
-	{
-		int l_ret = 0;
-		std::string l_path(_fpath);
+    int CEngine::LoadPlugins(const std::string& path)
+    {
+        //Plugins manager
+        fPFM = Plugins::CPluginManager::Instance();
+        return fPFM->LoadPlugins(path);
+    }
 
-		CEngine* l_eng = CEngine::Instance();
+    bool CEngine::LoadInterface()
+    {
+        bool Ret = false;
 
-		IProgressbar* l_prog = l_eng->getCallback();
-	
-		//Update progress bar to show progression :
-		if(l_prog != 0)
-		{
-			if(l_eng->getCount() > 9)
-			{
-				l_prog->updateProgress(l_path, true);
-				l_eng->setCount(0);
-			}
-			else
-			{
-				l_eng->setCount(l_eng->getCount()+1);
-			}
-		}
-	
-		#if defined DEBUG
-		std::cout << i8n("[DBG] FTW_callback : ") << l_path << '\n';
-		#endif
+        GUI::CMainInterface* Main = 0;
+        Main = new GUI::CMainInterface(NULL, wxID_ANY, wxT(NAME), SYMBOL_MAININTERFACE_POSITION, SYMBOL_MAININTERFACE_SIZE);
+        if(Main)
+        {
+            Main->Show(true);
+            Ret = true;
+        }
 
-		if(l_eng->asRoot())
-		{
-			Plugins::IInPlugin* l_root = 0;
-			l_root = l_eng->rootPlugin();
-			if(l_root != 0)
-			{
-				struct stat l_info;
-				//Try to stat file.
-				if(stat(l_path.c_str(), &l_info) == -1)
-				{
-					std::cout << i8n("[ERR] : Cannot stat ") << l_path << '\n';
-				}
-				else
-				{
-					if(l_info.st_size != 0)
-					{
-						l_root->processFile(l_path);
-					}
-				}
-			}
-		}
-		else
-		{
-			std::map<std::string, Plugins::IInPlugin*>* l_input = CEngine::Instance()->getPluginManager()->getInputListPtr();
-			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
-			for(l_it = l_input->begin(); l_it != l_input->end(); ++l_it)
-			{
-				if( (((*l_it).second)->Type() != Plugins::IPlugin::eRootInput) && (((*l_it).second)->Type() != Plugins::IPlugin::eRootByFolderInput))
-				{
-					struct stat l_info;
-					//Try to stat file.
-					if(stat(l_path.c_str(), &l_info) == -1)
-					{
-						std::cout << i8n("[ERR] : Cannot stat ") << l_path << '\n';
-					}
-					else
-					{
-						if(l_info.st_size == 0)
-						{
-							if(l_it->second->grabNullFile())
-							{
-								l_it->second->processFile(l_path);
-							}
-						}
-						else
-						{
-							if(!l_it->second->grabNullFile())
-							{
-								l_it->second->processFile(l_path);
-							}
-						}
-					}
-				}
-			}
-		}
-		return l_ret;				 // To tell nftw() to continue
-	}
-	
-	
-	bool CEngine::scanDirectory(const std::string& _path, bool _asRoot, Plugins::IInPlugin* _rootPlugin, bool _recursive)
-	{
-		bool l_ret = false;
-	
-		int l_flags = FTW_PHYS;
-	
-		if(_asRoot)
-		{
-			m_asRoot = true;
-			m_rootPlugin = _rootPlugin;
-		}
-	
-		if( nftw(_path.c_str(), FTW_callback, 20, l_flags) == 0)
-		{
-			l_ret = true;
-		}
-	
-		m_asRoot = false;
-	
-		return l_ret;
-	}
-	
-	void CEngine::getTimestamp(std::string& _str)
-	{
-		time_t l_tm;
-		struct tm l_time;
-	
-		time(&l_tm);
-		memcpy(&l_time, localtime(&l_tm), sizeof(l_time));
-	
-		//Append date: YYYYMMDD
-		std::stringstream l_temp;
-		//Append year
-		l_temp << 1900 + l_time.tm_year;
-	
-		//Append month
-		if(l_time.tm_mon + 1 < 10)
-		{
-			l_temp << 0 << l_time.tm_mon + 1;
-		}
-		else
-		{
-			l_temp << l_time.tm_mon + 1;
-		}
-	
-		//Append day
-		if(l_time.tm_mday + 1 < 10)
-		{
-			l_temp << 0 << l_time.tm_mday;
-		}
-		else
-		{
-			l_temp << l_time.tm_mday;
-		}
-	
-		l_temp << "_";
-	
-		//Append hour
-		if(l_time.tm_hour < 10)
-		{
-			l_temp << 0 << l_time.tm_hour;
-		}
-		else
-		{
-			l_temp << l_time.tm_hour;
-		}
-	
-		//Append minute
-		if(l_time.tm_min < 10)
-		{
-			l_temp << 0 << l_time.tm_min;
-		}
-		else
-		{
-			l_temp << l_time.tm_min;
-		}
-	
-		//Append second
-		if(l_time.tm_sec < 10)
-		{
-			l_temp << 0 << l_time.tm_sec;
-		}
-		else
-		{
-			l_temp << l_time.tm_sec;
-		}
-	
-		_str += l_temp.str();
-	
-		#if defined DEBUG
-		std::cout << i8n("[DBG] CEngine::getTimestamp Timestamp: ") << _str << '\n';
-		#endif
-	}
-	
-	
-	void CEngine::getCRCTable(std::vector<unsigned long>& _table)
-	{
-		unsigned long r;
-		_table.clear();
-	  	for(int i=0; i<256; ++i) 
-	  	{
-	    	r = i;
-	    	for(int j=0; j<8; ++j) 
-			{
-	      		if ( r & 1 )
-		  		{
-	         		r = (r >> 1) ^ CRC_POLY_REV;
-				}
-	      		else
-				{
-	         		r >>= 1;
-				}
-	    	}
-	    	_table.push_back(r);
-	  	}
-	}
-	
-	
-	void CEngine::calcCRC32(const std::string& _filename, unsigned long& _crc){
-		std::ifstream l_in(_filename.c_str(), std::ios::in | std::ios::binary);
-	
-		//Push seed.
-	  	_crc = 0xffffffff;
-	
-	  	if(!l_in.good())
-		{
-			std::cerr << i8n("[ERR] Error, cannot read ") << _filename << " during calcCRC32" << '\n';
-		}
-		else
-		{
-			char l_char;
-			std::vector<unsigned long> l_table;
-			getCRCTable(l_table);
-			while(l_in.get(l_char))
-			{
-				unsigned int l_pos;
-				l_pos = (_crc & 255) ^ l_char;
-				_crc = l_table[l_pos] ^ (_crc >> 8);
-			}
-	    }
-		l_in.close();
-		#if defined DEBUG
-		std::cout << "[DBG] calcCRC32 : CRC32 for " << _filename << " = " << _crc << '\n';
-		#endif
-	}
-	
-	
-	void CEngine::addFileInfo(const std::string& _file, unsigned long _crc)
-	{
-		#if defined DEBUG
-		std::cout << "[DBG] addFileInfo : " << _file << " " << _crc << '\n';
-		#endif
-		m_Infos.insert(make_pair(_file, _crc));
-	}
-	
-	
-	int CEngine::detectDuplicates()
-	{
-		int l_ret = 0;
-	
-		#if defined DEBUG
-		std::cout << "DBG detectDuplicates : Detect duplicate " << std::endl;
-		#endif
-	
-		std::map<std::string, unsigned long>::iterator l_it;
-		
-		for(l_it = m_Infos.begin(); l_it != m_Infos.end(); ++l_it)
-		{
-			if(l_it->second != 0)
-			{
-				std::map<std::string, unsigned long>::iterator l_it2 = l_it;
-				for(++l_it2; l_it2 != m_Infos.end(); ++l_it2)
-				{
-					if(l_it->second == l_it2->second)
-					{
-						if(m_DuplicatesFilesList[l_it->second] == "")
-						{
-							m_DuplicatesFilesList.insert(make_pair(l_it->second, l_it->first));
-							l_ret++;
-						}
-					}
-				}
-			}
-		}
-		std::cout << "Founded " << l_ret << " duplicates files" << std::endl;
-	
-		return l_ret;
-	}
-	
-	
-	int CEngine::findPackage(const std::string& _name)
-	{
-		int l_ret = 0;
-		//struct pkginfo** l_p = 0;
-  		//pointerp= bins + (hash(name) % (BINS));
-  		//while (*pointerp && strcasecmp((*pointerp)->name,name))
-    	//	pointerp= &(*pointerp)->next;
-  		//if (*pointerp) { free(name); return *pointerp; }
-		
-		return l_ret;
-	}
+        return Ret;
+    }
 
-	std::map<std::string, Plugins::IInPlugin*>* CEngine::getSelectedInputPlugs(bool _refresh)
-	{
-		std::cout << "getSelectedInputPlugs\n";
-		if(_refresh || !m_SelInPlugins)
-		{
-			std::cout << "getSelectedInputPlugs : refresh\n";
 
-			//First clear the map
-			m_SelectedInputPlugs.clear();
+    bool CEngine::IsRoot()
+    {
+        bool Ret;
+        if((getuid() != 0) || (geteuid() != 0))
+        {
+            Ret = false;
+        }
+        else
+        {
+            Ret = true;
+        }
+        return Ret;
+    }
 
-			//For each available plugin
-			std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
-			for(l_it = m_AvailableInputPlugs->begin(); l_it != m_AvailableInputPlugs->end(); ++l_it)
-			{
-				bool l_unsel = false;
-				//If it is no unselected
-				std::list<std::string>::iterator l_it2;
-				for(l_it2 = m_UnselectedInputPlugs.begin(); l_it2 != m_UnselectedInputPlugs.end(); ++l_it2)
-				{
-					if((*l_it2) == (l_it->first))
-					{
-						l_unsel = true;
-						std::cout << *l_it2 << " is unselected !!\n";
-						break;
-					}
-				}
-				std::cout << '\n';
-				if(!l_unsel)
-				{
-					m_SelectedInputPlugs.insert(make_pair(l_it->first, l_it->second));	
-				}
-			}
-			m_SelInPlugins = true;
-		}
-		return &m_SelectedInputPlugs;
-	}
+
+    bool CEngine::GetKernelVersion(std::string& version)
+    {
+        bool Ret = false;
+        utsname Temp;
+        if(uname(&Temp) != 0)
+        {
+            std::cerr << i8n("[ERR] CEngine::getKernelVersion error !\n");
+        }
+        else
+        {
+            version += Temp.release;
+
+            Ret = true;
+        }
+
+        return Ret;
+    }
+
+
+    bool CEngine::CallOutputPlugin(std::list<std::string>& list, std::string& name, const std::string& path, IProgressbar* callback)
+    {
+        bool Ret = false;
+        std::map<std::string, Plugins::IOutPlugin*>* OutputPlugs;
+        OutputPlugs = fPFM->GetOutputListPtr();
+        Plugins::IOutPlugin* Plug = (*OutputPlugs)[name];
+        if(Plug != 0)
+        {
+            Plug->ProcessFileList(list, path, callback);
+            Ret = true;
+        }
+        else
+        {
+            std::cout << i8n("[WNG] : null") << '\n';
+        }
+        return Ret;
+    }
+
+
+    bool CEngine::GetUsername(std::string& username)
+    {
+        bool Ret = false;
+
+        uid_t Uid = geteuid();
+
+        struct passwd* Passwd = 0;
+        Passwd = getpwuid(Uid);
+
+        #if defined DEBUG
+        std::cout << i8n("[DBG] CEngine::getUsername UID: ") << Uid << '\n';
+        #endif
+
+        if (Passwd)
+        {
+            username = Passwd->pw_name;
+            #if defined DEBUG
+            std::cout << i8n("[DBG] CEngine::getUsername Username: ") << username << '\n';
+            #endif
+            Ret = true;
+        }
+
+        return Ret;
+    }
+
+
+    void CEngine::FormatSize(double size, std::string& str)
+    {
+        std::stringstream Temp;
+
+        if(Size > (1024*1024*1024))
+        {
+            Temp << ROUND((size / (1024*1024*1024))) << i8n("GB");
+        }
+        else
+        {
+            if(size > (1024*1024))
+            {
+                Temp << ROUND(size / (1024*1024)) << i8n("MB");
+            }
+            else
+            {
+                if(size > 1024)
+                {
+                    Temp << ROUND(size / 1024) << i8n("KB");
+                }
+                else
+                {
+                    if(size == 0)
+                    {
+                        Temp << i8n("null size");
+                    }
+                    else
+                    {
+                        Temp << size;
+                    }
+                }
+            }
+        }
+        str += Temp.str();
+    }
+
+
+    double CEngine::GetFreeSpace(const std::string& path, std::string& usedspace, std::string& freespace, std::string& total)
+    {
+        double Ret = 0;
+
+        FILE* MountTable;
+        struct mntent* MountEntry;
+
+        MountTable = setmntent(FSTAB, "r");
+
+        if (MountTable == 0)
+        {
+            perror(FSTAB);
+        }
+        else
+        {
+            double Free, Used, Total;
+            Free = Used = Total = 0;
+
+            while ((MountEntry = getmntent(MountTable)))
+            {
+                struct statfs Stat;
+                double BlocksUsed;
+                double BlocksPercentUsed;
+
+                if (statfs(MountEntry->mnt_dir, &Stat) != 0)
+                {
+                    perror(MountEntry->mnt_dir);
+                }
+                else
+                {
+                    if (Stat.f_blocks > 0)
+                    {
+                        BlocksUsed = Stat.f_blocks - Stat.f_bfree;
+                        BlocksPercentUsed = (double)(BlocksUsed * 100.0 / (BlocksUsed + Stat.f_bavail) + 0.5);
+                        if (strcmp(MountEntry->mnt_fsname, "/dev/root") == 0)
+                        {
+                            /* Adjusts l_mountEntry->mnt_fsname to be the real root l_mountEntry->mnt_fsname,
+                             * or leaves l_mountEntry->mnt_fsname alone if it can't find it */
+                            //find_real_root_l_mountEntry->mnt_fsname_name( l_mountEntry->mnt_fsname);
+                        }
+                        else
+                        {
+                            Free += Stat.f_bavail*(Stat.f_bsize);
+                            Used += (Stat.f_blocks - Stat.f_bfree)*(Stat.f_bsize);
+                            Total += Stat.f_blocks*(Stat.f_bsize);
+                        }
+                    }
+                }
+            }
+
+                std::string Size;
+                formatSize(Free, Size);
+                freespace += Size;
+                Size.clear();
+                formatSize(Total, Size);
+                total += Size;
+                Size.clear();
+                formatSize(Used, Size);
+                usedspace += Size;
+                endmntent(MountTable);
+        }
+
+        return Ret;
+    }
+
+    bool CEngine::ScanDisk(IProgressbar* callback)
+    {
+        bool Ret = false;
+
+        fCallback = callback;
+
+
+        //If launch as root
+        if(IsRoot())
+        {
+            std::map<std::string, Plugins::IInPlugin*>* Input = GetSelectedInputPlugs(true);
+            std::map<std::string, Plugins::IInPlugin*>::iterator It;
+            for(It = Input->begin(); It != Input->end(); ++It)
+            {
+                if(It->second->Type() == Plugins::IPlugin::eRootByFolderInput)
+                {
+                    std::string Dir;
+                    (It->second)->getDirectory(Dir);
+                    callback->updateProgress(Dir, true);
+                    scanDirectory(Dir, true, It->second);
+                }
+            }
+        }
+
+        //In both case
+        std::list<std::string>* FoldersList = fSettings->GetFoldersListPtr();
+        std::list<std::string>::iterator ItFolders;
+        for(ItFolders = FoldersList->begin(); ItFolders != FoldersList->end(); ++ItFolders)
+        {
+            //#if defined DEBUG
+            std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << *ItFolders << '\n';
+            //#endif
+            if(callback != 0)
+            {
+                callback->UpdateProgress(*ItFolders, true);
+            }
+            scanDirectory(*ItFolders);
+        }
+        return Ret;
+    }
+
+    int CEngine::FTW_Callback(const char* fpath, const struct stat* stat, int tflag, struct FTW* ftwbuf)
+    {
+        int Ret = 0;
+        std::string Path(fpath);
+
+        CEngine* Engine = CEngine::Instance();
+
+        IProgressbar* Prog = Engine->GetCallback();
+
+        //Update progress bar to show progression :
+        if(Prog)
+        {
+            if(Engine->GetCount() > 9)
+            {
+                Prog->UpdateProgress(Path, true);
+                Engine->SetCount(0);
+            }
+            else
+            {
+                Engine->SetCount(Engine->GetCount()+1);
+            }
+        }
+
+        #if defined DEBUG
+        std::cout << i8n("[DBG] FTW_callback : ") << Path << '\n';
+        #endif
+
+        if(Engine->AsRoot())
+        {
+            Plugins::IInPlugin* Root = 0;
+            Root = Engine->RootPlugin();
+            if(Root != 0)
+            {
+                struct stat Info;
+                //Try to stat file.
+                if(stat(Path.c_str(), &Info) == -1)
+                {
+                    std::cout << i8n("[ERR] : Cannot stat ") << Path << '\n';
+                }
+                else
+                {
+                    if(Info.st_size != 0)
+                    {
+                        Root->ProcessFile(Path);
+                    }
+                }
+            }
+        }
+        else
+        {
+            std::map<std::string, Plugins::IInPlugin*>* Input = CEngine::Instance()->GetPluginManager()->GetInputListPtr();
+            std::map<std::string, Plugins::IInPlugin*>::iterator It;
+            for(It = Input->begin(); It != Input->end(); ++It)
+            {
+                if( (((*It).second)->Type() != Plugins::IPlugin::eRootInput) && (((*It).second)->Type() != Plugins::IPlugin::eRootByFolderInput))
+                {
+                    struct stat Info;
+                    //Try to stat file.
+                    if(stat(Path.c_str(), &Info) == -1)
+                    {
+                        std::cout << i8n("[ERR] : Cannot stat ") << Path << '\n';
+                    }
+                    else
+                    {
+                        if(Info.st_size == 0)
+                        {
+                            if(It->second->GrabNullFile())
+                            {
+                                It->second->ProcessFile(Path);
+                            }
+                        }
+                        else
+                        {
+                            if(!It->second->GrabNullFile())
+                            {
+                                It->second->ProcessFile(Path);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return Ret;                // To tell nftw() to continue
+    }
+
+    bool CEngine::ScanDirectory(const std::string& path, bool asroot, Plugins::IInPlugin* rootplugin, bool recursive)
+    {
+        bool Ret = false;
+
+        int Flags = FTW_PHYS;
+
+        if(asroot)
+        {
+            fAsRoot = true;
+            fRootPlugin = rootplugin;
+        }
+
+        if( nftw(path.c_str(), FTWCallback, 20, Flags) == 0)
+        {
+            Ret = true;
+        }
+
+        fAsRoot = false;
+
+        return Ret;
+    }
+
+    void CEngine::GetTimestamp(std::string& str)
+    {
+        time_t Tm;
+        struct tm Time;
+
+        time(&Tm);
+        memcpy(&Time, localtime(&Tm), sizeof(Time));
+
+        //Append date: YYYYMMDD
+        std::stringstream Temp;
+
+        //Append year
+        Temp << 1900 + Time.tfyear;
+
+        //Append month
+        if(Time.tfmon + 1 < 10)
+        {
+            Temp << 0 << Time.tfmon + 1;
+        }
+        else
+        {
+            Temp << Time.tfmon + 1;
+        }
+
+        //Append day
+        if(Time.tfmday + 1 < 10)
+        {
+            Temp << 0 << Time.tfmday;
+        }
+        else
+        {
+            Temp << Time.tfmday;
+        }
+
+        Temp << "_";
+
+        //Append hour
+        if(Time.tfhour < 10)
+        {
+            Temp << 0 << Time.tfhour;
+        }
+        else
+        {
+            Temp << Time.tfhour;
+        }
+
+        //Append minute
+        if(Time.tfmin < 10)
+        {
+            Temp << 0 << Time.tfmin;
+        }
+        else
+        {
+            Temp << Time.tfmin;
+        }
+
+        //Append second
+        if(Time.tfsec < 10)
+        {
+            Temp << 0 << Time.tfsec;
+        }
+        else
+        {
+            Temp << Time.tfsec;
+        }
+
+        str += Temp.str();
+
+        #if defined DEBUG
+        std::cout << i8n("[DBG] CEngine::getTimestamp Timestamp: ") << str << '\n';
+        #endif
+    }
+
+
+    void CEngine::GetCRCTable(std::vector<unsigned long>& table)
+    {
+        unsigned long R;
+        table.clear();
+        for(int i=0; i<256; ++i)
+        {
+            R = i;
+            for(int j=0; j<8; ++j)
+            {
+                if ( R & 1 )
+                {
+                    R = (R >> 1) ^ CRC_POLY_REV;
+                }
+                else
+                {
+                    R >>= 1;
+                }
+            }
+            table.push_back(R);
+        }
+    }
+
+
+    void CEngine::CalcCRC32(const std::string& filename, unsigned long& crc)
+    {
+        std::ifstream In(filename.c_str(), std::ios::in | std::ios::binary);
+
+        //Push seed.
+        crc = 0xffffffff;
+
+        if(!In.good())
+        {
+            std::cerr << i8n("[ERR] Error, cannot read ") << filename << " during calcCRC32" << '\n';
+        }
+        else
+        {
+            char Char;
+            std::vector<unsigned long> Table;
+            GetCRCTable(Table);
+            while(In.get(Char))
+            {
+                unsigned int Pos;
+                Pos = (crc & 255) ^ Char;
+                crc = Table[Pos] ^ (crc >> 8);
+            }
+        }
+        In.close();
+        #if defined DEBUG
+        std::cout << "[DBG] calcCRC32 : CRC32 for " << filename << " = " << crc << '\n';
+        #endif
+    }
+
+
+    void CEngine::AddFileInfo(const std::string& file, unsigned long crc)
+    {
+        #if defined DEBUG
+        std::cout << "[DBG] addFileInfo : " << file << " " << crc << '\n';
+        #endif
+        fInfos.insert(make_pair(file, crc));
+    }
+
+
+    int CEngine::DetectDuplicates()
+    {
+        int Ret = 0;
+
+        #if defined DEBUG
+        std::cout << "DBG detectDuplicates : Detect duplicate " << std::endl;
+        #endif
+
+        std::map<std::string, unsigned long>::iterator It;
+
+        for(It = fInfos.begin(); It != fInfos.end(); ++It)
+        {
+            if(It->second != 0)
+            {
+                std::map<std::string, unsigned long>::iterator It2 = It;
+                for(++It2; It2 != fInfos.end(); ++It2)
+                {
+                    if(It->second == It2->second)
+                    {
+                        if(fDuplicatesFilesList[It->second] == "")
+                        {
+                            fDuplicatesFilesList.insert(make_pair(It->second, It->first));
+                            Ret++;
+                        }
+                    }
+                }
+            }
+        }
+        std::cout << "Founded " << Ret << " duplicates files" << std::endl;
+
+        return Ret;
+    }
+
+
+    int CEngine::FindPackage(const std::string& name)
+    {
+        int Ret = 0;
+
+        //struct pkginfo** l_p = 0;
+        //pointerp= bins + (hash(name) % (BINS));
+        //while (*pointerp && strcasecmp((*pointerp)->name,name))
+        //  pointerp= &(*pointerp)->next;
+        //if (*pointerp) { free(name); return *pointerp; }
+
+        return Ret;
+    }
+
+    std::map<std::string, Plugins::IInPlugin*>* CEngine::GetSelectedInputPlugs(bool refresh)
+    {
+        #if defined DEBUG
+        std::cout << "getSelectedInputPlugs\n";
+        #endif
+
+        if(refresh || !fSelInPlugins)
+        {
+            #if defined DEBUG
+            std::cout << "getSelectedInputPlugs : refresh\n";
+            #endif
+
+            //First clear the map
+            fSelectedInputPlugs.clear();
+
+            //For each available plugin
+            std::map<std::string, Plugins::IInPlugin*>::iterator It;
+            for(It = fAvailableInputPlugs->begin(); It != fAvailableInputPlugs->end(); ++It)
+            {
+                bool Unsel = false;
+                //If it is no unselected
+                std::list<std::string>::iterator It2;
+                for(It2 = fUnselectedInputPlugs.begin(); It2 != fUnselectedInputPlugs.end(); ++It2)
+                {
+                    if((*It2) == (It->first))
+                    {
+                        Unsel = true;
+
+                        #if defined DEBUG
+                        std::cout << *It2 << " is unselected !!\n";
+                        #endif
+
+                        break;
+                    }
+                }
+
+                #if defined DEBUG
+                std::cout << '\n';
+                #endif
+
+                if(!Unsel)
+                {
+                    fSelectedInputPlugs.insert(make_pair(It->first, It->second));
+                }
+            }
+            fSelInPlugins = true;
+        }
+        return &fSelectedInputPlugs;
+    }
 
 } //namespace Engine
 /* vi:set ts=4: */

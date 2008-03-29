@@ -3,7 +3,7 @@
 
  * Copyright (C) 1995 Ian Jackson <ian@chiark.greenend.org.uk>
  * Copyright (C) 2000 Yann Guidon <whygee@f-cpu.org>
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007-2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 
 */
 
-#ifndef _ENGINE_H_
-#define _ENGINE_H_
+#ifndef __ENGINE_H__
+#define __ENGINE_H__
 
 #include <string>
 #include <list>
@@ -33,11 +33,13 @@
 #include <plugins/plugin_manager.h>
 #include "iprogress.h"
 
+//forward declarations
+
 namespace Plugins
 {
-	class IInPlugin;
-	class IOutPlugin;
-	class IRootPlugin;
+    class IInPlugin;
+    class IOutPlugin;
+    class IRootPlugin;
 }
 
 class CSettingsManager;
@@ -50,230 +52,231 @@ class CSettingsManager;
 */
 namespace Engine
 {
-	/*!
-	 *@brief Manage all operations
-	 *@version 15.11.2007
-	 *@author Jean-Michel Frouin (jmfrouin@gnu.org)
-	 */
-	class CEngine: public Tools::CSmartCpt, public Tools::TSingleton<CEngine>
-	{
-		public:
-			/*!
-			 *@brief ctor
-			 */
-			CEngine();
-	
-			/*!
-			 *@brief dtor
-			 */
-			~CEngine();
-	
-		public:
-			/*!
-			 *@brief Call load plugins in PluginManager.
-			 *@param path The folder location.
-			 *@return Number of plugins founded.
-			 */
-			int loadPlugins (const std::string& path);
-	
-			/*!
-			 *@brief Load GFX interface build on wxWidgets
-			 *@return true is everything is OK, false otherwise.
-			 */
-			bool loadInterface();
-	
-			/*!
-			 *@brief Detect if launch as root
-			 */
-			static bool isRoot();
-	
-			/*!
-			 *@brief Detect kernel version
-			 */
-			static bool getKernelVersion(std::string& _version);
-	
-			/*!
-			 *@brief callOutputPlugins with a list of files
-			 *@param _list A files list.
-			 *@param _name Name of plugin.
-			 *@param _path Path to save (if applicable) the output file.
-			 *@param _callback For progress bar.
-			 *@return true on success, false otherwise.
-			 *@todo Implement errors code.
-			 */
-			bool callOutputPlugin(std::list<std::string>& _list, std::string& _name, const std::string& _path, IProgressbar* _callback);
-	
-			/*!
-			 *@brief Replace wxDir usage.
-			 *@param _path Where retrieve file list.
-			 *@param _asRoot Scan in root mode.
-			 *@param _rootPlugin Root plugin.
-			 *@param _recursive If true, enter subfolders.
-			 *@return true on success, false otherwise.
-			 */
-			bool scanDirectory(const std::string& _path, bool _asRoot = false, Plugins::IInPlugin* _rootPlugin = 0, bool _recursive = true);
-	
-			/*!
-			 *@brief Callback : man ftw.
-			 *@param _fpath Directory.
-			 *@param _stat Where retrieve file list.
-			 *@param _tflag Flags.
-			 *@param _ftwbuf the TFW buffer.
-			 *@return true on success, false otherwise.
-			 */
-			static int FTW_callback(const char* _fpath, const struct stat* _stat, int _tflag, struct FTW* _ftwbuf);
-	
-			/*!
-			 *@brief Retrieve username.
-			 *@param _username The std::string to fill.
-			 *@return true on success, false otherwise.
-			 */
-			static bool getUsername(std::string& _username);
-	
-			/*!
-			 *@brief Better size display.
-			 *@param _size Size to format.
-			 *@param _str String to fill.
-			 */
-			static void formatSize(double _size, std::string& _str);
-	
-			/*!
-			 *@brief Get free space on system (Using mount table : by default /etc/fstab).
-			 *@param _path To get space from a path.
-			 *@param _used Used space correctly formatted.
-			 *@param _free Available space correctly formatted.
-			 *@param _total Total space correctly formatted.
-			 *@return free space size in bytes.
-			 */
-			static double getFreeSpace(const std::string& _path, std::string& _used, std::string& _free, std::string& _total);
-	
-			/*!
-			*@brief Launch a scan and pass each file to input plugin, to allow them to build file list.
-			 *@param _callback For progress bar.
-			*/
-			bool scanDisk(IProgressbar* _callback = 0);
-			
-			/*!
-			*@brief Get a timestamp.
-			*@param _str The str to fill.
-			*/
-			static void getTimestamp(std::string& _str);
-		
-			/*!
-			*@brief Calc CRC32.
-			*@note http://f-cpu.seul.org/whygee/lm-gdups/article_gdups.html
-			*@param _filename File name :D.
-			*@param _crc The computed CRC32 for _filename.
-			*/
-			static void calcCRC32(const std::string& _filename, unsigned long& _crc);
-	
-		private:
-			/*!
-			*@brief Calc CRC32's table
-			*@param _table The CRC32's table to fill
-			*/
-			static void getCRCTable(std::vector<unsigned long>& _table);
-	
-		public:
-			/*!
-			*@brief Add a file to files list
-			*@param _file File name
-			*@param _size File size
-			*/
-			void addFileInfo(const std::string& _file, unsigned long _crc);
-	
-			/*!
-			*@brief Check for duplicates (and identicals) files
-			*@return Number of duplicates files. (Count each once)
-			*/
-			int detectDuplicates();
-	
-		public:
-			/*!
-			*@brief Find a package on system.
-			*@note Come from database.c & dpkg-db.h from dpkg package.
-			*@param _name The package name to find.
-			@return Error codes (to implement).
-			*/
-			int findPackage(const std::string& _name);
+    /*!
+     *@brief Manage all operations
+     *@version 15.11.2007
+     *@author Jean-Michel Frouin (jmfrouin@gmail.com)
+     */
+    class CEngine: public Tools::CSmartCpt, public Tools::TSingleton<CEngine>
+    {
+        public:
+            /*!
+             *@brief ctor
+             */
+            CEngine();
 
-			/*!
-			*@brief Retrieve a pointer on selected plugins list.
-			*@param _refresh Did engine need to refresh the list ?
-			*/
-			std::map<std::string, Plugins::IInPlugin*>* getSelectedInputPlugs(bool _refresh = false);
-	
-		public:
-			//For the FTW callback ... it sucks !!!
-			Plugins::CPluginManager*	getPluginManager()
-			{
-				return m_pfm;
-			}
-	
-			bool asRoot()
-			{
-				return m_asRoot;
-			}
-	
-			Plugins::IInPlugin* rootPlugin()
-			{
-				return m_rootPlugin;
-			}
-	
-			IProgressbar* getCallback()
-			{
-				return m_callback;
-			}
-	
-			//Accessors
-			std::map<std::string, Plugins::IInPlugin*>*  getAvailableInputPlugs()
-			{
-				return m_AvailableInputPlugs;
-			}
-	
-			void setUnselectedInputPlugs(std::string _name)
-			{
-				m_UnselectedInputPlugs.push_back(_name);
-			}
+            /*!
+             *@brief dtor
+             */
+            ~CEngine();
 
-			unsigned int getCount()
-			{
-				return m_Count;
-			}
+        public:
+            /*!
+             *@brief Call load plugins in PluginManager.
+             *@param path The folder location.
+             *@return Number of plugins founded.
+             */
+            int LoadPlugins (const std::string& path);
 
-			void setCount(unsigned int _Nb)
-			{
-				m_Count = _Nb;
-			}
-			
-		private:
-			Tools::TSmartPtr<Plugins::CPluginManager>  		m_pfm;
-	
-			//Input plugins
-			std::map<std::string, Plugins::IInPlugin*>*  	m_AvailableInputPlugs;
-			std::map<std::string, Plugins::IInPlugin*>  	m_SelectedInputPlugs;
-			std::list<std::string>  						m_UnselectedInputPlugs;
-	
-			//Output plugins
-			std::map<std::string, Plugins::IOutPlugin*>* 	m_OutputPlugs;
-	
-			//Due to this fuck*** callback
-			Plugins::IInPlugin*								m_rootPlugin;
-			bool											m_asRoot;
-			IProgressbar*									m_callback;
-			unsigned int									m_Count;
-	
-			//Files infos
-			std::map<std::string, unsigned long>			m_Infos;
-	
-			//Duplicates files list
-			std::map<unsigned long, std::string>			m_DuplicatesFilesList;
+            /*!
+             *@brief Load GFX interface build on wxWidgets
+             *@return true is everything is OK, false otherwise.
+             */
+            bool LoadInterface();
 
-			//Settings manager
-			Tools::TSmartPtr<CSettingsManager>   			m_Settings;
+            /*!
+             *@brief Detect if launch as root
+             */
+            static bool IsRoot();
 
-			//Selected plugins up to date ?
-			bool											m_SelInPlugins;
-	};
+            /*!
+             *@brief Detect kernel version
+             */
+            static bool GetKernelVersion(std::string& version);
+
+            /*!
+             *@brief callOutputPlugins with a list of files
+             *@param list A files list.
+             *@param name Name of plugin.
+             *@param path Path to save (if applicable) the output file.
+             *@param callback For progress bar.
+             *@return true on success, false otherwise.
+             *@todo Implement errors code.
+             */
+            bool CallOutputPlugin(std::list<std::string>& list, std::string& name, const std::string& path, IProgressbar* callback);
+
+            /*!
+             *@brief Replace wxDir usage.
+             *@param path Where retrieve file list.
+             *@param asroot Scan in root mode.
+             *@param rootplugin Root plugin.
+             *@param recursive If true, enter subfolders.
+             *@return true on success, false otherwise.
+             */
+            bool ScanDirectory(const std::string& path, bool asroot = false, Plugins::IInPlugin* rootplugin = 0, bool recursive = true);
+
+            /*!
+             *@brief Callback : man ftw.
+             *@param fpath Directory.
+             *@param stat Where retrieve file list.
+             *@param tflag Flags.
+             *@param ftwbuf the TFW buffer.
+             *@return true on success, false otherwise.
+             */
+            static int FTWCallback(const char* fpath, const struct stat* stat, int tflag, struct FTW* ftwbuf);
+
+            /*!
+             *@brief Retrieve username.
+             *@param username The std::string to fill.
+             *@return true on success, false otherwise.
+             */
+            static bool GetUsername(std::string& username);
+
+            /*!
+             *@brief Better size display.
+             *@param size Size to format.
+             *@param str String to fill.
+             */
+            static void FormatSize(double size, std::string& str);
+
+            /*!
+             *@brief Get free space on system (Using mount table : by default /etc/fstab).
+             *@param path To get space from a path.
+             *@param used Used space correctly formatted.
+             *@param free Available space correctly formatted.
+             *@param total Total space correctly formatted.
+             *@return free space size in bytes.
+             */
+            static double GetFreeSpace(const std::string& path, std::string& usedspace, std::string& freespace, std::string& total);
+
+            /*!
+            *@brief Launch a scan and pass each file to input plugin, to allow them to build file list.
+             *@param callback For progress bar.
+            */
+            bool ScanDisk(IProgressbar* callback = 0);
+
+            /*!
+            *@brief Get a timestamp.
+            *@param str The str to fill.
+            */
+            static void GetTimestamp(std::string& str);
+
+            /*!
+            *@brief Calc CRC32.
+            *@note http://f-cpu.seul.org/whygee/lm-gdups/article_gdups.html
+            *@param filename File name :D.
+            *@param crc The computed CRC32 for _filename.
+            */
+            static void CalcCRC32(const std::string& filename, unsigned long& crc);
+
+        private:
+            /*!
+            *@brief Calc CRC32's table
+            *@param table The CRC32's table to fill
+            */
+            static void GetCRCTable(std::vector<unsigned long>& table);
+
+        public:
+            /*!
+            *@brief Add a file to files list
+            *@param file File name
+            *@param size File size
+            */
+            void AddFileInfo(const std::string& file, unsigned long crc);
+
+            /*!
+            *@brief Check for duplicates (and identicals) files
+            *@return Number of duplicates files. (Count each once)
+            */
+            int DetectDuplicates();
+
+        public:
+            /*!
+            *@brief Find a package on system.
+            *@note Come from database.c & dpkg-db.h from dpkg package.
+            *@param name The package name to find.
+            @return Error codes (to implement).
+            */
+            int FindPackage(const std::string& name);
+
+            /*!
+            *@brief Retrieve a pointer on selected plugins list.
+            *@param refresh Did engine need to refresh the list ?
+            */
+            std::map<std::string, Plugins::IInPlugin*>* GetSelectedInputPlugs(bool refresh = false);
+
+        public:
+            //For the FTW callback ... it sucks !!!
+            Plugins::CPluginManager* GetPluginManager()
+            {
+                return fPFM;
+            }
+
+            bool AsRoot()
+            {
+                return fAsRoot;
+            }
+
+            Plugins::IInPlugin* RootPlugin()
+            {
+                return fRootPlugin;
+            }
+
+            IProgressbar* GetCallback()
+            {
+                return fCallback;
+            }
+
+            //Accessors
+            std::map<std::string, Plugins::IInPlugin*>*  GetAvailableInputPlugs()
+            {
+                return fAvailableInputPlugs;
+            }
+
+            void SetUnselectedInputPlugs(std::string name)
+            {
+                fUnselectedInputPlugs.push_back(name);
+            }
+
+            unsigned int GetCount()
+            {
+                return fCount;
+            }
+
+            void SetCount(unsigned int nb)
+            {
+                fCount = nb;
+            }
+
+        private:
+            Tools::TSmartPtr<Plugins::CPluginManager>       fPFM;
+
+            //Input plugins
+            std::map<std::string, Plugins::IInPlugin*>*     fAvailableInputPlugs;
+            std::map<std::string, Plugins::IInPlugin*>      fSelectedInputPlugs;
+            std::list<std::string>                          fUnselectedInputPlugs;
+
+            //Output plugins
+            std::map<std::string, Plugins::IOutPlugin*>*    fOutputPlugs;
+
+            //Due to this fuck*** callback
+            Plugins::IInPlugin*                             fRootPlugin;
+            bool                                            fAsRoot;
+            IProgressbar*                                   fCallback;
+            unsigned int                                    fCount;
+
+            //Files infos
+            std::map<std::string, unsigned long>            fInfos;
+
+            //Duplicates files list
+            std::map<unsigned long, std::string>            fDuplicatesFilesList;
+
+            //Settings manager
+            Tools::TSmartPtr<CSettingsManager>              fSettings;
+
+            //Selected plugins up to date ?
+            bool                                            fSelInPlugins;
+    };
 } //namespace Engine
-#endif							 //_ENGINE_H_
+#endif                           //_ENGINE_H_
+

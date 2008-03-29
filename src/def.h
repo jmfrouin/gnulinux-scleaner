@@ -2,31 +2,31 @@
  * This file is part of scleaner project.
 
  * Copyright (C) 2000 Yann Guidon (whygee@f-cpu.org)
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007-2008 FROUIN Jean-Michel
 
- * Visit scleaner website : http://www.scleaner.fr 
+ * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
-   
+
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-   
+
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /*
  *@brief :      Commons definition file
- *@version 15.11.2007
- *@author Jean-Michel Frouin (jmfrouin@gnu.org)
+ *@version 29.03.2008
+ *@author Jean-Michel Frouin (jmfrouin@gmail.com)
  */
 
-#ifndef _DEF_H_
-#define _DEF_H_
+#ifndef __DEF_H__
+#define __DEF_H__
 
 #define BUILD 289
 
@@ -113,7 +113,7 @@
 
 
 //CRC32 stuff
-#define CRC_POLY_REV 0xEDB88320 		/* Reversed CRC32 poly, classic CRC32: poly = 0x04C11DB7 (32,26,23,22,16,12,11,10,8,7,5,4,2,1,0) */
+#define CRC_POLY_REV 0xEDB88320         /* Reversed CRC32 poly, classic CRC32: poly = 0x04C11DB7 (32,26,23,22,16,12,11,10,8,7,5,4,2,1,0) */
 
-#endif							 // _DEF_H_
+#endif                           // __DEF_H__
 /* vi:set ts=4: */

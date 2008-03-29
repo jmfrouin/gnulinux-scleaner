@@ -32,44 +32,44 @@
 */
 namespace Plugins
 {
-	/**
-	 * @brief Plugin Interface
-	 * @version 06.05.2007
-	 * @author Jean-Michel Frouin (jmfrouin@gnu.org)
-	 */
-	class IPlugin : public Tools::CName
-	{
-		public:
-			enum eType
-			{
-				eUserInput,
-				eUserByFolderInput,
-				eRootInput,
-				eRootByFolderInput,
-				eOutput
-			};
-	
-		public:
-			/*!
-			 * @brief ctor
-			 */
-			IPlugin(){}
-	
-			/*!
-			 * @brief dtor.
-			 */
-			virtual ~IPlugin(){}
-	
-			/*!
-			 *@brief Description.
-			 */
-			virtual std::string Description() = 0;
+    /**
+     * @brief Plugin Interface
+     * @version 06.05.2007
+     * @author Jean-Michel Frouin (jmfrouin@gmail.com)
+     */
+    class IPlugin : public Tools::CName
+    {
+        public:
+            enum eType
+            {
+                eUserInput,
+                eUserByFolderInput,
+                eRootInput,
+                eRootByFolderInput,
+                eOutput
+            };
 
-			/*!
-			 *@brief Input or output plugin ?
-			 */
-			virtual eType Type() = 0;
-	};
+        public:
+            /*!
+             * @brief ctor
+             */
+            IPlugin(){}
+
+            /*!
+             * @brief dtor.
+             */
+            virtual ~IPlugin(){}
+
+            /*!
+             *@brief Description.
+             */
+            virtual std::string Description() = 0;
+
+            /*!
+             *@brief Input or output plugin ?
+             */
+            virtual eType Type() = 0;
+    };
 } //namespace Plugins
-#endif							 //_IPLUGIN_H_
+#endif                           //_IPLUGIN_H_
 /* vi:set ts=4: */

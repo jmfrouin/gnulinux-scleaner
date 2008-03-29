@@ -35,67 +35,67 @@
 
 namespace Engine
 {
-	class CEngine;
-	class CSettingsManager;
+    class CEngine;
+    class CSettingsManager;
 }
 
 class wxCheckBox;
 
 namespace GUI
 {
-	/*!
-	 *@brief CPreferences class declaration
-	* @version 15.11.2007
-	* @author Jean-Michel Frouin (jmfrouin@gnu.org)
-	 */
-	class CPreferences: public wxDialog
-	{    
-	    DECLARE_DYNAMIC_CLASS( CPreferences )
-	    DECLARE_EVENT_TABLE()
-	
-	public:
-	    /// Constructors
-	    CPreferences();
-	    CPreferences( wxWindow* parent, wxWindowID id = SYMBOL_CPREFERENCES_IDNAME, const wxString& caption = SYMBOL_CPREFERENCES_TITLE, const wxPoint& pos = SYMBOL_CPREFERENCES_POSITION, const wxSize& size = SYMBOL_CPREFERENCES_SIZE, long style = SYMBOL_CPREFERENCES_STYLE );
-	
-	    /// Creation
-	    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_CPREFERENCES_IDNAME, const wxString& caption = SYMBOL_CPREFERENCES_TITLE, const wxPoint& pos = SYMBOL_CPREFERENCES_POSITION, const wxSize& size = SYMBOL_CPREFERENCES_SIZE, long style = SYMBOL_CPREFERENCES_STYLE );
-	
-	    /// Destructor
-	    ~CPreferences();
-	
-	    /// Initialises member variables
-	    void Init();
-	
-	    /// Creates the controls and sizers
-	    void CreateControls();
-	
-	    /// Retrieves bitmap resources
-	    wxBitmap GetBitmapResource( const wxString& name );
-	
-	    /// Retrieves icon resources
-	    wxIcon GetIconResource( const wxString& name );
-	
-	    /// Should we show tooltips?
-	    static bool ShowToolTips();
+    /*!
+     *@brief CPreferences class declaration
+    * @version 15.11.2007
+    * @author Jean-Michel Frouin (jmfrouin@gmail.com)
+     */
+    class CPreferences: public wxDialog
+    {
+        DECLARE_DYNAMIC_CLASS( CPreferences )
+        DECLARE_EVENT_TABLE()
 
-		/// User click Cancel button
-		void OnCancel(wxCommandEvent& WXUNUSED(event));
-	
-		/// User click Apply button
-		void OnApply(wxCommandEvent& WXUNUSED(event));
-	
-	private:
-		//Engine
-		Tools::TSmartPtr<Engine::CEngine>   			m_Engine;
+    public:
+        /// Constructors
+        CPreferences();
+        CPreferences( wxWindow* parent, wxWindowID id = SYMBOL_CPREFERENCES_IDNAME, const wxString& caption = SYMBOL_CPREFERENCES_TITLE, const wxPoint& pos = SYMBOL_CPREFERENCES_POSITION, const wxSize& size = SYMBOL_CPREFERENCES_SIZE, long style = SYMBOL_CPREFERENCES_STYLE );
 
-		//Settings manager
-		Tools::TSmartPtr<Engine::CSettingsManager>   	m_Settings;
+        /// Creation
+        bool Create( wxWindow* parent, wxWindowID id = SYMBOL_CPREFERENCES_IDNAME, const wxString& caption = SYMBOL_CPREFERENCES_TITLE, const wxPoint& pos = SYMBOL_CPREFERENCES_POSITION, const wxSize& size = SYMBOL_CPREFERENCES_SIZE, long style = SYMBOL_CPREFERENCES_STYLE );
 
-		//Preferences 
-		wxCheckBox*										m_SplashScreen;
-		wxCheckBox*										m_Toolbar;
-		wxCheckBox*										m_Statusbar;
-	};
+        /// Destructor
+        ~CPreferences();
+
+        /// Initialises member variables
+        void Init();
+
+        /// Creates the controls and sizers
+        void CreateControls();
+
+        /// Retrieves bitmap resources
+        wxBitmap GetBitmapResource( const wxString& name );
+
+        /// Retrieves icon resources
+        wxIcon GetIconResource( const wxString& name );
+
+        /// Should we show tooltips?
+        static bool ShowToolTips();
+
+        /// User click Cancel button
+        void OnCancel(wxCommandEvent& WXUNUSED(event));
+
+        /// User click Apply button
+        void OnApply(wxCommandEvent& WXUNUSED(event));
+
+    private:
+        //Engine
+        Tools::TSmartPtr<Engine::CEngine>               m_Engine;
+
+        //Settings manager
+        Tools::TSmartPtr<Engine::CSettingsManager>      m_Settings;
+
+        //Preferences
+        wxCheckBox*                                     m_SplashScreen;
+        wxCheckBox*                                     m_Toolbar;
+        wxCheckBox*                                     m_Statusbar;
+    };
 }
 #endif // _PREFERENCES_H_

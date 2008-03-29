@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007-2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -18,24 +18,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _IPROGRESS_H_
-#define _IPROGRESS_H_
+#ifndef __IPROGRESS_H__
+#define __IPROGRESS_H__
 
 #include <string>
 /**
  * @brief Plugin Interface
- * @version 15.11.2007
+ * @version 29.03.2008
  * @author Jean-Michel Frouin (jmforuin@gnu.org)
  */
 class IProgressbar
 {
-	public:
-		/*!
-		 *@brief Update process progress bar callback.
-		 *@param _pulse Put it in indeterminate state.
-		 *@param _nb Update number.
-		 */
-		virtual void updateProgress(const std::string& _mess, bool _pulse, int _nb = 0) = 0;
+    public:
+        /*!
+         *@brief Update process progress bar callback.
+         *@param pulse Put it in indeterminate state.
+         *@param nb Update number.
+         */
+        virtual void UpdateProgress(const std::string& mess, bool pulse, int nb = 0) = 0;
 };
-#endif							 //_IPROGRESS_H_
+#endif                           //_IPROGRESS_H_
 /* vi:set ts=4: */
