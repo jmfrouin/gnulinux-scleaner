@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007-2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -18,47 +18,47 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _STRING_H_
-#define _STRING_H_
+#ifndef __STRING_H__
+#define __STRING_H__
 
 #include <config.h>
 #include <string>
 
 namespace Tools
 {
-	/**
-	 * @brief In order to enhance std::string.
-	 */
-	class CString : public std::string
-	{
-		public:
-			/*!
-			 *@brief Default constructor.
-			 */
-			CString():
-			std::string()
-			{
-			}
-	
-			/*!
-			 *@brief Destructor.
-			 */
-			virtual ~CString();
-	
-			/*!
-			*@brief lowercase string.
-			*/
-			void toLower()
-			{
-      			for(int i=0; i<length(); ++i)
-				{
-      				if(this->at(i) >= 0x41 && this->at(i) <= 0x5A)
-					{
-      					this->at(i) = this->at(i) + 0x20;
-					}
-				}
-      		}				
-	};
+    /**
+     * @brief In order to enhance std::string.
+     */
+    class CString : public std::string
+    {
+        public:
+            /*!
+             *@brief Default constructor.
+             */
+            CString():
+            std::string()
+            {
+            }
+
+            /*!
+             *@brief Destructor.
+             */
+            virtual ~CString();
+
+            /*!
+            *@brief lowercase string.
+            */
+            void ToLower()
+            {
+                for(int i=Length(); --i>=0; )
+                {
+                    if(this->at(i) >= 0x41 && this->at(i) <= 0x5A)
+                    {
+                        this->at(i) = this->at(i) + 0x20;
+                    }
+                }
+            }
+    };
 }
-#endif							 //_STRING_H_
+#endif                           //_STRING_H_
 /* vi:set ts=4: */

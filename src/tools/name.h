@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007-2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 */
 
 
-#ifndef _NAME_H_
-#define _NAME_H_
+#ifndef __NAME_H__
+#define __NAME_H__
 
 #include <config.h>
 #include <string>
@@ -30,38 +30,38 @@
 */
 namespace Tools
 {
-	/**
-	 * @brief A base class who named an object.
-	 */
-	class CName
-	{
-		public:
-			/*!
-			 *@brief Default constructor.
-			 */
-			CName();
-	
-			/*!
-			 *@brief Destructor.
-			 */
-			virtual ~CName();
-	
-			/*!
-			 *@brief Retrieve the current name.
-			 *@return A string which contain the name.
-			 */
-			virtual const std::string& getName();
-	
-			/*!
-			 *@brief Set the current name.
-			 *@param _Name A string which contain the name.
-			 */
-			virtual void setName(const std::string& _Name);
-	
-		private:
-			std::string     m_Name;	 ///< The name.
-	
-	};
+    /**
+     * @brief A base class who named an object.
+     */
+    class CName
+    {
+        public:
+            /*!
+             *@brief Default constructor.
+             */
+            CName();
+
+            /*!
+             *@brief Destructor.
+             */
+            virtual ~CName();
+
+            /*!
+             *@brief Retrieve the current name.
+             *@return A string which contain the name.
+             */
+            virtual const std::string& GetName();
+
+            /*!
+             *@brief Set the current name.
+             *@param name A string which contain the name.
+             */
+            virtual void SetName(const std::string& name);
+
+        private:
+            std::string     fName;  ///< The name.
+
+    };
 }
-#endif							 //_NAME_H_
+#endif                           //__NAME_H__
 /* vi:set ts=4: */

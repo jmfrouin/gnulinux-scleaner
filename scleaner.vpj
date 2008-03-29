@@ -198,6 +198,21 @@
 				<F N="src/engine/settings_manager.cpp"/>
 				<F N="src/engine/settings_manager.h"/>
 			</Folder>
+			<Folder
+				Name="tools"
+				Filters="">
+				<F N="src/tools/CMakeLists.txt"/>
+				<F N="src/tools/name.cpp"/>
+				<F N="src/tools/name.h"/>
+				<F N="src/tools/singleton.h"/>
+				<F N="src/tools/smart_pointer.h"/>
+				<F N="src/tools/string.h"/>
+				<F N="src/tools/tar_archive.cpp"/>
+				<F N="src/tools/tar_archive.h"/>
+				<F N="src/tools/testbz.cpp"/>
+				<F N="src/tools/thread.cpp"/>
+				<F N="src/tools/thread.h"/>
+			</Folder>
 			<F N="src/def.h"/>
 		</Folder>
 		<Folder
