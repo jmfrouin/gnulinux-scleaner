@@ -213,6 +213,136 @@
 				<F N="src/tools/thread.cpp"/>
 				<F N="src/tools/thread.h"/>
 			</Folder>
+			<Folder
+				Name="interface"
+				Filters="">
+				<F N="src/interface/checklistctrl.cpp"/>
+				<F N="src/interface/checklistctrl.h"/>
+				<F N="src/interface/checktreectrl.cpp"/>
+				<F N="src/interface/checktreectrl.h"/>
+				<F N="src/interface/CMakeLists.txt"/>
+				<F N="src/interface/maininterface.cpp"/>
+				<F N="src/interface/maininterface.h"/>
+				<F N="src/interface/preferences.cpp"/>
+				<F N="src/interface/preferences.h"/>
+				<F N="src/interface/select_dialog.cpp"/>
+				<F N="src/interface/select_dialog.h"/>
+				<F N="src/interface/tmcimages.h"/>
+				<F N="src/interface/tray.cpp"/>
+				<F N="src/interface/tray.h"/>
+			</Folder>
+			<Folder
+				Name="plugins"
+				Filters="">
+				<Folder
+					Name="in"
+					Filters="">
+					<Folder
+						Name="apt-cache"
+						Filters="">
+						<F N="src/plugins/in/apt-cache/apt-cache.cpp"/>
+						<F N="src/plugins/in/apt-cache/apt-cache.h"/>
+						<F N="src/plugins/in/apt-cache/CMakeLists.txt"/>
+					</Folder>
+					<Folder
+						Name="backfiles"
+						Filters="">
+						<F N="src/plugins/in/backfiles/backfiles.cpp"/>
+						<F N="src/plugins/in/backfiles/backfiles.h"/>
+						<F N="src/plugins/in/backfiles/CMakeLists.txt"/>
+					</Folder>
+					<Folder
+						Name="coders"
+						Filters="">
+						<F N="src/plugins/in/coders/CMakeLists.txt"/>
+						<F N="src/plugins/in/coders/coders.cpp"/>
+						<F N="src/plugins/in/coders/coders.h"/>
+					</Folder>
+					<Folder
+						Name="crimosoft"
+						Filters="">
+						<F N="src/plugins/in/crimosoft/CMakeLists.txt"/>
+						<F N="src/plugins/in/crimosoft/crimosoft.cpp"/>
+						<F N="src/plugins/in/crimosoft/crimosoft.h"/>
+					</Folder>
+					<Folder
+						Name="emptyfolders"
+						Filters="">
+						<F N="src/plugins/in/emptyfolders/CMakeLists.txt"/>
+						<F N="src/plugins/in/emptyfolders/emptyfolders.cpp"/>
+						<F N="src/plugins/in/emptyfolders/emptyfolders.h"/>
+					</Folder>
+					<Folder
+						Name="kernels"
+						Filters="">
+						<F N="src/plugins/in/kernels/CMakeLists.txt"/>
+						<F N="src/plugins/in/kernels/kernels.cpp"/>
+						<F N="src/plugins/in/kernels/kernels.h"/>
+					</Folder>
+					<Folder
+						Name="latex"
+						Filters="">
+						<F N="src/plugins/in/latex/CMakeLists.txt"/>
+						<F N="src/plugins/in/latex/latex.cpp"/>
+						<F N="src/plugins/in/latex/latex.h"/>
+					</Folder>
+					<Folder
+						Name="logs"
+						Filters="">
+						<F N="src/plugins/in/logs/CMakeLists.txt"/>
+						<F N="src/plugins/in/logs/logs.cpp"/>
+						<F N="src/plugins/in/logs/logs.h"/>
+					</Folder>
+					<Folder
+						Name="mac"
+						Filters="">
+						<F N="src/plugins/in/mac/CMakeLists.txt"/>
+						<F N="src/plugins/in/mac/mac.cpp"/>
+						<F N="src/plugins/in/mac/mac.h"/>
+					</Folder>
+					<Folder
+						Name="nullfiles"
+						Filters="">
+						<F N="src/plugins/in/nullfiles/CMakeLists.txt"/>
+						<F N="src/plugins/in/nullfiles/nullfiles.cpp"/>
+						<F N="src/plugins/in/nullfiles/nullfiles.h"/>
+					</Folder>
+					<Folder
+						Name="orphan"
+						Filters="">
+						<F N="src/plugins/in/orphan/CMakeLists.txt"/>
+						<F N="src/plugins/in/orphan/orphan.cpp"/>
+						<F N="src/plugins/in/orphan/orphan.h"/>
+					</Folder>
+					<Folder
+						Name="trash"
+						Filters="">
+						<F N="src/plugins/in/trash/CMakeLists.txt"/>
+						<F N="src/plugins/in/trash/trash.cpp"/>
+						<F N="src/plugins/in/trash/trash.h"/>
+					</Folder>
+				</Folder>
+				<Folder
+					Name="out"
+					Filters="">
+					<Folder
+						Name="tbz"
+						Filters="">
+						<F N="src/plugins/out/tbz/CMakeLists.txt"/>
+						<F N="src/plugins/out/tbz/tbz.cpp"/>
+						<F N="src/plugins/out/tbz/tbz.h"/>
+					</Folder>
+				</Folder>
+				<F N="src/plugins/CMakeLists.txt"/>
+				<F N="src/plugins/in_plugin.h"/>
+				<F N="src/plugins/inplugin_initializer.h"/>
+				<F N="src/plugins/iplugin.h"/>
+				<F N="src/plugins/out_plugin.h"/>
+				<F N="src/plugins/outplugin_initializer.h"/>
+				<F N="src/plugins/plugin_manager.cpp"/>
+				<F N="src/plugins/plugin_manager.h"/>
+				<F N="src/plugins/README"/>
+			</Folder>
 			<F N="src/def.h"/>
 		</Folder>
 		<Folder
