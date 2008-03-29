@@ -37,28 +37,28 @@ CSClean::CSClean()
 
 bool CSClean::OnInit(void)
 {
-	//i8n
-	setlocale( LC_ALL, "" );
-	bindtextdomain( "scleaner", "/usr/share/locale" );
-	textdomain( "scleaner" );
+    //i8n
+    setlocale( LC_ALL, "" );
+    bindtextdomain( "scleaner", "/usr/share/locale" );
+    textdomain( "scleaner" );
 
-	#if defined DEBUG
-	std::cout << i8n("[DBG] scleaner starting ...\n");
-	#endif
+    #if defined DEBUG
+    std::cout << i8n("[DBG] scleaner starting ...\n");
+    #endif
 
-	bool l_ret = false;
-	wxImage::AddHandler(new wxPNGHandler);
+    bool l_ret = false;
+    wxImage::AddHandler(new wxPNGHandler);
 
-	//Retrieve Engine::CEngine instance pointer.
-	m_engine = Engine::CEngine::Instance();
+    //Retrieve Engine::CEngine instance pointer.
+    m_engine = Engine::CEngine::Instance();
 
-	//Load plugins
-	m_engine->loadPlugins(PLUG_FOLDER);
+    //Load plugins
+    m_engine->LoadPlugins(PLUG_FOLDER);
 
-	//Load GFX interface
-	l_ret = m_engine->loadInterface();
+    //Load GFX interface
+    l_ret = m_engine->LoadInterface();
 
-	return l_ret;
+    return l_ret;
 }
 
 

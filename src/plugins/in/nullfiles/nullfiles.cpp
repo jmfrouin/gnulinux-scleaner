@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -25,11 +25,11 @@
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<CnullfilesPlugin> g_nullfiles;
+Plugins::CPluginInitializerIn<CnullfilesPlugin> gNullFiles;
 
 CnullfilesPlugin::CnullfilesPlugin()
 {
-	setName("null files");
+    SetName("null files");
 }
 
 
@@ -38,14 +38,14 @@ CnullfilesPlugin::~CnullfilesPlugin()
 }
 
 
-void CnullfilesPlugin::processFile(const std::string& _filename)
+void CnullfilesPlugin::ProcessFile(const std::string& filename)
 {
-	m_fl.push_back(_filename);
+    fFL.push_back(filename);
 }
 
 
 std::string CnullfilesPlugin::Description()
 {
-	return "Find empty file size";
+    return "Find empty file size";
 }
 /* vi:set ts=4: */

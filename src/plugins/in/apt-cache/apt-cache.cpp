@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -24,11 +24,11 @@
 #include "apt-cache.h"
 #include <leak/leak_detector.h>
 
-Plugins::CPluginInitializerIn<Capt_cachePlugin> g_apt_cache;
+Plugins::CPluginInitializerIn<Capt_cachePlugin> gAptCache;
 
 Capt_cachePlugin::Capt_cachePlugin()
 {
-	setName("apt cache");
+    SetName("apt cache");
 }
 
 
@@ -37,20 +37,20 @@ Capt_cachePlugin::~Capt_cachePlugin()
 }
 
 
-void Capt_cachePlugin::getDirectory(std::string& _path)
+void Capt_cachePlugin::GetDirectory(std::string& path)
 {
-	_path = "/var/cache/apt/archives/";
+    path = "/var/cache/apt/archives/";
 }
 
 
-void Capt_cachePlugin::processFile(const std::string& _filename)
+void Capt_cachePlugin::ProcessFile(const std::string& filename)
 {
-	m_fl.push_back(_filename);
+    fFL.push_back(filename);
 }
 
 
 std::string Capt_cachePlugin::Description()
 {
-	return "Find apt cache archives";
+    return "Find apt cache archives";
 }
 /* vi:set ts=4: */

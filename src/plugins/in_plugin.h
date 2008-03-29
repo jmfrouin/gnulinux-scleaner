@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,70 +19,70 @@
 
 */
 
-#ifndef _IN_PLUGIN_H_
-#define _IN_PLUGIN_H_
+#ifndef __IN_PLUGIN_H__
+#define __IN_PLUGIN_H__
 
 #include <config.h>
 #include "iplugin.h"
 
 namespace Plugins
 {
-	/*!
-	 *@brief Input plugin interface.
-	 */
-	class IInPlugin : public IPlugin
-	{
-		public:
-			/*!
-			 *@brief ctor
-			 */
-			IInPlugin() {}
+    /*!
+     *@brief Input plugin interface.
+     */
+    class IInPlugin : public IPlugin
+    {
+        public:
+            /*!
+             *@brief ctor
+             */
+            IInPlugin() {}
 
-			/*!
-			 *@brief dtor
-			 */
-			virtual ~IInPlugin() {}
-	
-			/*!
-			 *@brief Does it need to grab null file size;
-			 *@return true if this plugin can grab null file size, false otherwise.
-			 */
-			virtual bool grabNullFile() = 0;
-	
-			/*!
-			 *@brief Selected by default configuration ?
-			 *@return true if "founded files" have to been pre"set" to Yes, false otherwise
-			 */
-			virtual bool getDefaultSelection() = 0;
+            /*!
+             *@brief dtor
+             */
+            virtual ~IInPlugin() {}
 
-			/*!
-			 *@brief Return a std::list of files targeted by plugin.
-			 *@param _fl The files list to fill.
-			 */
-			void getFileList(std::list<std::string>& _fl)
-			{
-				_fl.merge(m_fl);
-			}
-	
-			/*!
-			*@brief This method add, or not, _filename to m_fl.
-			*@param _filename The file name to process.
-			*/
-			virtual void processFile(const std::string& _filename) = 0;
+            /*!
+             *@brief Does it need to grab null file size;
+             *@return true if this plugin can grab null file size, false otherwise.
+             */
+            virtual bool GrabNullFile() = 0;
 
-			/*!
-			*@brief This method fill the directory to process.
-			*@note Usable only if plugin's type is e*ByFolderInput.
-			*@param _filename The directory name to process.
-			*/
-			virtual void getDirectory(std::string& _path) = 0;
+            /*!
+             *@brief Selected by default configuration ?
+             *@return true if "founded files" have to been pre"set" to Yes, false otherwise
+             */
+            virtual bool GetDefaultSelection() = 0;
+
+            /*!
+             *@brief Return a std::list of files targeted by plugin.
+             *@param fl The files list to fill.
+             */
+            void GetFileList(std::list<std::string>& fl)
+            {
+                fl.merge(fFL);
+            }
+
+            /*!
+            *@brief This method add, or not, filename to fFL.
+            *@param filename The file name to process.
+            */
+            virtual void ProcessFile(const std::string& filename) = 0;
+
+            /*!
+            *@brief This method fill the directory to process.
+            *@note Usable only if plugin's type is eByFolderInput.
+            *@param path The directory name to process.
+            */
+            virtual void GetDirectory(std::string& path) = 0;
 
 
-			//From IPlugin
-			virtual eType Type() { return eUserInput; }
-		
-		protected:
-			std::list<std::string>		m_fl;
-	};
+            //From IPlugin
+            virtual eType Type() { return eUserInput; }
+
+        protected:
+            std::list<std::string>      fFL;
+    };
 } //namespace Plugins
-#endif							 // _IN_PLUGIN_H_
+#endif                           // __IN_PLUGIN_H__

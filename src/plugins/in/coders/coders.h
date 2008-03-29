@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -33,40 +33,40 @@
  * @todo Support both modes, simple user & root/sudo.
  */
 
-#ifndef _CODERS_H_
-#define _CODERS_H_
+#ifndef __CODERS_H__
+#define __CODERS_H__
 
 #include <config.h>
 #include <plugins/in_plugin.h>
 
 class CcodersPlugin : public Plugins::IInPlugin
 {
-	public:
-		CcodersPlugin();
-		~CcodersPlugin();
+    public:
+        CcodersPlugin();
+        ~CcodersPlugin();
 
 
-		bool grabNullFile()
-		{
-			return false;
-		}
+        bool GrabNullFile()
+        {
+            return false;
+        }
 
-		bool getDefaultSelection()
-		{
-			return true;
-		}
+        bool GetDefaultSelection()
+        {
+            return true;
+        }
 
-		/*!
-		 *@brief From Plugins::IInPlugin
-		 */
-		void processFile(const std::string& _filename);
-		void getDirectory(std::string& _path) {_path = ""; }
+        /*!
+         *@brief From Plugins::IInPlugin
+         */
+        void ProcessFile(const std::string& filename);
+        void GetDirectory(std::string& path) { path = ""; }
 
-		/*!
-		 *@brief From IPlugin
-		 */
-		eType Type() { return eUserInput; }
-		std::string Description();
+        /*!
+         *@brief From IPlugin
+         */
+        eType Type() { return eUserInput; }
+        std::string Description();
 };
-#endif							 //_CODERS_H_
+#endif                           //__CODERS_H__
 /* vi:set ts=4: */

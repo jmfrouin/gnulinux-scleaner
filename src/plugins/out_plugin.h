@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 
 */
 
-#ifndef _OUT_PLUGIN_H_
-#define _OUT_PLUGIN_H_
+#ifndef __OUT_PLUGIN_H__
+#define __OUT_PLUGIN_H__
 
 #include <config.h>
 #include <engine/iprogress.h>
@@ -28,28 +28,28 @@
 
 namespace Plugins
 {
-	/*!
-	 *@brief Output plugin interface.
-	 */
-	class IOutPlugin : public IPlugin
-	{
-		public:
-			/*!
-			 *@brief ctor
-			 */
-			IOutPlugin() {}
-			/*!
-			 *@brief dtor
-			 */
-			virtual ~IOutPlugin() {}
-	
-			/*!
-			 *@brief Process all files selected by user.
-			 *@param _fl Files list to fill.
-			 *@param _path Where to write output files (if applicable).
-			 *@param _callback For progress bar support.
-			 */
-			virtual void processFileList(std::list<std::string>& _fl, const std::string& _path, IProgressbar* _callback) = 0;
-	};
+    /*!
+     *@brief Output plugin interface.
+     */
+    class IOutPlugin : public IPlugin
+    {
+        public:
+            /*!
+             *@brief ctor
+             */
+            IOutPlugin() {}
+            /*!
+             *@brief dtor
+             */
+            virtual ~IOutPlugin() {}
+
+            /*!
+             *@brief Process all files selected by user.
+             *@param fl Files list to fill.
+             *@param path Where to write output files (if applicable).
+             *@param callback For progress bar support.
+             */
+            virtual void ProcessFileList(std::list<std::string>& fl, const std::string& path, IProgressbar* callback) = 0;
+    };
 }
-#endif							 // _OUT_PLUGIN_H_
+#endif                           // __OUT_PLUGIN_H__

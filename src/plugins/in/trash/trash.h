@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -33,40 +33,40 @@
  * @todo Support both modes, simple user & root/sudo.
  */
 
-#ifndef _TRASH_H_
-#define _TRASH_H_
+#ifndef __TRASH_H__
+#define __TRASH_H__
 
 #include <config.h>
 #include <plugins/in_plugin.h>
 
 class CtrashPlugin : public Plugins::IInPlugin
 {
-	public:
-		CtrashPlugin();
-		~CtrashPlugin();
+    public:
+        CtrashPlugin();
+        ~CtrashPlugin();
 
 
-		bool grabNullFile()
-		{
-			return false;
-		}
+        bool GrabNullFile()
+        {
+            return false;
+        }
 
-		bool getDefaultSelection()
-		{
-			return true;
-		}
+        bool GetDefaultSelection()
+        {
+            return true;
+        }
 
-		/*!
-		 *@brief From Plugins::IInPlugin
-		 */
-		void processFile(const std::string& _filename);
-		void getDirectory(std::string& _path) {_path = ""; }
+        /*!
+         *@brief From Plugins::IInPlugin
+         */
+        void ProcessFile(const std::string& filename);
+        void GetDirectory(std::string& path) { path = ""; }
 
-		/*!
-		 *@brief From IPlugin
-		 */
-		eType Type() { return eUserByFolderInput; }
-		std::string Description();
+        /*!
+         *@brief From IPlugin
+         */
+        eType Type() { return eUserByFolderInput; }
+        std::string Description();
 };
-#endif							 //_TRASH_H_
+#endif                           //__TRASH_H__
 /* vi:set ts=4: */

@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 
 */
 
-#ifndef _PLUGIN_MANAGER_H_
-#define _PLUGIN_MANAGER_H_
+#ifndef __PLUGIN_MANAGER_H__
+#define __PLUGIN_MANAGER_H__
 
 #include <config.h>
 #include <map>
@@ -35,7 +35,7 @@ namespace Plugins
 {
     /*!
      *@brief Common source code of all plugins.
-     *@version 23.10.2007
+     *@version 29.03.2008
      *@author Jean-Michel Frouin (jmfrouin@gmail.com)
      *@note This code will be put in a dynamic library (libmanager.so).
      */
@@ -47,34 +47,34 @@ namespace Plugins
              *@param path The folder location.
              *@return Number of plugins founded.
              */
-            int loadPlugins (const std::string& path);
+            int LoadPlugins (const std::string& path);
 
             /*!
              *@brief Add a new input plugin to the list of available plugins.
-             *@param _toadd Plugin to add.
+             *@param toadd Plugin to add.
              */
-            void add(IInPlugin* _toadd);
+            void Add(IInPlugin* toadd);
 
             /*!
              *@brief Add a new output plugin to the list of available plugins.
-             *@param _toadd Plugin to add.
+             *@param toadd Plugin to add.
              */
-            void add(IOutPlugin* _toadd);
+            void Add(IOutPlugin* toadd);
 
             /*!
              *@brief Pointer on input plugins list
              */
-            std::map<std::string, IInPlugin*>* getInputListPtr();
+            std::map<std::string, IInPlugin*>* GetInputListPtr();
 
             /*!
              *@brief Pointer on output plugins list
              */
-            std::map<std::string, IOutPlugin*>* getOutputListPtr();
+            std::map<std::string, IOutPlugin*>* GetOutputListPtr();
 
             /*!
              *@brief Retrieve list found of ALL plugins.
              */
-            void getFileList(std::list<std::string>& _fl);
+            void GetFileList(std::list<std::string>& fl);
 
             /*!
              * @brief ctor.
@@ -89,10 +89,10 @@ namespace Plugins
 
         private:
                                      ///< List of available input plugins.
-            std::map<std::string, IInPlugin*>   m_InputPlugins;
+            std::map<std::string, IInPlugin*>   fInputPlugins;
                                      ///< List of available output plugins.
-            std::map<std::string, IOutPlugin*>  m_OutputPlugins;
+            std::map<std::string, IOutPlugin*>  fOutputPlugins;
     };
 } //namespace Plugins
-#endif                           //_PLUGIN_MANAGER_H_
+#endif                           //__PLUGIN_MANAGER_H__
 /* vi:set ts=4: */

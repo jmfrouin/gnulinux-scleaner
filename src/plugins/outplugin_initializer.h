@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 
 */
 
-#ifndef _OUTPLUGIN_INITIALIZER_H_
-#define _OUTPLUGIN_INITIALIZER_H_
+#ifndef __OUTPLUGIN_INITIALIZER_H__
+#define __OUTPLUGIN_INITIALIZER_H__
 
 #include <config.h>
 #include <iostream>
@@ -30,17 +30,17 @@
 
 namespace Plugins
 {
-	template <class T>
-	class CPluginInitializerOut
-	{
-		public:
-			CPluginInitializerOut()
-			{
-				CPluginManager* l_pfm = CPluginManager::Instance();
-				T* l_obj = new T;
-				l_pfm->add(l_obj);
-			}
-	};
+    template <class T>
+    class CPluginInitializerOut
+    {
+        public:
+            CPluginInitializerOut()
+            {
+                CPluginManager* PFM = CPluginManager::Instance();
+                T* Obj = new T;
+                PFM->Add(Obj);
+            }
+    };
 }
-#endif							 //_OUTPLUGIN_INITIALIZER_H_
+#endif                           //_OUTPLUGIN_INITIALIZER_H_
 /* vi:set ts=4: */

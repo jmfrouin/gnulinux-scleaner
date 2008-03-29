@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -32,42 +32,42 @@
  * @section pb Knows bugs
  */
 
-#ifndef _LOGS_H_
-#define _LOGS_H_
+#ifndef __LOGS_H__
+#define __LOGS_H__
 
 #include <config.h>
 #include <plugins/in_plugin.h>
 
 class ClogsPlugin : public Plugins::IInPlugin
 {
-	public:
-		ClogsPlugin();
-		~ClogsPlugin();
+    public:
+        ClogsPlugin();
+        ~ClogsPlugin();
 
 
-		bool grabNullFile()
-		{
-			return false;
-		}
+        bool GrabNullFile()
+        {
+            return false;
+        }
 
 
-		bool getDefaultSelection()
-		{
-			return true;
-		}
+        bool GetDefaultSelection()
+        {
+            return true;
+        }
 
 
-		/*!
-		 *@brief From IInPlugin
-		 */
-		void processFile(const std::string& _filename);
-		void getDirectory(std::string& _path);
+        /*!
+         *@brief From IInPlugin
+         */
+        void ProcessFile(const std::string& filename);
+        void GetDirectory(std::string& path);
 
-		/*!
-		 *@brief From IPlugin
-		 */
-		eType Type() { return eRootByFolderInput; }
-		std::string Description();
+        /*!
+         *@brief From IPlugin
+         */
+        eType Type() { return eRootByFolderInput; }
+        std::string Description();
 };
-#endif							 //_LOGS_H_
+#endif                           //__LOGS_H__
 /* vi:set ts=4: */

@@ -3,7 +3,7 @@
 
  * Copyright (c) 2004-2005 Andrew Reading.
  * Copyright (c) 2007 Sylvain Beucler.
- * Copyright (C) 2007-2008 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify

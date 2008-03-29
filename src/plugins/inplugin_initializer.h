@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 
 */
 
-#ifndef _INPLUGIN_INITIALIZER_H_
-#define _INPLUGIN_INITIALIZER_H_
+#ifndef __INPLUGIN_INITIALIZER_H__
+#define __INPLUGIN_INITIALIZER_H__
 
 #include <config.h>
 #include <iostream>
@@ -30,28 +30,28 @@
 
 namespace Plugins
 {
-	template <class T>
-	class CPluginInitializerIn
-	{
-		public:
-			CPluginInitializerIn()
-			{
-				CPluginManager* l_pfm = CPluginManager::Instance();
-				T* l_obj = new T;
-				if(!Engine::CEngine::isRoot())
-				{
-					if( (l_obj->Type() != Plugins::IPlugin::eRootInput) && (l_obj->Type() != Plugins::IPlugin::eRootByFolderInput) )
-					{
-						l_pfm->add(l_obj);
-					}
-				}
-				else
-				{
-					l_pfm->add(l_obj);
-				}
-	
-			}
-	};
+    template <class T>
+    class CPluginInitializerIn
+    {
+        public:
+            CPluginInitializerIn()
+            {
+                CPluginManager* PFM = CPluginManager::Instance();
+                T* Obj = new T;
+                if(!Engine::CEngine::IsRoot())
+                {
+                    if( (Obj->Type() != Plugins::IPlugin::eRootInput) && (Obj->Type() != Plugins::IPlugin::eRootByFolderInput) )
+                    {
+                        PFM->Add(Obj);
+                    }
+                }
+                else
+                {
+                    PFM->Add(Obj);
+                }
+
+            }
+    };
 } //namespace Plugins
-#endif							 //_INPLUGIN_INITIALIZER_H_
+#endif                           //__INPLUGIN_INITIALIZER_H__
 /* vi:set ts=4: */

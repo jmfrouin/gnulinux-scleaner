@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -24,11 +24,11 @@
 #include "orphan.h"
 #include <leak/leak_detector.h>
 
-CPluginInitializer<CorphanPlugin> g_orphan;
+CPluginInitializer<CorphanPlugin> gOrphan;
 
 CorphanPlugin::CorphanPlugin()
 {
-	setName("orphan");
+    SetName("orphan");
 }
 
 
@@ -37,40 +37,37 @@ CorphanPlugin::~CorphanPlugin()
 }
 
 
-const std::string CorphanPlugin::location()
+const std::string CorphanPlugin::Location()
 {
-	return "/var/log/orphan.log";
+    return "/var/log/orphan.log";
 }
 
 
-const std::string CorphanPlugin::description()
+const std::string CorphanPlugin::Description()
 {
-	return "Application settings orphan cleaner";
+    return "Application settings orphan cleaner";
 }
 
 
-bool CorphanPlugin::isThreadable()
+bool CorphanPlugin::IsThreadable()
 {
-	bool l_ret = true;
-	return l_ret;
+    return true;
 }
 
 
 void CorphanPlugin::__Run()
 {
-	std::cout << "I am in the thread !!" << '\n';
-	std::cout << "But I am very tired I ll sleep a bit !!" << '\n';
-	usleep(500000);
-	std::cout << "Ok ready to ... quit :) !!" << '\n';
-	IThread::__End();
+    std::cout << "I am in the thread !!" << '\n';
+    std::cout << "But I am very tired I ll sleep a bit !!" << '\n';
+    usleep(500000);
+    std::cout << "Ok ready to ... quit :) !!" << '\n';
+    IThread::__End();
 }
 
 
 IPlugin::eType CorphanPlugin::Type()
 {
-	eType l_ret;
-	l_ret = eInput;
-	return l_ret;
+    return eInput;
 }
 
 

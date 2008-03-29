@@ -3,7 +3,7 @@
 
  * Visit scleaner website : http://www.scleaner.fr
  * Copyright (C) 2000 Yann Guidon <whygee@f-cpu.org>
- * Copyright (C) 2007-2008 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -171,8 +171,7 @@ namespace Engine
     {
         std::stringstream Temp;
 
-        if(Size > (1024*1024*1024))
-        {
+        if(size > (1024*1024*1024))        {
             Temp << ROUND((size / (1024*1024*1024))) << i8n("GB");
         }
         else
@@ -255,13 +254,13 @@ namespace Engine
             }
 
                 std::string Size;
-                formatSize(Free, Size);
+                FormatSize(Free, Size);
                 freespace += Size;
                 Size.clear();
-                formatSize(Total, Size);
+                FormatSize(Total, Size);
                 total += Size;
                 Size.clear();
-                formatSize(Used, Size);
+                FormatSize(Used, Size);
                 usedspace += Size;
                 endmntent(MountTable);
         }
@@ -286,9 +285,9 @@ namespace Engine
                 if(It->second->Type() == Plugins::IPlugin::eRootByFolderInput)
                 {
                     std::string Dir;
-                    (It->second)->getDirectory(Dir);
-                    callback->updateProgress(Dir, true);
-                    scanDirectory(Dir, true, It->second);
+                    (It->second)->GetDirectory(Dir);
+                    callback->UpdateProgress(Dir, true);
+                    ScanDirectory(Dir, true, It->second);
                 }
             }
         }
@@ -305,12 +304,12 @@ namespace Engine
             {
                 callback->UpdateProgress(*ItFolders, true);
             }
-            scanDirectory(*ItFolders);
+            ScanDirectory(*ItFolders);
         }
         return Ret;
     }
 
-    int CEngine::FTW_Callback(const char* fpath, const struct stat* stat, int tflag, struct FTW* ftwbuf)
+    int CEngine::FTWCallback(const char* fpath, const struct stat* statp, int tflag, struct FTW* ftwbuf)
     {
         int Ret = 0;
         std::string Path(fpath);
@@ -429,58 +428,58 @@ namespace Engine
         std::stringstream Temp;
 
         //Append year
-        Temp << 1900 + Time.tfyear;
+        Temp << 1900 + Time.tm_year;
 
         //Append month
-        if(Time.tfmon + 1 < 10)
+        if(Time.tm_mon + 1 < 10)
         {
-            Temp << 0 << Time.tfmon + 1;
+            Temp << 0 << Time.tm_mon + 1;
         }
         else
         {
-            Temp << Time.tfmon + 1;
+            Temp << Time.tm_mon + 1;
         }
 
         //Append day
-        if(Time.tfmday + 1 < 10)
+        if(Time.tm_mday + 1 < 10)
         {
-            Temp << 0 << Time.tfmday;
+            Temp << 0 << Time.tm_mday;
         }
         else
         {
-            Temp << Time.tfmday;
+            Temp << Time.tm_mday;
         }
 
         Temp << "_";
 
         //Append hour
-        if(Time.tfhour < 10)
+        if(Time.tm_hour < 10)
         {
-            Temp << 0 << Time.tfhour;
+            Temp << 0 << Time.tm_hour;
         }
         else
         {
-            Temp << Time.tfhour;
+            Temp << Time.tm_hour;
         }
 
         //Append minute
-        if(Time.tfmin < 10)
+        if(Time.tm_min < 10)
         {
-            Temp << 0 << Time.tfmin;
+            Temp << 0 << Time.tm_min;
         }
         else
         {
-            Temp << Time.tfmin;
+            Temp << Time.tm_min;
         }
 
         //Append second
-        if(Time.tfsec < 10)
+        if(Time.tm_sec < 10)
         {
-            Temp << 0 << Time.tfsec;
+            Temp << 0 << Time.tm_sec;
         }
         else
         {
-            Temp << Time.tfsec;
+            Temp << Time.tm_sec;
         }
 
         str += Temp.str();

@@ -199,21 +199,6 @@
 				<F N="src/engine/settings_manager.h"/>
 			</Folder>
 			<Folder
-				Name="tools"
-				Filters="">
-				<F N="src/tools/CMakeLists.txt"/>
-				<F N="src/tools/name.cpp"/>
-				<F N="src/tools/name.h"/>
-				<F N="src/tools/singleton.h"/>
-				<F N="src/tools/smart_pointer.h"/>
-				<F N="src/tools/string.h"/>
-				<F N="src/tools/tar_archive.cpp"/>
-				<F N="src/tools/tar_archive.h"/>
-				<F N="src/tools/testbz.cpp"/>
-				<F N="src/tools/thread.cpp"/>
-				<F N="src/tools/thread.h"/>
-			</Folder>
-			<Folder
 				Name="interface"
 				Filters="">
 				<F N="src/interface/checklistctrl.cpp"/>
@@ -343,7 +328,28 @@
 				<F N="src/plugins/plugin_manager.h"/>
 				<F N="src/plugins/README"/>
 			</Folder>
+			<Folder
+				Name="tools"
+				Filters="">
+				<F N="src/tools/CMakeLists.txt"/>
+				<F N="src/tools/name.cpp"/>
+				<F N="src/tools/name.h"/>
+				<F N="src/tools/singleton.h"/>
+				<F N="src/tools/smart_pointer.h"/>
+				<F N="src/tools/string.h"/>
+				<F N="src/tools/tar_archive.cpp"/>
+				<F N="src/tools/tar_archive.h"/>
+				<F N="src/tools/testbz.cpp"/>
+				<F N="src/tools/thread.cpp"/>
+				<F N="src/tools/thread.h"/>
+			</Folder>
+			<F N="src/config.h.cmake"/>
 			<F N="src/def.h"/>
+			<F N="src/homepage.h"/>
+			<F N="src/scleaner_wx.cpp"/>
+			<F N="src/scleaner_wx.h"/>
+			<F N="src/sudo_scleaner.desktop"/>
+			<F N="src/update_build.sh"/>
 		</Folder>
 		<Folder
 			Name="Header Files"

@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -23,132 +23,132 @@
 #include <sys/utsname.h>
 #include <string>
 #include <regex.h>
-#include <apt-pkg/pkgcache.h>		//For pkgCache
-#include <apt-pkg/sourcelist.h> 	//For pkgSourceList
-#include <apt-pkg/pkgcachegen.h>	//For pkgMakeStatusCache
-#include <apt-pkg/progress.h>		//OpProgress
-#include <apt-pkg/init.h>			//For configuration
-#include <apt-pkg/error.h>			//_error
+#include <apt-pkg/pkgcache.h>       //For pkgCache
+#include <apt-pkg/sourcelist.h>     //For pkgSourceList
+#include <apt-pkg/pkgcachegen.h>    //For pkgMakeStatusCache
+#include <apt-pkg/progress.h>       //OpProgress
+#include <apt-pkg/init.h>           //For configuration
+#include <apt-pkg/error.h>          //_error
 #include <plugins/inplugin_initializer.h>
 #include <leak/leak_detector.h>
 #include "kernels.h"
 
-Plugins::CPluginInitializerIn<CkernelsPlugin> g_kernels;
+Plugins::CPluginInitializerIn<CkernelsPlugin> gKernels;
 
 CkernelsPlugin::CkernelsPlugin():
-m_Cache(0), m_SrcList(0), m_Map(0)
+fCache(0), fSrcList(0), fMap(0)
 {
-	setName("kernels");
+    SetName("kernels");
 
-   	if (pkgInitConfig(*_config) == false || pkgInitSystem(*_config,_system) == false)
-   	{
-		std::cerr << "[ERR] CkernelsPlugin() pkgInitConfig || pkgInitSystem\n";
-	}
-
-	if (_config->FindB("APT::Cache::Generate",true) == false)
+    if (pkgInitConfig(*_config) == false || pkgInitSystem(*_config,_system) == false)
     {
-		m_Map = new MMap(*new FileFd(_config->FindFile("Dir::Cache::pkgcache"), FileFd::ReadOnly),MMap::Public|MMap::ReadOnly);
-	}
-	else
-	{
-		// Open the cache file
-		m_SrcList = new pkgSourceList;
-		m_SrcList->ReadMainList();
-	
-		// Generate it and map it
-		OpProgress l_Prog;
-		pkgMakeStatusCache(*m_SrcList, l_Prog, &m_Map, true);
-	}
+        std::cerr << "[ERR] CkernelsPlugin() pkgInitConfig || pkgInitSystem\n";
+    }
 
-	if (_error->PendingError() == false)
+    if (_config->FindB("APT::Cache::Generate",true) == false)
     {
-		m_Cache = new pkgCache(m_Map);
-	}
-	else
-	{
-		std::cerr << "[ERR] CkernelsPlugin(): Errors occured\n";
-	}
+        fMap = new MMap(*new FileFd(_config->FindFile("Dir::Cache::pkgcache"), FileFd::ReadOnly),MMap::Public|MMap::ReadOnly);
+    }
+    else
+    {
+        // Open the cache file
+        fSrcList = new pkgSourceList;
+        fSrcList->ReadMainList();
+
+        // Generate it and map it
+        OpProgress Prog;
+        pkgMakeStatusCache(*fSrcList, Prog, &fMap, true);
+    }
+
+    if (_error->PendingError() == false)
+    {
+        fCache = new pkgCache(fMap);
+    }
+    else
+    {
+        std::cerr << "[ERR] CkernelsPlugin(): Errors occured\n";
+    }
 }
 
 
 CkernelsPlugin::~CkernelsPlugin()
 {
-	if(m_Map != 0)
-	{
-		delete m_Map;
-	}
-	if(m_Cache != 0)
-	{
-		delete m_Cache;
-	}
+    if(fMap)
+    {
+        delete fMap;
+    }
+    if(fCache)
+    {
+        delete fCache;
+    }
 }
 
 
-void CkernelsPlugin::getDirectory(std::string& _path)
+void CkernelsPlugin::GetDirectory(std::string& path)
 {
-	_path = "/boot/";
+    path = "/boot/";
 }
 
 
-void CkernelsPlugin::processFile(const std::string& _filename)
+void CkernelsPlugin::ProcessFile(const std::string& filename)
 {
-	if(_filename.find("vmlinuz", 0) != std::string::npos)
-	{
-		std::string l_res;
-		if(Search(_filename, l_res))
-		{
-			m_fl.push_back(l_res);
-		}
-	}
+    if(filename.find("vmlinuz", 0) != std::string::npos)
+    {
+        std::string Res;
+        if(Search(filename, Res))
+        {
+            fFL.push_back(Res);
+        }
+    }
 }
 
-bool CkernelsPlugin::Search(const std::string& _name, std::string& _result)
+bool CkernelsPlugin::Search(const std::string& Name, std::string& Result)
 {
-	bool l_ret = false;
+    bool Ret = false;
 
-	regex_t* l_pattern = new regex_t;
+    regex_t* Pattern = new regex_t;
 
-	std::string l_version = _name.substr(_name.find_first_of('-')+1, _name.length());
-	std::string l_filename = "linux-image-" + l_version;
+    std::string Version = Name.substr(Name.find_first_of('-')+1, Name.length());
+    std::string Filename = "linux-image-" + Version;
 
-	if(regcomp(l_pattern, l_filename.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
-	{
-		std::cerr << "Regex error !\n";
-		regfree(l_pattern);
-	}
+    if(regcomp(Pattern, Filename.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
+    {
+        std::cerr << "Regex error !\n";
+        regfree(Pattern);
+    }
 
-   	for (pkgCache::PkgIterator l_it = m_Cache->PkgBegin(); l_it.end() == false; ++l_it)
-   	{
-		#if defined DEBUG
-		std::cout << l_it.Name() << "=" << l_filename << '\n';
-		#endif
-	 	if (regexec(l_pattern,l_it.Name(),0,0,0) == 0)
-		{
-			_result = l_it.Name();
-			#if defined DEBUG
-			std::cout << _result << '\n';
-			#endif
-			l_ret = true;
-			break;
-		}
-   	}
+    for (pkgCache::PkgIterator It = fCache->PkgBegin(); It.end() == false; ++It)
+    {
+        #if defined DEBUG
+        std::cout << It.Name() << "=" << Filename << '\n';
+        #endif
+        if (regexec(Pattern,It.Name(),0,0,0) == 0)
+        {
+            Result = It.Name();
+            #if defined DEBUG
+            std::cout << Result << '\n';
+            #endif
+            Ret = true;
+            break;
+        }
+    }
 
-	//Did not add current kernel or computer won't works anymore ;)
-	std::string l_currentKernelVersion;
-	Engine::CEngine::getKernelVersion(l_currentKernelVersion);
-      
-	if(l_currentKernelVersion == l_version)
-	{
-		l_ret = false;
-	}
+    //Did not add current kernel or computer won't works anymore ;)
+    std::string CurrentKernelVersion;
+    Engine::CEngine::GetKernelVersion(CurrentKernelVersion);
 
-	regfree(l_pattern);
-   	return l_ret;
+    if(CurrentKernelVersion == Version)
+    {
+        Ret = false;
+    }
+
+    regfree(Pattern);
+    return Ret;
 }
 
 
 std::string CkernelsPlugin::Description()
 {
-	return "Find unused installed kernels";
+    return "Find unused installed kernels";
 }
 /* vi:set ts=4: */

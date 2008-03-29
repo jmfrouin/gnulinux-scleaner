@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007-2008 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -110,7 +110,7 @@ namespace Engine
         }
         else
         {
-            Ppath += "/home/";
+            Path += "/home/";
             std::string User;
             CEngine::GetUsername(User);
             Path += User;
@@ -139,7 +139,7 @@ namespace Engine
             #if defined DEBUG
             std::cout << "Adding :" << *It << '\n';
             #endif
-            l_File << eFolderInc << ' ' << *It << '\n';
+            File << eFolderInc << ' ' << *It << '\n';
         }
 
         //Folders exclude from scan

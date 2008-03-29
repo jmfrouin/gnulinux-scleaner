@@ -2,7 +2,7 @@
  * This file is part of scleaner project.
 
  * Copyright (C) 2000 Yann Guidon (whygee@f-cpu.org)
- * Copyright (C) 2007-2008 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 289
+#define BUILD 297
 
 //Bash Colors
 #define VERT "\e[0;32m"

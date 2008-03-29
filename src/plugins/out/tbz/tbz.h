@@ -4,7 +4,7 @@
  * Copyright (C) 2004-2005 Andrew Reading.
  * Copyright (C) 2007 Sylvain Beucler.
  * Visit scleaner website : http://www.scleaner.fr
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,42 +33,42 @@
  * @section todo Todo
  */
 
-#ifndef _TBZ_H_
-#define _TBZ_H_
+#ifndef __TBZ_H__
+#define __TBZ_H__
 
 #include <config.h>
 #include <plugins/out_plugin.h>
 
 class CtbzPlugin : public Plugins::IOutPlugin
 {
-	public:
-		CtbzPlugin();
-		~CtbzPlugin();
+    public:
+        CtbzPlugin();
+        ~CtbzPlugin();
 
-		/*!
-		 *@brief From IPlugin.
-		 */
-		eType Type() { return eOutput; }
+        /*!
+         *@brief From IPlugin.
+         */
+        eType Type() { return eOutput; }
 
-		/*!
-		*@brief From IOutPlugin
-		*/
-		void processFileList(std::list<std::string>& _fl, const std::string& _path, IProgressbar* _callback);
+        /*!
+        *@brief From IOutPlugin
+        */
+        void ProcessFileList(std::list<std::string>& fl, const std::string& path, IProgressbar* callback);
 
-	private:
-		/*!
-		 *@brief Compress a file using bz algo.
-		 *@param _input Input file name.
-		 *@param _output Output file name.
-		 *@param _callback For the progress bar.
-		 *@return true on success, false otherwise.
-		 */
-		bool Compress(const std::string& _input, const std::string& _output, IProgressbar* _callback);
+    private:
+        /*!
+         *@brief Compress a file using bz algo.
+         *@param input Input file name.
+         *@param output Output file name.
+         *@param callback For the progress bar.
+         *@return true on success, false otherwise.
+         */
+        bool Compress(const std::string& input, const std::string& output, IProgressbar* callback);
 
-		/*!
-		 *@brief From IPlugin
-		 */
-		std::string Description();
+        /*!
+         *@brief From IPlugin
+         */
+        std::string Description();
 };
-#endif							 //_TBZ_H_
+#endif                           //__TBZ_H__
 /* vi:set ts=4: */

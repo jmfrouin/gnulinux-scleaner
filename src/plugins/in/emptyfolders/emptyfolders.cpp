@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -20,18 +20,18 @@
 */
 
 #include <iostream>
-#include <dirent.h>				 ///For path manipulation.
+#include <dirent.h>              ///For path manipulation.
 #include <sys/stat.h>
 #include <engine/engine.h>
 #include <leak/leak_detector.h>
 #include <plugins/inplugin_initializer.h>
 #include "emptyfolders.h"
 
-Plugins::CPluginInitializerIn<CemptyfoldersPlugin> g_emptyfolders;
+Plugins::CPluginInitializerIn<CemptyfoldersPlugin> gEmptyFolders;
 
 CemptyfoldersPlugin::CemptyfoldersPlugin()
 {
-	setName("empty folders");
+    SetName("empty folders");
 }
 
 
@@ -40,41 +40,41 @@ CemptyfoldersPlugin::~CemptyfoldersPlugin()
 }
 
 
-void CemptyfoldersPlugin::processFile(const std::string& _filename)
+void CemptyfoldersPlugin::ProcessFile(const std::string& filename)
 {
-	struct stat l_stat;
+    struct stat Stat;
 
-	//Try to stat file.
-	if(stat(_filename.c_str(), &l_stat) == -1)
-	{
-		std::cout << i8n("[ERR] : Cannot stat ") << _filename << '\n';
-	}
-	else
-	{
-		//std::cout << "Stat : " << "[" << _filename << "]" << l_stat.st_mode << '\n';
-		if(S_ISDIR(l_stat.st_mode))
-		{
-			struct dirent** l_namelist;
-			int l_nb = scandir(_filename.c_str(), &l_namelist, 0, alphasort);
-			if(l_nb != -1) //Fix Bug 4 : If no error append.
-			{
-				if(l_nb == 2) //So contain only : . and ..
-				{
-					m_fl.push_back(_filename);
-				}
-				while (l_nb-- > 0)
-				{
-					free(l_namelist[l_nb]);
-				}
-				free(l_namelist);
-			}
-		}
-	}
+    //Try to stat file.
+    if(stat(filename.c_str(), &Stat) == -1)
+    {
+        std::cout << i8n("[ERR] : Cannot stat ") << filename << '\n';
+    }
+    else
+    {
+        //std::cout << "Stat : " << "[" << filename << "]" << Stat.st_mode << '\n';
+        if(S_ISDIR(Stat.st_mode))
+        {
+            struct dirent** NameList;
+            int Nb = scandir(filename.c_str(), &NameList, 0, alphasort);
+            if(Nb != -1) //Fix Bug 4 : If no error append.
+            {
+                if(Nb == 2) //So contain only : . and ..
+                {
+                    fFL.push_back(filename);
+                }
+                while (Nb-- > 0)
+                {
+                    free(NameList[Nb]);
+                }
+                free(NameList);
+            }
+        }
+    }
 }
 
 
 std::string CemptyfoldersPlugin::Description()
 {
-	return "Find empty folder size";
+    return "Find empty folder size";
 }
 /* vi:set ts=4: */

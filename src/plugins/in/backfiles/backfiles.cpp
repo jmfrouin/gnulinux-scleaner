@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -23,15 +23,15 @@
 #include <iostream>
 #include <plugins/inplugin_initializer.h>
 #include "backfiles.h"
-#include <sys/stat.h>			 ///Get file size.
+#include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<CbackfilesPlugin> g_backfiles;
+Plugins::CPluginInitializerIn<CbackfilesPlugin> gBackFiles;
 
 CbackfilesPlugin::CbackfilesPlugin()
 {
-	setName("backfiles");
+    SetName("backfiles");
 }
 
 
@@ -40,17 +40,17 @@ CbackfilesPlugin::~CbackfilesPlugin()
 }
 
 
-void CbackfilesPlugin::processFile(const std::string& _filename)
+void CbackfilesPlugin::ProcessFile(const std::string& filename)
 {
-	if((_filename.find("~", 0) == (_filename.length()-1)) || (_filename.find("bak", 0) == (_filename.length()-3)))
-	{
-		m_fl.push_back(_filename);
-	}
+    if((filename.find("~", 0) == (filename.length()-1)) || (filename.find("bak", 0) == (filename.length()-3)))
+    {
+        fFL.push_back(filename);
+    }
 }
 
 
 std::string CbackfilesPlugin::Description()
 {
-	return "Find backup files (*~ and *bak files)";
+    return "Find backup files (*~ and *bak files)";
 }
 /* vi:set ts=4: */

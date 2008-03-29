@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 
 */
 
-#ifndef _MAININTERFACE_H_
-#define _MAININTERFACE_H_
+#ifndef __MAININTERFACE_H__
+#define __MAININTERFACE_H__
 
 #include <config.h>
 #include <list>
@@ -100,15 +100,15 @@ namespace GUI
 
             /*!
              *@brief Call splash screen
-             *@param _delay Delay, before splash will gone.
+             *@param delay Delay, before splash will gone.
              */
-            void launchSplash(int _delay);
+            void LaunchSplash(int delay);
 
             /*!
              *@brief Retrieve list of selected files to process.
-             *@param _fl Files list to fill.
+             *@param fl Files list to fill.
              */
-            void GetSelectedFiles(std::list<std::string>& _fl);
+            void GetSelectedFiles(std::list<std::string>& fl);
 
             /*!
             *@brief Update folder view :)
@@ -116,40 +116,40 @@ namespace GUI
             void UpdateFolderList();
 
             //From IProgressbar
-            void updateProgress(const std::string& _mess, bool _pulse, int _nb);
+            void UpdateProgress(const std::string& mess, bool pulse, int nb);
 
         protected:
-            CTrayIcon*                          m_Icon;
+            CTrayIcon*                          fIcon;
         #if defined(__WXCOCOA__)
-            CTrayIcon*                          m_DockIcon;
+            CTrayIcon*                          fDockIcon;
         #endif
             //Engine
-            Tools::TSmartPtr<Engine::CEngine>   m_Engine;
+            Tools::TSmartPtr<Engine::CEngine>   fEngine;
 
             //GUI tree list which display input plugins and file list.
-            wxNotebook*                         m_FoundFiles;
+            wxNotebook*                         fFoundFiles;
 
             //Informations GUI panel
-            wxCheckTreeCtrl*                    m_Tree;
+            wxCheckTreeCtrl*                    fTree;
 
             //GUI checkbox which display output plugins
-            wxStatusBar*                        m_StatusBar;
-            wxAuiNotebook*                      m_Aui;
-            wxPanel*                            m_Folders;
-            wxCheckListCtrl*                    m_AddedFolders;
-            wxCheckListCtrl*                    m_ExcludedFolders;
-            wxCheckListCtrl*                    m_InputPlugins;
-            wxRadioBox*                         m_OutputPlugins;
+            wxStatusBar*                        fStatusBar;
+            wxAuiNotebook*                      fAui;
+            wxPanel*                            fFolders;
+            wxCheckListCtrl*                    fAddedFolders;
+            wxCheckListCtrl*                    fExcludedFolders;
+            wxCheckListCtrl*                    fInputPlugins;
+            wxRadioBox*                         fOutputPlugins;
 
             //Progress bar for process part.
-            wxProgressDialog*                   m_Progress;
+            wxProgressDialog*                   fProgress;
 
             //Total sizes
-            std::vector<double>                 m_TotalSizes;
+            std::vector<double>                 fTotalSizes;
 
             //Settings manager
-            Engine::CSettingsManager*           m_Settings;
+            Engine::CSettingsManager*           fSettings;
     };
 }
 #endif
-// _MAININTERFACE_H_
+// __MAININTERFACE_H__

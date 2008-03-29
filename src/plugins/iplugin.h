@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 
 */
 
-#ifndef _IPLUGIN_H_
-#define _IPLUGIN_H_
+#ifndef __IPLUGIN_H__
+#define __IPLUGIN_H__
 
 #include <config.h>
 #include <string>
@@ -71,5 +71,5 @@ namespace Plugins
             virtual eType Type() = 0;
     };
 } //namespace Plugins
-#endif                           //_IPLUGIN_H_
+#endif                           //__IPLUGIN_H__
 /* vi:set ts=4: */

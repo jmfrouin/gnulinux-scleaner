@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -25,11 +25,11 @@
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<ClogsPlugin> g_logs;
+Plugins::CPluginInitializerIn<ClogsPlugin> gLogs;
 
 ClogsPlugin::ClogsPlugin()
 {
-	setName("logs");
+    SetName("logs");
 }
 
 
@@ -38,20 +38,20 @@ ClogsPlugin::~ClogsPlugin()
 }
 
 
-void ClogsPlugin::getDirectory(std::string& _path)
+void ClogsPlugin::GetDirectory(std::string& path)
 {
-	_path = "/var/log/";
+    path = "/var/log/";
 }
 
 
-void ClogsPlugin::processFile(const std::string& _filename)
+void ClogsPlugin::ProcessFile(const std::string& filename)
 {
-	m_fl.push_back(_filename);
+    fFL.push_back(filename);
 }
 
 
 std::string ClogsPlugin::Description()
 {
-	return "Find old logs";
+    return "Find old logs";
 }
 /* vi:set ts=4: */

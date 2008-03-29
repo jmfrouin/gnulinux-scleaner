@@ -3,7 +3,7 @@
 
  * Copyright (C) 1995 Ian Jackson <ian@chiark.greenend.org.uk>
  * Copyright (C) 2000 Yann Guidon <whygee@f-cpu.org>
- * Copyright (C) 2007-2008 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -123,7 +123,7 @@ namespace Engine
              *@param ftwbuf the TFW buffer.
              *@return true on success, false otherwise.
              */
-            static int FTWCallback(const char* fpath, const struct stat* stat, int tflag, struct FTW* ftwbuf);
+            static int FTWCallback(const char* fpath, const struct stat* statp, int tflag, struct FTW* ftwbuf);
 
             /*!
              *@brief Retrieve username.

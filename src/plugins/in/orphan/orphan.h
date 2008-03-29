@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 
 */
 
-#ifndef __ORPHAN_H_
-#define __ORPHAN_H_
+#ifndef __ORPHAN_H__
+#define __ORPHAN_H__
 
 #include <config.h>
 #include <plugins/iplugin.h>
@@ -33,23 +33,23 @@
  */
 class CorphanPlugin : public IPlugin, public IThread
 {
-	public:
-		CorphanPlugin();
-		~CorphanPlugin();
+    public:
+        CorphanPlugin();
+        ~CorphanPlugin();
 
-		/*!
-		 *@brief From IPlugin.
-		 */
-		const std::string location();
-		const std::string description();
-		bool isThreadable();
-		eType Type();
+        /*!
+         *@brief From IPlugin.
+         */
+        const std::string Location();
+        const std::string Description();
+        bool IsThreadable();
+        eType Type();
 
-		/*!
-		 *@brief From CThread.
-		 */
-		virtual void __Run();
+        /*!
+         *@brief From CThread.
+         */
+        virtual void __Run();
 
 };
-#endif							 //_ORPHAN_H_
+#endif                           //__ORPHAN_H__
 /* vi:set ts=4: */

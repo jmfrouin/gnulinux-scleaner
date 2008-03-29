@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -32,8 +32,8 @@
  * @section todo Todo
  */
 
-#ifndef _APT_CACHE_H_
-#define _APT_CACHE_H_
+#ifndef __APT_CACHE_H__
+#define __APT_CACHE_H__
 
 #include <config.h>
 #include <plugins/in_plugin.h>
@@ -43,31 +43,31 @@
  */
 class Capt_cachePlugin : public Plugins::IInPlugin
 {
-	public:
-		Capt_cachePlugin();
-		~Capt_cachePlugin();
+    public:
+        Capt_cachePlugin();
+        ~Capt_cachePlugin();
 
-		bool grabNullFile()
-		{
-			return false;
-		}
+        bool GrabNullFile()
+        {
+            return false;
+        }
 
-		bool getDefaultSelection()
-		{
-			return true;
-		}
+        bool GetDefaultSelection()
+        {
+            return true;
+        }
 
-		/*!
-		 *@brief From IInPlugin
-		 */
-		void getDirectory(std::string& _path);
-		void processFile(const std::string& _filename);
+        /*!
+         *@brief From IInPlugin
+         */
+        void GetDirectory(std::string& path);
+        void ProcessFile(const std::string& filename);
 
-		/*!
-		 *@brief From IPlugin
-		 */
-		eType Type() { return eRootByFolderInput; }
-		std::string Description();
+        /*!
+         *@brief From IPlugin
+         */
+        eType Type() { return eRootByFolderInput; }
+        std::string Description();
 };
-#endif							 //_APT_CACHE_H_
+#endif                           //__APT_CACHE_H__
 /* vi:set ts=4: */

@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -32,8 +32,8 @@
  * @section todo Todo
  */
 
-#ifndef _KERN_H_
-#define _KERN_H_
+#ifndef __KERN_H__
+#define __KERN_H__
 
 #include <config.h>
 #include <plugins/in_plugin.h>
@@ -47,46 +47,46 @@ class MMap;
  */
 class CkernelsPlugin : public Plugins::IInPlugin
 {
-	public:
-		CkernelsPlugin();
-		~CkernelsPlugin();
+    public:
+        CkernelsPlugin();
+        ~CkernelsPlugin();
 
-		bool grabNullFile()
-		{
-			return false;
-		}
+        bool GrabNullFile()
+        {
+            return false;
+        }
 
-		bool getDefaultSelection()
-		{
-			return false;
-		}
-
-
-		/*!
-		 *@brief Search for a package in cache.
-		 *@param _name The package name.
-		 *@param _result A string containing the first found package.
-		 */
-		bool Search(const std::string& _name, std::string& _result);
+        bool GetDefaultSelection()
+        {
+            return false;
+        }
 
 
-		/*!
-		 *@brief From IInPlugin
-		 */
-		void processFile(const std::string& _filename);
-		void getDirectory(std::string& _path);
+        /*!
+         *@brief Search for a package in cache.
+         *@param name The package name.
+         *@param result A string containing the first found package.
+         */
+        bool Search(const std::string& name, std::string& result);
 
 
-		/*!
-		 *@brief From IPlugin
-		 */
-		eType Type() { return eRootByFolderInput; }
-		std::string Description();
+        /*!
+         *@brief From IInPlugin
+         */
+        void ProcessFile(const std::string& filename);
+        void GetDirectory(std::string& path);
 
-	private:
-		pkgCache* 		m_Cache;
-		pkgSourceList* 	m_SrcList;
-		MMap*			m_Map;
+
+        /*!
+         *@brief From IPlugin
+         */
+        eType Type() { return eRootByFolderInput; }
+        std::string Description();
+
+    private:
+        pkgCache*       fCache;
+        pkgSourceList*  fSrcList;
+        MMap*           fMap;
 };
-#endif							 //_KERN_H_
+#endif                           //__KERN_H__
 /* vi:set ts=4: */

@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -23,15 +23,15 @@
 #include <iostream>
 #include <plugins/inplugin_initializer.h>
 #include "trash.h"
-#include <sys/stat.h>			 ///Get file size.
+#include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<CtrashPlugin> g_trash;
+Plugins::CPluginInitializerIn<CtrashPlugin> gTrash;
 
 CtrashPlugin::CtrashPlugin()
 {
-	setName("trash");
+    SetName("trash");
 }
 
 
@@ -40,14 +40,14 @@ CtrashPlugin::~CtrashPlugin()
 }
 
 
-void CtrashPlugin::processFile(const std::string& _filename)
+void CtrashPlugin::ProcessFile(const std::string& filename)
 {
-	//m_fl.push_back(_filename);
+    //fFL.push_back(filename);
 }
 
 
 std::string CtrashPlugin::Description()
 {
-	return "Find files in your trashbin";
+    return "Find files in your trashbin";
 }
 /* vi:set ts=4: */
