@@ -171,24 +171,24 @@ namespace Engine
     {
         std::stringstream Temp;
 
-        if(size > (1024*1024*1024))        {
-            Temp << ROUND((size / (1024*1024*1024))) << i8n("GB");
+        if(size > (1<<30))        {
+            Temp << ROUND((size / (1<<30))) << i8n("GB");
         }
         else
         {
-            if(size > (1024*1024))
+            if(size > (1<<20))
             {
-                Temp << ROUND(size / (1024*1024)) << i8n("MB");
+                Temp << ROUND(size / (1<<20)) << i8n("MB");
             }
             else
             {
-                if(size > 1024)
+                if(size > (1<<10))
                 {
-                    Temp << ROUND(size / 1024) << i8n("KB");
+                    Temp << ROUND(size / (1<<10)) << i8n("KB");
                 }
                 else
                 {
-                    if(size == 0)
+                    if(!size)
                     {
                         Temp << i8n("null size");
                     }
