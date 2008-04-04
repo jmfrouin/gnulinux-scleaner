@@ -23,5 +23,7 @@
 
 typedef pthread_t Thread;
 typedef pthread_mutex_t Mutex;
+typedef wchar_t WChar;
+typedef wchar_t* PWChar;
 
 #endif //__TYPES_H__

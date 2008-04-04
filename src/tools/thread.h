@@ -80,7 +80,7 @@ namespace Tools
             static int fCount;
             static int fMax;
             CMutex fLock;
-            bool fRunning;
+            volatile bool fRunning;
     };
 
     int IThread::fCount = 0;

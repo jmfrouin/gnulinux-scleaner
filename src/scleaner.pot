@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-07 22:37+0200\n"
+"POT-Creation-Date: 2008-04-04 23:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,358 +16,422 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: leak/memory_manager.cpp:62
+#: leak/memory_manager.cpp:58
 msgid "   No leak detected, congratulations !  "
 msgstr ""
 
-#: tools/tar_archive.cpp:252
+#: tools/tar_archive.cpp:257
 msgid " (file is skipped)"
 msgstr ""
 
-#: leak/memory_manager.cpp:48
+#: leak/memory_manager.cpp:44
 msgid " - Report (Compiled on "
 msgstr ""
 
-#: leak/memory_manager.cpp:140
+#: leak/memory_manager.cpp:136
 msgid " Line : "
 msgstr ""
 
-#: leak/memory_manager.cpp:69
+#: leak/memory_manager.cpp:65
 msgid " Oops... Some leaks have been detected  "
 msgstr ""
 
-#: tools/tar_archive.cpp:345
+#: tools/tar_archive.cpp:350
 msgid " appended to "
 msgstr ""
 
-#: leak/memory_manager.cpp:94
+#: leak/memory_manager.cpp:90
 msgid " blocs not empty, "
 msgstr ""
 
-#: leak/memory_manager.cpp:88
+#: leak/memory_manager.cpp:84
 msgid " bytes"
 msgstr ""
 
-#: leak/memory_manager.cpp:95
+#: leak/memory_manager.cpp:91
 msgid " bytes --"
 msgstr ""
 
-#: tools/tar_archive.cpp:304
+#: interface/preferences.cpp:142
+msgid " default selection"
+msgstr ""
+
+#: tools/tar_archive.cpp:309
 msgid " file!"
 msgstr ""
 
-#: plugins/plugin_manager.cpp:45
+#: plugins/plugin_manager.cpp:43
 msgid " input plugin : "
 msgstr ""
 
-#: plugins/plugin_manager.cpp:41
+#: plugins/plugin_manager.cpp:39
 msgid " input plugins : "
 msgstr ""
 
-#: interface/maininterface.cpp:575
+#: interface/maininterface.cpp:645 interface/maininterface.cpp:697
 msgid " is already in the folders list."
 msgstr ""
 
-#: plugins/plugin_manager.cpp:71
+#: plugins/plugin_manager.cpp:60
 msgid " output plugin : "
 msgstr ""
 
-#: plugins/plugin_manager.cpp:67
+#: plugins/plugin_manager.cpp:56
 msgid " output plugins : "
 msgstr ""
 
-#: interface/maininterface.cpp:520
+#: interface/maininterface.cpp:527
 msgid " plugin:"
 msgstr ""
 
-#: interface/maininterface.cpp:573
+#: interface/maininterface.cpp:643 interface/maininterface.cpp:695
 msgid " since "
 msgstr ""
 
-#: tools/tar_archive.cpp:52
+#: tools/tar_archive.cpp:57
 msgid " so I skip it !"
 msgstr ""
 
-#: interface/checklistctrl.cpp:155 interface/maininterface.cpp:196
-msgid "&Add a folder to scan\tCtrl-A"
-msgstr ""
-
-#: interface/checklistctrl.cpp:156 interface/maininterface.cpp:198
-msgid "&Remove selected folders from scan\tCtrl-D"
-msgstr ""
-
-#: tools/tar_archive.cpp:288
+#: tools/tar_archive.cpp:293
 msgid "' hasn't been add to tar archive !"
 msgstr ""
 
-#: interface/maininterface.cpp:203
+#: interface/maininterface.cpp:208
 msgid "About"
 msgstr ""
 
-#: tools/tar_archive.cpp:341
+#: tools/tar_archive.cpp:346
 msgid "Adding\n"
 msgstr ""
 
-#: interface/maininterface.cpp:216 interface/maininterface.cpp:218
+#: interface/preferences.cpp:181
+msgid "Application"
+msgstr ""
+
+#: interface/preferences.cpp:125
+msgid "Apply"
+msgstr ""
+
 #: interface/maininterface.cpp:219
 msgid "Apply output plugin on selected files."
 msgstr ""
 
-#: interface/maininterface.cpp:403
+#: interface/maininterface.cpp:407
 msgid "CRC32"
 msgstr ""
 
-#: plugins/out/tbz/tbz.cpp:124
-msgid "Cannot stat "
-msgstr ""
-
-#: interface/tray.cpp:65
-msgid "E&xit"
-msgstr ""
-
-#: plugins/out/tbz/tbz.cpp:103
-msgid "Error bzWriteOpen!"
+#: interface/preferences.cpp:126
+msgid "Cancel"
 msgstr ""
 
 #: plugins/out/tbz/tbz.cpp:113
-msgid "Error in file!"
+msgid "Cannot stat "
+msgstr ""
+
+#: interface/maininterface.cpp:245
+msgid "Description"
+msgstr ""
+
+#: interface/tray.cpp:63
+msgid "E&xit"
+msgstr ""
+
+#: interface/maininterface.cpp:201
+msgid "Edit"
 msgstr ""
 
 #: plugins/out/tbz/tbz.cpp:92
+msgid "Error bzWriteOpen!"
+msgstr ""
+
+#: plugins/out/tbz/tbz.cpp:102
+msgid "Error in file!"
+msgstr ""
+
+#: plugins/out/tbz/tbz.cpp:81
 msgid "Error out file!"
 msgstr ""
 
-#: interface/maininterface.cpp:190
+#: interface/maininterface.cpp:196
 msgid "File"
 msgstr ""
 
-#: interface/maininterface.cpp:395
+#: interface/maininterface.cpp:399
 msgid "File location"
 msgstr ""
 
-#: interface/maininterface.cpp:195
+#: interface/maininterface.cpp:235
 msgid "Folders"
 msgstr ""
 
-#: interface/maininterface.cpp:286
+#: interface/maininterface.cpp:276
+msgid "Found files"
+msgstr ""
+
+#: interface/maininterface.cpp:300
 msgid "Free: "
 msgstr ""
 
-#: engine/engine.cpp:184
+#: engine/engine.cpp:175
 msgid "GB"
 msgstr ""
 
-#: interface/maininterface.cpp:571
+#: interface/maininterface.cpp:641 interface/maininterface.cpp:693
 msgid "I cannot add "
 msgstr ""
 
-#: engine/engine.cpp:196
+#: interface/maininterface.cpp:264
+msgid "Input plugins"
+msgstr ""
+
+#: engine/engine.cpp:187
 msgid "KB"
 msgstr ""
 
-#: interface/maininterface.cpp:282
+#: interface/maininterface.cpp:296
 msgid "Kernel : v"
 msgstr ""
 
-#: interface/maininterface.cpp:279
+#: interface/maininterface.cpp:293
 msgid "Launched as "
 msgstr ""
 
-#: interface/maininterface.cpp:272
+#: interface/maininterface.cpp:286
 msgid "Launched as root/sudo"
 msgstr ""
 
-#: engine/engine.cpp:190
+#: engine/engine.cpp:181
 msgid "MB"
 msgstr ""
 
-#: interface/maininterface.cpp:202
+#: interface/maininterface.cpp:207
 msgid "Misc"
 msgstr ""
 
-#: interface/maininterface.cpp:539
+#: interface/maininterface.cpp:555 interface/maininterface.cpp:578
 msgid "Name"
 msgstr ""
 
-#: interface/maininterface.cpp:191 interface/maininterface.cpp:223
+#: interface/maininterface.cpp:271
+msgid "Output plugins"
+msgstr ""
+
+#: interface/maininterface.cpp:269
+msgid "Output plugins :"
+msgstr ""
+
+#: interface/preferences.cpp:136
+msgid "Plugin default selection : "
+msgstr ""
+
+#: interface/maininterface.cpp:241
+msgid "Plugin name"
+msgstr ""
+
+#: interface/preferences.cpp:147
+msgid "Plugins"
+msgstr ""
+
+#: interface/maininterface.cpp:221 interface/maininterface.cpp:737
+msgid "Preferences"
+msgstr ""
+
+#: interface/maininterface.cpp:202
+msgid "Preferences\tCtrl-P"
+msgstr ""
+
+#: interface/preferences.cpp:178
+msgid "Progress bar update's delay"
+msgstr ""
+
+#: interface/maininterface.cpp:197 interface/maininterface.cpp:223
 msgid "Quit"
 msgstr ""
 
-#: interface/maininterface.cpp:564
+#: interface/maininterface.cpp:633 interface/maininterface.cpp:686
 msgid "Select a folder to add to scan"
 msgstr ""
 
-#: interface/maininterface.cpp:520
+#: interface/maininterface.cpp:527
 msgid "Select an output folder for "
 msgstr ""
 
-#: interface/maininterface.cpp:641
+#: interface/maininterface.cpp:778
 msgid "Select input plugins to use"
 msgstr ""
 
-#: interface/maininterface.cpp:214
-msgid "Select input plugins to use."
+#: interface/preferences.cpp:163
+msgid "Show splash screen on startup"
 msgstr ""
 
-#: interface/maininterface.cpp:631
+#: interface/preferences.cpp:173
+msgid "Show status bar (need reboot)"
+msgstr ""
+
+#: interface/preferences.cpp:168
+msgid "Show toolbar (need reboot)"
+msgstr ""
+
+#: interface/maininterface.cpp:768
 msgid ""
 "Since for this alpha version, there are only 3 input plugins (and 2 that run "
 "only in root mode), the dialog for selecting input plugins is not yet ready :"
 "D but will be available soon !!"
 msgstr ""
 
-#: interface/maininterface.cpp:399
+#: interface/maininterface.cpp:403
 msgid "Size (bytes)"
 msgstr ""
 
-#: interface/maininterface.cpp:331
+#: interface/maininterface.cpp:342
 msgid "Total size : "
 msgstr ""
 
-#: interface/maininterface.cpp:286
+#: interface/maininterface.cpp:300
 msgid "Total: "
 msgstr ""
 
-#: interface/maininterface.cpp:215
+#: interface/maininterface.cpp:218
 msgid "Use input plugins to find files."
 msgstr ""
 
-#: interface/maininterface.cpp:286
+#: interface/maininterface.cpp:300
 msgid "Used: "
 msgstr ""
 
-#: engine/engine.cpp:538
+#: engine/engine.cpp:488
 msgid "[DBG] CEngine::getTimestamp Timestamp: "
 msgstr ""
 
-#: engine/engine.cpp:158
+#: engine/engine.cpp:154
 msgid "[DBG] CEngine::getUsername UID: "
 msgstr ""
 
-#: engine/engine.cpp:165
+#: engine/engine.cpp:161
 msgid "[DBG] CEngine::getUsername Username: "
 msgstr ""
 
-#: engine/engine.cpp:313
+#: engine/engine.cpp:301
 msgid "[DBG] CEngine::scanDisk Path : "
 msgstr ""
 
-#: interface/maininterface.cpp:503
+#: interface/maininterface.cpp:510
 msgid "[DBG] CMainInterface : Get selection : "
 msgstr ""
 
-#: engine/engine.cpp:405
+#: engine/engine.cpp:336
 msgid "[DBG] FTW_callback : "
 msgstr ""
 
-#: plugins/plugin_manager.cpp:38 plugins/plugin_manager.cpp:64
+#: plugins/plugin_manager.cpp:36 plugins/plugin_manager.cpp:53
 msgid "[DBG] I founded "
 msgstr ""
 
-#: interface/maininterface.cpp:468
+#: interface/maininterface.cpp:475
 msgid "[DBG] Process !!! "
 msgstr ""
 
-#: interface/maininterface.cpp:389
+#: interface/maininterface.cpp:393
 msgid "[DBG] Size = "
 msgstr ""
 
-#: interface/maininterface.cpp:475
+#: interface/maininterface.cpp:482
 msgid "[DBG] You have selected: "
 msgstr ""
 
-#: scleaner_wx.cpp:51
+#: scleaner_wx.cpp:46
 msgid "[DBG] scleaner starting ...\n"
 msgstr ""
 
-#: tools/tar_archive.cpp:42
+#: tools/tar_archive.cpp:47
 msgid "[DBG]File header for "
 msgstr ""
 
-#: leak/memory_manager.cpp:43
+#: leak/memory_manager.cpp:39
 msgid "[ERR] : Cannot open "
 msgstr ""
 
-#: interface/maininterface.cpp:424
+#: engine/engine.cpp:349 engine/engine.cpp:372
+#: plugins/in/emptyfolders/emptyfolders.cpp:50 interface/maininterface.cpp:428
 msgid "[ERR] : Cannot stat "
 msgstr ""
 
-#: plugins/out/tbz/tbz.cpp:69
+#: plugins/out/tbz/tbz.cpp:66
 msgid "[ERR] An error occured during compression so I left "
 msgstr ""
 
-#: engine/engine.cpp:114
+#: engine/engine.cpp:112
 msgid "[ERR] CEngine::getKernelVersion error !\n"
 msgstr ""
 
-#: interface/maininterface.cpp:671
+#: interface/maininterface.cpp:808
 msgid "[ERR] CMainInterface::GetSelectedFiles GetItem !!"
 msgstr ""
 
-#: tools/tar_archive.cpp:304
+#: tools/tar_archive.cpp:309
 msgid "[ERR] Cannot open "
 msgstr ""
 
-#: interface/maininterface.cpp:157
+#: interface/maininterface.cpp:159
 msgid "[ERR] Could not set icon.\n"
 msgstr ""
 
-#: tools/tar_archive.cpp:364
+#: tools/tar_archive.cpp:369
 msgid "[ERR] Due to error(s) on CleanClose, I delete "
 msgstr ""
 
-#: tools/tar_archive.cpp:353
+#: tools/tar_archive.cpp:358
 msgid "[ERR] Due to error(s) on WriteData, I delete "
 msgstr ""
 
-#: tools/tar_archive.cpp:243
+#: tools/tar_archive.cpp:248
 msgid "[ERR] Error output file: "
 msgstr ""
 
-#: engine/engine.cpp:574
-msgid "[ERR] Error, canot read "
+#: engine/engine.cpp:525
+msgid "[ERR] Error, cannot read "
 msgstr ""
 
-#: engine/engine.cpp:140
+#: engine/engine.cpp:138
 msgid "[WNG] : null"
 msgstr ""
 
-#: tools/tar_archive.cpp:71
+#: tools/tar_archive.cpp:76
 msgid "[WNG] Archiving non-ordinary file (Linked or Device file?)"
 msgstr ""
 
-#: tools/tar_archive.cpp:52
+#: tools/tar_archive.cpp:57
 msgid "[WNG] Cannot stat file: "
 msgstr ""
 
-#: tools/tar_archive.cpp:252
+#: tools/tar_archive.cpp:257
 msgid "[WNG] Error in file: "
 msgstr ""
 
-#: tools/tar_archive.cpp:288
+#: tools/tar_archive.cpp:293
 msgid "[WNG] File '"
 msgstr ""
 
-#: plugins/out/tbz/tbz.cpp:139
+#: plugins/out/tbz/tbz.cpp:128
 msgid "bz2 compression of\n"
 msgstr ""
 
-#: engine/engine.cpp:202
+#: engine/engine.cpp:193
 msgid "null size"
 msgstr ""
 
-#: interface/maininterface.cpp:577
+#: interface/maininterface.cpp:647 interface/maininterface.cpp:699
 msgid "scleaner information"
 msgstr ""
 
-#: interface/maininterface.cpp:483
+#: interface/maininterface.cpp:490
 msgid "scleaner process your files ..."
 msgstr ""
 
-#: interface/maininterface.cpp:356
+#: interface/maininterface.cpp:368
 msgid "scleaner scan your disk ..."
 msgstr ""
 
-#: interface/maininterface.cpp:357 interface/maininterface.cpp:484
+#: interface/maininterface.cpp:369 interface/maininterface.cpp:491
 msgid "this is a information"
 msgstr ""

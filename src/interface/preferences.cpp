@@ -144,7 +144,7 @@ namespace GUI
             l_Sizer->Add(l_PluginCB, 1, wxGROW | wxALL, 5);
         }
 
-        l_PrefListbook->AddPage(l_PluginsPanel, _("Plugins"));
+        l_PrefListbook->AddPage(l_PluginsPanel, _T("Plugins"));
 
         wxPanel* l_PrefPanel = new wxPanel(l_PrefListbook, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
 
@@ -178,7 +178,7 @@ namespace GUI
         wxSpinButton* l_PBDelay = new wxSpinButton(l_PrefPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_HORIZONTAL, _T("Progress bar update's delay"));
         l_Sizer2->Add(l_PBDelay, 1, wxGROW | wxALL, 5);
 
-        l_PrefListbook->AddPage(l_PrefPanel, _("Application"));
+        l_PrefListbook->AddPage(l_PrefPanel, _T("Application"));
     }
 
 
