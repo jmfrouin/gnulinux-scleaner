@@ -332,6 +332,8 @@
 				Name="tools"
 				Filters="">
 				<F N="src/tools/CMakeLists.txt"/>
+				<F N="src/tools/mutex.cpp"/>
+				<F N="src/tools/mutex.h"/>
 				<F N="src/tools/name.cpp"/>
 				<F N="src/tools/name.h"/>
 				<F N="src/tools/singleton.h"/>
@@ -342,7 +344,9 @@
 				<F N="src/tools/testbz.cpp"/>
 				<F N="src/tools/thread.cpp"/>
 				<F N="src/tools/thread.h"/>
+				<F N="src/tools/types.h"/>
 			</Folder>
+			<F N="src/CMakeLists.txt"/>
 			<F N="src/config.h.cmake"/>
 			<F N="src/def.h"/>
 			<F N="src/homepage.h"/>
@@ -350,13 +354,6 @@
 			<F N="src/scleaner_wx.h"/>
 			<F N="src/sudo_scleaner.desktop"/>
 			<F N="src/update_build.sh"/>
-		</Folder>
-		<Folder
-			Name="Header Files"
-			Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.inc;*.sh;*.cpy;*.if"/>
-		<Folder
-			Name="Other Files"
-			Filters="">
 		</Folder>
 	</Files>
 </Project>

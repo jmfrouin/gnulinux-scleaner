@@ -491,7 +491,7 @@ namespace GUI
             wxString(i8n("this is a information"), wxConvUTF8),
             100,                     // range
             this,                    // parent
-            //wxPD_CAN_ABORT |
+            wxPD_CAN_ABORT |
             // wxPD_CAN_SKIP |
             wxPD_APP_MODAL |
             //wxPD_AUTO_HIDE | -- try this as well

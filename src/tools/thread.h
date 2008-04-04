@@ -24,7 +24,7 @@
 #include <pthread.h>
 #include <unistd.h>
 #include "mutex.h"
-typedef pthread_t Thread;
+#include "types.h"
 
 namespace Tools
 {
@@ -38,9 +38,9 @@ namespace Tools
             virtual ~IThread();
 
             /*!
-             *@brief Launch thread
+             *@brief Start thread.
              */
-            int Start();
+            void Start();
 
             /*!
              *@brief The function to run to be pure virtual.
@@ -48,14 +48,32 @@ namespace Tools
             virtual void Run() = 0;
             const bool Running() const { return fRunning; }
 
-            static const int GetCount();
-            static const int GetMax();
-            static void SetMax(const int tmax);
-
-            /*!
-             *@brief Need to be call when Run has end.
+             /*!
+             *@brief Stop the thread.
              */
             void Stop();
+
+            /*!
+            *@brief Wait the end of thread.
+            */
+            void Join();
+
+            /*!
+             *@brief Lock the mutex.
+             */
+            void Lock() { return fLock.Lock(); }
+
+            /*!
+             *@brief Unlock mutex
+             */
+            void UnLock() { return fLock.UnLock(); }
+
+            static const int GetCount() { return fCount; }
+            static const int GetMax() { return fMax; }
+            static void SetMax(const int tmax) { fMax = tmax; }
+
+        private:
+            static void* __Run(void* thread);
 
         private:
             Thread fThread;
