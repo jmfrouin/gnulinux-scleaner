@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 
 */
 
-/*! @mainpage Simple Cleaner homepage
+/*! @mainpage simple cleaner homepage
  *
  * Documentation homepage : http://www.scleaner.net
  *
@@ -50,11 +50,13 @@
  * Here you can find all plugins documentations.
  */
 
-/*! @page page1 Successful platform tested
+/*! @page page1 Successful platforms tested
  *
  * Debian etch 4.00
  *
  * Ubuntu Feisty 7.04
+ *
+ * Ubuntu Feisty 7.10
  */
 
 /*! @page page2 Inputs plugins to write
@@ -106,4 +108,3 @@
  *
  */
 
-/* vi:set ts=4: */
