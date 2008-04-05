@@ -1,0 +1,185 @@
+/////////////////////////////////////////////////////////////////////////////
+// Name:        aboutdialog.cpp
+// Purpose:     
+// Author:      Frouin Jean-Michel
+// Modified by: 
+// Created:     Sun 06 Apr 2008 00:39:31 CEST
+// RCS-ID:      
+// Copyright:   Project are under GNU GPL v3
+// Licence:     
+/////////////////////////////////////////////////////////////////////////////
+
+// For compilers that support precompilation, includes "wx/wx.h".
+#include "wx/wxprec.h"
+
+#ifdef __BORLANDC__
+#pragma hdrstop
+#endif
+
+#ifndef WX_PRECOMP
+#include "wx/wx.h"
+#endif
+
+////@begin includes
+////@end includes
+
+#include "caboutdialog.h"
+
+////@begin XPM images
+////@end XPM images
+
+
+/*!
+ * CAboutDialog type definition
+ */
+
+IMPLEMENT_DYNAMIC_CLASS( CAboutDialog, wxDialog )
+
+
+/*!
+ * CAboutDialog event table definition
+ */
+
+BEGIN_EVENT_TABLE( CAboutDialog, wxDialog )
+
+////@begin CAboutDialog event table entries
+////@end CAboutDialog event table entries
+
+END_EVENT_TABLE()
+
+
+/*!
+ * CAboutDialog constructors
+ */
+
+CAboutDialog::CAboutDialog()
+{
+    Init();
+}
+
+CAboutDialog::CAboutDialog( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+{
+    Init();
+    Create(parent, id, caption, pos, size, style);
+}
+
+
+/*!
+ * CAboutDialog creator
+ */
+
+bool CAboutDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+{
+////@begin CAboutDialog creation
+    SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
+    wxDialog::Create( parent, id, caption, pos, size, style );
+
+    CreateControls();
+    if (GetSizer())
+    {
+        GetSizer()->SetSizeHints(this);
+    }
+    Centre();
+////@end CAboutDialog creation
+    return true;
+}
+
+
+/*!
+ * CAboutDialog destructor
+ */
+
+CAboutDialog::~CAboutDialog()
+{
+////@begin CAboutDialog destruction
+////@end CAboutDialog destruction
+}
+
+
+/*!
+ * Member initialisation
+ */
+
+void CAboutDialog::Init()
+{
+////@begin CAboutDialog member initialisation
+////@end CAboutDialog member initialisation
+}
+
+
+/*!
+ * Control creation for CAboutDialog
+ */
+
+void CAboutDialog::CreateControls()
+{    
+////@begin CAboutDialog content construction
+    CAboutDialog* itemDialog1 = this;
+
+    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
+    itemDialog1->SetSizer(itemBoxSizer2);
+
+    wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxStaticBitmap* itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, itemDialog1->GetBitmapResource(wxT("src/gfx/scleaner.png")), wxDefaultPosition, wxSize(24, 24), 0 );
+    itemBoxSizer3->Add(itemStaticBitmap4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _("scleaner 0.40.0 beta 1"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer3->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Copyleft 2007-2008 Frouin Jean-Michel"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxHyperlinkCtrl* itemHyperlinkCtrl7 = new wxHyperlinkCtrl( itemDialog1, ID_HYPERLINKCTRL1, _("Visit website"), _T("http://www.scleaner.fr"), wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
+    itemBoxSizer2->Add(itemHyperlinkCtrl7, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, wxID_STATIC, _("This software used other free software :\nlibbz2 for archive compression.\nlibpthread for threads.\nlibgd for plugins implementation.\ncmake for compilation managment.\n"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTON, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(itemButton9, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+////@end CAboutDialog content construction
+}
+
+
+/*!
+ * Should we show tooltips?
+ */
+
+bool CAboutDialog::ShowToolTips()
+{
+    return true;
+}
+
+/*!
+ * Get bitmap resources
+ */
+
+wxBitmap CAboutDialog::GetBitmapResource( const wxString& name )
+{
+    // Bitmap retrieval
+////@begin CAboutDialog bitmap retrieval
+    wxUnusedVar(name);
+    if (name == _T("src/gfx/scleaner.png"))
+    {
+        wxBitmap bitmap(_T("src/gfx/scleaner.png"), wxBITMAP_TYPE_PNG);
+        return bitmap;
+    }
+    return wxNullBitmap;
+////@end CAboutDialog bitmap retrieval
+}
+
+/*!
+ * Get icon resources
+ */
+
+wxIcon CAboutDialog::GetIconResource( const wxString& name )
+{
+    // Icon retrieval
+////@begin CAboutDialog icon retrieval
+    wxUnusedVar(name);
+    return wxNullIcon;
+////@end CAboutDialog icon retrieval
+}
