@@ -1,12 +1,12 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        aboutdialog.cpp
-// Purpose:     
+// Purpose:
 // Author:      Frouin Jean-Michel
-// Modified by: 
-// Created:     Sun 06 Apr 2008 00:39:31 CEST
-// RCS-ID:      
+// Modified by:
+// Created:     Sun 06 Apr 2008 01:03:17 CEST
+// RCS-ID:
 // Copyright:   Project are under GNU GPL v3
-// Licence:     
+// Licence:
 /////////////////////////////////////////////////////////////////////////////
 
 // For compilers that support precompilation, includes "wx/wx.h".
@@ -23,9 +23,10 @@
 ////@begin includes
 ////@end includes
 
-#include "caboutdialog.h"
+#include "aboutdialog.h"
 
 ////@begin XPM images
+
 ////@end XPM images
 
 
@@ -80,7 +81,7 @@ bool CAboutDialog::Create( wxWindow* parent, wxWindowID id, const wxString& capt
         GetSizer()->SetSizeHints(this);
     }
     Centre();
-////@end CAboutDialog creation
+    ////@end CAboutDialog creation
     return true;
 }
 
@@ -112,7 +113,7 @@ void CAboutDialog::Init()
  */
 
 void CAboutDialog::CreateControls()
-{    
+{
 ////@begin CAboutDialog content construction
     CAboutDialog* itemDialog1 = this;
 

@@ -1048,7 +1048,7 @@
           <string name="proxy-Base class">"wxDialog"</string>
           <string name="proxy-Window kind">"wxDialog"</string>
           <string name="proxy-Implementation filename">"src/interface/aboutdialog.cpp"</string>
-          <string name="proxy-Header filename">"src/interface/caboutdialog.h"</string>
+          <string name="proxy-Header filename">"src/interface/aboutdialog.h"</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"AboutDialog"</string>
           <bool name="proxy-Centre">1</bool>

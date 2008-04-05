@@ -50,6 +50,7 @@
 #include "checklistctrl.h"
 #include "select_dialog.h"
 #include "preferences.h"
+#include "aboutdialog.h"
 
 //App icon
 #include <gfx/scleaner.xpm>
@@ -350,7 +351,9 @@ namespace GUI
     //Menu
     void CMainInterface::OnAbout(wxCommandEvent& WXUNUSED(event))
     {
-        LaunchSplash(3000);
+        //LaunchSplash(3000);
+        CAboutDialog *Dial = new CAboutDialog(NULL, -1, _T("About"), wxDefaultPosition, wxSize(250, 230));
+        Dial->Show(true);
     }
 
 

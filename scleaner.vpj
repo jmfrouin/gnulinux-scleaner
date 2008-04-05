@@ -201,6 +201,8 @@
 			<Folder
 				Name="interface"
 				Filters="">
+				<F N="src/interface/aboutdialog.cpp"/>
+				<F N="src/interface/aboutdialog.h"/>
 				<F N="src/interface/checklistctrl.cpp"/>
 				<F N="src/interface/checklistctrl.h"/>
 				<F N="src/interface/checktreectrl.cpp"/>
