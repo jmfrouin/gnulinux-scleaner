@@ -316,6 +316,18 @@ namespace Engine
 
         CEngine* Engine = CEngine::Instance();
 
+        std::list<std::string>* ExcludeFoldersList = Engine->fSettings->GetExcludedFoldersListPtr();
+        std::list<std::string>::iterator ItExcludeFolders;
+
+        for(ItExcludeFolders = ExcludeFoldersList->begin(); ItExcludeFolders != ExcludeFoldersList->end(); ++ItExcludeFolders)
+        {
+            if(Path.find(*ItExcludeFolders) != std::string::npos)
+            {
+                std::cout << "Skip " << Path << " because I found " << *ItExcludeFolders << '\n';
+                return Ret;                // To tell nftw() to continue
+            }
+        }
+
         IProgressbar* Prog = Engine->GetCallback();
 
         //Update progress bar to show progression :
