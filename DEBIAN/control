@@ -1,22 +1,21 @@
 Source: scleaner
 Section: misc
 Priority: optional
-Maintainer: Jean-Michel Frouin <jmfrouin@gnu.org>, David Paleino <d.paleino@gmail.com> 
-Homepage: http://savannah.nongnu.org/projects/scleaner/
+Maintainer: Jean-Michel Frouin <jmfrouin@gmail.org>, David Paleino <d.paleino@gmail.com>
+Homepage: http://www.scleaner.fr
 Build-Depends: debhelper (>= 5), cmake
 Standards-Version: 3.7.2
 XS-Vcs-Browser: http://svn.savannah.nongnu.org/viewvc/trunk/?root=scleaner
 XS-Vcs-SVN: svn://svn.savannah.nongnu.org/project/scleaner
-
 Package: scleaner
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: simple GNU/Linux desktop cleaner
  scleaner is a small utility which aim is to help the user to clean a GNU/Linux
- desktop. It is able to remove, for example, unwanted logs, orphan or duplicate 
+ desktop. It is able to remove, for example, unwanted logs, orphan or duplicate
  files.
  .
- scleaner is based on a plugin system, which lets you search for files to be 
+ scleaner is based on a plugin system, which lets you search for files to be
  removed and act on these files.
  .
  scleaner can be used both as a normal-user and as root.

@@ -1,8 +1,16 @@
+scleaner (0.40.0) unstable; urgency=low
+
+  * Add threads support.
+  * Exclude folders from scan.
+  * New about box.
+
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Fri, 06 Apr 2008 11:02:16 +0200
+
 scleaner (0.32.0) unstable; urgency=low
 
   * Add a gnome shortcut. scleaner is put under Application;System;
   * David Paleino helps me to fix debian folder ... thanks!
-  * You can now add directories in scan, there are 2 rules to know : 
+  * You can now add directories in scan, there are 2 rules to know :
   * 1) If a folder is added (for example /home/snoogie/git/src) but his parent (for example /home/snoogie/) is already in the folder list, then scleaner won't add it with a wxMessageDialog for user notification.
   * 2) If a parent folder is added (for example /home/snoogie/) but some childs (for example /home/snoogie/git/, /home/snoogie/git2 or /home/snoogie/git/src) are already in the folder list, then scleaner will remove them from folders list.
   * Add CRC32 calc method in CEngine.
@@ -16,7 +24,7 @@ scleaner (0.32.0) unstable; urgency=low
   * Add an empty folder plugin.
   * Plugins can now pre-select founded files.
 
- -- Jean-Michel Frouin <jmfrouin@gnu.org>  Fri, 30 Sep 2007 23:44:26 +0200
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Fri, 30 Sep 2007 23:44:26 +0200
 
 scleaner (0.31.0) unstable; urgency=low
 
@@ -25,19 +33,19 @@ scleaner (0.31.0) unstable; urgency=low
   * Code cleanup.
   * French version.
 
- -- Jean-Michel Frouin <jmfrouin@gnu.org>  Fri, 14 Sep 2007 22:19:26 +0200
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Fri, 14 Sep 2007 22:19:26 +0200
 
 scleaner (0.30.5) unstable; urgency=low
 
   * 2 input plugins & 1 output plugin are now delivered with scleaner.
 
- -- Jean-Michel Frouin <jmfrouin@gnu.org>  Fri, 14 Sep 2007 22:19:26 +0200
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Fri, 14 Sep 2007 22:19:26 +0200
 
 scleaner (0.30.4) unstable; urgency=low
 
   * Plugins are now compiled as separated debian package.
 
- -- Jean-Michel Frouin <jmfrouin@gnu.org>  Sat, 11 Sep 2007 18:25:26 +0200
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat, 11 Sep 2007 18:25:26 +0200
 
 scleaner (0.30.3) unstable; urgency=low
 
@@ -45,23 +53,23 @@ scleaner (0.30.3) unstable; urgency=low
   * html & splash screen in /usr/share/scleaner.
   * Build plugins as separated package.
 
- -- Jean-Michel Frouin <jmfrouin@gnu.org>  Sat, 10 Sep 2007 22:30:03 +0200
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat, 10 Sep 2007 22:30:03 +0200
 
 scleaner (0.30.2) unstable; urgency=low
 
   * Correct plugins & html paths.
 
- -- Jean-Michel Frouin <jmfrouin@gnu.org>  Sat,  8 Sep 2007 22:53:23 +0200
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat,  8 Sep 2007 22:53:23 +0200
 
 scleaner (0.30.1) unstable; urgency=low
 
   * Correct a bug in dependencies. Since all wxWidgets libraries on Ubuntu are built in Unicode mode, some changes are need in source code.
 
- -- Jean-Michel Frouin <jmfrouin@gnu.org>  Sat,  8 Sep 2007 20:44:03 +0200
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat,  8 Sep 2007 20:44:03 +0200
 
 scleaner (0.30.0) unstable; urgency=low
 
   * Initial release
 
- -- Jean-Michel Frouin <jmfrouin@gnu.org>  Sat,  8 Sep 2007 19:32:45 +0200
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat,  8 Sep 2007 19:32:45 +0200
 

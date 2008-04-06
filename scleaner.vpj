@@ -186,6 +186,17 @@
 			Name="Source Files"
 			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl">
 			<Folder
+				Name="DEBIAN"
+				Filters="">
+				<F N="DEBIAN/changelog"/>
+				<F N="DEBIAN/compat"/>
+				<F N="DEBIAN/control"/>
+				<F N="DEBIAN/copyright"/>
+				<F N="DEBIAN/dirs"/>
+				<F N="DEBIAN/postinst"/>
+				<F N="DEBIAN/rules"/>
+			</Folder>
+			<Folder
 				Name="engine"
 				Filters="">
 				<F N="src/engine/CMakeLists.txt"/>
@@ -348,6 +359,7 @@
 				<F N="src/tools/thread.h"/>
 				<F N="src/tools/types.h"/>
 			</Folder>
+			<F N="Changelog"/>
 			<F N="src/CMakeLists.txt"/>
 			<F N="src/config.h.cmake"/>
 			<F N="src/def.h"/>
