@@ -18,27 +18,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
 #include "mutex.h"
 
 namespace Tools
 {
   CMutex::CMutex()
   {
-    pthread_mutex_init(&fMutex, 0);
+    int Err = pthread_mutex_init(&fMutex, 0);
+    std::cout << "CMutex " << Err << '\n';
   }
 
   CMutex::~CMutex()
   {
-        pthread_mutex_destroy(&fMutex);
+    int Err = pthread_mutex_destroy(&fMutex);
+    std::cout << "~CMutex " << Err << '\n';
   }
 
   void CMutex::Lock()
   {
-    pthread_mutex_lock(&fMutex);
+    int Err = pthread_mutex_lock(&fMutex);
+    std::cout << "Lock " << Err << '\n';
   }
 
   void CMutex::UnLock()
   {
-    pthread_mutex_unlock(&fMutex);
+    int Err = pthread_mutex_unlock(&fMutex);
+    std::cout << "Unlock " << Err << '\n';
   }
 }

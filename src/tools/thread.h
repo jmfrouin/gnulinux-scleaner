@@ -72,7 +72,7 @@ namespace Tools
             static const int GetMax() { return fMax; }
             static void SetMax(const int tmax) { fMax = tmax; }
 
-        private:
+        protected:
             static void* __Run(void* thread);
 
         private:
@@ -82,9 +82,6 @@ namespace Tools
             CMutex fLock;
             volatile bool fRunning;
     };
-
-    int IThread::fCount = 0;
-    int IThread::fMax = 16;
 }
 #endif                           //__THREAD_H__
 /* vi:set ts=4: */

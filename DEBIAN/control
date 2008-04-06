@@ -3,10 +3,11 @@ Section: misc
 Priority: optional
 Maintainer: Jean-Michel Frouin <jmfrouin@gmail.org>, David Paleino <d.paleino@gmail.com>
 Homepage: http://www.scleaner.fr
-Build-Depends: debhelper (>= 5), cmake
+Build-Depends: debhelper (>= 5), libwxbase2.8-0-dev,  libwxgtk2.8-0-dev, cmake
 Standards-Version: 3.7.2
 XS-Vcs-Browser: http://svn.savannah.nongnu.org/viewvc/trunk/?root=scleaner
 XS-Vcs-SVN: svn://svn.savannah.nongnu.org/project/scleaner
+
 Package: scleaner
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}

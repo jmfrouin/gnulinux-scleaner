@@ -123,7 +123,7 @@ void CAboutDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxStaticBitmap* itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, itemDialog1->GetBitmapResource(wxT("src/gfx/scleaner.png")), wxDefaultPosition, wxSize(24, 24), 0 );
+    wxStaticBitmap* itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, itemDialog1->GetBitmapResource(wxT("/usr/share/pixmaps/scleaner.png")), wxDefaultPosition, wxSize(24, 24), 0 );
     itemBoxSizer3->Add(itemStaticBitmap4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _("scleaner 0.40.0 beta 1"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -135,7 +135,7 @@ void CAboutDialog::CreateControls()
     wxHyperlinkCtrl* itemHyperlinkCtrl7 = new wxHyperlinkCtrl( itemDialog1, ID_HYPERLINKCTRL1, _("Visit website"), _T("http://www.scleaner.fr"), wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
     itemBoxSizer2->Add(itemHyperlinkCtrl7, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, wxID_STATIC, _("This software used other free software :\nlibbz2 for archive compression.\nlibpthread for threads.\nlibgd for plugins implementation.\ncmake for compilation managment.\n"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, wxID_STATIC, _("This software used other free software :\nwxWidgets for interface.\nlibbz2 for archive compression.\nlibpthread for threads.\nlibgd for plugins implementation.\ncmake for compilation managment.\n"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTON, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );

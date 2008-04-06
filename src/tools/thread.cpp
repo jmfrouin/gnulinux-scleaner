@@ -21,6 +21,10 @@
 #include <iostream>
 #include "thread.h"
 
+
+int Tools::IThread::fCount = 0;
+int Tools::IThread::fMax = 16;
+
 namespace Tools
 {
     IThread::IThread():
@@ -40,20 +44,28 @@ namespace Tools
     void IThread::Start()
     {
         if(fCount < fMax)
-        pthread_create(&fThread, 0, IThread::__Run, this);
+        {
+            int Err = pthread_create(&fThread, 0, IThread::__Run, this);
+            std::cout << "Start " << Err << '\n';
+        }
     }
 
 
     void* IThread::__Run(void* thread)
     {
-        IThread* T = (IThread*)thread;
-        T->fLock.Lock();
-        T->fRunning = true;
-        fCount++;
-        T->Run();
-        fCount--;
-        T->fRunning = false;
-        T->fLock.UnLock();
+        std::cout << "__Run\n";
+        //IThread* T = (IThread*)thread;
+        std::cout << "__Run2\n";
+        //T->fLock.Lock();
+        //T->fRunning = true;
+        //T->fCount++;
+        std::cout << "__Run3\n";
+        //T->Run();
+        std::cout << "__Run4\n";
+        //T->fCount--;
+        //T->fRunning = false;
+        //T->fLock.UnLock();
+        std::cout << "__Run5\n";
         return 0;
     }
 
