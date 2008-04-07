@@ -132,13 +132,17 @@ void MainInterface::CreateControls()
 
     itemAuiNotebook7->AddPage(itemListCtrl8, _("Tab"), false);
 
-    wxListCtrl* itemListCtrl9 = new wxListCtrl( itemAuiNotebook7, ID_LISTCTRL2, wxDefaultPosition, wxSize(100, 100), wxLC_REPORT );
+    wxTreeCtrl* itemTreeCtrl9 = new wxTreeCtrl( itemAuiNotebook7, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
 
-    itemAuiNotebook7->AddPage(itemListCtrl9, _("Tab"), false);
+    itemAuiNotebook7->AddPage(itemTreeCtrl9, _("Tab"), false);
 
-    wxStatusBar* itemStatusBar10 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar10->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar10);
+    wxListCtrl* itemListCtrl10 = new wxListCtrl( itemAuiNotebook7, ID_LISTCTRL2, wxDefaultPosition, wxSize(100, 100), wxLC_REPORT );
+
+    itemAuiNotebook7->AddPage(itemListCtrl10, _("Tab"), false);
+
+    wxStatusBar* itemStatusBar11 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar11->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar11);
 
 ////@end MainInterface content construction
 }

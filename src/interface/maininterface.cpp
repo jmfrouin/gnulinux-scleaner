@@ -48,6 +48,7 @@
 #include <wx/statline.h>
 #include "maininterface.h"
 #include "checklistctrl.h"
+#include "checktreectrl.h"
 #include "select_dialog.h"
 #include "preferences.h"
 #include "aboutdialog.h"
@@ -263,6 +264,23 @@ namespace GUI
         fInputPlugins->SetColumnWidth(1, wxLIST_AUTOSIZE);
 
         fAui->AddPage(fInputPlugins, wxString(i8n("Input plugins"), wxConvUTF8), false);
+
+        wxCheckTreeCtrl* fTest = new wxCheckTreeCtrl(fAui, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+        wxString text;
+        wxTreeItemId temp = fTest->GetRootItem();
+          wxTreeItemId rootId = fTest->AddRoot(wxT("Root"),
+                                  0, 0);
+        for(int i=10; --i;)
+        {
+            text.Printf(wxT("Item #%d"), i);
+            std::cout << i << "\n";
+            wxTreeItemId temp2 = fTest->AddCheckedItem(rootId, text, true);
+            for(int j=10; --j;)
+            {
+                //temp.AddCheckedItem(temp2, text, true);
+            }
+        }
+        fAui->AddPage(fTest, wxString(i8n("Files result new"), wxConvUTF8), false);
 
         //Output plugins
         wxString Output[1];
