@@ -128,17 +128,43 @@ void MainInterface::CreateControls()
 
     wxAuiNotebook* itemAuiNotebook7 = new wxAuiNotebook( itemFrame1, ID_AUINOTEBOOK1, wxDefaultPosition, wxDefaultSize, wxAUI_NB_DEFAULT_STYLE );
 
-    wxListCtrl* itemListCtrl8 = new wxListCtrl( itemAuiNotebook7, ID_LISTCTRL1, wxDefaultPosition, wxSize(100, 100), wxLC_REPORT );
+    wxListCtrl* itemListCtrl8 = new wxListCtrl( itemAuiNotebook7, ID_LISTCTRL2, wxDefaultPosition, wxSize(100, 100), wxLC_REPORT );
 
     itemAuiNotebook7->AddPage(itemListCtrl8, _("Tab"), false);
 
-    wxListCtrl* itemListCtrl9 = new wxListCtrl( itemAuiNotebook7, ID_LISTCTRL2, wxDefaultPosition, wxSize(100, 100), wxLC_REPORT );
+    wxSplitterWindow* itemSplitterWindow9 = new wxSplitterWindow( itemAuiNotebook7, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+    itemSplitterWindow9->SetMinimumPaneSize(0);
 
-    itemAuiNotebook7->AddPage(itemListCtrl9, _("Tab"), false);
+    wxTreeCtrl* itemTreeCtrl10 = new wxTreeCtrl( itemSplitterWindow9, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
 
-    wxStatusBar* itemStatusBar10 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar10->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar10);
+    wxPanel* itemPanel11 = new wxPanel( itemSplitterWindow9, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizer12 = new wxBoxSizer(wxVERTICAL);
+    itemPanel11->SetSizer(itemBoxSizer12);
+
+    wxButton* itemButton13 = new wxButton( itemPanel11, ID_BUTTON1, _("Button"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer12->Add(itemButton13, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxButton* itemButton14 = new wxButton( itemPanel11, ID_BUTTON2, _("Button"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer12->Add(itemButton14, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxButton* itemButton15 = new wxButton( itemPanel11, ID_BUTTON3, _("Button"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer12->Add(itemButton15, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxButton* itemButton16 = new wxButton( itemPanel11, ID_BUTTON4, _("Button"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer12->Add(itemButton16, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxButton* itemButton17 = new wxButton( itemPanel11, ID_BUTTON5, _("Button"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer12->Add(itemButton17, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxButton* itemButton18 = new wxButton( itemPanel11, ID_BUTTON6, _("Button"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer12->Add(itemButton18, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    itemSplitterWindow9->SplitVertically(itemTreeCtrl10, itemPanel11, 50);
+    itemAuiNotebook7->AddPage(itemSplitterWindow9, _("Tab"), false);
+
+    wxStatusBar* itemStatusBar19 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar19->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar19);
 
 ////@end MainInterface content construction
 }
