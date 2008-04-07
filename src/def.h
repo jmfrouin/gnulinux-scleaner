@@ -28,11 +28,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-<<<<<<< HEAD:src/def.h
-#define BUILD 330
-=======
-#define BUILD 327
->>>>>>> 57118111bd7d37336525ad1269306620213d5d83:src/def.h
+#define BUILD 331
 
 //Bash Colors
 #define VERT "\e[0;32m"
