@@ -132,18 +132,35 @@ void MainInterface::CreateControls()
 
     itemAuiNotebook7->AddPage(itemListCtrl8, _("Tab"), false);
 
+<<<<<<< HEAD:maininterface.cpp
     wxSplitterWindow* itemSplitterWindow9 = new wxSplitterWindow( itemAuiNotebook7, ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
     itemSplitterWindow9->SetMinimumPaneSize(0);
+=======
+    wxTreeCtrl* itemTreeCtrl9 = new wxTreeCtrl( itemAuiNotebook7, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
+>>>>>>> 57118111bd7d37336525ad1269306620213d5d83:maininterface.cpp
 
+<<<<<<< HEAD:maininterface.cpp
     wxTreeCtrl* itemTreeCtrl10 = new wxTreeCtrl( itemSplitterWindow9, ID_TREECTRL1, wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE );
+=======
+    itemAuiNotebook7->AddPage(itemTreeCtrl9, _("Tab"), false);
+>>>>>>> 57118111bd7d37336525ad1269306620213d5d83:maininterface.cpp
 
+<<<<<<< HEAD:maininterface.cpp
     wxPanel* itemPanel11 = new wxPanel( itemSplitterWindow9, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer12 = new wxBoxSizer(wxVERTICAL);
     itemPanel11->SetSizer(itemBoxSizer12);
+=======
+    wxListCtrl* itemListCtrl10 = new wxListCtrl( itemAuiNotebook7, ID_LISTCTRL2, wxDefaultPosition, wxSize(100, 100), wxLC_REPORT );
+>>>>>>> 57118111bd7d37336525ad1269306620213d5d83:maininterface.cpp
 
+<<<<<<< HEAD:maininterface.cpp
     wxButton* itemButton13 = new wxButton( itemPanel11, ID_BUTTON1, _("Button"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer12->Add(itemButton13, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+=======
+    itemAuiNotebook7->AddPage(itemListCtrl10, _("Tab"), false);
+>>>>>>> 57118111bd7d37336525ad1269306620213d5d83:maininterface.cpp
 
+<<<<<<< HEAD:maininterface.cpp
     wxButton* itemButton14 = new wxButton( itemPanel11, ID_BUTTON2, _("Button"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer12->Add(itemButton14, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -165,6 +182,11 @@ void MainInterface::CreateControls()
     wxStatusBar* itemStatusBar19 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
     itemStatusBar19->SetFieldsCount(2);
     itemFrame1->SetStatusBar(itemStatusBar19);
+=======
+    wxStatusBar* itemStatusBar11 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar11->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar11);
+>>>>>>> 57118111bd7d37336525ad1269306620213d5d83:maininterface.cpp
 
 ////@end MainInterface content construction
 }

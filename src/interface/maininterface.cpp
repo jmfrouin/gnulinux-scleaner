@@ -280,7 +280,13 @@ namespace GUI
         wxTreeItemId temp2 = fTest->AddCheckedItem(rootId, text, true);
         for(int j=10; --j;)
         {
-            //temp.AddCheckedItem(temp2, text, true);
+            text.Printf(wxT("Item #%d"), i);
+            std::cout << i << "\n";
+            wxTreeItemId temp2 = fTest->AddCheckedItem(rootId, text, true);
+            for(int j=10; --j;)
+            {
+                //temp.AddCheckedItem(temp2, text, true);
+            }
         }
     }
 

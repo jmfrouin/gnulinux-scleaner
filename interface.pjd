@@ -615,6 +615,90 @@
               <string name="proxy-Custom arguments">""</string>
               <string name="proxy-Custom ctor arguments">""</string>
               <string name="proxy-Event sources">""</string>
+<<<<<<< HEAD:interface.pjd
+=======
+            </document>
+            <document>
+              <string name="title">"wxTreeCtrl: ID_TREECTRL1"</string>
+              <string name="type">"dialog-control-document"</string>
+              <string name="filename">""</string>
+              <string name="icon-name">"treectrl"</string>
+              <long name="is-transient">0</long>
+              <long name="owns-file">1</long>
+              <long name="title-mode">0</long>
+              <long name="locked">0</long>
+              <string name="created">"7/4/2008"</string>
+              <string name="proxy-type">"wbTreeCtrlProxy"</string>
+              <string name="proxy-Id name">"ID_TREECTRL1"</string>
+              <long name="proxy-Id value">10012</long>
+              <string name="proxy-Name">""</string>
+              <string name="proxy-Class">"wxTreeCtrl"</string>
+              <string name="proxy-Base class">"wxTreeCtrl"</string>
+              <bool name="proxy-External implementation">1</bool>
+              <bool name="proxy-Separate files">0</bool>
+              <string name="proxy-Implementation filename">""</string>
+              <string name="proxy-Header filename">""</string>
+              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Tab label">"Tab"</string>
+              <string name="proxy-Tab icon">""</string>
+              <string name="proxy-Help text">""</string>
+              <string name="proxy-Tooltip text">""</string>
+              <string name="proxy-Background colour">""</string>
+              <string name="proxy-Foreground colour">""</string>
+              <string name="proxy-Font">""</string>
+              <bool name="proxy-Hidden">0</bool>
+              <bool name="proxy-Enabled">1</bool>
+              <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
+              <string name="proxy-Data variable">""</string>
+              <string name="proxy-Data validator">""</string>
+              <string name="proxy-Data source">""</string>
+              <string name="proxy-Data class name">""</string>
+              <string name="proxy-Data class implementation filename">""</string>
+              <string name="proxy-Data class header filename">""</string>
+              <string name="proxy-Data class manager window">""</string>
+              <bool name="proxy-wxTR_EDIT_LABELS">0</bool>
+              <bool name="proxy-wxTR_NO_BUTTONS">0</bool>
+              <bool name="proxy-wxTR_HAS_BUTTONS ">0</bool>
+              <bool name="proxy-wxTR_TWIST_BUTTONS">0</bool>
+              <bool name="proxy-wxTR_NO_LINES">0</bool>
+              <bool name="proxy-wxTR_FULL_ROW_HIGHLIGHT">0</bool>
+              <bool name="proxy-wxTR_LINES_AT_ROOT">0</bool>
+              <bool name="proxy-wxTR_HIDE_ROOT">0</bool>
+              <bool name="proxy-wxTR_ROW_LINES">0</bool>
+              <bool name="proxy-wxTR_HAS_VARIABLE_ROW_HEIGHT">0</bool>
+              <bool name="proxy-wxTR_SINGLE">1</bool>
+              <bool name="proxy-wxTR_MULTIPLE">0</bool>
+              <bool name="proxy-wxTR_EXTENDED">0</bool>
+              <bool name="proxy-wxNO_BORDER">0</bool>
+              <bool name="proxy-wxSIMPLE_BORDER">0</bool>
+              <bool name="proxy-wxDOUBLE_BORDER">0</bool>
+              <bool name="proxy-wxSUNKEN_BORDER">0</bool>
+              <bool name="proxy-wxRAISED_BORDER">0</bool>
+              <bool name="proxy-wxSTATIC_BORDER">0</bool>
+              <bool name="proxy-wxWANTS_CHARS">0</bool>
+              <bool name="proxy-wxNO_FULL_REPAINT_ON_RESIZE">0</bool>
+              <bool name="proxy-wxFULL_REPAINT_ON_RESIZE">0</bool>
+              <bool name="proxy-wxCLIP_CHILDREN">0</bool>
+              <string name="proxy-Custom styles">""</string>
+              <long name="proxy-X">-1</long>
+              <long name="proxy-Y">-1</long>
+              <long name="proxy-Width">100</long>
+              <long name="proxy-Height">100</long>
+              <string name="proxy-AlignH">"Centre"</string>
+              <string name="proxy-AlignV">"Centre"</string>
+              <long name="proxy-Stretch factor">0</long>
+              <long name="proxy-Border">5</long>
+              <bool name="proxy-wxLEFT">1</bool>
+              <bool name="proxy-wxRIGHT">1</bool>
+              <bool name="proxy-wxTOP">1</bool>
+              <bool name="proxy-wxBOTTOM">1</bool>
+              <bool name="proxy-wxSHAPED">0</bool>
+              <bool name="proxy-wxADJUST_MINSIZE">0</bool>
+              <bool name="proxy-wxFIXED_MINSIZE">0</bool>
+              <string name="proxy-Custom arguments">""</string>
+              <string name="proxy-Custom ctor arguments">""</string>
+              <string name="proxy-Event sources">""</string>
+>>>>>>> 57118111bd7d37336525ad1269306620213d5d83:interface.pjd
             </document>
             <document>
               <string name="title">"wxSplitterWindow: ID_SPLITTERWINDOW1"</string>
@@ -639,10 +723,13 @@
               <string name="proxy-Member variable name">""</string>
               <string name="proxy-Tab label">"Tab"</string>
               <string name="proxy-Tab icon">""</string>
+<<<<<<< HEAD:interface.pjd
               <string name="proxy-Orientation">"Vertical"</string>
               <long name="proxy-Sash position">50</long>
               <long name="proxy-Minimum pane size">0</long>
               <double name="proxy-Gravity">0</double>
+=======
+>>>>>>> 57118111bd7d37336525ad1269306620213d5d83:interface.pjd
               <string name="proxy-Help text">""</string>
               <string name="proxy-Tooltip text">""</string>
               <string name="proxy-Background colour">""</string>
@@ -693,6 +780,7 @@
               <string name="proxy-Custom arguments">""</string>
               <string name="proxy-Custom ctor arguments">""</string>
               <string name="proxy-Event sources">""</string>
+<<<<<<< HEAD:interface.pjd
               <document>
                 <string name="title">"wxTreeCtrl: ID_TREECTRL1"</string>
                 <string name="type">"dialog-control-document"</string>
@@ -1270,6 +1358,8 @@
                   </document>
                 </document>
               </document>
+=======
+>>>>>>> 57118111bd7d37336525ad1269306620213d5d83:interface.pjd
             </document>
           </document>
           <document>
