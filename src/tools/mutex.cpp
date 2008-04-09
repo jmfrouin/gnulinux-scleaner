@@ -25,25 +25,21 @@ namespace Tools
 {
   CMutex::CMutex()
   {
-    int Err = pthread_mutex_init(&fMutex, 0);
-    std::cout << "CMutex " << Err << '\n';
+    pthread_mutex_init(&fMutex, 0);
   }
 
   CMutex::~CMutex()
   {
-    int Err = pthread_mutex_destroy(&fMutex);
-    std::cout << "~CMutex " << Err << '\n';
+    pthread_mutex_destroy(&fMutex);
   }
 
   void CMutex::Lock()
   {
-    int Err = pthread_mutex_lock(&fMutex);
-    std::cout << "Lock " << Err << '\n';
+    pthread_mutex_lock(&fMutex);
   }
 
   void CMutex::UnLock()
   {
-    int Err = pthread_mutex_unlock(&fMutex);
-    std::cout << "Unlock " << Err << '\n';
+    pthread_mutex_unlock(&fMutex);
   }
 }

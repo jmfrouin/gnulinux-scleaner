@@ -36,7 +36,6 @@ namespace Tools
 
     IThread::~IThread()
     {
-        std::cout << "Waiting end of thread ..." << '\n';
         Stop();
     }
 
@@ -44,28 +43,20 @@ namespace Tools
     void IThread::Start()
     {
         if(fCount < fMax)
-        {
-            int Err = pthread_create(&fThread, 0, IThread::__Run, this);
-            std::cout << "Start " << Err << '\n';
-        }
+            pthread_create(&fThread, 0, IThread::__Run, this);
     }
 
 
     void* IThread::__Run(void* thread)
     {
-        std::cout << "__Run\n";
-        //IThread* T = (IThread*)thread;
-        std::cout << "__Run2\n";
-        //T->fLock.Lock();
-        //T->fRunning = true;
-        //T->fCount++;
-        std::cout << "__Run3\n";
-        //T->Run();
-        std::cout << "__Run4\n";
-        //T->fCount--;
-        //T->fRunning = false;
-        //T->fLock.UnLock();
-        std::cout << "__Run5\n";
+        IThread* T = (IThread*)thread;
+        T->fLock.Lock();
+        T->fRunning = true;
+        T->fCount++;
+        T->Run();
+        T->fCount--;
+        T->fRunning = false;
+        T->fLock.UnLock();
         return 0;
     }
 

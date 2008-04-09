@@ -72,10 +72,10 @@ namespace Tools
             static const int GetMax() { return fMax; }
             static void SetMax(const int tmax) { fMax = tmax; }
 
-        protected:
+				protected:
             static void* __Run(void* thread);
 
-        private:
+        protected:
             Thread fThread;
             static int fCount;
             static int fMax;
