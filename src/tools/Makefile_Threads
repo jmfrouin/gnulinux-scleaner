@@ -1,0 +1,17 @@
+all: testthread
+
+testthread: thread.o mutex.o testthread.o
+	g++ -o $@ $^ -lpthread
+
+thread.o: thread.cpp
+	g++ -c $^
+
+mutex.o: mutex.cpp
+	g++ -c $^
+
+testthread.o: testthread.cpp
+	g++ -c $^
+
+clean:
+	rm *.o
+	rm -f testthread
