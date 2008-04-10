@@ -412,13 +412,13 @@ namespace GUI
             ItemCol.SetAlign(wxLIST_FORMAT_RIGHT);
             FilesList->InsertColumn(2, ItemCol);
 
-            ItemCol.SetText(wxString(i8n("Plugins"), wxConvUTF8));
+            /*ItemCol.SetText(wxString(i8n("Plugins"), wxConvUTF8));
             ItemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-            FilesList->InsertColumn(3, ItemCol);
+            FilesList->InsertColumn(3, ItemCol);*/
 
             ItemCol.SetText(wxString(i8n("CRC32"), wxConvUTF8));
             ItemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-            FilesList->InsertColumn(4, ItemCol);
+            FilesList->InsertColumn(3, ItemCol);
             // to speed up inserting, we hide the control temporarily
             FilesList->Hide();
 
@@ -433,6 +433,7 @@ namespace GUI
                 //Insert file size.
                 struct stat Info;
 
+                FilesList->SetItem(LongTmp, 2, String);
                 //Try to stat file.
                 if(stat(FileName.c_str(), &Info) == -1)
                 {
@@ -453,7 +454,7 @@ namespace GUI
                         Engine::CEngine::CalcCRC32(FileName, CRC);
                         std::stringstream CRC2;
                         CRC2 << CRC;
-                        FilesList->SetItem(LongTmp, 2, wxString(std::string(CRC2.str()).c_str(), wxConvUTF8));
+                        FilesList->SetItem(LongTmp, 3, wxString(std::string(CRC2.str()).c_str(), wxConvUTF8));
                         fEngine->AddFileInfo(FileName, CRC);
                     }
                     else
@@ -468,6 +469,8 @@ namespace GUI
             FilesList->SetColumnWidth(0, wxLIST_AUTOSIZE);
             FilesList->SetColumnWidth(1, wxLIST_AUTOSIZE);
             FilesList->SetColumnWidth(2, wxLIST_AUTOSIZE);
+            FilesList->SetColumnWidth(3, wxLIST_AUTOSIZE);
+            FilesList->SetColumnWidth(4, wxLIST_AUTOSIZE);
 
             FilesList->Show();
             fFoundFiles->AddPage(FilesList, String, true);
