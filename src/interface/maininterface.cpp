@@ -265,47 +265,6 @@ namespace GUI
 
         fAui->AddPage(fInputPlugins, wxString(i8n("Input plugins"), wxConvUTF8), false);
 
-        wxSplitterWindow* itemSplitterWindow9 = new wxSplitterWindow(fAui, 0, wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
-    itemSplitterWindow9->SetMinimumPaneSize(0);
-
-    wxCheckTreeCtrl* fTest = new wxCheckTreeCtrl(itemSplitterWindow9, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
-    wxString text;
-    wxTreeItemId temp = fTest->GetRootItem();
-      wxTreeItemId rootId = fTest->AddRoot(wxT("/home/snoogie/"),
-                              0, 0);
-    for(int i=10; --i;)
-    {
-        text.Printf(wxT("test#%d.txt, 0B, located by null files size plugin"), i);
-        std::cout << i << "\n";
-        wxTreeItemId temp2 = fTest->AddCheckedItem(rootId, text, true);
-        for(int j=10; --j;)
-        {
-            text.Printf(wxT("Item #%d"), i);
-            std::cout << i << "\n";
-            wxTreeItemId temp2 = fTest->AddCheckedItem(rootId, text, true);
-            for(int j=10; --j;)
-            {
-                //temp.AddCheckedItem(temp2, text, true);
-            }
-        }
-    }
-
-    wxPanel* itemPanel11 = new wxPanel( itemSplitterWindow9, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
-    wxBoxSizer* itemBoxSizer12 = new wxBoxSizer(wxVERTICAL);
-    itemPanel11->SetSizer(itemBoxSizer12);
-
-    wxButton* itemButton13 = new wxButton( itemPanel11, 0, _("Order by input plugins"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer12->Add(itemButton13, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-
-    wxButton* itemButton14 = new wxButton( itemPanel11, 0, _("Order by size"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer12->Add(itemButton14, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-
-    wxButton* itemButton15 = new wxButton( itemPanel11, 0, _("Order by ... what else ?"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer12->Add(itemButton15, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-
-    itemSplitterWindow9->SplitVertically(fTest, itemPanel11, 50);
-    fAui->AddPage(itemSplitterWindow9, _("Tab"), false);
-
         //Output plugins
         wxString Output[1];
         Output[0] = _("tbz");
@@ -449,10 +408,17 @@ namespace GUI
             ItemCol.SetAlign(wxLIST_FORMAT_CENTRE);
             FilesList->InsertColumn(1, ItemCol);
 
-            ItemCol.SetText(wxString(i8n("CRC32"), wxConvUTF8));
+            ItemCol.SetText(wxString(i8n("Folders"), wxConvUTF8));
             ItemCol.SetAlign(wxLIST_FORMAT_RIGHT);
             FilesList->InsertColumn(2, ItemCol);
 
+            /*ItemCol.SetText(wxString(i8n("Plugins"), wxConvUTF8));
+            ItemCol.SetAlign(wxLIST_FORMAT_RIGHT);
+            FilesList->InsertColumn(3, ItemCol);*/
+
+            ItemCol.SetText(wxString(i8n("CRC32"), wxConvUTF8));
+            ItemCol.SetAlign(wxLIST_FORMAT_RIGHT);
+            FilesList->InsertColumn(3, ItemCol);
             // to speed up inserting, we hide the control temporarily
             FilesList->Hide();
 
@@ -467,6 +433,7 @@ namespace GUI
                 //Insert file size.
                 struct stat Info;
 
+                FilesList->SetItem(LongTmp, 2, String);
                 //Try to stat file.
                 if(stat(FileName.c_str(), &Info) == -1)
                 {
@@ -487,7 +454,7 @@ namespace GUI
                         Engine::CEngine::CalcCRC32(FileName, CRC);
                         std::stringstream CRC2;
                         CRC2 << CRC;
-                        FilesList->SetItem(LongTmp, 2, wxString(std::string(CRC2.str()).c_str(), wxConvUTF8));
+                        FilesList->SetItem(LongTmp, 3, wxString(std::string(CRC2.str()).c_str(), wxConvUTF8));
                         fEngine->AddFileInfo(FileName, CRC);
                     }
                     else
@@ -502,6 +469,8 @@ namespace GUI
             FilesList->SetColumnWidth(0, wxLIST_AUTOSIZE);
             FilesList->SetColumnWidth(1, wxLIST_AUTOSIZE);
             FilesList->SetColumnWidth(2, wxLIST_AUTOSIZE);
+            FilesList->SetColumnWidth(3, wxLIST_AUTOSIZE);
+            FilesList->SetColumnWidth(4, wxLIST_AUTOSIZE);
 
             FilesList->Show();
             fFoundFiles->AddPage(FilesList, String, true);
