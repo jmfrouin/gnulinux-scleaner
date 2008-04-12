@@ -132,7 +132,8 @@ namespace GUI
 
     void wxCheckListCtrl::OnContextMenu(wxContextMenuEvent& event)
     {
-        wxPoint point = event.GetPosition();
+        /*wxPoint point = event.GetPosition();
+        //std::cout << "Right click detected\n";
         // If from keyboard
         if (point.x == -1 && point.y == -1) {
             wxSize size = GetSize();
@@ -141,17 +142,17 @@ namespace GUI
         } else {
             point = ScreenToClient(point);
         }
-        ShowContextMenu(point);
+        ShowContextMenu(point);*/
     }
 
 
     void wxCheckListCtrl::ShowContextMenu(const wxPoint& pos)
     {
-        //wxMenu menu;
+        wxMenu menu;
 
-        //menu.Append(ID_FOLDER_ADD, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
-        //menu.Append(ID_FOLDER_DEL, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
+        menu.Append(0, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
+        menu.Append(0, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
 
-        //PopupMenu(&menu, pos.x, pos.y);
+        PopupMenu(&menu, pos.x, pos.y);
     }
 }

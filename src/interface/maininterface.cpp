@@ -48,7 +48,7 @@
 #include <wx/statline.h>
 #include "maininterface.h"
 #include "checklistctrl.h"
-#include "checktreectrl.h"
+#include "result_checklistctrl.h"
 #include "select_dialog.h"
 #include "preferences.h"
 #include "aboutdialog.h"
@@ -85,12 +85,15 @@ namespace GUI
     BEGIN_EVENT_TABLE( CMainInterface, wxFrame )
 
     EVT_NOTEBOOK_PAGE_CHANGED(ID_NOTEBOOK, CMainInterface::OnNotebook)
+
+    //Menu
     EVT_MENU(ID_SCAN, CMainInterface::OnScan)
     EVT_MENU(ID_ABOUT, CMainInterface::OnAbout)
     EVT_MENU(ID_PREFS, CMainInterface::OnPrefs)
     EVT_MENU(wxID_EXIT, CMainInterface::OnQuit)
     EVT_MENU(ID_PROCESS, CMainInterface::OnProcess)
     EVT_MENU(ID_SELECT, CMainInterface::OnSelect)
+
     //ListBook
     EVT_BUTTON(ID_FOLDER_INC_ADD, CMainInterface::OnFolderIncAdd)
     EVT_BUTTON(ID_FOLDER_INC_DEL, CMainInterface::OnFolderIncDel)
@@ -396,7 +399,7 @@ namespace GUI
             #if defined DEBUG
             std::cout << i8n("[DBG] Size = ") << List.size() << '\n';
             #endif
-            wxCheckListCtrl* FilesList = new wxCheckListCtrl(fFoundFiles, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+            ResultCheckListCtrl* FilesList = new ResultCheckListCtrl(fFoundFiles, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 
             //Setting header:
             wxListItem ItemCol;

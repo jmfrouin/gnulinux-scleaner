@@ -27,43 +27,39 @@
 
 namespace GUI
 {
-	/*!
-	 * wxCheckListCtrl
-	 * The options hierarchy viewer.
-	 */
-	
-	class wxCheckListCtrl: public wxListCtrl
-	{
-		DECLARE_CLASS(wxCheckListCtrl)
-			public:
-			wxCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition,
-				const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
-			virtual ~wxCheckListCtrl();
-	
-			//// Event handlers
-			void OnMouseEvent(wxMouseEvent& event);
-			void OnKeyDown(wxKeyEvent& event);
-	
-			//// Accessors
-	
-			/*!
-			*@brief Load the icons
-			*/
-			bool LoadIcons();
-	
-			/// Set the appropriate icon
-			bool SetIcon(long& item);
-			
-			/*!
-			*@brief Callbacks
-			*/
-			void OnContextMenu(wxContextMenuEvent& event);
-			void ShowContextMenu(const wxPoint& pos);
-	
-		protected:
-			wxImageList*        m_imageList;
-	
-			DECLARE_EVENT_TABLE()
-	};
+    /*!
+     * wxCheckListCtrl
+     * The options hierarchy viewer.
+     */
+
+    class wxCheckListCtrl: public wxListCtrl
+    {
+    DECLARE_CLASS(wxCheckListCtrl)
+        public:
+            wxCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition, const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
+            virtual ~wxCheckListCtrl();
+
+            virtual void OnMouseEvent(wxMouseEvent& event);
+            virtual void OnKeyDown(wxKeyEvent& event);
+
+            /*!
+            *@brief Load the icons
+            */
+            virtual bool LoadIcons();
+
+            /// Set the appropriate icon
+            virtual bool SetIcon(long& item);
+
+            /*!
+            *@brief Callbacks
+            */
+            virtual void OnContextMenu(wxContextMenuEvent& event);
+            virtual void ShowContextMenu(const wxPoint& pos);
+
+        protected:
+            wxImageList*        m_imageList;
+
+    DECLARE_EVENT_TABLE()
+    };
 } // namespace
-#endif							 // _WB_CHECKLISTCTRL_H_
+#endif                           // _WB_CHECKLISTCTRL_H_
