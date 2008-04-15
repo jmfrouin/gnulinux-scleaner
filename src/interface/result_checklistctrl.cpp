@@ -66,8 +66,12 @@ namespace GUI
     {
         wxMenu menu;
 
-        menu.Append(0, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
-        menu.Append(0, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
+        menu.Append(0, wxString(i8n("&Select all files"), wxConvUTF8));
+        menu.Append(0, wxString(i8n("&Unselect all files"), wxConvUTF8));
+        menu.Append(0, wxString(i8n("&Select all files from same folder"), wxConvUTF8));
+        menu.Append(0, wxString(i8n("&Unselect all files from same folder"), wxConvUTF8));
+        menu.Append(0, wxString(i8n("&Select all files with same extension"), wxConvUTF8));
+        menu.Append(0, wxString(i8n("&Unselect all files with same extension"), wxConvUTF8));
 
         PopupMenu(&menu, pos.x, pos.y);
     }

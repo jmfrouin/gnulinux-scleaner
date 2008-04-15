@@ -167,7 +167,7 @@ namespace GUI
         //Show splash
         if(fSettings->GetShowSplash() == true)
         {
-            LaunchSplash(1000);
+            LaunchSplash(5000);
         }
     }
 
