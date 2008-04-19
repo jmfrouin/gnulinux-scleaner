@@ -129,13 +129,16 @@ void CAboutDialog::CreateControls()
     wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _("scleaner 0.40.0 beta 1"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer3->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Copyleft 2007-2008 Frouin Jean-Michel"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Copyleft 2007, 2008 Frouin Jean-Michel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxHyperlinkCtrl* itemHyperlinkCtrl7 = new wxHyperlinkCtrl( itemDialog1, ID_HYPERLINKCTRL1, _("Visit website"), _T("http://www.scleaner.fr"), wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
     itemBoxSizer2->Add(itemHyperlinkCtrl7, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, wxID_STATIC, _("This software used other free software :\nwxWidgets for interface.\nlibbz2 for archive compression.\nlibpthread for threads.\nlibgd for plugins implementation.\ncmake for compilation managment.\n"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText9 = new wxStaticText(itemDialog1, wxID_STATIC, _("I want to thanks all people who help me to release this beta (by alphabetical order):\nJacquier Pierre (webmaster of scleaner.fr)\nMedina Bastien (graphist)\nPaleino David(debian packager, italian translator)\nVoss Peer (german translator)\n"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(itemStaticText9, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, wxID_STATIC, _("This software used other free softwares :\nwxWidgets for interface, libbz2 for archive compression,\nlibpthread for threads, libgd for plugins implementation,\ncmake for compilation managment.\n"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTON, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -161,7 +164,6 @@ bool CAboutDialog::ShowToolTips()
 wxBitmap CAboutDialog::GetBitmapResource( const wxString& name )
 {
     // Bitmap retrieval
-////@begin CAboutDialog bitmap retrieval
     wxUnusedVar(name);
     if (name == _T("src/gfx/scleaner.png"))
     {
@@ -169,7 +171,6 @@ wxBitmap CAboutDialog::GetBitmapResource( const wxString& name )
         return bitmap;
     }
     return wxNullBitmap;
-////@end CAboutDialog bitmap retrieval
 }
 
 /*!
@@ -179,8 +180,6 @@ wxBitmap CAboutDialog::GetBitmapResource( const wxString& name )
 wxIcon CAboutDialog::GetIconResource( const wxString& name )
 {
     // Icon retrieval
-////@begin CAboutDialog icon retrieval
     wxUnusedVar(name);
     return wxNullIcon;
-////@end CAboutDialog icon retrieval
 }
