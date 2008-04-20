@@ -1,2 +1,3 @@
 The post_inst debian file need to create the ~/.scleaner folder.
 
+I can start on packaging scleaner next week-end, is that ok? --David
