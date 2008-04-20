@@ -155,11 +155,14 @@ namespace GUI
 
     void ResultCheckListCtrl::OnSelectAll(wxCommandEvent& WXUNUSED(event))
     {
-
+        std::cout << "select all\n";
+        Hide();
+        Show();
     }
 
     void ResultCheckListCtrl::OnUnselectAll(wxCommandEvent& WXUNUSED(event))
     {
-
+        std::cout << "unselect all\n";
+        Show();
     }
 }
