@@ -22,15 +22,12 @@
 #ifndef __RESULT_CHECKLISTCTRL_H__
 #define __RESULT_CHECKLISTCTRL_H__
 
-#include "checklistctrl.h"
+#include <wx/listctrl.h>
+#include <wx/imaglist.h>
 
 namespace GUI
 {
-    /*!
-     * wxCheckListCtrl for Result files list
-     */
-
-    class ResultCheckListCtrl: public wxCheckListCtrl
+    class ResultCheckListCtrl: public wxListCtrl
     {
         DECLARE_CLASS(ResultCheckListCtrl)
             public:
@@ -41,8 +38,21 @@ namespace GUI
             /*!
             *@brief Callbacks
             */
+            virtual void OnMouseEvent(wxMouseEvent& event);
+            virtual void OnKeyDown(wxKeyEvent& event);
             void OnContextMenu(wxContextMenuEvent& event);
             void ShowContextMenu(const wxPoint& pos);
+            void OnSelectAll(wxCommandEvent& event);
+            void OnUnselectAll(wxCommandEvent& event);
+
+            virtual bool LoadIcons();
+            virtual bool SetIcon(long& item);
+
+        protected:
+            wxImageList*        m_imageList;
+
+    DECLARE_EVENT_TABLE()
+
     };
 } // namespace
 #endif                           // __RESULT_CHECKLISTCTRL_H__

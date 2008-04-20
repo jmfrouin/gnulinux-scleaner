@@ -40,7 +40,6 @@ namespace GUI
     BEGIN_EVENT_TABLE(wxCheckListCtrl, wxListCtrl)
         EVT_MOUSE_EVENTS(wxCheckListCtrl::OnMouseEvent)
         EVT_CHAR(wxCheckListCtrl::OnKeyDown)
-        EVT_CONTEXT_MENU(wxCheckListCtrl::OnContextMenu)
     END_EVENT_TABLE()
 
     wxCheckListCtrl::wxCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
@@ -127,32 +126,5 @@ namespace GUI
         {
             event.Skip();
         }
-    }
-
-
-    void wxCheckListCtrl::OnContextMenu(wxContextMenuEvent& event)
-    {
-        /*wxPoint point = event.GetPosition();
-        //std::cout << "Right click detected\n";
-        // If from keyboard
-        if (point.x == -1 && point.y == -1) {
-            wxSize size = GetSize();
-            point.x = size.x / 2;
-            point.y = size.y / 2;
-        } else {
-            point = ScreenToClient(point);
-        }
-        ShowContextMenu(point);*/
-    }
-
-
-    void wxCheckListCtrl::ShowContextMenu(const wxPoint& pos)
-    {
-        wxMenu menu;
-
-        menu.Append(0, wxString(i8n("&Add a folder to scan\tCtrl-A"), wxConvUTF8));
-        menu.Append(0, wxString(i8n("&Remove selected folders from scan\tCtrl-D"), wxConvUTF8));
-
-        PopupMenu(&menu, pos.x, pos.y);
     }
 }

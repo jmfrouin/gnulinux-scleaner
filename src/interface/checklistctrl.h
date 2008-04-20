@@ -50,12 +50,6 @@ namespace GUI
             /// Set the appropriate icon
             virtual bool SetIcon(long& item);
 
-            /*!
-            *@brief Callbacks
-            */
-            virtual void OnContextMenu(wxContextMenuEvent& event);
-            virtual void ShowContextMenu(const wxPoint& pos);
-
         protected:
             wxImageList*        m_imageList;
 
