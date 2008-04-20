@@ -34,8 +34,9 @@ class IProgressbar
          *@brief Update process progress bar callback.
          *@param pulse Put it in indeterminate state.
          *@param nb Update number.
+         *@return true on continue, false on stop
          */
-        virtual void UpdateProgress(const std::string& mess, bool pulse, int nb = 0) = 0;
+        virtual bool UpdateProgress(const std::string& mess, bool pulse, int nb = 0) = 0;
 };
 #endif                           //_IPROGRESS_H_
 /* vi:set ts=4: */

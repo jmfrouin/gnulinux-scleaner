@@ -286,7 +286,9 @@ namespace Engine
                 {
                     std::string Dir;
                     (It->second)->GetDirectory(Dir);
-                    callback->UpdateProgress(Dir, true);
+                    bool Continue = callback->UpdateProgress(Dir, true);
+                    if(!Continue)
+                      break;
                     ScanDirectory(Dir, true, It->second);
                 }
             }
@@ -302,7 +304,9 @@ namespace Engine
             //#endif
             if(callback != 0)
             {
-                callback->UpdateProgress(*ItFolders, true);
+                bool Continue = callback->UpdateProgress(*ItFolders, true);
+                if(!Continue)
+                  break;
             }
             ScanDirectory(*ItFolders);
         }
@@ -335,7 +339,9 @@ namespace Engine
         {
             if(Engine->GetCount() > 9)
             {
-                Prog->UpdateProgress(Path, true);
+                bool Continue = Prog->UpdateProgress(Path, true);
+                if(!Continue)
+                    return !Ret;
                 Engine->SetCount(0);
             }
             else

@@ -755,7 +755,7 @@ namespace GUI
     }
 
 
-    void CMainInterface::UpdateProgress(const std::string& mess, bool pulse, int nb)
+    bool CMainInterface::UpdateProgress(const std::string& mess, bool pulse, int nb)
     {
         wxString Message(mess.c_str(), wxConvUTF8);
         bool Continue;
@@ -768,14 +768,19 @@ namespace GUI
             Continue = fProgress->Update(nb, Message, 0);
         }
 
-        //if(!Continue)
-        //{
-        //  if ( wxMessageBox(_T("Do you really want to cancel?"), _T("scleaner question"), wxYES_NO | wxICON_QUESTION) == wxNO)
-        //  {
-        //      Continue = true;
-        //      fProgress->Resume();
-        //  }
-        //}
+        if(!Continue)
+        {
+          if ( wxMessageBox(_T("Do you really want to cancel?"), _T("scleaner question"), wxYES_NO | wxICON_QUESTION) == wxNO)
+          {
+              Continue = true;
+              fProgress->Resume();
+              return true;
+          }
+          else
+              return false;
+        }
+        else
+            return true;
     }
 
 

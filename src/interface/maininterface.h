@@ -116,7 +116,7 @@ namespace GUI
             void UpdateFolderList();
 
             //From IProgressbar
-            void UpdateProgress(const std::string& mess, bool pulse, int nb);
+            bool UpdateProgress(const std::string& mess, bool pulse, int nb);
 
         protected:
             CTrayIcon*                          fIcon;
