@@ -39,6 +39,10 @@ namespace GUI
         EVT_CONTEXT_MENU(ResultCheckListCtrl::OnContextMenu)
         EVT_MENU(ID_SELECT_ALL, ResultCheckListCtrl::OnSelectAll)
         EVT_MENU(ID_UNSELECT_ALL, ResultCheckListCtrl::OnUnselectAll)
+        EVT_MENU(ID_SELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnSelectFromSameFolder)
+        EVT_MENU(ID_UNSELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnUnselectFromSameFolder)
+        EVT_MENU(ID_SELECT_FROM_SAME_EXTENSION, ResultCheckListCtrl::OnSelectFromSameExtension)
+        EVT_MENU(ID_UNSELECT_FROM_SAME_EXTENSION, ResultCheckListCtrl::OnUnselectFromSameExtension)
     END_EVENT_TABLE()
 
     ResultCheckListCtrl::ResultCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
@@ -80,9 +84,7 @@ namespace GUI
             SetItemImage(item, 1);
         }
         else
-        {
             SetItemImage(item, 0);
-        }
 
         return l_ret;
     }
@@ -155,14 +157,65 @@ namespace GUI
 
     void ResultCheckListCtrl::OnSelectAll(wxCommandEvent& WXUNUSED(event))
     {
-        std::cout << "select all\n";
-        Hide();
-        Show();
+        long Item = -1;
+        for ( ;; )
+        {
+            Item = GetNextItem(Item);
+            if(Item == -1)
+                break;
+            SetItemImage(Item, 0);
+        }
     }
 
     void ResultCheckListCtrl::OnUnselectAll(wxCommandEvent& WXUNUSED(event))
     {
-        std::cout << "unselect all\n";
-        Show();
+        long Item = -1;
+        for ( ;; )
+        {
+            Item = GetNextItem(Item);
+            if(Item == -1)
+                break;
+            SetItemImage(Item, 1);
+        }
     }
+
+    void ResultCheckListCtrl::OnSelectFromSameFolder(wxCommandEvent& event)
+    {
+        std::cout << GetSelection() << '\n';
+    }
+
+    void ResultCheckListCtrl::OnUnselectFromSameFolder(wxCommandEvent& event)
+    {
+
+    }
+
+    void ResultCheckListCtrl::OnSelectFromSameExtension(wxCommandEvent& event)
+    {
+
+    }
+
+    void ResultCheckListCtrl::OnUnselectFromSameExtension(wxCommandEvent& event)
+    {
+
+    }
+
+    long ResultCheckListCtrl::GetSelection()
+    {
+        long Item = -1;
+        for(;;)
+        {
+            Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+
+            if(Item == -1)
+                break;
+            else
+                return Item;
+        }
+        return Item;
+    }
+
 }
+
+/*
+
+*/

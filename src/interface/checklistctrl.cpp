@@ -69,7 +69,6 @@ namespace GUI
     {
     }
 
-
     /// Set the appropriate icon
     bool wxCheckListCtrl::SetIcon(long& item)
     {

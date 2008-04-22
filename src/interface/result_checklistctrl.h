@@ -30,7 +30,7 @@ namespace GUI
     class ResultCheckListCtrl: public wxListCtrl
     {
         DECLARE_CLASS(ResultCheckListCtrl)
-            public:
+        public:
             ResultCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition,
                 const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
             virtual ~ResultCheckListCtrl();
@@ -44,9 +44,16 @@ namespace GUI
             void ShowContextMenu(const wxPoint& pos);
             void OnSelectAll(wxCommandEvent& event);
             void OnUnselectAll(wxCommandEvent& event);
+            void OnSelectFromSameFolder(wxCommandEvent& event);
+            void OnUnselectFromSameFolder(wxCommandEvent& event);
+            void OnSelectFromSameExtension(wxCommandEvent& event);
+            void OnUnselectFromSameExtension(wxCommandEvent& event);
 
             virtual bool LoadIcons();
             virtual bool SetIcon(long& item);
+
+        private:
+            long GetSelection();
 
         protected:
             wxImageList*        m_imageList;
