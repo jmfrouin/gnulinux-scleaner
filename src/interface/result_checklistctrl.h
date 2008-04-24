@@ -44,6 +44,7 @@ namespace GUI
             void ShowContextMenu(const wxPoint& pos);
             void OnSelectAll(wxCommandEvent& event);
             void OnUnselectAll(wxCommandEvent& event);
+            void OnInvertSelection(wxCommandEvent& event);
             void OnSelectFromSameFolder(wxCommandEvent& event);
             void OnUnselectFromSameFolder(wxCommandEvent& event);
             void OnSelectFromSameExtension(wxCommandEvent& event);

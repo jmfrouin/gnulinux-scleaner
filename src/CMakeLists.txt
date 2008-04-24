@@ -21,10 +21,16 @@
 
 PROJECT(scleaner)
 
+#Others dependencies for scleaner
+FOREACH(LIB zlibK)
+FIND_LIBRARY(${LIB}dev NAMES wx${LIB}${_DBG} PATHS ${WX_LIB_DIR} NO_DEFAULT_PATH)
+ENDFOREACH(LIB)
+
 INCLUDE(FindDoxygen)
 INCLUDE(FindLATEX)
 INCLUDE(FindUnixCommands)
 INCLUDE(FindwxWidgets)
+INCLUDE(FindBZip2)
 
 #ADD_DEFINITIONS(-g -DLEAK_DETECTOR)# -DDEBUG)
 ADD_DEFINITIONS(-Wall -MD `wx-config --cxxflags`)

@@ -39,6 +39,7 @@ namespace GUI
         EVT_CONTEXT_MENU(ResultCheckListCtrl::OnContextMenu)
         EVT_MENU(ID_SELECT_ALL, ResultCheckListCtrl::OnSelectAll)
         EVT_MENU(ID_UNSELECT_ALL, ResultCheckListCtrl::OnUnselectAll)
+        EVT_MENU(ID_INVERT_SELECTION, ResultCheckListCtrl::OnInvertSelection)
         EVT_MENU(ID_SELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnSelectFromSameFolder)
         EVT_MENU(ID_UNSELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnUnselectFromSameFolder)
         EVT_MENU(ID_SELECT_FROM_SAME_EXTENSION, ResultCheckListCtrl::OnSelectFromSameExtension)
@@ -146,9 +147,11 @@ namespace GUI
 
         menu.Append(ID_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
         menu.Append(ID_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
-        //m_lbox->SetSelection(-1);
+        menu.Append(ID_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
+        menu.AppendSeparator();
         menu.Append(ID_SELECT_FROM_SAME_FOLDER, wxString(i8n("&Select all files from same folder"), wxConvUTF8));
         menu.Append(ID_UNSELECT_FROM_SAME_FOLDER, wxString(i8n("&Unselect all files from same folder"), wxConvUTF8));
+        menu.AppendSeparator();
         menu.Append(ID_SELECT_FROM_SAME_EXTENSION, wxString(i8n("&Select all files with same extension"), wxConvUTF8));
         menu.Append(ID_UNSELECT_FROM_SAME_EXTENSION, wxString(i8n("&Unselect all files with same extension"), wxConvUTF8));
 
@@ -176,6 +179,26 @@ namespace GUI
             if(Item == -1)
                 break;
             SetItemImage(Item, 1);
+        }
+    }
+
+    void ResultCheckListCtrl::OnInvertSelection(wxCommandEvent& event)
+    {
+        long Item = -1;
+        for ( ;; )
+        {
+            Item = GetNextItem(Item);
+            if(Item == -1)
+                break;
+
+            wxListItem LItem;
+            LItem.SetId(Item);
+            GetItem(LItem);
+
+            if(LItem.GetImage())
+                SetItemImage(Item, 0);
+            else
+                SetItemImage(Item, 1);
         }
     }
 
