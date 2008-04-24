@@ -197,6 +197,11 @@
 				<F N="DEBIAN/rules"/>
 			</Folder>
 			<Folder
+				Name="cmake"
+				Filters="">
+				<F N="src/cmake/FindAPT.cmake"/>
+			</Folder>
+			<Folder
 				Name="engine"
 				Filters="">
 				<F N="src/engine/CMakeLists.txt"/>
