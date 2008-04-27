@@ -39,6 +39,9 @@ namespace GUI
         EVT_CONTEXT_MENU(ResultCheckListCtrl::OnContextMenu)
         EVT_MENU(ID_SELECT_ALL, ResultCheckListCtrl::OnSelectAll)
         EVT_MENU(ID_UNSELECT_ALL, ResultCheckListCtrl::OnUnselectAll)
+        EVT_MENU(ID_INVERT_SELECTION, ResultCheckListCtrl::OnInvertSelection)
+        EVT_MENU(ID_SELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnSelectFromSameFolder)
+        EVT_MENU(ID_UNSELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnUnselectFromSameFolder)
     END_EVENT_TABLE()
 
     ResultCheckListCtrl::ResultCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
@@ -80,9 +83,7 @@ namespace GUI
             SetItemImage(item, 1);
         }
         else
-        {
             SetItemImage(item, 0);
-        }
 
         return l_ret;
     }
@@ -144,22 +145,134 @@ namespace GUI
 
         menu.Append(ID_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
         menu.Append(ID_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
-        //m_lbox->SetSelection(-1);
+        menu.Append(ID_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
+        menu.AppendSeparator();
         menu.Append(ID_SELECT_FROM_SAME_FOLDER, wxString(i8n("&Select all files from same folder"), wxConvUTF8));
         menu.Append(ID_UNSELECT_FROM_SAME_FOLDER, wxString(i8n("&Unselect all files from same folder"), wxConvUTF8));
-        menu.Append(ID_SELECT_FROM_SAME_EXTENSION, wxString(i8n("&Select all files with same extension"), wxConvUTF8));
-        menu.Append(ID_UNSELECT_FROM_SAME_EXTENSION, wxString(i8n("&Unselect all files with same extension"), wxConvUTF8));
 
         PopupMenu(&menu, pos.x, pos.y);
     }
 
     void ResultCheckListCtrl::OnSelectAll(wxCommandEvent& WXUNUSED(event))
     {
-
+        long Item = -1;
+        for ( ;; )
+        {
+            Item = GetNextItem(Item);
+            if(Item == -1)
+                break;
+            SetItemImage(Item, 0);
+        }
     }
 
     void ResultCheckListCtrl::OnUnselectAll(wxCommandEvent& WXUNUSED(event))
     {
-
+        long Item = -1;
+        for ( ;; )
+        {
+            Item = GetNextItem(Item);
+            if(Item == -1)
+                break;
+            SetItemImage(Item, 1);
+        }
     }
+
+    void ResultCheckListCtrl::OnInvertSelection(wxCommandEvent& event)
+    {
+        long Item = -1;
+        for ( ;; )
+        {
+            Item = GetNextItem(Item);
+            if(Item == -1)
+                break;
+
+            wxListItem LItem;
+            LItem.SetId(Item);
+            GetItem(LItem);
+
+            if(LItem.GetImage())
+                SetItemImage(Item, 0);
+            else
+                SetItemImage(Item, 1);
+        }
+    }
+
+    void ResultCheckListCtrl::OnSelectFromSameFolder(wxCommandEvent& event)
+    {
+        long Item = -1;
+        wxString Folder = GetSelectionFolderName();
+        for ( ;; )
+        {
+            Item = GetNextItem(Item);
+            if(Item == -1)
+                break;
+
+            wxListItem LItem;
+            LItem.SetId(Item);
+            LItem.SetColumn(2);
+            GetItem(LItem);
+            std::cout << LItem.m_text << " = ";
+            std::cout << Folder << '\n';
+            if(LItem.m_text.Find(Folder) != wxNOT_FOUND)
+                SetItemImage(Item, 0);
+        }
+    }
+
+    void ResultCheckListCtrl::OnUnselectFromSameFolder(wxCommandEvent& event)
+    {
+        long Item = -1;
+        wxString Folder = GetSelectionFolderName();
+        for ( ;; )
+        {
+            Item = GetNextItem(Item);
+            if(Item == -1)
+                break;
+
+            wxListItem LItem;
+            LItem.SetId(Item);
+            LItem.SetColumn(2);
+            GetItem(LItem);
+            if(LItem.m_text.Find(Folder) != wxNOT_FOUND)
+                SetItemImage(Item, 1);
+        }
+    }
+
+    long ResultCheckListCtrl::GetSelection()
+    {
+        long Item = -1;
+        for(;;)
+        {
+            Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+
+            if(Item == -1)
+                break;
+            else
+                return Item;
+        }
+        return Item;
+    }
+
+    wxString ResultCheckListCtrl::GetSelectionFolderName()
+    {
+        long Item = -1;
+        wxString Res;
+        for(;;)
+        {
+            Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+
+            if(Item == -1)
+                break;
+            else
+            {
+                wxListItem LItem;
+                LItem.SetId(Item);
+                LItem.SetColumn(2);
+                GetItem(LItem);
+                return LItem.m_text;
+            }
+        }
+        return Res;
+    }
+
 }
+

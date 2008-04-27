@@ -251,12 +251,12 @@ namespace GUI
         ItemCol.SetAlign(wxLIST_FORMAT_CENTRE);
         fInputPlugins->InsertColumn(1, ItemCol);
 
+        fInputPlugins->Hide();
+
         int Counter=0;
         std::map<std::string, Plugins::IInPlugin*>::iterator It;
         for(It = fEngine->GetAvailableInputPlugs()->begin(); It != fEngine->GetAvailableInputPlugs()->end(); ++It)
         {
-            fInputPlugins->Hide();
-
             wxString String(((*It).second)->GetName().c_str(), wxConvUTF8);
             wxString Description(((*It).second)->Description().c_str(), wxConvUTF8);
             long LongTmp = fInputPlugins->InsertItem(Counter++, String, 0);
@@ -415,13 +415,10 @@ namespace GUI
             ItemCol.SetAlign(wxLIST_FORMAT_RIGHT);
             FilesList->InsertColumn(2, ItemCol);
 
-            /*ItemCol.SetText(wxString(i8n("Plugins"), wxConvUTF8));
-            ItemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-            FilesList->InsertColumn(3, ItemCol);*/
-
             ItemCol.SetText(wxString(i8n("CRC32"), wxConvUTF8));
             ItemCol.SetAlign(wxLIST_FORMAT_RIGHT);
             FilesList->InsertColumn(3, ItemCol);
+
             // to speed up inserting, we hide the control temporarily
             FilesList->Hide();
 
@@ -436,7 +433,12 @@ namespace GUI
                 //Insert file size.
                 struct stat Info;
 
-                FilesList->SetItem(LongTmp, 2, String);
+                //Insert folder
+                std::string FolderName = FileName.substr(0, FileName.find_last_of('/'));
+                wxString Folder(FolderName.c_str(), wxConvUTF8);
+
+                FilesList->SetItem(LongTmp, 2, Folder);
+
                 //Try to stat file.
                 if(stat(FileName.c_str(), &Info) == -1)
                 {
