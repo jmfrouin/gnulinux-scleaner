@@ -55,6 +55,7 @@ namespace GUI
 
         private:
             long GetSelection();
+            wxString GetSelectionFolderName();
 
         protected:
             wxImageList*        m_imageList;

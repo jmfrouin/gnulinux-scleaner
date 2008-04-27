@@ -204,12 +204,44 @@ namespace GUI
 
     void ResultCheckListCtrl::OnSelectFromSameFolder(wxCommandEvent& event)
     {
-        std::cout << GetSelection() << '\n';
+        long Item = -1;
+        wxString Folder = GetSelectionFolderName();
+        for ( ;; )
+        {
+            Item = GetNextItem(Item);
+            if(Item == -1)
+                break;
+
+            wxListItem LItem;
+            LItem.SetId(Item);
+            LItem.SetColumn(2);
+            GetItem(LItem);
+            std::cout << LItem.m_text << " = ";
+            std::cout << Folder << '\n';
+            if(LItem.m_text.Find(Folder) != wxNOT_FOUND)
+                SetItemImage(Item, 0);
+        }
     }
 
     void ResultCheckListCtrl::OnUnselectFromSameFolder(wxCommandEvent& event)
     {
+        long Item = -1;
+        wxString Folder = GetSelectionFolderName();
+        for ( ;; )
+        {
+            Item = GetNextItem(Item);
+            if(Item == -1)
+                break;
 
+            wxListItem LItem;
+            LItem.SetId(Item);
+            LItem.SetColumn(2);
+            GetItem(LItem);
+            std::cout << LItem.m_text << " = ";
+            std::cout << Folder << '\n';
+            if(LItem.m_text.Find(Folder) != wxNOT_FOUND)
+                SetItemImage(Item, 1);
+        }
     }
 
     void ResultCheckListCtrl::OnSelectFromSameExtension(wxCommandEvent& event)
@@ -237,8 +269,27 @@ namespace GUI
         return Item;
     }
 
+    wxString ResultCheckListCtrl::GetSelectionFolderName()
+    {
+        long Item = -1;
+        wxString Res;
+        for(;;)
+        {
+            Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+
+            if(Item == -1)
+                break;
+            else
+            {
+                wxListItem LItem;
+                LItem.SetId(Item);
+                LItem.SetColumn(2);
+                GetItem(LItem);
+                //std::cout << "Selected item is in folder : " << LItem.m_text.char_str() << '\n';
+                return LItem.m_text;
+            }
+        }
+        return Res;
+    }
 }
 
-/*
-
-*/
