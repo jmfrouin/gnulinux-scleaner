@@ -42,8 +42,6 @@ namespace GUI
         EVT_MENU(ID_INVERT_SELECTION, ResultCheckListCtrl::OnInvertSelection)
         EVT_MENU(ID_SELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnSelectFromSameFolder)
         EVT_MENU(ID_UNSELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnUnselectFromSameFolder)
-        EVT_MENU(ID_SELECT_FROM_SAME_EXTENSION, ResultCheckListCtrl::OnSelectFromSameExtension)
-        EVT_MENU(ID_UNSELECT_FROM_SAME_EXTENSION, ResultCheckListCtrl::OnUnselectFromSameExtension)
     END_EVENT_TABLE()
 
     ResultCheckListCtrl::ResultCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
@@ -151,9 +149,6 @@ namespace GUI
         menu.AppendSeparator();
         menu.Append(ID_SELECT_FROM_SAME_FOLDER, wxString(i8n("&Select all files from same folder"), wxConvUTF8));
         menu.Append(ID_UNSELECT_FROM_SAME_FOLDER, wxString(i8n("&Unselect all files from same folder"), wxConvUTF8));
-        menu.AppendSeparator();
-        menu.Append(ID_SELECT_FROM_SAME_EXTENSION, wxString(i8n("&Select all files with same extension"), wxConvUTF8));
-        menu.Append(ID_UNSELECT_FROM_SAME_EXTENSION, wxString(i8n("&Unselect all files with same extension"), wxConvUTF8));
 
         PopupMenu(&menu, pos.x, pos.y);
     }
@@ -237,21 +232,9 @@ namespace GUI
             LItem.SetId(Item);
             LItem.SetColumn(2);
             GetItem(LItem);
-            std::cout << LItem.m_text << " = ";
-            std::cout << Folder << '\n';
             if(LItem.m_text.Find(Folder) != wxNOT_FOUND)
                 SetItemImage(Item, 1);
         }
-    }
-
-    void ResultCheckListCtrl::OnSelectFromSameExtension(wxCommandEvent& event)
-    {
-
-    }
-
-    void ResultCheckListCtrl::OnUnselectFromSameExtension(wxCommandEvent& event)
-    {
-
     }
 
     long ResultCheckListCtrl::GetSelection()
@@ -285,11 +268,11 @@ namespace GUI
                 LItem.SetId(Item);
                 LItem.SetColumn(2);
                 GetItem(LItem);
-                //std::cout << "Selected item is in folder : " << LItem.m_text.char_str() << '\n';
                 return LItem.m_text;
             }
         }
         return Res;
     }
+
 }
 

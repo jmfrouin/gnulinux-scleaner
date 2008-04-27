@@ -47,8 +47,6 @@ namespace GUI
             void OnInvertSelection(wxCommandEvent& event);
             void OnSelectFromSameFolder(wxCommandEvent& event);
             void OnUnselectFromSameFolder(wxCommandEvent& event);
-            void OnSelectFromSameExtension(wxCommandEvent& event);
-            void OnUnselectFromSameExtension(wxCommandEvent& event);
 
             virtual bool LoadIcons();
             virtual bool SetIcon(long& item);
