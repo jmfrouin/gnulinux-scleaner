@@ -92,6 +92,15 @@
 					Type="Slick-C"/>
 			</Target>
 		</Menu>
+		<Includes>
+			<Include Dir="/home/snoogie/dev/scleaner/src/engine/"/>
+			<Include Dir="/home/snoogie/dev/scleaner/src/interface/"/>
+			<Include Dir="/home/snoogie/dev/scleaner/src/leak/"/>
+			<Include Dir="/home/snoogie/dev/scleaner/src/log/"/>
+			<Include Dir="/home/snoogie/dev/scleaner/src/tools/"/>
+			<Include Dir="/home/snoogie/dev/scleaner/src/"/>
+			<Include Dir="/usr/include/wx-2.8/"/>
+		</Includes>
 	</Config>
 	<Config
 		Name="Release"
@@ -180,6 +189,15 @@
 					Type="Slick-C"/>
 			</Target>
 		</Menu>
+		<Includes>
+			<Include Dir="/home/snoogie/dev/scleaner/src/engine/"/>
+			<Include Dir="/home/snoogie/dev/scleaner/src/interface/"/>
+			<Include Dir="/home/snoogie/dev/scleaner/src/leak/"/>
+			<Include Dir="/home/snoogie/dev/scleaner/src/log/"/>
+			<Include Dir="/home/snoogie/dev/scleaner/src/tools/"/>
+			<Include Dir="/home/snoogie/dev/scleaner/src/"/>
+			<Include Dir="/usr/include/wx-2.8/"/>
+		</Includes>
 	</Config>
 	<Files>
 		<Folder
@@ -205,7 +223,6 @@
 				Name="engine"
 				Filters="">
 				<F N="src/engine/CMakeLists.txt"/>
-				<F N="src/engine/database.c"/>
 				<F N="src/engine/dpkg-db.h"/>
 				<F N="src/engine/dpkg.h"/>
 				<F N="src/engine/engine.cpp"/>
@@ -374,5 +391,8 @@
 			<F N="src/sudo_scleaner.desktop"/>
 			<F N="src/update_build.sh"/>
 		</Folder>
+		<F
+			N="Makefile"
+			Type="Makefile"/>
 	</Files>
 </Project>

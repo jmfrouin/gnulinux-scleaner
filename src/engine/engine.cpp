@@ -36,7 +36,7 @@
 #include <sys/stat.h>
 #include <sys/vfs.h>
 #include <sys/utsname.h>
-#include <interface/maininterface.h>
+#include "interface/maininterface.h"
 #include "settings_manager.h"
 #include "dpkg-db.h"
 #include "engine.h"
@@ -125,10 +125,11 @@ namespace Engine
     bool CEngine::CallOutputPlugin(std::list<std::string>& list, std::string& name, const std::string& path, IProgressbar* callback)
     {
         bool Ret = false;
+        std::cout << "CallOutputPlugin, name : " << name << '\n';
         std::map<std::string, Plugins::IOutPlugin*>* OutputPlugs;
         OutputPlugs = fPFM->GetOutputListPtr();
         Plugins::IOutPlugin* Plug = (*OutputPlugs)[name];
-        if(Plug != 0)
+        if(Plug)
         {
             Plug->ProcessFileList(list, path, callback);
             Ret = true;

@@ -507,7 +507,7 @@ namespace GUI
         #endif
 
         fProgress = new wxProgressDialog(wxString(i8n("scleaner process your files ..."), wxConvUTF8),
-            wxString(i8n("this is a information"), wxConvUTF8),
+            wxString(i8n("this is an information"), wxConvUTF8),
             100,                     // range
             this,                    // parent
             wxPD_CAN_ABORT |
@@ -522,7 +522,7 @@ namespace GUI
 
         std::string Name;
         wxString NameWX;
-        //NameWX = fOutput->GetStringSelection();
+        NameWX = fOutputPlugins->GetStringSelection();
         Name = NameWX.char_str();
 
         #if defined DEBUG
@@ -543,7 +543,7 @@ namespace GUI
             Message.FromUTF8(Path.c_str());
         }
 
-        wxDirDialog OutputFileDlg(this, wxString(i8n("Select an output folder for "), wxConvUTF8) + NameWX + wxString(i8n(" plugin:"), wxConvUTF8), Message, wxDD_DIR_MUST_EXIST);
+        wxDirDialog OutputFileDlg(this, wxString(i8n("Select a folder"), wxConvUTF8)/* + NameWX + wxString(i8n(" plugin:"), wxConvUTF8)*/, Message, wxDD_DIR_MUST_EXIST);
 
         if (OutputFileDlg.ShowModal() == wxID_OK)
         {
