@@ -357,7 +357,7 @@ namespace GUI
     {
         //LaunchSplash(3000);
         CAboutDialog *Dial = new CAboutDialog(NULL, -1, _T("About"), wxDefaultPosition, wxSize(250, 230));
-        Dial->Show(true);
+        Dial->ShowModal();
     }
 
 

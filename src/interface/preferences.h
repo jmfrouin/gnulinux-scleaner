@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -87,15 +87,16 @@ namespace GUI
 
     private:
         //Engine
-        Tools::TSmartPtr<Engine::CEngine>               m_Engine;
+        Tools::TSmartPtr<Engine::CEngine>               fEngine;
 
         //Settings manager
-        Tools::TSmartPtr<Engine::CSettingsManager>      m_Settings;
+        Tools::TSmartPtr<Engine::CSettingsManager>      fSettings;
 
         //Preferences
-        wxCheckBox*                                     m_SplashScreen;
-        wxCheckBox*                                     m_Toolbar;
-        wxCheckBox*                                     m_Statusbar;
+        wxCheckBox*     fSplashScreen;
+        wxCheckBox*     fToolbar;
+        wxCheckBox*     fStatusbar;
+        wxCheckBox*     fDelete;
     };
 }
 #endif // _PREFERENCES_H_

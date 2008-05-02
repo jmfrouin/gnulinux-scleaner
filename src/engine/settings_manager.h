@@ -99,6 +99,8 @@ namespace Engine
 
             bool GetShowStatusbar() { return fShowStatusbar; }
 
+            bool GetDelete() { return fDelete; }
+
             /*!
             * Mutators
             */
@@ -107,6 +109,8 @@ namespace Engine
             void SetShowToolbar(bool val) { fShowToolbar = val; }
 
             void SetShowStatusbar(bool val) { fShowStatusbar = val; }
+
+            void SetDelete(bool val) { fDelete = val; }
 
         private:
             bool                    fShowSplash;       ///Display splash (only in GUI) ?
@@ -117,6 +121,7 @@ namespace Engine
 
             bool                    fShowToolbar;      ///Display toolbar (only in GUI) ?
             bool                    fShowStatusbar;    ///Display statusbar (only in GUI) ?
+            bool                    fDelete; ///Delete files after applying the ouput plugin ?
     };
 } //namespace Engine
 

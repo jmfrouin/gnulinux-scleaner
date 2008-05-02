@@ -71,9 +71,11 @@ public:
     void CreateControls();
 
 ////@begin CAboutDialog event handler declarations
+
 ////@end CAboutDialog event handler declarations
 
 ////@begin CAboutDialog member function declarations
+
     /// Retrieves bitmap resources
     wxBitmap GetBitmapResource( const wxString& name );
 

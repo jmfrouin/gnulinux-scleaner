@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -57,7 +57,7 @@ namespace GUI
      * CPreferences constructors
      */
     CPreferences::CPreferences():
-    m_SplashScreen(0)
+    fSplashScreen(0), fToolbar(0), fStatusbar(0), fDelete(0)
     {
         Init();
     }
@@ -101,8 +101,8 @@ namespace GUI
      */
     void CPreferences::Init()
     {
-        m_Engine = Engine::CEngine::Instance();
-        m_Settings = Engine::CSettingsManager::Instance();
+        fEngine = Engine::CEngine::Instance();
+        fSettings = Engine::CSettingsManager::Instance();
     }
 
 
@@ -137,7 +137,7 @@ namespace GUI
         l_Sizer->Add(l_Title, 1, wxGROW | wxALL, 5);
 
         std::map<std::string, Plugins::IInPlugin*>::iterator l_it;
-        for(l_it = m_Engine->GetAvailableInputPlugs()->begin(); l_it != m_Engine->GetAvailableInputPlugs()->end(); ++l_it)
+        for(l_it = fEngine->GetAvailableInputPlugs()->begin(); l_it != fEngine->GetAvailableInputPlugs()->end(); ++l_it)
         {
             wxCheckBox* l_PluginCB = new wxCheckBox(l_PluginsPanel, wxID_ANY, wxString(l_it->first.c_str(), wxConvUTF8) + wxString(i8n(" default selection"), wxConvUTF8));
             l_PluginCB->SetValue(l_it->second->GetDefaultSelection());
@@ -160,23 +160,28 @@ namespace GUI
         //l_Sizer2->Add(itemRadioBox3, 1, wxGROW | wxALL, 5);
 
         //Show splashscreen ?
-        m_SplashScreen = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show splash screen on startup"), wxDefaultPosition);
-        m_SplashScreen->SetValue(m_Settings->GetShowSplash());
-        l_Sizer2->Add(m_SplashScreen, 1, wxGROW | wxALL, 5);
+        fSplashScreen = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show splash screen on startup"), wxDefaultPosition);
+        fSplashScreen->SetValue(fSettings->GetShowSplash());
+        l_Sizer2->Add(fSplashScreen, 1, wxGROW | wxALL, 5);
 
         //Show toolbar ?
-        m_Toolbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show toolbar (need reboot)"), wxDefaultPosition);
-        m_Toolbar->SetValue(m_Settings->GetShowToolbar());
-        l_Sizer2->Add(m_Toolbar, 1, wxGROW | wxALL, 5);
+        fToolbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show toolbar (need reboot)"), wxDefaultPosition);
+        fToolbar->SetValue(fSettings->GetShowToolbar());
+        l_Sizer2->Add(fToolbar, 1, wxGROW | wxALL, 5);
 
         //Show statusbar ?
-        m_Statusbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show status bar (need reboot)"), wxDefaultPosition);
-        m_Statusbar->SetValue(m_Settings->GetShowStatusbar());
-        l_Sizer2->Add(m_Statusbar, 1, wxGROW | wxALL, 5);
+        fStatusbar = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Show status bar (need reboot)"), wxDefaultPosition);
+        fStatusbar->SetValue(fSettings->GetShowStatusbar());
+        l_Sizer2->Add(fStatusbar, 1, wxGROW | wxALL, 5);
 
         //Progress bar refresh's delay
-        wxSpinButton* l_PBDelay = new wxSpinButton(l_PrefPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_HORIZONTAL, _T("Progress bar update's delay"));
-        l_Sizer2->Add(l_PBDelay, 1, wxGROW | wxALL, 5);
+        /*wxSpinButton* l_PBDelay = new wxSpinButton(l_PrefPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_HORIZONTAL, _T("Progress bar update's delay"));
+        l_Sizer2->Add(l_PBDelay, 1, wxGROW | wxALL, 5);*/
+
+        //Delete file after output plugin ?
+        fDelete = new wxCheckBox(l_PrefPanel, wxID_ANY, _T("Delete files after applying the output plugin"), wxDefaultPosition);
+        fStatusbar->SetValue(fSettings->GetDelete());
+        l_Sizer2->Add(fDelete, 1, wxGROW | wxALL, 5);
 
         l_PrefListbook->AddPage(l_PrefPanel, _T("Application"));
     }
@@ -218,9 +223,10 @@ namespace GUI
 
     void CPreferences::OnApply(wxCommandEvent& WXUNUSED(event))
     {
-        m_Settings->SetShowSplash(m_SplashScreen->GetValue());
-        m_Settings->SetShowToolbar(m_Toolbar->GetValue());
-        m_Settings->SetShowStatusbar(m_Statusbar->GetValue());
+        fSettings->SetShowSplash(fSplashScreen->GetValue());
+        fSettings->SetShowToolbar(fToolbar->GetValue());
+        fSettings->SetShowStatusbar(fStatusbar->GetValue());
+        fSettings->SetDelete(fDelete->GetValue());
         Close(true);
     }
 }
