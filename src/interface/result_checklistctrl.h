@@ -30,35 +30,54 @@ namespace GUI
     class ResultCheckListCtrl: public wxListCtrl
     {
         DECLARE_CLASS(ResultCheckListCtrl)
-        public:
-            ResultCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition,
-                const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
-            virtual ~ResultCheckListCtrl();
+    public:
+        ResultCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition,
+                            const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
+        virtual ~ResultCheckListCtrl();
 
-            /*!
-            *@brief Callbacks
-            */
-            virtual void OnMouseEvent(wxMouseEvent& event);
-            virtual void OnKeyDown(wxKeyEvent& event);
-            void OnContextMenu(wxContextMenuEvent& event);
-            void ShowContextMenu(const wxPoint& pos);
-            void OnSelectAll(wxCommandEvent& event);
-            void OnUnselectAll(wxCommandEvent& event);
-            void OnInvertSelection(wxCommandEvent& event);
-            void OnSelectFromSameFolder(wxCommandEvent& event);
-            void OnUnselectFromSameFolder(wxCommandEvent& event);
+        /*!
+        *@brief Callbacks
+        */
+        virtual void OnMouseEvent(wxMouseEvent& event);
+        virtual void OnKeyDown(wxKeyEvent& event);
+        void OnContextMenu(wxContextMenuEvent& event);
+        void ShowContextMenu(const wxPoint& pos);
+        void OnSelectAll(wxCommandEvent& event);
+        void OnUnselectAll(wxCommandEvent& event);
+        void OnInvertSelection(wxCommandEvent& event);
+        void OnSelectFromSameFolder(wxCommandEvent& event);
+        void OnUnselectFromSameFolder(wxCommandEvent& event);
+        void OnColClick(wxListEvent& event);
 
-            virtual bool LoadIcons();
-            virtual bool SetIcon(long& item);
+        virtual bool LoadIcons();
+        virtual bool SetIcon(long& item);
 
-        private:
-            long GetSelection();
-            wxString GetSelectionFolderName();
+    private:
+        /*!
+         * @brief Retrieve selected item number.
+         * @author snoogie (5/4/2008)
+         * @return ID of selected item.
+         */
+        long GetSelection();
 
-        protected:
-            wxImageList*        m_imageList;
+        /*!
+         * @brief Count how many selected items (In wxListCtrl by CTRL & SHIFT)
+         * @author snoogie (5/4/2008)
+         * @return Number of selected items.
+         */
+        int GetSelectionCount();
 
-    DECLARE_EVENT_TABLE()
+        /*!
+         * @brief Retrieve folder name of selected item
+         * @author snoogie (5/4/2008)
+         * @return Folder name.
+         */
+        wxString GetSelectionFolderName();
+
+    protected:
+        wxImageList*        m_imageList;
+
+        DECLARE_EVENT_TABLE()
 
     };
 } // namespace

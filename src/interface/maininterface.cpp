@@ -399,7 +399,7 @@ namespace GUI
             #if defined DEBUG
             std::cout << i8n("[DBG] Size = ") << List.size() << '\n';
             #endif
-            ResultCheckListCtrl* FilesList = new ResultCheckListCtrl(fFoundFiles, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+            ResultCheckListCtrl* FilesList = new ResultCheckListCtrl(fFoundFiles, ID_RESCHECKLIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 
             //Setting header:
             wxListItem ItemCol;

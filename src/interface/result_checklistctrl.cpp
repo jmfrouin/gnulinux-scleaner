@@ -37,6 +37,7 @@ namespace GUI
         EVT_MOUSE_EVENTS(ResultCheckListCtrl::OnMouseEvent)
         EVT_CHAR(ResultCheckListCtrl::OnKeyDown)
         EVT_CONTEXT_MENU(ResultCheckListCtrl::OnContextMenu)
+        EVT_LIST_COL_CLICK(ID_RESCHECKLIST, ResultCheckListCtrl::OnColClick)
         EVT_MENU(ID_SELECT_ALL, ResultCheckListCtrl::OnSelectAll)
         EVT_MENU(ID_UNSELECT_ALL, ResultCheckListCtrl::OnUnselectAll)
         EVT_MENU(ID_INVERT_SELECTION, ResultCheckListCtrl::OnInvertSelection)
@@ -150,6 +151,7 @@ namespace GUI
         menu.Append(ID_SELECT_FROM_SAME_FOLDER, wxString(i8n("&Select all files from same folder"), wxConvUTF8));
         menu.Append(ID_UNSELECT_FROM_SAME_FOLDER, wxString(i8n("&Unselect all files from same folder"), wxConvUTF8));
 
+        std::cout << "Selection : " << GetSelectionCount() << '\n';
         PopupMenu(&menu, pos.x, pos.y);
     }
 
@@ -237,6 +239,12 @@ namespace GUI
         }
     }
 
+    void ResultCheckListCtrl::OnColClick(wxListEvent& event)
+    {
+
+    }
+
+    //Private
     long ResultCheckListCtrl::GetSelection()
     {
         long Item = -1;
@@ -274,5 +282,19 @@ namespace GUI
         return Res;
     }
 
+     int ResultCheckListCtrl::GetSelectionCount()
+    {
+        int Count = 0;
+        long Item = -1;
+        for(;;)
+        {
+            Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+            if(Item == -1)
+                break;
+            else
+                Count++;
+        }
+        return Count;
+    }
 }
 

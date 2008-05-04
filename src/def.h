@@ -28,7 +28,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 426
+#define BUILD 429
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -73,9 +73,8 @@
 //#define ID_TREECTRL1 10009
 #define ID_NOTEBOOK 10009
 #define ID_RADIOBOX 10010
-//#define ID_SPLITTERWINDOW2 10011
+#define ID_RESCHECKLIST 10011
 #define ID_TITLE 10012
-//#define ID_SPLITTERWINDOW3 10013
 
 //Menu ID
 #define ID_ABOUT 10013
