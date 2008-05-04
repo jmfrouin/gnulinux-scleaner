@@ -29,6 +29,42 @@
 #include <engine/engine.h>
 #include "result_checklistctrl.h"
 
+
+/*!
+  * @brief Comparaison callbacks.
+  * @author snoogie(5/4/2008)
+  */
+ int wxCALLBACK CompareByName(long item1, long item2, long sortData)
+{
+    if(sortData == 0)
+    {
+        if (item1 < item2)
+            return -1;
+        if (item1 > item2)
+            return 1;
+    }
+    else
+    {
+        if (item1 > item2)
+            return -1;
+        if (item1 < item2)
+            return 1;
+    }
+
+    return 0;
+}
+
+ int wxCALLBACK CompareBySize(long item1, long item2, long sortData)
+{
+    std::cout << "Comparing " << item1 << " and " << item2 << '\n';
+    // inverse the order
+    if (item1 > item2)
+        return -1;
+    if (item1 < item2)
+        return 1;
+    return 0;
+}
+
 namespace GUI
 {
     IMPLEMENT_CLASS(ResultCheckListCtrl, wxListCtrl)
@@ -47,7 +83,7 @@ namespace GUI
 
     ResultCheckListCtrl::ResultCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
     const wxSize& sz, long style):
-    wxListCtrl(parent, id, pt, sz, style)
+    wxListCtrl(parent, id, pt, sz, style), fSort(false)
     {
         LoadIcons();
     }
@@ -305,7 +341,14 @@ namespace GUI
     void ResultCheckListCtrl::OnColClick(wxListEvent& event)
     {
         int col = event.GetColumn();
-        std::cout << "OnColClick : " << col << "\n";
+
+        switch(col) //FIXME : Add col ID in def.h and used them here !
+        {
+            case 0:
+                SortItems(CompareByName, fSort);
+                break;
+        }
+        fSort = !fSort;
     }
 
     //Private
@@ -360,5 +403,6 @@ namespace GUI
         }
         return Count;
     }
+
 }
 

@@ -76,6 +76,7 @@ namespace GUI
 
     protected:
         wxImageList*        m_imageList;
+        bool fSort;
 
         DECLARE_EVENT_TABLE()
 
