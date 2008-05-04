@@ -304,7 +304,8 @@ namespace GUI
 
     void ResultCheckListCtrl::OnColClick(wxListEvent& event)
     {
-
+        int col = event.GetColumn();
+        std::cout << "OnColClick : " << col << "\n";
     }
 
     //Private
