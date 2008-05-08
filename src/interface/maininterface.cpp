@@ -753,7 +753,7 @@ namespace GUI
 
     void CMainInterface::OnPrefs(wxCommandEvent& WXUNUSED(event))
     {
-        CPreferences(this, wxID_ANY, wxString(i8n("Preferences"), wxConvUTF8), wxDefaultPosition, wxDefaultSize).ShowModal();
+        CPreferences(this, wxID_ANY, wxString(i8n("Preferences"), wxConvUTF8), wxDefaultPosition, wxSize(600,300)).ShowModal();
     }
 
 

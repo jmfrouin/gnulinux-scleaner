@@ -1,4 +1,5 @@
 scleaner (0.40.0) unstable; urgency=low
+  * Adding icons in preferences dialog.
   * Sort on col click in output checklists.
   * Selection enhacement in output checklists.
   * Context menu added in output checklists. (One when user select 1 file, and another when user select many files)
