@@ -39,6 +39,11 @@ namespace GUI
             wxCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition, const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
             virtual ~wxCheckListCtrl();
 
+            void OnContextMenu(wxContextMenuEvent& event);
+            void ShowContextMenu(const wxPoint& pos);
+            void OnSelectAll(wxCommandEvent& event);
+            void OnUnselectAll(wxCommandEvent& event);
+            void OnInvertSelection(wxCommandEvent& event);
             virtual void OnMouseEvent(wxMouseEvent& event);
             virtual void OnKeyDown(wxKeyEvent& event);
 
@@ -46,6 +51,13 @@ namespace GUI
             *@brief Load the icons
             */
             virtual bool LoadIcons();
+
+            /*!
+             * @brief Count how many selected items (In wxListCtrl by CTRL & SHIFT)
+             * @author snoogie (5/4/2008)
+             * @return Number of selected items.
+             */
+            int GetSelectionCount();
 
             /// Set the appropriate icon
             virtual bool SetIcon(long& item);

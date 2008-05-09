@@ -40,6 +40,7 @@ namespace GUI
     BEGIN_EVENT_TABLE(wxCheckListCtrl, wxListCtrl)
         EVT_MOUSE_EVENTS(wxCheckListCtrl::OnMouseEvent)
         EVT_CHAR(wxCheckListCtrl::OnKeyDown)
+        EVT_CONTEXT_MENU(wxCheckListCtrl::OnContextMenu)
     END_EVENT_TABLE()
 
     wxCheckListCtrl::wxCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
@@ -126,4 +127,143 @@ namespace GUI
             event.Skip();
         }
     }
+
+    void wxCheckListCtrl::OnContextMenu(wxContextMenuEvent& event)
+    {
+        wxPoint point = event.GetPosition();
+        // If from keyboard
+        if (point.x == -1 && point.y == -1)
+        {
+            wxSize size = GetSize();
+            point.x = size.x / 2;
+            point.y = size.y / 2;
+        }
+        else
+            point = ScreenToClient(point);
+        ShowContextMenu(point);
+    }
+
+    void wxCheckListCtrl::ShowContextMenu(const wxPoint& pos)
+    {
+        wxMenu menu;
+
+        menu.Append(ID_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
+        menu.Append(ID_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
+        menu.Append(ID_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
+
+        PopupMenu(&menu, pos.x, pos.y);
+    }
+
+    void wxCheckListCtrl::OnSelectAll(wxCommandEvent& WXUNUSED(event))
+    {
+        long Item = -1;
+        if(GetSelectionCount() == 1)
+        {
+            //If user has selected only 1 item, that apply to all files
+            for ( ;; )
+            {
+                Item = GetNextItem(Item);
+                if(Item == -1)
+                    break;
+                SetItemImage(Item, 0);
+            }
+        }
+        else
+        {
+            //If user has selected more than 1 item, that apply to selected files
+            for ( ;; )
+            {
+                Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+                if(Item == -1)
+                    break;
+                SetItemImage(Item, 0);
+            }
+        }
+    }
+
+    void wxCheckListCtrl::OnUnselectAll(wxCommandEvent& WXUNUSED(event))
+    {
+        long Item = -1;
+        if(GetSelectionCount() == 1)
+        {
+            //If user has selected only 1 item, that apply to all files
+            for ( ;; )
+            {
+                Item = GetNextItem(Item);
+                if(Item == -1)
+                    break;
+                SetItemImage(Item, 1);
+            }
+        }
+        else
+        {
+            //If user has selected more than 1 item, that apply to selected files
+            for ( ;; )
+            {
+                Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+                if(Item == -1)
+                    break;
+                SetItemImage(Item, 1);
+            }
+        }
+    }
+
+    void wxCheckListCtrl::OnInvertSelection(wxCommandEvent& event)
+    {
+        long Item = -1;
+        if(GetSelectionCount() == 1)
+        {
+            //If user has selected only 1 item, that apply to all files
+            for ( ;; )
+            {
+                Item = GetNextItem(Item);
+                if(Item == -1)
+                    break;
+
+                wxListItem LItem;
+                LItem.SetId(Item);
+                GetItem(LItem);
+
+                if(LItem.GetImage())
+                    SetItemImage(Item, 0);
+                else
+                    SetItemImage(Item, 1);
+            }
+        }
+        else
+        {
+            //If user has selected more than 1 item, that apply to selected files
+            for ( ;; )
+            {
+                Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+                if(Item == -1)
+                    break;
+
+                wxListItem LItem;
+                LItem.SetId(Item);
+                GetItem(LItem);
+
+                if(LItem.GetImage())
+                    SetItemImage(Item, 0);
+                else
+                    SetItemImage(Item, 1);
+            }
+        }
+    }
+
+    int wxCheckListCtrl::GetSelectionCount()
+    {
+        int Count = 0;
+        long Item = -1;
+        for(;;)
+        {
+            Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+            if(Item == -1)
+                break;
+            else
+                Count++;
+        }
+        return Count;
+    }
+
 }
