@@ -451,55 +451,35 @@ namespace Engine
 
         //Append month
         if(Time.tm_mon + 1 < 10)
-        {
             Temp << 0 << Time.tm_mon + 1;
-        }
         else
-        {
             Temp << Time.tm_mon + 1;
-        }
 
         //Append day
-        if(Time.tm_mday + 1 < 10)
-        {
+        if(Time.tm_mday < 10)
             Temp << 0 << Time.tm_mday;
-        }
         else
-        {
             Temp << Time.tm_mday;
-        }
 
         Temp << "_";
 
         //Append hour
         if(Time.tm_hour < 10)
-        {
             Temp << 0 << Time.tm_hour;
-        }
         else
-        {
             Temp << Time.tm_hour;
-        }
 
         //Append minute
         if(Time.tm_min < 10)
-        {
             Temp << 0 << Time.tm_min;
-        }
         else
-        {
             Temp << Time.tm_min;
-        }
 
         //Append second
         if(Time.tm_sec < 10)
-        {
             Temp << 0 << Time.tm_sec;
-        }
         else
-        {
             Temp << Time.tm_sec;
-        }
 
         str += Temp.str();
 

@@ -134,13 +134,9 @@ bool CtbzPlugin::Compress(const std::string& input, const std::string& output, I
                     } while(In.good());
 
                     if( In.bad() || !In.eof() )
-                    {
                         Ret = false;
-                    }
                     else
-                    {
                         Ret = true;
-                    }
 
                     In.close();
                 }
