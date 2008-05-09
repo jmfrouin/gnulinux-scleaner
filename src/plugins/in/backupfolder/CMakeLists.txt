@@ -1,7 +1,7 @@
 # 
 # This file is part of scleaner project.
 # 
-# Copyright (C) 2007 FROUIN Jean-Michel
+# Copyright (C) 2008 FROUIN Jean-Michel
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,11 +15,9 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
+#
 
-
-SET(folder apt-cache backfiles backupfolder coders emptyfolders kernels logs nullfiles trash crimosoft latex mac)
-
-FOREACH(fold ${folder})
-	ADD_SUBDIRECTORY(${fold})
-ENDFOREACH(fold ${folder})
+SET(backupfolder_src backupfolder.cpp)
+ADD_LIBRARY(backupfolder SHARED ${backupfolder_src}) 
+TARGET_LINK_LIBRARIES(backupfolder plugins tools)
+INSTALL(TARGETS backupfolder DESTINATION ${PLUGSDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
