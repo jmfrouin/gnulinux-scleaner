@@ -7,6 +7,7 @@ ERROR CODE
 
 0.40.0
 Corriger bouton annuler de la progress bar de tbz !
+Ajouter les #if defined DEBUG et passer en RELEASE
 Ajouter un setting dans les pref pour eviter l'utilisation proc a 100%
 Settings folder need to point on ~ and not on /home/snoogie/
 Daemon analysant les fichiers du systeme pour maintenir une liste a jour

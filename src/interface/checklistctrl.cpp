@@ -41,6 +41,9 @@ namespace GUI
         EVT_MOUSE_EVENTS(wxCheckListCtrl::OnMouseEvent)
         EVT_CHAR(wxCheckListCtrl::OnKeyDown)
         EVT_CONTEXT_MENU(wxCheckListCtrl::OnContextMenu)
+        EVT_MENU(ID_SELECT_ALL, wxCheckListCtrl::OnSelectAll)
+        EVT_MENU(ID_UNSELECT_ALL, wxCheckListCtrl::OnUnselectAll)
+        EVT_MENU(ID_INVERT_SELECTION, wxCheckListCtrl::OnInvertSelection)
     END_EVENT_TABLE()
 
     wxCheckListCtrl::wxCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
@@ -183,6 +186,7 @@ namespace GUI
 
     void wxCheckListCtrl::OnUnselectAll(wxCommandEvent& WXUNUSED(event))
     {
+        std::cout << "OnUnselectAll\n";
         long Item = -1;
         if(GetSelectionCount() == 1)
         {
