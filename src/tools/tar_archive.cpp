@@ -191,7 +191,7 @@ namespace Tools
             l_checksumstr = PadWithZeros(l_checksumstr, 8);
             strncpy(_header.chksum, l_checksumstr.c_str(), 8);
 
-            #if defined DEBUG
+            #if defined DEBUG && defined VERBOSE
             std::cout << "[DBG] Mode (8bytes) : " << _header.mode << '\n';
             std::cout << "[DBG] UID (8b) : " << _header.uid << '\n';
             std::cout << "[DBG] GID (8b) : " << _header.gid << '\n';

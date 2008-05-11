@@ -35,35 +35,23 @@ namespace Plugins
         int Size = fInputPlugins.size();
         std::cout << i8n("[DBG] I founded ");
         if(Size > 2)
-        {
             std::cout << Size << i8n(" input plugins : ") << '\n';
-        }
         else
-        {
             std::cout << Size << i8n(" input plugin : ") << '\n';
-        }
         std::map<std::string, IInPlugin*>::iterator It;
         for(It = fInputPlugins.begin(); It != fInputPlugins.end(); ++It)
-        {
             std::cout << "[DBG] " << (*It).first << ": ";
-        }
 
         //Output plugins
         Size = fOutputPlugins.size();
         std::cout << i8n("[DBG] I founded ");
         if(Size > 2)
-        {
             std::cout << Size << i8n(" output plugins : ") << '\n';
-        }
         else
-        {
             std::cout << Size << i8n(" output plugin : ") << '\n';
-        }
         std::map<std::string, IOutPlugin*>::iterator It2;
         for(It2 = fOutputPlugins.begin(); It2 != fOutputPlugins.end(); ++It2)
-        {
-            std::cout << "[DBG] " << (*It2).first << ": ";
-        }
+            std::cout << "[DBG] " << (*It2).first << "\n";
         #endif
     }
 
