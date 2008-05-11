@@ -3,7 +3,7 @@
 
  * Copyright (c) 2004-2005 Andrew Reading.
  * Copyright (c) 2007 Sylvain Beucler.
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -81,41 +81,23 @@ namespace Tools
 
             //  Find out the file permissions.
             if(l_info.st_mode & TUREAD)
-            {
                 l_mode += 400;
-            }
             if(l_info.st_mode & TUWRITE)
-            {
                 l_mode += 200;
-            }
             if(l_info.st_mode & TUEXEC)
-            {
                 l_mode += 100;
-            }
             if(l_info.st_mode & TGREAD)
-            {
                 l_mode += 40;
-            }
             if(l_info.st_mode & TGWRITE)
-            {
                 l_mode += 20;
-            }
             if(l_info.st_mode & TGEXEC)
-            {
                 l_mode += 10;
-            }
             if(l_info.st_mode & TOREAD)
-            {
                 l_mode += 4;
-            }
             if(l_info.st_mode & TOWRITE)
-            {
                 l_mode += 2;
-            }
             if(l_info.st_mode & TOEXEC)
-            {
                 l_mode += 1;
-            }
 
             std::string l_modestr(itos(l_mode));
             l_modestr = PadWithZeros(l_modestr, 8);
@@ -145,9 +127,7 @@ namespace Tools
             _header.typeflag = REGTYPE;
 
             if (S_ISLNK(l_info.st_mode))
-            {
                 _header.typeflag = SYMTYPE;
-            }
             else
             {
                 if (S_ISDIR(l_info.st_mode))
@@ -201,9 +181,7 @@ namespace Tools
 
             // Find the checksum.
             for(l_headerPtr = l_startheaderPtr; (l_headerPtr - l_startheaderPtr) < 512; ++l_headerPtr)
-            {
                 l_checksum += static_cast<int>(*l_headerPtr);
-            }
 
             // Add 256 (2^8)
             l_checksum += 256;
@@ -214,12 +192,12 @@ namespace Tools
             strncpy(_header.chksum, l_checksumstr.c_str(), 8);
 
             #if defined DEBUG
-            std::cout << "Mode (8bytes) : " << _header.mode << '\n';
-            std::cout << "UID (8b) : " << _header.uid << '\n';
-            std::cout << "GID (8b) : " << _header.gid << '\n';
-            std::cout << "Size (12b) : " << _header.size << '\n';
-            std::cout << "Time (12b) : " << _header.mtime << '\n';
-            std::cout << "Checksum : " << _header.chksum << '\n';
+            std::cout << "[DBG] Mode (8bytes) : " << _header.mode << '\n';
+            std::cout << "[DBG] UID (8b) : " << _header.uid << '\n';
+            std::cout << "[DBG] GID (8b) : " << _header.gid << '\n';
+            std::cout << "[DBG] Size (12b) : " << _header.size << '\n';
+            std::cout << "[DBG] Time (12b) : " << _header.mtime << '\n';
+            std::cout << "[DBG] Checksum : " << _header.chksum << '\n';
             #endif
             #endif
             l_ret=true;
@@ -229,7 +207,7 @@ namespace Tools
     }
 
 
-    bool CTarArchive::WriteData(const std::string& _input, const std::string& _output)
+    bool CTarArchive::WriteData(const std::string& _input, const std::string& output)
     {
         bool l_ret = false;
 
@@ -241,11 +219,11 @@ namespace Tools
         posix_header l_header;
         if(FillHeader(_input, l_header))
         {
-            std::ofstream l_out(_output.c_str(), std::ios::out | std::ios::binary | std::ios::app | std::ios::ate);
+            std::ofstream l_out(output.c_str(), std::ios::out | std::ios::binary | std::ios::app | std::ios::ate);
 
             if(!l_out.good())
             {
-                std::cerr << i8n("[ERR] Error output file: ") << _output << '\n';
+                std::cerr << i8n("[ERR] Error output file: ") << output << '\n';
                 l_ret = false;
             }
             else
@@ -265,9 +243,7 @@ namespace Tools
                         int l_AmountToRound = RoundTo512(l_out.tellp()) - l_out.tellp();
 
                         for(int i = 0; i < l_AmountToRound; ++i)
-                        {
                             l_out.put('\0');
-                        }
                     }
 
                     m_FirstFile = true;
@@ -278,9 +254,7 @@ namespace Tools
                     //Append file content
                     char l_char;
                     while(l_in.get(l_char))
-                    {
                         l_out.put(l_char);
-                    }
 
                     l_in.close();
                     l_out.close();
@@ -298,15 +272,15 @@ namespace Tools
     }
 
 
-    bool CTarArchive::CleanClose(const std::string& _output)
+    bool CTarArchive::CleanClose(const std::string& output)
     {
         bool l_ret = false;
 
-        std::ofstream l_out(_output.c_str(), std::ios::out | std::ios::binary | std::ios::app | std::ios::ate);
+        std::ofstream l_out(output.c_str(), std::ios::out | std::ios::binary | std::ios::app | std::ios::ate);
 
         if(!l_out.good())
         {
-            std::cout << i8n("[ERR] Cannot open ") << _output << i8n(" file!") << '\n';
+            std::cout << i8n("[ERR] Cannot open ") << output << i8n(" file!") << '\n';
             l_ret = false;
         }
         else
@@ -326,47 +300,47 @@ namespace Tools
     }
 
 
-    bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& _output, IProgressbar* _callback)
+    bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& output, IProgressbar* callback)
     {
         bool l_ret = false;
-        std::list<std::string>::iterator l_it;
+        std::list<std::string>::iterator It;
         int l_size = _filenames.size();
         int l_done = 0;
         bool l_error = false;
 
-        for(l_it = _filenames.begin(); l_it != _filenames.end(); ++l_it)
+        for(It = _filenames.begin(); It != _filenames.end(); ++It)
         {
             ++l_done;
-            if(!WriteData(*l_it, _output))
+            if(!WriteData(*It, output))
             {
                 l_error = true;
                 break;
             }
-            int l_res = l_done*50/l_size;
-            std::string l_mess(i8n("Adding\n"));
-            l_mess += *l_it;
-            _callback->UpdateProgress(l_mess, false, l_res);
+            int Res = l_done*50/l_size;
+            std::string Mess(i8n("Adding\n"));
+            Mess += *It;
+            bool Continue = callback->UpdateProgress(Mess, false, Res);
+            if(!Continue)
+                break;
             #if defined DEBUG
-            std::cout << *l_it << i8n(" appended to ") << _output << '\n';
+            std::cout <<"[DBG] " <<  *It << i8n(" appended to ") << output << '\n';
             #endif
         }
 
         if(l_error)
         {
-            std::cout << (*l_it) << '\n';
-            unlink(_output.c_str());
-            std::cout << i8n("[ERR] Due to error(s) on WriteData, I delete ") << _output << '\n';
+            std::cout << (*It) << '\n';
+            unlink(output.c_str());
+            std::cout << i8n("[ERR] Due to error(s) on WriteData, I delete ") << output << '\n';
         }
         else
         {
-            if(CleanClose(_output))
-            {
+            if(CleanClose(output))
                 l_ret = true;
-            }
             else
             {
-                unlink(_output.c_str());
-                std::cout << i8n("[ERR] Due to error(s) on CleanClose, I delete ") << _output << '\n';
+                unlink(output.c_str());
+                std::cout << i8n("[ERR] Due to error(s) on CleanClose, I delete ") << output << '\n';
                 l_ret = false;
             }
         }
