@@ -762,13 +762,9 @@ namespace GUI
         wxString Message(mess.c_str(), wxConvUTF8);
         bool Continue;
         if(pulse)
-        {
             Continue = fProgress->Pulse(Message, 0);
-        }
         else
-        {
             Continue = fProgress->Update(nb, Message, 0);
-        }
 
         if(!Continue)
         {
