@@ -56,11 +56,12 @@ namespace Engine
     CEngine::~CEngine()
     {
         #if defined DEBUG
-        std::cout << "~CEngine\n";
+        std::cout << "[DBG] ~CEngine\n";
         std::list<std::string>::iterator It;
+        std::cout << "[DBG] fUnselectedInputPlugs : \n";
         for(It = fUnselectedInputPlugs.begin(); It != fUnselectedInputPlugs.end(); ++It)
         {
-            std::cout << *It << '\n';
+            std::cout << "[DBG]" << *It << '\n';
         }
         #endif
     }

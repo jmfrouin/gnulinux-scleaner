@@ -9,9 +9,8 @@ ERROR CODE
 Corriger bouton annuler de la progress bar de tbz !
 Ajouter les #if defined DEBUG et passer en RELEASE
 Ajouter un setting dans les pref pour eviter l'utilisation proc a 100%
-Settings folder need to point on ~ and not on /home/snoogie/
 Daemon analysant les fichiers du systeme pour maintenir une liste a jour
-Find a way to keep a matrix of file / size / crc 
+Find a way to keep a matrix of file / size / crc
 Find a way to faster find 2 identical int in a int list, faster than N!
 Improve total file size
 Replace CRC32 by MD5 or SHA, and add an option to limit checksum control on first 10 Kb.
@@ -19,8 +18,9 @@ Check memory leaks and FIXME in code
 - pour le moment si on déplace la sélection avec les flèches, et on commute avec la barre d'espace, les fichiers à sélectionner ne se déplacent pas (de façon générale les sélections par clavier ne fonctionnent pas bien)
 - possibilité de sauvegarder un tgz individuel dans chaque sous-dossier (par exemple si j'ai /home/moi/docs/fichier1.bak /home/moi/docs/fichier2.bak /home/moi/docs/fichier3.bak cela sauvegarde les fichiers temporaires dans /home/moi/docs/backup_bak.tgz et ainsi de suite pour chaque dossier au lieu d'avoir un seul gros fichier de backup)
 - pour les logs, possibilité de garder le log en cours et d'effacer les archives de ces logs (les .1.gz etc)
-slint est en effet excellent (et il y en a plein d'autres, à la finddupes, duper, dupefinder, etc.), mais ces programmes ne permettent pas de répondre de manière synthétique lorsqu'une arborescence complète est dupliquée (et impossible de modifier l'énorme pipe de fslint dans ce sens...). 
+slint est en effet excellent (et il y en a plein d'autres, à la finddupes, duper, dupefinder, etc.), mais ces programmes ne permettent pas de répondre de manière synthétique lorsqu'une arborescence complète est dupliquée (et impossible de modifier l'énorme pipe de fslint dans ce sens...).
 Ils ne permettent généralement pas non plus de renvoyer les doublons entre ton disque et des fichiers gravés sur CD/DVD.
+OK: Settings folder need to point on ~ and not on /home/snoogie/
 OK: Plugin : .doc, .xls, ou alors les fichiers temps pour latex, .aux, ou les immondes ._dstore de mac os x etc)
 OK: facilités de sélections par dossiers / sous dossiers (là c'est fichier par fichier ..)
 OK: facilité de sélection par plage, avec shift etc (comme dans konqueror par exemple)
@@ -29,7 +29,7 @@ OK: Include only some folder in scan.
 OK: Exclude only some folder from scan.
 OK: Build counter implemented in CMakeLists.txt file.
 OK: Add entries in wikipedia fr / en
-OK: filtre de recherche de fichiers temps dans des répertoires suivant divers critères : dossiers perso, dossiers systèmes, exclure un répertoire, 
+OK: filtre de recherche de fichiers temps dans des répertoires suivant divers critères : dossiers perso, dossiers systèmes, exclure un répertoire,
 PARTIAL : Add CRC in checklistbox
 PARTIAL: Tri par colonnes (taille, crc32)
 PARTIAL: tout ceci avec par exemple une sélection ou une non sélection par défaut (les ~ automatiquement sélectionnés, les .aux automatiquements non sélectionnés)

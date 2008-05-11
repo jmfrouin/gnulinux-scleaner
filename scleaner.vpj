@@ -204,6 +204,11 @@
 			Name="Source Files"
 			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl">
 			<Folder
+				Name="cmake"
+				Filters="">
+				<F N="src/cmake/FindAPT.cmake"/>
+			</Folder>
+			<Folder
 				Name="DEBIAN"
 				Filters="">
 				<F N="DEBIAN/changelog"/>
@@ -213,11 +218,6 @@
 				<F N="DEBIAN/dirs"/>
 				<F N="DEBIAN/postinst"/>
 				<F N="DEBIAN/rules"/>
-			</Folder>
-			<Folder
-				Name="cmake"
-				Filters="">
-				<F N="src/cmake/FindAPT.cmake"/>
 			</Folder>
 			<Folder
 				Name="engine"
@@ -396,6 +396,7 @@
 			<F N="src/scleaner_wx.cpp"/>
 			<F N="src/scleaner_wx.h"/>
 			<F N="src/sudo_scleaner.desktop"/>
+			<F N="TODO"/>
 			<F N="src/update_build.sh"/>
 		</Folder>
 		<F

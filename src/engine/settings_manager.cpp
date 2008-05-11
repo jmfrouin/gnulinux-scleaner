@@ -46,7 +46,6 @@ namespace Engine
         std::string Config(Path);
         Config += "/.scleaner/prefs.conf";
 
-
         std::ifstream File(Config.c_str());
         unsigned int Label;
 
@@ -56,9 +55,7 @@ namespace Engine
             {
                 File >> Label;
                 if(File.eof() == true)
-                {
                     break;
-                }
                 std::string Folder;
                 switch(Label)
                 {
@@ -79,6 +76,9 @@ namespace Engine
                     case eShowStatusbar:
                         File >> fShowStatusbar;
                         break;
+                    case eDelete:
+                        File >> fDelete;
+                        break;
                     default:
                         continue;
                 }
@@ -92,10 +92,11 @@ namespace Engine
         }
 
         #if defined DEBUG
-        std::cout << "Loading pref : \n";
-        std::cout << "fShowSplash = " << fShowSplash << '\n';
-        std::cout << "fShowToolbar = " << fShowToolbar << '\n';
-        std::cout << "fShowStatusbar = " << fShowStatusbar << '\n';
+        std::cout << "[DBG] Loading pref : \n";
+        std::cout << "[DBG] fShowSplash = " << fShowSplash << '\n';
+        std::cout << "[DBG] fShowToolbar = " << fShowToolbar << '\n';
+        std::cout << "[DBG] fShowStatusbar = " << fShowStatusbar << '\n';
+        std::cout << "[DBG] fDelete = " << fDelete << '\n';
         #endif
     }
 
@@ -121,23 +122,24 @@ namespace Engine
 
         std::ofstream File(Config.c_str());
 
-        //Splash screen
-        File << eShowSplash << ' ' << fShowSplash << '\n';
-
         //Debug
         #if defined DEBUG
-        std::cout << "Saving pref\n";
-        std::cout << "fShowSplash = " << fShowSplash << '\n';
-        std::cout << "fShowToolbar = " << fShowToolbar << '\n';
-        std::cout << "fShowStatusbar = " << fShowStatusbar << '\n';
+        std::cout << "[DBG] Saving pref\n";
+        std::cout << "[DBG] fShowSplash = " << fShowSplash << '\n';
+        std::cout << "[DBG] fShowToolbar = " << fShowToolbar << '\n';
+        std::cout << "[DBG] fShowStatusbar = " << fShowStatusbar << '\n';
+        std::cout << "[DBG] fDelete = " << fDelete << '\n';
         #endif
+
+        //Write splash screen
+        File << eShowSplash << ' ' << fShowSplash << '\n';
 
         //Folders include in scan
         std::list<std::string>::iterator It;
         for(It = fFoldersList.begin(); It != fFoldersList.end(); ++It)
         {
             #if defined DEBUG
-            std::cout << "Adding :" << *It << '\n';
+            std::cout << "[DBG] Adding :" << *It << '\n';
             #endif
             File << eFolderInc << ' ' << *It << '\n';
         }
@@ -146,7 +148,7 @@ namespace Engine
         for(It = fExcludedFoldersList.begin(); It != fExcludedFoldersList.end(); ++It)
         {
             #if defined DEBUG
-            std::cout << "Excluding :" << *It << '\n';
+            std::cout << "[DBG] Excluding :" << *It << '\n';
             #endif
             File << eFolderEx << ' ' << *It << '\n';
         }
@@ -156,6 +158,9 @@ namespace Engine
 
         //Show status bar
         File << eShowStatusbar << ' ' << fShowStatusbar << '\n';
+
+        //Delete files after output plugin
+        File << eDelete << ' ' << fDelete << '\n';
     }
 
 
@@ -213,16 +218,12 @@ namespace Engine
                     FileList->erase(It2erase);
                 }
                 else
-                {
                     ++It;
-                }
             }while(It != FileList->end());
         }
 
         if(Ret)
-        {
             FileList->push_back(dir);
-        }
         else
         {
             //If a parent folder is found, no need to add is child.

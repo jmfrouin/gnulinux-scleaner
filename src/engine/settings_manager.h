@@ -47,7 +47,8 @@ namespace Engine
                 eFolderInc,
                 eFolderEx,
                 eShowToolbar,
-                eShowStatusbar
+                eShowStatusbar,
+                eDelete
             };
 
             enum eFoldersType
