@@ -372,16 +372,10 @@ namespace Tools
         int l_padsize = l_size - _s.size();
 
         if(_s.size() <= _size)
-        {
             for(int i = 0; i < l_padsize; ++i)
-            {
                 l_ret.append(1, '0');
-            }
-        }
         else
-        {
             return static_cast<std::string>(0);
-        }
 
         l_ret.append(_s);
 
@@ -392,13 +386,9 @@ namespace Tools
     int CTarArchive::RoundTo512(int n)
     {
         if(n % 512 == 0)
-        {
             return n;
-        }
         else
-        {
             return (n - (n % 512)) + 512;
-        }
     }
 }
 

@@ -129,7 +129,9 @@ bool CtbzPlugin::Compress(const std::string& input, const std::string& output, I
                         std::stringstream DoneStr;
                         DoneStr << (Result-50)*2;
                         Mess += output + " :  " + DoneStr.str() + "%";
-                        callback->UpdateProgress(Mess, false, Result);
+                        bool Continue = callback->UpdateProgress(Mess, false, Result);
+                        if(!Continue)
+                            break;
                         BZ2_bzWrite(&Err, BZ, Buffer, BytesRead);
                     } while(In.good());
 
