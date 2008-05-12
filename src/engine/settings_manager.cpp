@@ -91,7 +91,7 @@ namespace Engine
             fExcludedFoldersList.push_back(Path);
         }
 
-        #if defined DEBUG
+        #if defined DEBUG && defined VERBOSE
         std::cout << "[DBG] Loading pref : \n";
         std::cout << "[DBG] fShowSplash = " << fShowSplash << '\n';
         std::cout << "[DBG] fShowToolbar = " << fShowToolbar << '\n';
@@ -123,7 +123,7 @@ namespace Engine
         std::ofstream File(Config.c_str());
 
         //Debug
-        #if defined DEBUG
+        #if defined DEBUG && defined VERBOSE
         std::cout << "[DBG] Saving pref\n";
         std::cout << "[DBG] fShowSplash = " << fShowSplash << '\n';
         std::cout << "[DBG] fShowToolbar = " << fShowToolbar << '\n';

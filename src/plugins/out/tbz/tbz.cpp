@@ -62,9 +62,7 @@ void CtbzPlugin::ProcessFileList(std::list<std::string>& fl, const std::string& 
             unlink(Del.c_str());
         }
         else
-        {
             std::cerr << i8n("[ERR] An error occured during compression so I left ") << path + "/backup_" + Date + ".tar" << '\n';
-        }
     }
 }
 

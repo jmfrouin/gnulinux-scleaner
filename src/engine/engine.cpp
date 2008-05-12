@@ -329,7 +329,9 @@ namespace Engine
         {
             if(Path.find(*ItExcludeFolders) != std::string::npos)
             {
+                #if defined DEBUG && defined VERBOSE
                 std::cout << "Skip " << Path << " because I found " << *ItExcludeFolders << '\n';
+                #endif
                 return Ret;                // To tell nftw() to continue
             }
         }
@@ -352,7 +354,7 @@ namespace Engine
             }
         }
 
-        #if defined DEBUG
+        #if defined DEBUG && defined VERBOSE
         std::cout << i8n("[DBG] FTW_callback : ") << Path << '\n';
         #endif
 
@@ -537,7 +539,7 @@ namespace Engine
             }
         }
         In.close();
-        #if defined DEBUG
+        #if defined DEBUG && defined VERBOSE
         std::cout << "[DBG] calcCRC32 : CRC32 for " << filename << " = " << crc << '\n';
         #endif
     }
@@ -545,7 +547,7 @@ namespace Engine
 
     void CEngine::AddFileInfo(const std::string& file, unsigned long crc)
     {
-        #if defined DEBUG
+        #if defined DEBUG && defined VERBOSE
         std::cout << "[DBG] addFileInfo : " << file << " " << crc << '\n';
         #endif
         fInfos.insert(make_pair(file, crc));
@@ -557,7 +559,7 @@ namespace Engine
         int Ret = 0;
 
         #if defined DEBUG
-        std::cout << "DBG detectDuplicates : Detect duplicate " << std::endl;
+        std::cout << "[DBG] detectDuplicates : Detect duplicate " << std::endl;
         #endif
 
         std::map<std::string, unsigned long>::iterator It;
@@ -601,16 +603,8 @@ namespace Engine
 
     std::map<std::string, Plugins::IInPlugin*>* CEngine::GetSelectedInputPlugs(bool refresh)
     {
-        #if defined DEBUG
-        std::cout << "getSelectedInputPlugs\n";
-        #endif
-
         if(refresh || !fSelInPlugins)
         {
-            #if defined DEBUG
-            std::cout << "getSelectedInputPlugs : refresh\n";
-            #endif
-
             //First clear the map
             fSelectedInputPlugs.clear();
 
@@ -627,22 +621,16 @@ namespace Engine
                     {
                         Unsel = true;
 
-                        #if defined DEBUG
-                        std::cout << *It2 << " is unselected !!\n";
+                        #if defined DEBUG && defined VERBOSE
+                        std::cout << "[DBG] " << *It2 << " is unselected !!\n";
                         #endif
 
                         break;
                     }
                 }
 
-                #if defined DEBUG
-                std::cout << '\n';
-                #endif
-
                 if(!Unsel)
-                {
                     fSelectedInputPlugs.insert(make_pair(It->first, It->second));
-                }
             }
             fSelInPlugins = true;
         }

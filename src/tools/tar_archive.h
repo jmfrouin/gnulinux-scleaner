@@ -70,11 +70,11 @@ namespace Tools
 
             /*!
              *@brief Compute file header.
-             *@param _filename File name.
-             *@param _header The header to fill.
+             *@param filename File name.
+             *@param header The header to fill.
              *@return true on success, false otherwise.
              */
-            bool FillHeader(const std::string& _filename, posix_header& _header);
+            bool FillHeader(const std::string& filename, posix_header& header);
 
             /*!
              *@brief Write data from an input file to the output .tar.

@@ -30,7 +30,7 @@ namespace Plugins
 {
     CPluginManager::~CPluginManager()
     {
-        #if defined DEBUG
+        #if defined DEBUG && defined VERBOSE
         //Input plugins
         int Size = fInputPlugins.size();
         std::cout << i8n("[DBG] I founded ");

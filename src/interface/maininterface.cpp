@@ -370,7 +370,6 @@ namespace GUI
     //Toolbar
     void CMainInterface::OnScan(wxCommandEvent& WXUNUSED(event))
     {
-        std::cout << "OnScan\n";
         fFoundFiles->DeleteAllPages();
         fProgress = new wxProgressDialog(wxString(i8n("scleaner scan your disk ..."), wxConvUTF8),
             wxString(i8n("this is a information"), wxConvUTF8), 100, this,
@@ -378,7 +377,6 @@ namespace GUI
             );
 
         fEngine->ScanDisk(this);
-        std::cout << "ScanDisk\n";
 
         delete fProgress;
         fProgress = 0;
@@ -396,7 +394,7 @@ namespace GUI
             std::list<std::string>::iterator It2;
 
 
-            #if defined DEBUG
+            #if defined DEBUG && defined VERBOSE
             std::cout << i8n("[DBG] Size = ") << List.size() << '\n';
             #endif
             ResultCheckListCtrl* FilesList = new ResultCheckListCtrl(fFoundFiles, ID_RESCHECKLIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
@@ -489,21 +487,15 @@ namespace GUI
 
     void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
     {
-        //GetToolBar()->SetToolShortHelp(wxID_NEW, _T("New toolbar button"));
-        #if defined DEBUG
-        std::cout << i8n("[DBG] Process !!! ") << '\n';
-        #endif
         std::list<std::string> SelectionectedFiles;
         //GetSelectedFilesRecursively(fFoundFiles->GetRootItem(), SelectionectedFiles);
         GetSelectedFiles(SelectionectedFiles);
 
-        #if defined DEBUG
+        #if defined DEBUG && defined VERBOSE
         std::cout << i8n("[DBG] You have selected: ") << '\n';
         std::list<std::string>::iterator It;
         for(It = SelectionectedFiles.begin(); It != SelectionectedFiles.end(); ++It)
-        {
             std::cout << "[DBG] " << *It << '\n';
-        }
         #endif
 
         fProgress = new wxProgressDialog(wxString(i8n("scleaner process your files ..."), wxConvUTF8),
@@ -531,9 +523,7 @@ namespace GUI
 
         wxString Message;
         if(Engine::CEngine::IsRoot())
-        {
             Message = _T("/root/");
-        }
         else
         {
             std::string Path("/home");
@@ -666,9 +656,7 @@ namespace GUI
                 wxMessageBox(Text, wxString(i8n("scleaner information"), wxConvUTF8), wxICON_INFORMATION);
             }
             else
-            {
                 UpdateFolderList();
-            }
         }
     }
 
@@ -693,9 +681,7 @@ namespace GUI
         }
 
         if(Refresh)
-        {
             UpdateFolderList();
-        }
     }
 
 
@@ -718,9 +704,7 @@ namespace GUI
                 wxMessageBox(Text, wxString(i8n("scleaner information"), wxConvUTF8), wxICON_INFORMATION);
             }
             else
-            {
                 UpdateFolderList();
-            }
         }
     }
 
@@ -745,9 +729,7 @@ namespace GUI
         }
 
         if(Refresh)
-        {
             UpdateFolderList();
-        }
     }
 
 
@@ -791,9 +773,7 @@ namespace GUI
 
         std::map<std::string, Plugins::IInPlugin*>::iterator It;
         for(It = fEngine->GetAvailableInputPlugs()->begin(); It != fEngine->GetAvailableInputPlugs()->end(); ++It)
-        {
             PluginList.push_back((*It).first);
-        }
 
         CSelectDialog SelectionDlg(wxString(i8n("Select input plugins to use"), wxConvUTF8), PluginList);
         SelectionDlg.Show(true);
@@ -824,9 +804,7 @@ namespace GUI
                     }
                 }
                 else
-                {
                     std::cerr << i8n("[ERR] CMainInterface::GetSelectedFiles GetItem !!") << '\n';
-                }
             }
         }
     }

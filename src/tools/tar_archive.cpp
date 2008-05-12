@@ -41,9 +41,9 @@ namespace Tools
 
     bool CTarArchive::FillHeader(const std::string& _filename, posix_header& _header)
     {
-        bool l_ret = false;
+        bool Ret = false;
 
-        #if defined DEBUG
+        #if defined DEBUG && defined VERBOSE
         std::cout << i8n("[DBG]File header for ") << _filename << " :" << '\n';
         #endif
 
@@ -55,7 +55,7 @@ namespace Tools
         if(stat(_filename.c_str(), &l_info) == -1)
         {
             std::cout << i8n("[WNG] Cannot stat file: ") << _filename.c_str() << i8n(" so I skip it !") << '\n';
-            l_ret = false;
+            Ret = false;
         }
         else
         {
@@ -114,9 +114,9 @@ namespace Tools
             strncpy(_header.gid, l_gid.c_str(), 8);
 
             // File Size.
-            std::string l_size = DecToOct(l_info.st_size);
-            l_size = PadWithZeros(l_size, 12);
-            strncpy(_header.size, l_size.c_str(), 12);
+            std::string Size = DecToOct(l_info.st_size);
+            Size = PadWithZeros(Size, 12);
+            strncpy(_header.size, Size.c_str(), 12);
 
             // Time of modification
             std::string l_mtime = DecToOct(time(0));
@@ -200,16 +200,16 @@ namespace Tools
             std::cout << "[DBG] Checksum : " << _header.chksum << '\n';
             #endif
             #endif
-            l_ret=true;
+            Ret=true;
         }
 
-        return l_ret;
+        return Ret;
     }
 
 
     bool CTarArchive::WriteData(const std::string& _input, const std::string& output)
     {
-        bool l_ret = false;
+        bool Ret = false;
 
         /*int iAmountToRound = 0;
         static bool bFirstEntry = true;
@@ -224,7 +224,7 @@ namespace Tools
             if(!l_out.good())
             {
                 std::cerr << i8n("[ERR] Error output file: ") << output << '\n';
-                l_ret = false;
+                Ret = false;
             }
             else
             {
@@ -233,7 +233,7 @@ namespace Tools
                 if(!l_in.good())
                 {
                     std::cerr << i8n("[WNG] Error in file: ") << _input << i8n(" (file is skipped)") << '\n';
-                    l_ret = true; // If we cannot read a file it's not vital, we skip, but we need to inform user !
+                    Ret = true; // If we cannot read a file it's not vital, we skip, but we need to inform user !
                 }
                 else
                 {
@@ -258,30 +258,30 @@ namespace Tools
 
                     l_in.close();
                     l_out.close();
-                    l_ret = true;
+                    Ret = true;
                 }
             }
         }
         else
         {
             std::cerr << i8n("[WNG] File '") << _input << i8n("' hasn't been add to tar archive !") << '\n';
-            l_ret = true; // If we cannot compute header, we skip it.
+            Ret = true; // If we cannot compute header, we skip it.
         }
 
-        return l_ret;
+        return Ret;
     }
 
 
     bool CTarArchive::CleanClose(const std::string& output)
     {
-        bool l_ret = false;
+        bool Ret = false;
 
         std::ofstream l_out(output.c_str(), std::ios::out | std::ios::binary | std::ios::app | std::ios::ate);
 
         if(!l_out.good())
         {
             std::cout << i8n("[ERR] Cannot open ") << output << i8n(" file!") << '\n';
-            l_ret = false;
+            Ret = false;
         }
         else
         {
@@ -294,92 +294,96 @@ namespace Tools
             l_out.put('\0');
             l_out.put('\0');
             l_out.close();
-            l_ret = true;
+            Ret = true;
         }
-        return l_ret;
+        return Ret;
     }
 
 
-    bool CTarArchive::Create(std::list<std::string> _filenames, const std::string& output, IProgressbar* callback)
+    bool CTarArchive::Create(std::list<std::string> filenames, const std::string& output, IProgressbar* callback)
     {
-        bool l_ret = false;
+        bool Ret = false;
         std::list<std::string>::iterator It;
-        int l_size = _filenames.size();
-        int l_done = 0;
-        bool l_error = false;
+        int Size = filenames.size();
+        int Done = 0;
+        bool Error = false;
+        bool Continue;
 
-        for(It = _filenames.begin(); It != _filenames.end(); ++It)
+        for(It = filenames.begin(); It != filenames.end(); ++It)
         {
-            ++l_done;
+            ++Done;
             if(!WriteData(*It, output))
             {
-                l_error = true;
+                Error = true;
                 break;
             }
-            int Res = l_done*50/l_size;
+            int Res = Done*50/Size;
             std::string Mess(i8n("Adding\n"));
             Mess += *It;
-            bool Continue = callback->UpdateProgress(Mess, false, Res);
+            Continue = callback->UpdateProgress(Mess, false, Res);
             if(!Continue)
                 break;
-            #if defined DEBUG
+            #if defined DEBUG && defined VERBOSE
             std::cout <<"[DBG] " <<  *It << i8n(" appended to ") << output << '\n';
             #endif
         }
 
-        if(l_error)
+        if(Error | !Continue)
         {
-            std::cout << (*It) << '\n';
             unlink(output.c_str());
-            std::cout << i8n("[ERR] Due to error(s) on WriteData, I delete ") << output << '\n';
+            if(Error)
+                std::cout << i8n("[ERR] Due to error(s) on WriteData, I delete ") << output << '\n';
+            else
+                std::cout << i8n("[ERR] User cancel so I delete ") << output << '\n';
+            Ret = false;
         }
         else
         {
             if(CleanClose(output))
-                l_ret = true;
+                Ret = true;
             else
             {
                 unlink(output.c_str());
                 std::cout << i8n("[ERR] Due to error(s) on CleanClose, I delete ") << output << '\n';
-                l_ret = false;
+                Ret = false;
             }
         }
-        return l_ret;
+        return Ret;
     }
 
 
     //Simplify manipulation :
     std::string CTarArchive::itos(int _nb)
     {
-        std::stringstream l_ret;
-        l_ret << _nb;
-        return l_ret.str();
+        std::stringstream Ret;
+        Ret << _nb;
+        return Ret.str();
     }
 
 
     std::string CTarArchive::DecToOct(int _nb)
     {
-        std::stringstream l_ret;
-        l_ret << std::oct << _nb;
-        return l_ret.str();
+        std::stringstream Ret;
+        Ret << std::oct << _nb;
+        return Ret.str();
     }
 
 
     std::string CTarArchive::PadWithZeros(std::string& _s, unsigned int _size)
     {
-        std::string l_ret;
-        int l_size = _size - 1;
-        int l_padsize = l_size - _s.size();
+        std::string Ret;
+        int Size = _size - 1;
+        int l_padsize = Size - _s.size();
 
         if(_s.size() <= _size)
             for(int i = 0; i < l_padsize; ++i)
-                l_ret.append(1, '0');
+                Ret.append(1, '0');
         else
             return static_cast<std::string>(0);
 
-        l_ret.append(_s);
+        Ret.append(_s);
 
-        return l_ret;
+        return Ret;
     }
 
 
