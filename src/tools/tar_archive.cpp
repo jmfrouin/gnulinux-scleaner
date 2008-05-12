@@ -39,149 +39,149 @@ namespace Tools
     }
 
 
-    bool CTarArchive::FillHeader(const std::string& _filename, posix_header& _header)
+    bool CTarArchive::FillHeader(const std::string& filename, posix_header& header)
     {
         bool Ret = false;
 
         #if defined DEBUG && defined VERBOSE
-        std::cout << i8n("[DBG]File header for ") << _filename << " :" << '\n';
+        std::cout << i8n("[DBG]File header for ") << filename << " :" << '\n';
         #endif
 
-        struct stat l_info;
+        struct stat Info;
 
-        memset(&_header, 0, 512);
+        memset(&header, 0, 512);
 
         //Try to stat file.
-        if(stat(_filename.c_str(), &l_info) == -1)
+        if(stat(filename.c_str(), &Info) == -1)
         {
-            std::cout << i8n("[WNG] Cannot stat file: ") << _filename.c_str() << i8n(" so I skip it !") << '\n';
+            std::cout << i8n("[WNG] Cannot stat file: ") << filename.c_str() << i8n(" so I skip it !") << '\n';
             Ret = false;
         }
         else
         {
-            std::string l_name(_filename);
+            std::string l_name(filename);
 
             #if defined WIN32
             // No UID or GID support for Windows - Hack it up.
-            strncpy(_header.mode, "0100777", 8);
-            strncpy(_header.uid, "0000000", 8);
-            strncpy(_header.gid, "0000000", 8);
+            strncpy(header.mode, "0100777", 8);
+            strncpy(header.uid, "0000000", 8);
+            strncpy(header.gid, "0000000", 8);
             #else
-            int l_mode = 0;
+            int Mode = 0;
 
             //Never reached ?
-            if(!(l_info.st_mode & S_IFREG))
+            if(!(Info.st_mode & S_IFREG))
             {
                 // Not a normal file.  Let's archive it anyway, but warn the user.
                 std::cout << i8n("[WNG] Archiving non-ordinary file (Linked or Device file?)") << '\n';
             }
 
             // Add the normal file bit.
-            l_mode += 100000;
+            Mode += 100000;
 
             //  Find out the file permissions.
-            if(l_info.st_mode & TUREAD)
-                l_mode += 400;
-            if(l_info.st_mode & TUWRITE)
-                l_mode += 200;
-            if(l_info.st_mode & TUEXEC)
-                l_mode += 100;
-            if(l_info.st_mode & TGREAD)
-                l_mode += 40;
-            if(l_info.st_mode & TGWRITE)
-                l_mode += 20;
-            if(l_info.st_mode & TGEXEC)
-                l_mode += 10;
-            if(l_info.st_mode & TOREAD)
-                l_mode += 4;
-            if(l_info.st_mode & TOWRITE)
-                l_mode += 2;
-            if(l_info.st_mode & TOEXEC)
-                l_mode += 1;
+            if(Info.st_mode & TUREAD)
+                Mode += 400;
+            if(Info.st_mode & TUWRITE)
+                Mode += 200;
+            if(Info.st_mode & TUEXEC)
+                Mode += 100;
+            if(Info.st_mode & TGREAD)
+                Mode += 40;
+            if(Info.st_mode & TGWRITE)
+                Mode += 20;
+            if(Info.st_mode & TGEXEC)
+                Mode += 10;
+            if(Info.st_mode & TOREAD)
+                Mode += 4;
+            if(Info.st_mode & TOWRITE)
+                Mode += 2;
+            if(Info.st_mode & TOEXEC)
+                Mode += 1;
 
-            std::string l_modestr(itos(l_mode));
-            l_modestr = PadWithZeros(l_modestr, 8);
-            strncpy(_header.mode, l_modestr.c_str(), 8);
+            std::string Modestr(itos(Mode));
+            Modestr = PadWithZeros(Modestr, 8);
+            strncpy(header.mode, Modestr.c_str(), 8);
 
             //UID
-            std::string l_uid(DecToOct(l_info.st_uid));
+            std::string l_uid(DecToOct(Info.st_uid));
             l_uid = PadWithZeros(l_uid, 8);
-            strncpy(_header.uid, l_uid.c_str(), 8);
+            strncpy(header.uid, l_uid.c_str(), 8);
 
             //GID
-            std::string l_gid(DecToOct(l_info.st_gid));
+            std::string l_gid(DecToOct(Info.st_gid));
             l_gid = PadWithZeros(l_gid, 8);
-            strncpy(_header.gid, l_gid.c_str(), 8);
+            strncpy(header.gid, l_gid.c_str(), 8);
 
             // File Size.
-            std::string Size = DecToOct(l_info.st_size);
+            std::string Size = DecToOct(Info.st_size);
             Size = PadWithZeros(Size, 12);
-            strncpy(_header.size, Size.c_str(), 12);
+            strncpy(header.size, Size.c_str(), 12);
 
             // Time of modification
             std::string l_mtime = DecToOct(time(0));
             l_mtime = PadWithZeros(l_mtime, 12);
-            strncpy(_header.mtime, l_mtime.c_str(), 12);
+            strncpy(header.mtime, l_mtime.c_str(), 12);
 
             // Type of file.
-            _header.typeflag = REGTYPE;
+            header.typeflag = REGTYPE;
 
-            if (S_ISLNK(l_info.st_mode))
-                _header.typeflag = SYMTYPE;
+            if (S_ISLNK(Info.st_mode))
+                header.typeflag = SYMTYPE;
             else
             {
-                if (S_ISDIR(l_info.st_mode))
+                if (S_ISDIR(Info.st_mode))
                 {
-                    _header.typeflag = DIRTYPE;
+                    header.typeflag = DIRTYPE;
                     l_name += "/";
                 }
             }
 
-            strncpy(_header.name, l_name.c_str(), 100);
+            strncpy(header.name, l_name.c_str(), 100);
 
-            strncpy(_header.linkname, "", 100);
+            strncpy(header.linkname, "", 100);
 
             // Magic
-            strncpy(_header.magic, TMAGIC, TMAGLEN);
+            strncpy(header.magic, TMAGIC, TMAGLEN);
 
-            strncpy(_header.version, TVERSION, TVERSLEN);
+            strncpy(header.version, TVERSION, TVERSLEN);
 
             // Windows again, let's cheat.
             #if defined WIN32
-            strncpy(_header.uname, "root", 32);
-            strncpy(_header.gname, "root", 32);
+            strncpy(header.uname, "root", 32);
+            strncpy(header.gname, "root", 32);
             #else
-            passwd* l_pwdFileInfo = getpwuid(l_info.st_uid);
-            group* l_grpFileInfo = getgrgid(l_info.st_gid);
+            passwd* l_pwdFileInfo = getpwuid(Info.st_uid);
+            group* l_grpFileInfo = getgrgid(Info.st_gid);
 
             if(!l_pwdFileInfo || !l_grpFileInfo)
             {
                 // No entry.  Let's fake it.
-                strncpy(_header.uname, _header.uid, 32);
-                strncpy(_header.gname, _header.gid, 32);
+                strncpy(header.uname, header.uid, 32);
+                strncpy(header.gname, header.gid, 32);
             }
             else
             {
-                strncpy(_header.uname, l_pwdFileInfo->pw_name, 32);
-                strncpy(_header.gname, l_grpFileInfo->gr_name, 32);
+                strncpy(header.uname, l_pwdFileInfo->pw_name, 32);
+                strncpy(header.gname, l_grpFileInfo->gr_name, 32);
             }
             #endif
 
             // Skip devminor and devmajor.
-            strncpy(_header.devmajor, "", 8);
-            strncpy(_header.devminor, "", 8);
+            strncpy(header.devmajor, "", 8);
+            strncpy(header.devminor, "", 8);
 
             // Fill the prefix.
-            strncpy(_header.prefix, "", 167);
+            strncpy(header.prefix, "", 167);
 
             // Initialize our pointer.
-            char* l_startheaderPtr = reinterpret_cast<char*>(&_header);
-            char* l_headerPtr ;
+            char* l_startheaderPtr = reinterpret_cast<char*>(&header);
+            char* lheaderPtr ;
             int l_checksum = 0;
 
             // Find the checksum.
-            for(l_headerPtr = l_startheaderPtr; (l_headerPtr - l_startheaderPtr) < 512; ++l_headerPtr)
-                l_checksum += static_cast<int>(*l_headerPtr);
+            for(lheaderPtr = l_startheaderPtr; (lheaderPtr - l_startheaderPtr) < 512; ++lheaderPtr)
+                l_checksum += static_cast<int>(*lheaderPtr);
 
             // Add 256 (2^8)
             l_checksum += 256;
@@ -189,15 +189,15 @@ namespace Tools
             // Get it to Octal.
             std::string l_checksumstr = DecToOct(l_checksum);
             l_checksumstr = PadWithZeros(l_checksumstr, 8);
-            strncpy(_header.chksum, l_checksumstr.c_str(), 8);
+            strncpy(header.chksum, l_checksumstr.c_str(), 8);
 
             #if defined DEBUG && defined VERBOSE
-            std::cout << "[DBG] Mode (8bytes) : " << _header.mode << '\n';
-            std::cout << "[DBG] UID (8b) : " << _header.uid << '\n';
-            std::cout << "[DBG] GID (8b) : " << _header.gid << '\n';
-            std::cout << "[DBG] Size (12b) : " << _header.size << '\n';
-            std::cout << "[DBG] Time (12b) : " << _header.mtime << '\n';
-            std::cout << "[DBG] Checksum : " << _header.chksum << '\n';
+            std::cout << "[DBG] Mode (8bytes) : " << header.mode << '\n';
+            std::cout << "[DBG] UID (8b) : " << header.uid << '\n';
+            std::cout << "[DBG] GID (8b) : " << header.gid << '\n';
+            std::cout << "[DBG] Size (12b) : " << header.size << '\n';
+            std::cout << "[DBG] Time (12b) : " << header.mtime << '\n';
+            std::cout << "[DBG] Checksum : " << header.chksum << '\n';
             #endif
             #endif
             Ret=true;
@@ -216,8 +216,8 @@ namespace Tools
         std::fstream f_In, f_Out;
         std::string strData = strTarfile;*/
 
-        posix_header l_header;
-        if(FillHeader(_input, l_header))
+        posix_header lheader;
+        if(FillHeader(_input, lheader))
         {
             std::ofstream l_out(output.c_str(), std::ios::out | std::ios::binary | std::ios::app | std::ios::ate);
 
@@ -249,7 +249,7 @@ namespace Tools
                     m_FirstFile = true;
 
                     //Write header
-                    l_out.write(reinterpret_cast<char*>(&l_header), sizeof(l_header));
+                    l_out.write(reinterpret_cast<char*>(&lheader), sizeof(lheader));
 
                     //Append file content
                     char l_char;

@@ -20,6 +20,7 @@
 */
 
 #include <fstream>
+#include <sys/stat.h>
 #include "engine.h"
 #include "settings_manager.h"
 
@@ -31,9 +32,7 @@ namespace Engine
         std::string Path;
 
         if(CEngine::IsRoot())
-        {
             Path += "/root";
-        }
         else
         {
             Path += "/home/";
@@ -42,9 +41,25 @@ namespace Engine
             Path += User;
         }
 
-        //Fixme : need to create folder : bug 5
+        Path += "/.scleaner/";
+
+        //Check that folder exist.
+        struct stat Info;
+        if(stat(Path.c_str(), &Info) == -1)
+        {
+                int Res = mkdir(Path.c_str(), 01777);
+                #if defined DEBUG
+                std::cout << "[DBG] " << Path << " didn't exist need to created it \n";
+                std::cout << "[DBG] " << Path << " creation :";
+                if(!Res)
+                    std::cout << "OK\n";
+                else
+                    std::cout << "KO\n";
+                #endif
+        }
+
         std::string Config(Path);
-        Config += "/.scleaner/prefs.conf";
+        Config += "prefs.conf";
 
         std::ifstream File(Config.c_str());
         unsigned int Label;
