@@ -30,6 +30,7 @@
 #include <sstream>
 #include <sys/stat.h>
 #include <engine/iprogress.h>
+#include <engine/settings_manager.h>
 
 namespace Tools
 {
@@ -348,6 +349,16 @@ namespace Tools
                 Ret = false;
             }
         }
+
+        if(Ret && Continue) //Delete files here
+            if(Engine::CSettingsManager::Instance()->GetDelete())
+                for(It = filenames.begin(); It != filenames.end(); ++It)
+                {
+                    #if defined DEBUG
+                    std::cout << "[DBG] " << It->c_str() << " deleted ! \n";
+                    #endif
+                    unlink(It->c_str());
+                }
         return Ret;
     }
 

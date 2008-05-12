@@ -121,9 +121,7 @@ namespace Engine
         std::string Path;
 
         if(CEngine::IsRoot())
-        {
             Path += "/root";
-        }
         else
         {
             Path += "/home/";

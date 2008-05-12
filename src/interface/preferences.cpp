@@ -182,7 +182,7 @@ namespace GUI
 
         //Delete file after output plugin ?
         fDelete = new wxCheckBox(PrefPanel, wxID_ANY, _T("Delete files after applying the output plugin"), wxDefaultPosition);
-        fStatusbar->SetValue(fSettings->GetDelete());
+        fDelete->SetValue(fSettings->GetDelete());
         l_Sizer2->Add(fDelete, 1, wxGROW | wxALL, 5);
 
         //Append pages, by alphabetical order:
