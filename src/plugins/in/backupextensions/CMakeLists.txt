@@ -1,7 +1,7 @@
 # 
 # This file is part of scleaner project.
 # 
-# Copyright (C) 2007 FROUIN Jean-Michel
+# Copyright (C) 2007, 2008 FROUIN Jean-Michel
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(crimosoft_src crimosoft.cpp)
-ADD_LIBRARY(crimosoft SHARED ${crimosoft_src}) 
-TARGET_LINK_LIBRARIES(crimosoft plugins tools)
-INSTALL(TARGETS crimosoft DESTINATION ${PLUGSDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
+SET(backupextensions_src backupextensions.cpp)
+ADD_LIBRARY(backupextensions SHARED ${backupextensions_src}) 
+TARGET_LINK_LIBRARIES(backupextensions plugins tools)
+INSTALL(TARGETS backupextensions DESTINATION ${PLUGSDIR}/ PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)

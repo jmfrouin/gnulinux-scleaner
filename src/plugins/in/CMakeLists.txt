@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-SET(folder apt-cache backfiles coders emptyfolders kernels logs nullfiles trash crimosoft latex mac)
+SET(folder apt-cache backfiles coders emptyfolders kernels logs nullfiles trash backupextensions latex mac)
 
 FOREACH(fold ${folder})
 	ADD_SUBDIRECTORY(${fold})

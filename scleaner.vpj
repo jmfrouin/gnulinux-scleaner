@@ -286,13 +286,6 @@
 						<F N="src/plugins/in/coders/coders.h"/>
 					</Folder>
 					<Folder
-						Name="crimosoft"
-						Filters="">
-						<F N="src/plugins/in/crimosoft/CMakeLists.txt"/>
-						<F N="src/plugins/in/crimosoft/crimosoft.cpp"/>
-						<F N="src/plugins/in/crimosoft/crimosoft.h"/>
-					</Folder>
-					<Folder
 						Name="emptyfolders"
 						Filters="">
 						<F N="src/plugins/in/emptyfolders/CMakeLists.txt"/>
