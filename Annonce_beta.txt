@@ -1,1 +1,62 @@
 Utilisation de scleaner comme logiciel de backup !!!
+
+Site web :
+Important :
+
+
+
+Bugs connus :
+Le paquet debian ne supporte pas encore les dÃ©pendances, donc merci d'installer les librairies libwxgtk2.8 and libbz2 via apt ou synaptic.
+
+Quelques chaines de texte peuvent Ãªtre non traduites.
+
+Merci de nous informer de tout mauvais fonctionnement ou toute chaine de caractÃ¨res mal traduite par mail Ã  jmfrouin chez gmail point com.
+Ou, mieux, remplissez le formulaire de bug sur savannah.
+
+Description coutre
+[Beta]
+Première beta disponible de scleaner (aka simple cleaner). Ce logiciel permet de faire le ménage sur un système GNU-Linux.
+Depuis l'alpha (lien) beaucoup de changements: 11 plugins d'entrée (contre 3 pour l'alpha) et de nombreuses remarques d'utilisateurs intégrées à cette béta.
+Reste des bugs connus, et des choses à faire mais le moment est venu d'avoir un retour utilisateur.
+Cette version est une version de test, merci de la tester dans un environnement de test.
+
+scleaner est disponible sous licence GPL v3 ou ultérieure
+
+[Alpha]
+Voici la premiÃ¨re version d'un logiciel qui va faire le mÃ©nage... scleaner (aka simple cleaner) vient de sortir en version alpha 0.31. Ce logiciel permet de faire le mÃ©nage sur un systÃ¨me GNU-Linux.
+
+Il utilise des greffons d'entrÃ©e pour rechercher des fichiers Ã  nettoyer et des greffons de sortie pour appliquer des actions Ã  ces fichiers. Il possÃ¨de une interface graphique relativement simple et est disponible en franÃ§ais ou en anglais. La langue Ã  utiliser sera automatiquement dÃ©tectÃ©e. Enfin, il devrait fonctionner sur n'importe quelle distribution ayant GTK d'installÃ©.
+
+
+Description longue linuxfr :
+[Alpha]
+scleaner vous permet de supprimer des fichiers qui ne sont plus nécessaires au bon fonctionnement de votre ordinateur sous GNU/Linux (Pour le moment une compatibilité maximum est observée sous Ubuntu 8.04). scleaner utilise des greffons d'entrée pour trouver des fichiers inutiles. Ensuite scleaner utilise des greffons de sortie pour traiter les fichiers sélectionnés par l'utilisateur, parmi les fichiers trouvés par les greffons d'entrée.
+
+Il est important de comprendre que scleaner peut fonctionner dans 2 modes :
+    * Le premier, en mode simple (les fichiers seront recherchés dans /home/user). Ce mode est activé lorsque scleaner est lancé par un utilisateur normal. Depuis la beta 1, ce mode correspond à l'icone bleu de scleaner dans le menu : "Applications->Outils système->scleaner".
+    * En mode administrateur (les fichiers seront recherchés dans /home/ et dans divers autres emplacements définis dans les greffons d'entrée nécessitant root). Ce mode est activé lorsque scleaner est lancé en tant que superutilisateur (ou en utilisant la commande sudo : sudo scleaner). Depuis la beta 1, ce mode correspond à l'icone rouge de scleaner dans le menu : "Applications->Outils système->scleaner (root)". 
+
+J'en suis arrivé à un stade de développement où j'ai besoin de personnes pour tester l'application et me remonter des besoins et/ou des bugs.
+
+11 greffons d'entrée sont dores et déjà  disponibles :
+
+    * apt-cache# (la commande apt-get clean supprime ces fichiers, que ce plugin trouvera pour vous)
+    * backfiles (permet d'identifier les fichiers de sauvegardes abandonnés (lâchement) par une application)
+    * coders (fichiers *.o)
+    * crimosoft (fichiers *.doc ou *.xls)
+    * emptyfolders (trouve les répertoires vides)
+    * kernels# (permettant d'identifier les noyaux qui ne sont plus utilisés)
+    * latex (fichiers *.toc et *.aux)
+    * logs# (fichiers *.log)
+    * mac (fichiers .dstore)
+    * nullfiles (fichiers de taille nulle)
+    * orphan (fichiers orphelins)
+    * Trash (fichiers contenus dans la corbeille)
+
+(Ceux marqués par un # n'apparaitront qu'en mode superutilisateur)
+
+Beaucoup de greffons d'entrée sont encore à faire (fichiers dupliqués, liens symboliques brisés, binaire brisé, miniatures, cache de navigateurs web, détection de doublons dans les images).
+
+Pour le moment, le seul greffon de sortie disponible (c'est-Ã -dire le seul type d'action possible sur les fichiers sélectionnés) est le greffon tbz. Cela signifie juste que dans cette version vous pourrez uniquement créer une archive tar+bzip2 des fichiers sélectionnés (Attention, si vous souhaitez réellement effaçer vos fichiers après création de l'archive, il vous faudra cocher une option dans les préférences. Cette option est décochée par défaut, ainsi il vous sera impossible d'effacer des fichiers importants tant que cette option n'est pas activée).
+
+J'espÃ¨re que vous serez nombreux à tester scleaner. C'est aussi gràce à vous que ce logiciel pourra vivre. Enfin, si vous voulez des versions localisées, sachez que l'i18n est déjà supporté (logique diront certains vu que l'application est disponible en français et en anglais). Des versions en italien et en allemand seront prochainement disponibles.
