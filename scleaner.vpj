@@ -272,6 +272,13 @@
 						<F N="src/plugins/in/backfiles/CMakeLists.txt"/>
 					</Folder>
 					<Folder
+						Name="backupextensions"
+						Filters="">
+						<F N="src/plugins/in/backupextensions/backupextensions.cpp"/>
+						<F N="src/plugins/in/backupextensions/backupextensions.h"/>
+						<F N="src/plugins/in/backupextensions/CMakeLists.txt"/>
+					</Folder>
+					<Folder
 						Name="backupfolder"
 						Filters="">
 						<F N="src/plugins/in/backupfolder/backupfolder.cpp"/>
