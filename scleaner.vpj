@@ -348,6 +348,13 @@
 						<F N="src/plugins/in/trash/trash.cpp"/>
 						<F N="src/plugins/in/trash/trash.h"/>
 					</Folder>
+					<Folder
+						Name="thumbnails"
+						Filters="">
+						<F N="src/plugins/in/thumbnails/CMakeLists.txt"/>
+						<F N="src/plugins/in/thumbnails/thumbnails.cpp"/>
+						<F N="src/plugins/in/thumbnails/thumbnails.h"/>
+					</Folder>
 				</Folder>
 				<Folder
 					Name="out"
@@ -399,6 +406,13 @@
 			<F N="src/sudo_scleaner.desktop"/>
 			<F N="TODO"/>
 			<F N="src/update_build.sh"/>
+		</Folder>
+		<Folder
+			Name="Press"
+			Filters="">
+			<F N="Article linux/Frouin-scleaner.html"/>
+			<F N="Article linux/Interface.jpg"/>
+			<F N="Article linux/Thumb_Interface.jpg"/>
 		</Folder>
 		<F
 			N="Makefile"

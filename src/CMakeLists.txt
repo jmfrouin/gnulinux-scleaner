@@ -18,6 +18,7 @@
 #
 # 02/11/07 : Adding a build counter
 # 04/09/07 : Adding a cscope rule
+# 17/05/08 : Adding profiling code
 
 PROJECT(scleaner)
 
@@ -32,7 +33,15 @@ INCLUDE(FindUnixCommands)
 INCLUDE(FindwxWidgets)
 INCLUDE(FindBZip2)
 
-ADD_DEFINITIONS(-Wall -MD -g -DLEAK_DETECTOR `wx-config --cxxflags` -DwxUSE_UNICODE -DDEBUG)
+SET(SCLEANER_CFLAGS "-pg ")
+SET(SCLEANER_LDFLAGS "-pg ")
+
+IF(PROFILE)
+        SET(SCLEANER_CFLAGS "-pg ${SCLEANER_CFLAGS}")
+        SET(SCLEANER_LDFLAGS "-pg ${SCLEANER_LDFLAGS}")
+ENDIF(PROFILE)
+
+ADD_DEFINITIONS(-Wall -MD -pg -g -DLEAK_DETECTOR `wx-config --cxxflags` -DwxUSE_UNICODE -DDEBUG)
 
 INCLUDE_DIRECTORIES(AFTER SYSTEM . ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR})
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
@@ -56,6 +65,7 @@ ENDFOREACH(fold ${folder})
 SET(scleaner_src scleaner_wx.cpp)
 
 ADD_EXECUTABLE(scleaner ${scleaner_src})
+SET_TARGET_PROPERTIES(scleaner PROPERTIES LINK_FLAGS "-pg" COMPILE_FLAGS "-pg")
 TARGET_LINK_LIBRARIES(scleaner pthread dl engine interface leaks log plugins tools `wx-config --libs`)
 
 # Valgrind test

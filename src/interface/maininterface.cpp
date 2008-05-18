@@ -278,7 +278,7 @@ namespace GUI
         //Found files AuiNotebook page
         //FIXME: Display it only when "scan" has been launched
         fFoundFiles = new wxNotebook(fAui, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, Flags);
-        fAui->AddPage(fFoundFiles, wxString(i8n("Found files"), wxConvUTF8), false);
+        fAui->AddPage(fFoundFiles, wxString(i8n("Founded files"), wxConvUTF8), false);
 
         if(fSettings->GetShowStatusbar() == true)
         {
