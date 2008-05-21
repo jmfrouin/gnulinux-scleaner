@@ -293,11 +293,25 @@
 						<F N="src/plugins/in/coders/coders.h"/>
 					</Folder>
 					<Folder
+						Name="coredump"
+						Filters="">
+						<F N="src/plugins/in/coredump/CMakeLists.txt"/>
+						<F N="src/plugins/in/coredump/coredump.cpp"/>
+						<F N="src/plugins/in/coredump/coredump.h"/>
+					</Folder>
+					<Folder
 						Name="emptyfolders"
 						Filters="">
 						<F N="src/plugins/in/emptyfolders/CMakeLists.txt"/>
 						<F N="src/plugins/in/emptyfolders/emptyfolders.cpp"/>
 						<F N="src/plugins/in/emptyfolders/emptyfolders.h"/>
+					</Folder>
+					<Folder
+						Name="iso"
+						Filters="">
+						<F N="src/plugins/in/iso/CMakeLists.txt"/>
+						<F N="src/plugins/in/iso/iso.cpp"/>
+						<F N="src/plugins/in/iso/iso.h"/>
 					</Folder>
 					<Folder
 						Name="kernels"
