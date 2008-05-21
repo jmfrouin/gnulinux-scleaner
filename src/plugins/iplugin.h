@@ -46,6 +46,7 @@ namespace Plugins
                 eUserByFolderInput,
                 eRootInput,
                 eRootByFolderInput,
+                eThreadableInput,
                 eOutput
             };
 
