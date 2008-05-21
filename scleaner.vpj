@@ -390,6 +390,8 @@
 				<F N="src/plugins/plugin_manager.cpp"/>
 				<F N="src/plugins/plugin_manager.h"/>
 				<F N="src/plugins/README"/>
+				<F N="src/plugins/thread_in_plugin.h"/>
+				<F N="src/plugins/threadinplugin_initializer.h"/>
 			</Folder>
 			<Folder
 				Name="tools"
