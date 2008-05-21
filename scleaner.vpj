@@ -369,6 +369,13 @@
 						<F N="src/plugins/in/thumbnails/thumbnails.cpp"/>
 						<F N="src/plugins/in/thumbnails/thumbnails.h"/>
 					</Folder>
+					<Folder
+						Name="wma"
+						Filters="">
+						<F N="src/plugins/in/wma/CMakeLists.txt"/>
+						<F N="src/plugins/in/wma/wma.cpp"/>
+						<F N="src/plugins/in/wma/wma.h"/>
+					</Folder>
 				</Folder>
 				<Folder
 					Name="out"
