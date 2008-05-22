@@ -77,6 +77,13 @@ namespace Plugins
             */
             virtual void GetDirectory(std::string& path) = 0;
 
+            /*!
+             * @brief Define is a plugin is threadable.
+             * @author snoogie (5/22/2008)
+             * @return bool true if threadable, false otherwise.
+             */
+            virtual bool Threadable() = 0;
+
 
             //From IPlugin
             virtual EType Type() { return eUserInput; }
