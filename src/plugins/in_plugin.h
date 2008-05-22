@@ -79,7 +79,7 @@ namespace Plugins
 
 
             //From IPlugin
-            virtual eType Type() { return eUserInput; }
+            virtual EType Type() { return eUserInput; }
 
         protected:
             std::list<std::string>      fFL;

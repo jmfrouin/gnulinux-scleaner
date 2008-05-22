@@ -65,7 +65,7 @@ class ClatexPlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        eType Type() { return eUserInput; }
+        EType Type() { return eUserInput; }
         std::string Description();
 };
 #endif                           //__LATEX_H__

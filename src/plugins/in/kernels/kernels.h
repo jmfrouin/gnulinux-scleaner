@@ -80,7 +80,7 @@ class CkernelsPlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        eType Type() { return eRootByFolderInput; }
+        EType Type() { return eRootByFolderInput; }
         std::string Description();
 
     private:

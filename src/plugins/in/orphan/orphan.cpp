@@ -65,7 +65,7 @@ void CorphanPlugin::__Run()
 }
 
 
-IPlugin::eType CorphanPlugin::Type()
+IPlugin::EType CorphanPlugin::Type()
 {
     return eInput;
 }

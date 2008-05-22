@@ -28,7 +28,7 @@
 #include <tools/name.h>
 
 /*!
-*@brief Contain all code to manage plugins.
+*@brief Define a plugin.
 */
 namespace Plugins
 {
@@ -40,36 +40,51 @@ namespace Plugins
     class IPlugin : public Tools::CName
     {
         public:
-            enum eType
+            //! All input plugins' type
+            enum EType
             {
-                eUserInput,
-                eUserByFolderInput,
-                eRootInput,
-                eRootByFolderInput,
-                eThreadableInput,
-                eOutput
+                eUserInput,                    /*!< Basic input plugin: call for each files found in user defined folders. */
+                eUserByFolderInput,     /*!< eUserInput which scan a specific folder. */
+                eRootInput,                     /*!< Input plugin which require root privileges.*/
+                eRootByFolderInput,     /*!<  eRootInput which scan a specific folder.*/
+                eThreadableInput,       /*!<  Threadable input plugin, run alone from others.*/
+                eOutput                         /*!<  Output plugin.*/
             };
 
         public:
             /*!
              * @brief ctor
+             * @author snoogie (5/22/2008)
              */
             IPlugin(){}
 
             /*!
-             * @brief dtor.
+             * @brief dtor
+             * @author snoogie (5/22/2008)
              */
             virtual ~IPlugin(){}
 
             /*!
-             *@brief Description.
+             * @brief Threadable plugin ?
+             * @author snoogie (5/22/2008)
+             * @return bool true on threadable plugin, false otherwise
+             */
+            bool IsThreadable();
+
+            /*!
+             * @brief Full 'user friendly' description.
+             * @todo Add a 'tech friendly' description.
+             * @author snoogie (5/22/2008)
+             * @return std::string
              */
             virtual std::string Description() = 0;
 
             /*!
-             *@brief Input or output plugin ?
+             * @brief Type from EType.
+             * @author snoogie (5/22/2008)
+             * @return EType
              */
-            virtual eType Type() = 0;
+            virtual EType Type() = 0;
     };
 } //namespace Plugins
 #endif                           //__IPLUGIN_H__

@@ -48,7 +48,7 @@ class CtbzPlugin : public Plugins::IOutPlugin
         /*!
          *@brief From IPlugin.
          */
-        eType Type() { return eOutput; }
+        EType Type() { return eOutput; }
 
         /*!
         *@brief From IOutPlugin
