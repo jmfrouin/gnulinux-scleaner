@@ -30,7 +30,7 @@
 #include <sys/stat.h>            ///Get file size.
 #include <wx/dir.h>
 #include <tools/tar_archive.h>
-#include <plugins/outplugin_initializer.h>
+#include <outplugin_initializer.h>
 #include <leak/leak_detector.h>
 
 Plugins::CPluginInitializerOut<CtbzPlugin> gTBZ;

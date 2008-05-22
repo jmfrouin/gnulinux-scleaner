@@ -279,13 +279,6 @@
 						<F N="src/plugins/in/backupextensions/CMakeLists.txt"/>
 					</Folder>
 					<Folder
-						Name="backupfolder"
-						Filters="">
-						<F N="src/plugins/in/backupfolder/backupfolder.cpp"/>
-						<F N="src/plugins/in/backupfolder/backupfolder.h"/>
-						<F N="src/plugins/in/backupfolder/CMakeLists.txt"/>
-					</Folder>
-					<Folder
 						Name="coders"
 						Filters="">
 						<F N="src/plugins/in/coders/CMakeLists.txt"/>
@@ -356,19 +349,24 @@
 						<F N="src/plugins/in/orphan/orphan.h"/>
 					</Folder>
 					<Folder
-						Name="trash"
-						Filters="">
-						<F N="src/plugins/in/trash/CMakeLists.txt"/>
-						<F N="src/plugins/in/trash/trash.cpp"/>
-						<F N="src/plugins/in/trash/trash.h"/>
-					</Folder>
-					<Folder
 						Name="thumbnails"
 						Filters="">
 						<F N="src/plugins/in/thumbnails/CMakeLists.txt"/>
 						<F N="src/plugins/in/thumbnails/thumbnails.cpp"/>
 						<F N="src/plugins/in/thumbnails/thumbnails.h"/>
 					</Folder>
+					<Folder
+						Name="trash"
+						Filters="">
+						<F N="src/plugins/in/trash/CMakeLists.txt"/>
+						<F N="src/plugins/in/trash/trash.cpp"/>
+						<F N="src/plugins/in/trash/trash.h"/>
+					</Folder>
+					<F N="src/plugins/in/CMakeLists.txt"/>
+					<F N="src/plugins/in/in_plugin.h"/>
+					<F N="src/plugins/in/inplugin_initializer.h"/>
+					<F N="src/plugins/in/thread_in_plugin.h"/>
+					<F N="src/plugins/in/threadinplugin_initializer.h"/>
 				</Folder>
 				<Folder
 					Name="out"
@@ -380,18 +378,15 @@
 						<F N="src/plugins/out/tbz/tbz.cpp"/>
 						<F N="src/plugins/out/tbz/tbz.h"/>
 					</Folder>
+					<F N="src/plugins/out/CMakeLists.txt"/>
+					<F N="src/plugins/out/out_plugin.h"/>
+					<F N="src/plugins/out/outplugin_initializer.h"/>
 				</Folder>
 				<F N="src/plugins/CMakeLists.txt"/>
-				<F N="src/plugins/in_plugin.h"/>
-				<F N="src/plugins/inplugin_initializer.h"/>
 				<F N="src/plugins/iplugin.h"/>
-				<F N="src/plugins/out_plugin.h"/>
-				<F N="src/plugins/outplugin_initializer.h"/>
 				<F N="src/plugins/plugin_manager.cpp"/>
 				<F N="src/plugins/plugin_manager.h"/>
 				<F N="src/plugins/README"/>
-				<F N="src/plugins/thread_in_plugin.h"/>
-				<F N="src/plugins/threadinplugin_initializer.h"/>
 			</Folder>
 			<Folder
 				Name="tools"

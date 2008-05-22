@@ -21,7 +21,7 @@
 
 
 #include <iostream>
-#include <plugins/inplugin_initializer.h>
+#include <inplugin_initializer.h>
 #include "coders.h"
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
@@ -43,9 +43,7 @@ CcodersPlugin::~CcodersPlugin()
 void CcodersPlugin::ProcessFile(const std::string& filename)
 {
     if( filename.find(".o", 0) == (filename.length()-2) )
-    {
         fFL.push_back(filename);
-    }
 }
 
 

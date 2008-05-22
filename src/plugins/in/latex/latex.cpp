@@ -21,7 +21,7 @@
 
 
 #include <iostream>
-#include <plugins/inplugin_initializer.h>
+#include <inplugin_initializer.h>
 #include "latex.h"
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>

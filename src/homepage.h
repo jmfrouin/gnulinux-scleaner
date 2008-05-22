@@ -52,18 +52,10 @@
 
 /*! @page page1 Successful platforms tested
  *
- * Debian etch 4.00
- *
- * Ubuntu Feisty 7.04
- *
- * Ubuntu Feisty 7.10
+ * Ubuntu 8.04
  */
 
 /*! @page page2 Inputs plugins to write
- *
- * Empty file
- *
- * Empty folder
  *
  * .app orphan folder
  *
@@ -84,8 +76,6 @@
  * .Trash folder plugins
  *
  * .thumbnail for browser stuff
- *
- * /var/cache/apt/archives plugin equivalent to apt-get clean
  *
  * Plugin sur les par2 / rar avi
  *

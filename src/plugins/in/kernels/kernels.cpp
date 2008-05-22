@@ -29,7 +29,7 @@
 #include <apt-pkg/progress.h>       //OpProgress
 #include <apt-pkg/init.h>           //For configuration
 #include <apt-pkg/error.h>          //_error
-#include <plugins/inplugin_initializer.h>
+#include <inplugin_initializer.h>
 #include <leak/leak_detector.h>
 #include "kernels.h"
 
