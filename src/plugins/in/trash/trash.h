@@ -67,6 +67,7 @@ class CtrashPlugin : public Plugins::IInPlugin
          */
         EType Type() { return eUserByFolderInput; }
         std::string Description();
+        bool Threadable() { return true; }
 };
 #endif                           //__TRASH_H__
 /* vi:set ts=4: */

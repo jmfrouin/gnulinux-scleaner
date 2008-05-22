@@ -49,12 +49,6 @@ const std::string CorphanPlugin::Description()
 }
 
 
-bool CorphanPlugin::IsThreadable()
-{
-    return true;
-}
-
-
 void CorphanPlugin::__Run()
 {
     std::cout << "I am in the thread !!" << '\n';

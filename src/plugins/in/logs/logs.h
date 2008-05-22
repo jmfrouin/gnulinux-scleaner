@@ -68,6 +68,7 @@ class ClogsPlugin : public Plugins::IInPlugin
          */
         EType Type() { return eRootByFolderInput; }
         std::string Description();
+        bool Threadable() { return false; }
 };
 #endif                           //__LOGS_H__
 /* vi:set ts=4: */

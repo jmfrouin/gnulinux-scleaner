@@ -42,7 +42,7 @@ class CorphanPlugin : public IPlugin, public IThread
          */
         const std::string Location();
         const std::string Description();
-        bool IsThreadable();
+        bool Threadable() { return true; }
         EType Type();
 
         /*!

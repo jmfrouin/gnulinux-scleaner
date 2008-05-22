@@ -82,6 +82,7 @@ class CkernelsPlugin : public Plugins::IInPlugin
          */
         EType Type() { return eRootByFolderInput; }
         std::string Description();
+        bool Threadable() { return true; }
 
     private:
         pkgCache*       fCache;
