@@ -40,15 +40,11 @@ fCache(0), fSrcList(0), fMap(0)
 {
     SetName("kernels");
 
-    if (pkgInitConfig(*_config) == false || pkgInitSystem(*_config,_system) == false)
-    {
+    if (!pkgInitConfig(*_config) || !pkgInitSystem(*_config,_system))
         std::cerr << "[ERR] CkernelsPlugin() pkgInitConfig || pkgInitSystem\n";
-    }
 
-    if (_config->FindB("APT::Cache::Generate",true) == false)
-    {
+    if (!(_config->FindB("APT::Cache::Generate",true)))
         fMap = new MMap(*new FileFd(_config->FindFile("Dir::Cache::pkgcache"), FileFd::ReadOnly),MMap::Public|MMap::ReadOnly);
-    }
     else
     {
         // Open the cache file
@@ -60,27 +56,19 @@ fCache(0), fSrcList(0), fMap(0)
         pkgMakeStatusCache(*fSrcList, Prog, &fMap, true);
     }
 
-    if (_error->PendingError() == false)
-    {
+    if (!_error->PendingError())
         fCache = new pkgCache(fMap);
-    }
     else
-    {
         std::cerr << "[ERR] CkernelsPlugin(): Errors occured\n";
-    }
 }
 
 
 CkernelsPlugin::~CkernelsPlugin()
 {
     if(fMap)
-    {
         delete fMap;
-    }
     if(fCache)
-    {
         delete fCache;
-    }
 }
 
 
@@ -96,9 +84,7 @@ void CkernelsPlugin::ProcessFile(const std::string& filename)
     {
         std::string Res;
         if(Search(filename, Res))
-        {
             fFL.push_back(Res);
-        }
     }
 }
 
@@ -111,7 +97,7 @@ bool CkernelsPlugin::Search(const std::string& Name, std::string& Result)
     std::string Version = Name.substr(Name.find_first_of('-')+1, Name.length());
     std::string Filename = "linux-image-" + Version;
 
-    if(regcomp(Pattern, Filename.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
+    if(regcomp(Pattern, Filename.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB))
     {
         std::cerr << "Regex error !\n";
         regfree(Pattern);
@@ -122,7 +108,7 @@ bool CkernelsPlugin::Search(const std::string& Name, std::string& Result)
         #if defined DEBUG
         std::cout << It.Name() << "=" << Filename << '\n';
         #endif
-        if (regexec(Pattern,It.Name(),0,0,0) == 0)
+        if (!regexec(Pattern,It.Name(),0,0,0))
         {
             Result = It.Name();
             #if defined DEBUG
@@ -138,9 +124,7 @@ bool CkernelsPlugin::Search(const std::string& Name, std::string& Result)
     Engine::CEngine::GetKernelVersion(CurrentKernelVersion);
 
     if(CurrentKernelVersion == Version)
-    {
         Ret = false;
-    }
 
     regfree(Pattern);
     return Ret;

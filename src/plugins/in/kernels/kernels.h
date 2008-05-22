@@ -51,15 +51,9 @@ class CkernelsPlugin : public Plugins::IInPlugin
         CkernelsPlugin();
         ~CkernelsPlugin();
 
-        bool GrabNullFile()
-        {
-            return false;
-        }
+        bool GrabNullFile() { return false; }
 
-        bool GetDefaultSelection()
-        {
-            return false;
-        }
+        bool GetDefaultSelection() { return false; }
 
 
         /*!
