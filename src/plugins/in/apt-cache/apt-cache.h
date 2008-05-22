@@ -36,7 +36,7 @@
 #define __APT_CACHE_H__
 
 #include <config.h>
-#include <plugins/in_plugin.h>
+#include <in_plugin.h>
 
 /*!
  *@brief Find unused apt_cache.
@@ -62,7 +62,6 @@ class Capt_cachePlugin : public Plugins::IInPlugin
          */
         void GetDirectory(std::string& path);
         void ProcessFile(const std::string& filename);
-        bool Threadable() { return false; }
 
         /*!
          *@brief From IPlugin

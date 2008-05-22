@@ -23,7 +23,7 @@
 #define __IN_PLUGIN_H__
 
 #include <config.h>
-#include "iplugin.h"
+#include <iplugin.h>
 
 namespace Plugins
 {
@@ -82,7 +82,7 @@ namespace Plugins
              * @author snoogie (5/22/2008)
              * @return bool true if threadable, false otherwise.
              */
-            virtual bool Threadable() = 0;
+            virtual bool Threadable() { return false; }
 
 
             //From IPlugin

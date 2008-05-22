@@ -29,7 +29,7 @@
 #include <apt-pkg/progress.h>       //OpProgress
 #include <apt-pkg/init.h>           //For configuration
 #include <apt-pkg/error.h>          //_error
-#include <plugins/inplugin_initializer.h>
+#include <inplugin_initializer.h>
 #include <leak/leak_detector.h>
 #include "kernels.h"
 
@@ -41,14 +41,10 @@ fCache(0), fSrcList(0), fMap(0)
     SetName("kernels");
 
     if (pkgInitConfig(*_config) == false || pkgInitSystem(*_config,_system) == false)
-    {
         std::cerr << "[ERR] CkernelsPlugin() pkgInitConfig || pkgInitSystem\n";
-    }
 
     if (_config->FindB("APT::Cache::Generate",true) == false)
-    {
         fMap = new MMap(*new FileFd(_config->FindFile("Dir::Cache::pkgcache"), FileFd::ReadOnly),MMap::Public|MMap::ReadOnly);
-    }
     else
     {
         // Open the cache file
@@ -61,26 +57,18 @@ fCache(0), fSrcList(0), fMap(0)
     }
 
     if (_error->PendingError() == false)
-    {
         fCache = new pkgCache(fMap);
-    }
     else
-    {
         std::cerr << "[ERR] CkernelsPlugin(): Errors occured\n";
-    }
 }
 
 
 CkernelsPlugin::~CkernelsPlugin()
 {
     if(fMap)
-    {
         delete fMap;
-    }
     if(fCache)
-    {
         delete fCache;
-    }
 }
 
 
@@ -96,9 +84,7 @@ void CkernelsPlugin::ProcessFile(const std::string& filename)
     {
         std::string Res;
         if(Search(filename, Res))
-        {
             fFL.push_back(Res);
-        }
     }
 }
 

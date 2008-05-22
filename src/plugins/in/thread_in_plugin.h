@@ -23,14 +23,14 @@
 #define __THREAD_IN_PLUGIN_H__
 
 #include <config.h>
-#include "iplugin.h"
+#include <in_plugin.h>
 
 namespace Plugins
 {
     /*!
      *@brief Input plugin interface.
      */
-    class IThreadInPlugin : public InPlugin
+    class IThreadInPlugin : public IInPlugin
     {
         public:
             /*!

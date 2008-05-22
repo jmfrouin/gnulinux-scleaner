@@ -35,7 +35,7 @@
 #define __COREDUMP_H__
 
 #include <config.h>
-#include <plugins/in_plugin.h>
+#include <in_plugin.h>
 
 class CcoredumpPlugin : public Plugins::IInPlugin
 {
@@ -59,7 +59,6 @@ class CcoredumpPlugin : public Plugins::IInPlugin
          */
         void ProcessFile(const std::string& filename);
         void GetDirectory(std::string& path) { path = ""; }
-        bool Threadable() { return false; }
 
         /*!
          *@brief From IPlugin

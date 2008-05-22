@@ -37,7 +37,7 @@
 #define __LATEX_H__
 
 #include <config.h>
-#include <plugins/in_plugin.h>
+#include <in_plugin.h>
 
 class ClatexPlugin : public Plugins::IInPlugin
 {
@@ -61,7 +61,6 @@ class ClatexPlugin : public Plugins::IInPlugin
          */
         void ProcessFile(const std::string& filename);
         void GetDirectory(std::string& path) { path = ""; }
-        bool Threadable() { return false; }
 
         /*!
          *@brief From IPlugin
