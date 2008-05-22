@@ -23,7 +23,7 @@
 #define __IN_PLUGIN_H__
 
 #include <config.h>
-#include "iplugin.h"
+#include <iplugin.h>
 
 namespace Plugins
 {
@@ -77,9 +77,16 @@ namespace Plugins
             */
             virtual void GetDirectory(std::string& path) = 0;
 
+            /*!
+             * @brief Define is a plugin is threadable.
+             * @author snoogie (5/22/2008)
+             * @return bool true if threadable, false otherwise.
+             */
+            virtual bool Threadable() { return false; }
+
 
             //From IPlugin
-            virtual eType Type() { return eUserInput; }
+            virtual EType Type() { return eUserInput; }
 
         protected:
             std::list<std::string>      fFL;

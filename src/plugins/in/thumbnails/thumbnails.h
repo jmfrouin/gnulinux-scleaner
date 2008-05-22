@@ -37,7 +37,7 @@
 #define __THUMBNAILS_H__
 
 #include <config.h>
-#include <plugins/in_plugin.h>
+#include <in_plugin.h>
 
 class CthumbnailsPlugin : public Plugins::IInPlugin
 {
@@ -65,7 +65,7 @@ class CthumbnailsPlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        eType Type() { return eUserInput; }
+        EType Type() { return eUserInput; }
         std::string Description();
 };
 #endif                           //__THUMBNAILS_H__

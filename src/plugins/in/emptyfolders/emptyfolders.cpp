@@ -24,7 +24,7 @@
 #include <sys/stat.h>
 #include <engine/engine.h>
 #include <leak/leak_detector.h>
-#include <plugins/inplugin_initializer.h>
+#include <inplugin_initializer.h>
 #include "emptyfolders.h"
 
 Plugins::CPluginInitializerIn<CemptyfoldersPlugin> gEmptyFolders;

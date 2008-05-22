@@ -36,7 +36,7 @@
 #define __ISO_H__
 
 #include <config.h>
-#include <plugins/in_plugin.h>
+#include <in_plugin.h>
 
 class CisoPlugin : public Plugins::IInPlugin
 {
@@ -64,7 +64,7 @@ class CisoPlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        eType Type() { return eUserInput; }
+        EType Type() { return eUserInput; }
         std::string Description();
 };
 #endif                           //__ISO_H__

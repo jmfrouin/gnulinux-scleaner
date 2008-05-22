@@ -36,7 +36,7 @@
 #define __KERN_H__
 
 #include <config.h>
-#include <plugins/in_plugin.h>
+#include <thread_in_plugin.h>
 
 class pkgCache;
 class pkgSourceList;
@@ -45,21 +45,15 @@ class MMap;
 /*!
  *@brief Find unused kernels.
  */
-class CkernelsPlugin : public Plugins::IInPlugin
+class CkernelsPlugin : public Plugins::IThreadInPlugin
 {
     public:
         CkernelsPlugin();
         ~CkernelsPlugin();
 
-        bool GrabNullFile()
-        {
-            return false;
-        }
+        bool GrabNullFile() { return false; }
 
-        bool GetDefaultSelection()
-        {
-            return false;
-        }
+        bool GetDefaultSelection() { return false; }
 
 
         /*!
@@ -80,7 +74,7 @@ class CkernelsPlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        eType Type() { return eRootByFolderInput; }
+        EType Type() { return eRootByFolderInput; }
         std::string Description();
 
     private:

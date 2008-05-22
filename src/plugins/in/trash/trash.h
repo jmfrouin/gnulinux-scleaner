@@ -37,7 +37,7 @@
 #define __TRASH_H__
 
 #include <config.h>
-#include <plugins/in_plugin.h>
+#include <in_plugin.h>
 
 class CtrashPlugin : public Plugins::IInPlugin
 {
@@ -65,7 +65,7 @@ class CtrashPlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        eType Type() { return eUserByFolderInput; }
+        EType Type() { return eUserByFolderInput; }
         std::string Description();
 };
 #endif                           //__TRASH_H__

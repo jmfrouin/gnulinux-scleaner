@@ -36,7 +36,7 @@
 #define __LOGS_H__
 
 #include <config.h>
-#include <plugins/in_plugin.h>
+#include <in_plugin.h>
 
 class ClogsPlugin : public Plugins::IInPlugin
 {
@@ -66,7 +66,7 @@ class ClogsPlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        eType Type() { return eRootByFolderInput; }
+        EType Type() { return eRootByFolderInput; }
         std::string Description();
 };
 #endif                           //__LOGS_H__

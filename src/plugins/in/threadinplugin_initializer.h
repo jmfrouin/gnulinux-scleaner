@@ -19,35 +19,39 @@
 
 */
 
+#ifndef __INPLUGIN_INITIALIZER_H__
+#define __INPLUGIN_INITIALIZER_H__
 
+#include <config.h>
 #include <iostream>
-#include <plugins/inplugin_initializer.h>
-#include "backupfolder.h"
-#include <sys/stat.h>            ///Get file size.
-#include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<CbackupfolderPlugin> gBackFiles;
+#include "plugin_manager.h"
 
-CbackupfolderPlugin::CbackupfolderPlugin()
+namespace Plugins
 {
-    SetName("backupfolder");
-}
+    template <class T>
+    class CPluginInitializerIn
+    {
+        public:
+            CPluginInitializerIn()
+            {
+                CPluginManager* PFM = CPluginManager::Instance();
+                T* Obj = new T;
+                if(!Engine::CEngine::IsRoot())
+                {
+                    if( (Obj->Type() != Plugins::IPlugin::eRootInput) && (Obj->Type() != Plugins::IPlugin::eRootByFolderInput) )
+                    {
+                        PFM->Add(Obj);
+                    }
+                }
+                else
+                {
+                    PFM->Add(Obj);
+                }
 
-
-CbackupfolderPlugin::~CbackupfolderPlugin()
-{
-}
-
-
-void CbackupfolderPlugin::ProcessFile(const std::string& filename)
-{
-    fFL.push_back(filename);
-}
-
-
-std::string CbackupfolderPlugin::Description()
-{
-    return "Grab all files from a folder, in order to backup it\nBe sure to unactivated files deletion ;)!";
-}
+            }
+    };
+} //namespace Plugins
+#endif                           //__INPLUGIN_INITIALIZER_H__
 /* vi:set ts=4: */

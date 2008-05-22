@@ -37,7 +37,7 @@
 #define __TBZ_H__
 
 #include <config.h>
-#include <plugins/out_plugin.h>
+#include <out_plugin.h>
 
 class CtbzPlugin : public Plugins::IOutPlugin
 {
@@ -48,7 +48,7 @@ class CtbzPlugin : public Plugins::IOutPlugin
         /*!
          *@brief From IPlugin.
          */
-        eType Type() { return eOutput; }
+        EType Type() { return eOutput; }
 
         /*!
         *@brief From IOutPlugin

@@ -59,7 +59,7 @@ static PuzzleImageTypeCode puzzle_get_image_type_from_fp(FILE * const fp)
     PuzzleImageTypeCode ret = PUZZLE_IMAGE_TYPE_ERROR;
     unsigned char header[MAX_SIGNATURE_LENGTH];
     fpos_t pos;
-    
+
     if (fgetpos(fp, &pos) != 0) {
         return PUZZLE_IMAGE_TYPE_ERROR;
     }
@@ -82,7 +82,7 @@ static PuzzleImageTypeCode puzzle_get_image_type_from_fp(FILE * const fp)
     bye:
     if (fsetpos(fp, &pos) != 0) {
         puzzle_err_bug(__FILE__, __LINE__);
-    }    
+    }
     return ret;
 }
 
@@ -151,13 +151,13 @@ static int puzzle_autocrop_axis(PuzzleContext * const context,
             break;
         }
     } while ((*crop0)++ < chunk_n1);
-    total_contrast = 0.0;    
+    total_contrast = 0.0;
     *crop1 = chunk_n1;
     do {
         total_contrast += chunk_contrasts[*crop1];
         if (total_contrast >= barrier_contrast) {
             break;
-        }        
+        }
     } while ((*crop1)-- > 0U);
     free(chunk_contrasts);
     if (*crop0 > chunk_n1 || *crop1 > chunk_n1) {
@@ -166,7 +166,7 @@ static int puzzle_autocrop_axis(PuzzleContext * const context,
     max_crop = (unsigned int)
         round((double) chunk_n1 * context->puzzle_max_cropping_ratio);
     if (max_crop > chunk_n1) {
-        puzzle_err_bug(__FILE__, __LINE__);        
+        puzzle_err_bug(__FILE__, __LINE__);
     }
     *crop0 = MIN(*crop0, max_crop);
     *crop1 = MAX(*crop1, chunk_n1 - max_crop);
@@ -221,8 +221,8 @@ static int puzzle_getview_from_gdimage(PuzzleContext * const context,
     unsigned int x1, y1;
     unsigned char *maptr;
     int pixel;
-    
-    view->map = NULL;    
+
+    view->map = NULL;
     view->width = (unsigned int) gdImageSX(gdimage);
     view->height = (unsigned int) gdImageSY(gdimage);
     view->sizeof_map = (size_t) (view->width * view->height);
@@ -295,7 +295,7 @@ static double puzzle_softedgedlvl(const PuzzleView * const view,
         if (ax >= view->width) {
             break;
         }
-        if (y > PUZZLE_PIXEL_FUZZ_SIZE) {            
+        if (y > PUZZLE_PIXEL_FUZZ_SIZE) {
             ay = y - PUZZLE_PIXEL_FUZZ_SIZE;
         } else {
             ay = 0U;
@@ -343,7 +343,7 @@ static double puzzle_get_avglvl(const PuzzleView * const view,
             lvl += puzzle_softedgedlvl(view, ax, ay);
         } while (ay++ < ylimit);
     } while (ax++ < xlimit);
-    
+
     return lvl / (double) (width * height);
 }
 
@@ -394,7 +394,7 @@ static int puzzle_fill_avglgls(PuzzleContext * const context,
             lheight = (unsigned int) round
                 (yshift + (double) SUCC(ly) * height /
                  (double) SUCC(lambdas) - y);
-            if (p < lwidth) {                
+            if (p < lwidth) {
                 xd = (unsigned int) round(x + (lwidth - p) / 2.0);
             } else {
                 xd = (unsigned int) round(x);
@@ -422,7 +422,7 @@ static int puzzle_fill_avglgls(PuzzleContext * const context,
             PUZZLE_AVGLVL(avglvls, lx, ly) = avglvl;
         } while (++ly < lambdas);
     } while (++lx < lambdas);
-    
+
     return 0;
 }
 
@@ -436,7 +436,7 @@ static unsigned int puzzle_add_neighbors(double ** const vecur,
     unsigned int xlimit, ylimit;
     unsigned int neighbors = 0U;
     const double ref = PUZZLE_AVGLVL(avglvls, lx, ly);
-    
+
     if (max_neighbors != 8U) {
         puzzle_err_bug(__FILE__, __LINE__);
     }
@@ -474,7 +474,7 @@ static unsigned int puzzle_add_neighbors(double ** const vecur,
     } while (ax++ < xlimit);
     if (neighbors > max_neighbors) {
         puzzle_err_bug(__FILE__, __LINE__);
-    }    
+    }
     return neighbors;
 }
 
@@ -484,7 +484,7 @@ static int puzzle_fill_dvec(PuzzleDvec * const dvec,
     unsigned int lambdas;
     unsigned int lx, ly;
     double *vecur;
-    
+
     lambdas = avglvls->lambdas;
     dvec->sizeof_compressed_vec = (size_t) 0U;
     dvec->sizeof_vec = (size_t) (lambdas * lambdas * PUZZLE_NEIGHBORS);
@@ -562,10 +562,10 @@ int puzzle_fill_dvec_from_file(PuzzleContext * const context,
         goto out;
     }
     ret = puzzle_fill_dvec(dvec, &avglvls);
-    out:    
+    out:
     puzzle_free_view(&view);
     puzzle_free_avglvls(&avglvls);
-    
+
     return ret;
 }
 
@@ -575,13 +575,13 @@ int puzzle_dump_dvec(PuzzleContext * const context,
     size_t s = dvec->sizeof_compressed_vec;
     const double *vecptr = dvec->vec;
 
-    (void) context;    
+    (void) context;
     if (s <= (size_t) 0U) {
         puzzle_err_bug(__FILE__, __LINE__);
     }
     do {
         printf("%g\n", *vecptr++);
     } while (--s != (size_t) 0U);
-    
+
     return 0;
 }

@@ -23,7 +23,7 @@ typedef enum PuzzleImageTypeCode_ {
 } PuzzleImageTypeCode;
 
 typedef struct PuzzleImageType_ {
-    const size_t sizeof_signature;    
+    const size_t sizeof_signature;
     const unsigned char *signature;
     const PuzzleImageTypeCode image_type_code;
 } PuzzleImageType;
