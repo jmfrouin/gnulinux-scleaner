@@ -356,19 +356,20 @@
 						<F N="src/plugins/in/orphan/orphan.h"/>
 					</Folder>
 					<Folder
-						Name="trash"
-						Filters="">
-						<F N="src/plugins/in/trash/CMakeLists.txt"/>
-						<F N="src/plugins/in/trash/trash.cpp"/>
-						<F N="src/plugins/in/trash/trash.h"/>
-					</Folder>
-					<Folder
 						Name="thumbnails"
 						Filters="">
 						<F N="src/plugins/in/thumbnails/CMakeLists.txt"/>
 						<F N="src/plugins/in/thumbnails/thumbnails.cpp"/>
 						<F N="src/plugins/in/thumbnails/thumbnails.h"/>
 					</Folder>
+					<Folder
+						Name="trash"
+						Filters="">
+						<F N="src/plugins/in/trash/CMakeLists.txt"/>
+						<F N="src/plugins/in/trash/trash.cpp"/>
+						<F N="src/plugins/in/trash/trash.h"/>
+					</Folder>
+					<F N="src/plugins/in/CMakeLists.txt"/>
 				</Folder>
 				<Folder
 					Name="out"

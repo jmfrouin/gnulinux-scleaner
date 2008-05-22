@@ -62,6 +62,7 @@ class Capt_cachePlugin : public Plugins::IInPlugin
          */
         void GetDirectory(std::string& path);
         void ProcessFile(const std::string& filename);
+        bool Threadable() { return false; }
 
         /*!
          *@brief From IPlugin
