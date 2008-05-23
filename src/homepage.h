@@ -21,7 +21,7 @@
 
 /*! @mainpage simple cleaner homepage
  *
- * Documentation homepage : http://www.scleaner.fr
+ * Documentation homepage : http://www.scleaner.org
  *
  * Project homepage : https://savannah.nongnu.org/projects/scleaner/
  *
@@ -31,7 +31,7 @@
  *
  * @section intro_whatis What is scleaner ?
  *
- * scleaner will be able to clean your GNU/Linux desktop (developped under Ubuntu 7.10) by removing for example all unwanted log, orphan or duplicate files ...
+ * scleaner will be able to clean your GNU/Linux desktop (developped under Ubuntu 8.04) by removing for example all unwanted log, orphan or duplicate files ...
  *
  * It support plugins to allow developpers to add there own plugins. It is able to minimize in Tray.
  *
@@ -41,7 +41,7 @@
  *
  * @section install Installation
  *
- * You can download the last version here : http://download.savannah.nongnu.org/releases/scleaner/ (get *.deb files)
+ * You can download the last version here : http://www.scleaner.org/ (get *.deb files)
  *
  *  @image html gfx/gpl.png
  */
