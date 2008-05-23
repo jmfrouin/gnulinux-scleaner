@@ -46,7 +46,7 @@ bool CSClean::OnInit(void)
     std::cout << i8n("[DBG] scleaner starting ...\n");
     #endif
 
-    bool l_ret = false;
+    bool Ret = false;
     wxImage::AddHandler(new wxPNGHandler);
 
     //Retrieve Engine::CEngine instance pointer.
@@ -56,9 +56,9 @@ bool CSClean::OnInit(void)
     m_engine->LoadPlugins(PLUG_FOLDER);
 
     //Load GFX interface
-    l_ret = m_engine->LoadInterface();
+    Ret = m_engine->LoadInterface();
 
-    return l_ret;
+    return Ret;
 }
 
 

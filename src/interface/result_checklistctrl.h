@@ -75,7 +75,7 @@ namespace GUI
         wxString GetSelectionFolderName();
 
     protected:
-        wxImageList*        m_imageList;
+        wxImageList*        fImageList;
         bool fSort;
 
         DECLARE_EVENT_TABLE()

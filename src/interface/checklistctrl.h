@@ -63,7 +63,7 @@ namespace GUI
             virtual bool SetIcon(long& item);
 
         protected:
-            wxImageList*        m_imageList;
+            wxImageList*        fImageList;
 
     DECLARE_EVENT_TABLE()
     };

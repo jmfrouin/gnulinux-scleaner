@@ -91,12 +91,12 @@ namespace GUI
     bool ResultCheckListCtrl::LoadIcons()
     {
         //FIXME : Manual delete need
-        m_imageList = new wxImageList(16, 16, true);
-        AssignImageList(m_imageList, wxIMAGE_LIST_SMALL);
+        fImageList = new wxImageList(16, 16, true);
+        AssignImageList(fImageList, wxIMAGE_LIST_SMALL);
 
-        m_imageList->Add(wxIcon(checked_xpm));
-        m_imageList->Add(wxIcon(unchecked_xpm));
-        m_imageList->Add(wxIcon(folder_xpm));
+        fImageList->Add(wxIcon(checked_xpm));
+        fImageList->Add(wxIcon(unchecked_xpm));
+        fImageList->Add(wxIcon(folder_xpm));
 
         return true;
     }
@@ -107,7 +107,7 @@ namespace GUI
 
     bool ResultCheckListCtrl::SetIcon(long& item)
     {
-        bool l_ret = true;
+        bool Ret = true;
 
         wxListItem l_item;
         l_item.SetId(item);
@@ -122,7 +122,7 @@ namespace GUI
         else
             SetItemImage(item, 0);
 
-        return l_ret;
+        return Ret;
     }
 
 

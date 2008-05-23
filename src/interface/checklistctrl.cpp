@@ -58,12 +58,12 @@ namespace GUI
     bool wxCheckListCtrl::LoadIcons()
     {
         //FIXME : Manual delete need
-        m_imageList = new wxImageList(16, 16, true);
-        AssignImageList(m_imageList, wxIMAGE_LIST_SMALL);
+        fImageList = new wxImageList(16, 16, true);
+        AssignImageList(fImageList, wxIMAGE_LIST_SMALL);
 
-        m_imageList->Add(wxIcon(checked_xpm));
-        m_imageList->Add(wxIcon(unchecked_xpm));
-        m_imageList->Add(wxIcon(folder_xpm));
+        fImageList->Add(wxIcon(checked_xpm));
+        fImageList->Add(wxIcon(unchecked_xpm));
+        fImageList->Add(wxIcon(folder_xpm));
 
         return true;
     }
@@ -76,24 +76,22 @@ namespace GUI
     /// Set the appropriate icon
     bool wxCheckListCtrl::SetIcon(long& item)
     {
-        bool l_ret = true;
+        bool Ret = true;
 
-        wxListItem l_item;
-        l_item.SetId(item);
-        GetItem(l_item);
-        wxString l_text = l_item.GetText();
+        wxListItem Item;
+        Item.SetId(item);
+        GetItem(Item);
+        wxString Text = Item.GetText();
 
-        if(l_item.GetImage() == 0)
+        if(Item.GetImage() == 0)
         {
-            Engine::CEngine::Instance()->SetUnselectedInputPlugs(std::string(l_text.ToAscii()));
+            Engine::CEngine::Instance()->SetUnselectedInputPlugs(std::string(Text.ToAscii()));
             SetItemImage(item, 1);
         }
         else
-        {
             SetItemImage(item, 0);
-        }
 
-        return l_ret;
+        return Ret;
     }
 
 
@@ -101,15 +99,11 @@ namespace GUI
     {
         int l_flags = 0;
         long l_subitem;
-        long l_item = HitTest(wxPoint(event.GetX(), event.GetY()), l_flags, &l_subitem);
+        long Item = HitTest(wxPoint(event.GetX(), event.GetY()), l_flags, &l_subitem);
 
         if (event.LeftDown())
-        {
             if (l_flags & wxLIST_HITTEST_ONITEMICON)
-            {
-                SetIcon(l_item);
-            }
-        }
+                SetIcon(Item);
 
         event.Skip();
     }
@@ -119,16 +113,12 @@ namespace GUI
     {
         int l_flags = 0;
         long l_subitem;
-        long l_item = HitTest(wxPoint(event.GetX(), event.GetY()), l_flags, &l_subitem);
+        long Item = HitTest(wxPoint(event.GetX(), event.GetY()), l_flags, &l_subitem);
 
         if (event.GetKeyCode() == WXK_SPACE)
-        {
-            SetIcon(l_item);
-        }
+            SetIcon(Item);
         else
-        {
             event.Skip();
-        }
     }
 
     void wxCheckListCtrl::OnContextMenu(wxContextMenuEvent& event)

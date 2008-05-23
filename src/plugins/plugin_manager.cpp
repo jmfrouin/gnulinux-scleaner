@@ -121,7 +121,7 @@ namespace Plugins
 
 
     //FIXME : Trash code, to clean one day
-    //int l_ret = 0;
+    //int Ret = 0;
     //int Size = 0;
 
     //std::map<std::string, IInPlugin*>::iterator lIt;
@@ -159,12 +159,12 @@ namespace Plugins
     //      Size += l_info.st_size;
     //      cont = l_dir.GetNext(&l_filename);
     //  }
-    //  l_ret += Size;
+    //  Ret += Size;
     //  std::cout << ((*lIt).second)->getName() << " : " << Size << " bytes" << '\n';
     //}
 
-    //std::cout << "Total : " << l_ret << '\n';
-    //return l_ret;
+    //std::cout << "Total : " << Ret << '\n';
+    //return Ret;
     //}
 } //namespace Plugins
 
