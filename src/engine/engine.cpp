@@ -60,9 +60,7 @@ namespace Engine
         std::list<std::string>::iterator It;
         std::cout << "[DBG] fUnselectedInputPlugs : \n";
         for(It = fUnselectedInputPlugs.begin(); It != fUnselectedInputPlugs.end(); ++It)
-        {
             std::cout << "[DBG]" << *It << '\n';
-        }
         #endif
     }
 
@@ -92,14 +90,10 @@ namespace Engine
     bool CEngine::IsRoot()
     {
         bool Ret;
-        if((getuid() != 0) || (geteuid() != 0))
-        {
+        if(getuid() || geteuid())
             Ret = false;
-        }
         else
-        {
             Ret = true;
-        }
         return Ret;
     }
 
@@ -109,13 +103,10 @@ namespace Engine
         bool Ret = false;
         utsname Temp;
         if(uname(&Temp) != 0)
-        {
             std::cerr << i8n("[ERR] CEngine::getKernelVersion error !\n");
-        }
         else
         {
             version += Temp.release;
-
             Ret = true;
         }
 
@@ -136,9 +127,7 @@ namespace Engine
             Ret = true;
         }
         else
-        {
             std::cout << i8n("[WNG] : null") << '\n';
-        }
         return Ret;
     }
 
@@ -173,34 +162,19 @@ namespace Engine
     {
         std::stringstream Temp;
 
-        if(size > (1<<30))        {
+        if(size > (1<<30))
             Temp << ROUND((size / (1<<30))) << i8n("GB");
-        }
         else
-        {
             if(size > (1<<20))
-            {
                 Temp << ROUND(size / (1<<20)) << i8n("MB");
-            }
             else
-            {
                 if(size > (1<<10))
-                {
                     Temp << ROUND(size / (1<<10)) << i8n("KB");
-                }
                 else
-                {
                     if(!size)
-                    {
                         Temp << i8n("null size");
-                    }
                     else
-                    {
                         Temp << size;
-                    }
-                }
-            }
-        }
         str += Temp.str();
     }
 
@@ -214,10 +188,8 @@ namespace Engine
 
         MountTable = setmntent(FSTAB, "r");
 
-        if (MountTable == 0)
-        {
+        if (!MountTable)
             perror(FSTAB);
-        }
         else
         {
             double Free, Used, Total;
@@ -230,9 +202,7 @@ namespace Engine
                 double BlocksPercentUsed;
 
                 if (statfs(MountEntry->mnt_dir, &Stat) != 0)
-                {
                     perror(MountEntry->mnt_dir);
-                }
                 else
                 {
                     if (Stat.f_blocks > 0)
@@ -255,16 +225,16 @@ namespace Engine
                 }
             }
 
-                std::string Size;
-                FormatSize(Free, Size);
-                freespace += Size;
-                Size.clear();
-                FormatSize(Total, Size);
-                total += Size;
-                Size.clear();
-                FormatSize(Used, Size);
-                usedspace += Size;
-                endmntent(MountTable);
+            std::string Size;
+            FormatSize(Free, Size);
+            freespace += Size;
+            Size.clear();
+            FormatSize(Total, Size);
+            total += Size;
+            Size.clear();
+            FormatSize(Used, Size);
+            usedspace += Size;
+            endmntent(MountTable);
         }
 
         return Ret;
@@ -349,9 +319,7 @@ namespace Engine
                 Engine->SetCount(0);
             }
             else
-            {
                 Engine->SetCount(Engine->GetCount()+1);
-            }
         }
 
         #if defined DEBUG && defined VERBOSE
@@ -362,21 +330,15 @@ namespace Engine
         {
             Plugins::IInPlugin* Root = 0;
             Root = Engine->RootPlugin();
-            if(Root != 0)
+            if(Root)
             {
                 struct stat Info;
                 //Try to stat file.
                 if(stat(Path.c_str(), &Info) == -1)
-                {
                     std::cout << i8n("[ERR] : Cannot stat ") << Path << '\n';
-                }
                 else
-                {
                     if(Info.st_size != 0)
-                    {
                         Root->ProcessFile(Path);
-                    }
-                }
             }
         }
         else
@@ -390,26 +352,14 @@ namespace Engine
                     struct stat Info;
                     //Try to stat file.
                     if(stat(Path.c_str(), &Info) == -1)
-                    {
                         std::cout << i8n("[ERR] : Cannot stat ") << Path << '\n';
-                    }
                     else
-                    {
                         if(Info.st_size == 0)
-                        {
                             if(It->second->GrabNullFile())
-                            {
                                 It->second->ProcessFile(Path);
-                            }
-                        }
                         else
-                        {
                             if(!It->second->GrabNullFile())
-                            {
                                 It->second->ProcessFile(Path);
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -429,9 +379,7 @@ namespace Engine
         }
 
         if( nftw(path.c_str(), FTWCallback, 20, Flags) == 0)
-        {
             Ret = true;
-        }
 
         fAsRoot = false;
 
@@ -502,13 +450,9 @@ namespace Engine
             for(int j=0; j<8; ++j)
             {
                 if ( R & 1 )
-                {
                     R = (R >> 1) ^ CRC_POLY_REV;
-                }
                 else
-                {
                     R >>= 1;
-                }
             }
             table.push_back(R);
         }
@@ -523,9 +467,7 @@ namespace Engine
         crc = 0xffffffff;
 
         if(!In.good())
-        {
             std::cerr << i8n("[ERR] Error, cannot read ") << filename << " during calcCRC32" << '\n';
-        }
         else
         {
             char Char;
@@ -572,13 +514,11 @@ namespace Engine
                 for(++It2; It2 != fInfos.end(); ++It2)
                 {
                     if(It->second == It2->second)
-                    {
                         if(fDuplicatesFilesList[It->second] == "")
                         {
                             fDuplicatesFilesList.insert(make_pair(It->second, It->first));
                             Ret++;
                         }
-                    }
                 }
             }
         }

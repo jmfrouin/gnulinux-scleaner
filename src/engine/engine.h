@@ -207,46 +207,22 @@ namespace Engine
 
         public:
             //For the FTW callback ... it sucks !!!
-            Plugins::CPluginManager* GetPluginManager()
-            {
-                return fPFM;
-            }
+            Plugins::CPluginManager* GetPluginManager() { return fPFM; }
 
-            bool AsRoot()
-            {
-                return fAsRoot;
-            }
+            bool AsRoot() { return fAsRoot; }
 
-            Plugins::IInPlugin* RootPlugin()
-            {
-                return fRootPlugin;
-            }
+            Plugins::IInPlugin* RootPlugin() { return fRootPlugin; }
 
-            IProgressbar* GetCallback()
-            {
-                return fCallback;
-            }
+            IProgressbar* GetCallback() { return fCallback; }
 
             //Accessors
-            std::map<std::string, Plugins::IInPlugin*>*  GetAvailableInputPlugs()
-            {
-                return fAvailableInputPlugs;
-            }
+            std::map<std::string, Plugins::IInPlugin*>*  GetAvailableInputPlugs() { return fAvailableInputPlugs; }
 
-            void SetUnselectedInputPlugs(std::string name)
-            {
-                fUnselectedInputPlugs.push_back(name);
-            }
+            void SetUnselectedInputPlugs(std::string name) { fUnselectedInputPlugs.push_back(name); }
 
-            unsigned int GetCount()
-            {
-                return fCount;
-            }
+            unsigned int GetCount() { return fCount; }
 
-            void SetCount(unsigned int nb)
-            {
-                fCount = nb;
-            }
+            void SetCount(unsigned int nb) { fCount = nb; }
 
         private:
             Tools::TSmartPtr<Plugins::CPluginManager>       fPFM;
@@ -254,7 +230,7 @@ namespace Engine
             //Input plugins
             std::map<std::string, Plugins::IInPlugin*>*     fAvailableInputPlugs;
             std::map<std::string, Plugins::IInPlugin*>      fSelectedInputPlugs;
-            std::list<std::string>                          fUnselectedInputPlugs;
+            std::list<std::string>                                          fUnselectedInputPlugs;
 
             //Output plugins
             std::map<std::string, Plugins::IOutPlugin*>*    fOutputPlugs;

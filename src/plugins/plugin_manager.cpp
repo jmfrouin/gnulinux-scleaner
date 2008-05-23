@@ -72,13 +72,9 @@ namespace Plugins
             {
                 void* Handler = dlopen (Tmp.c_str(), RTLD_NOW);
                 if (Handler != 0)
-                {
                     Res++;
-                }
                 else
-                {
                     std::cerr << "[ERR] loadPlugins " << dlerror() << std::endl;
-                }
             }
         }
         free(Namelist);
@@ -114,9 +110,7 @@ namespace Plugins
     {
         std::map<std::string, IInPlugin*>::iterator It;
         for(It = fInputPlugins.begin(); It != fInputPlugins.end(); ++It)
-        {
             ((*It).second)->GetFileList(fl);
-        }
     }
 
 
