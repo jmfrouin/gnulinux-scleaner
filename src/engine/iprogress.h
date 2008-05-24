@@ -22,10 +22,11 @@
 #define __IPROGRESS_H__
 
 #include <string>
+
 /**
  * @brief Plugin Interface
  * @version 29.03.2008
- * @author Jean-Michel Frouin (jmforuin@gnu.org)
+ * @author Jean-Michel Frouin (jmfrouin@gmail.com)
  */
 class IProgressbar
 {

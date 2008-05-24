@@ -236,10 +236,10 @@ namespace Engine
             std::map<std::string, Plugins::IOutPlugin*>*    fOutputPlugs;
 
             //Due to this fuck*** callback
-            Plugins::IInPlugin*                             fRootPlugin;
-            bool                                            fAsRoot;
-            IProgressbar*                                   fCallback;
-            unsigned int                                    fCount;
+            Plugins::IInPlugin* fRootPlugin;
+            bool fAsRoot;
+            IProgressbar* fCallback;
+            unsigned int fCount;
 
             //Files infos
             std::map<std::string, unsigned long>            fInfos;

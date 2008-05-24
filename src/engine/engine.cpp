@@ -89,12 +89,10 @@ namespace Engine
 
     bool CEngine::IsRoot()
     {
-        bool Ret;
         if(getuid() || geteuid())
-            Ret = false;
+            return false;
         else
-            Ret = true;
-        return Ret;
+            return true;
     }
 
 
@@ -245,7 +243,6 @@ namespace Engine
         bool Ret = false;
 
         fCallback = callback;
-
 
         //If launch as root
         if(IsRoot())

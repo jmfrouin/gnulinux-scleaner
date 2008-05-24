@@ -31,7 +31,7 @@ struct versionrevision {
   unsigned long epoch;
   const char *version;
   const char *revision;
-};  
+};
 
 enum deptype {
   dep_suggests,

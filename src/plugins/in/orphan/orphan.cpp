@@ -26,15 +26,10 @@
 
 CPluginInitializer<CorphanPlugin> gOrphan;
 
-CorphanPlugin::CorphanPlugin()
-{
-    SetName("orphan");
-}
+CorphanPlugin::CorphanPlugin() { SetName("orphan"); }
 
 
-CorphanPlugin::~CorphanPlugin()
-{
-}
+CorphanPlugin::~CorphanPlugin() { }
 
 
 const std::string CorphanPlugin::Location()
@@ -61,7 +56,7 @@ void CorphanPlugin::__Run()
 
 IPlugin::EType CorphanPlugin::Type()
 {
-    return eInput;
+    return eThreadableInput;
 }
 
 
