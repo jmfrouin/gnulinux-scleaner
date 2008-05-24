@@ -26,7 +26,7 @@
 #include <iostream>
 #include <engine/engine.h>
 
-#include "plugin_manager.h"
+#include <plugins/plugin_manager.h>
 
 namespace Plugins
 {

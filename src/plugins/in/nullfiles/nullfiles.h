@@ -36,7 +36,7 @@
 #define __LOGS_H__
 
 #include <config.h>
-#include <in_plugin.h>
+#include <plugins/in/in_plugin.h>
 
 class CnullfilesPlugin : public Plugins::IInPlugin
 {

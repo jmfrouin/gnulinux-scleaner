@@ -24,7 +24,7 @@
 
 #include <config.h>
 #include <engine/iprogress.h>
-#include "iplugin.h"
+#include <plugins/iplugin.h>
 
 namespace Plugins
 {

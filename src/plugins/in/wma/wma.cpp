@@ -21,7 +21,7 @@
 
 
 #include <iostream>
-#include <inplugin_initializer.h>
+#include <plugins/in/inplugin_initializer.h>
 #include "wma.h"
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>

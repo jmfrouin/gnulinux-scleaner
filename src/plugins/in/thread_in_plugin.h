@@ -23,14 +23,15 @@
 #define __THREAD_IN_PLUGIN_H__
 
 #include <config.h>
-#include <in_plugin.h>
+#include <plugins/in/in_plugin.h>
+#include <tools/thread.h>
 
 namespace Plugins
 {
     /*!
      *@brief Input plugin interface.
      */
-    class IThreadInPlugin : public IInPlugin
+    class IThreadInPlugin : public IInPlugin, public Tools::IThread
     {
         public:
             /*!
@@ -49,6 +50,9 @@ namespace Plugins
              * @return bool
              */
             bool Threadable() { return true; }
+
+            //From IThread
+            virtual void Run() = 0;
 
 
             //From IPlugin

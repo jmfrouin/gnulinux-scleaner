@@ -36,7 +36,7 @@
 #define __ISO_H__
 
 #include <config.h>
-#include <in_plugin.h>
+#include <plugins/in/in_plugin.h>
 
 class CisoPlugin : public Plugins::IInPlugin
 {

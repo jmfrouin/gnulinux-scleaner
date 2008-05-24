@@ -20,7 +20,7 @@
 */
 
 #include <iostream>
-#include <inplugin_initializer.h>
+#include <plugins/in/inplugin_initializer.h>
 #include "apt-cache.h"
 #include <leak/leak_detector.h>
 

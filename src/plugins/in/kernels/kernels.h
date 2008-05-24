@@ -32,11 +32,11 @@
  * @section todo Todo
  */
 
-#ifndef __KERN_H__
-#define __KERN_H__
+#ifndef __KERNELS_H__
+#define __KERNELS_H__
 
 #include <config.h>
-#include <thread_in_plugin.h>
+#include <plugins/in/thread_in_plugin.h>
 
 class pkgCache;
 class pkgSourceList;
@@ -65,6 +65,11 @@ class CkernelsPlugin : public Plugins::IThreadInPlugin
 
 
         /*!
+        *@brief From IThread
+        */
+        virtual void Run();
+
+        /*!
          *@brief From IInPlugin
          */
         void ProcessFile(const std::string& filename);
@@ -82,5 +87,5 @@ class CkernelsPlugin : public Plugins::IThreadInPlugin
         pkgSourceList*  fSrcList;
         MMap*           fMap;
 };
-#endif                           //__KERN_H__
+#endif                           //__KERNELS_H__
 /* vi:set ts=4: */

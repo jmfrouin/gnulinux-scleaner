@@ -28,8 +28,8 @@
 #include <string>
 #include <tools/singleton.h>
 #include <tools/smart_pointer.h>
-#include <in_plugin.h>
-#include <out_plugin.h>
+#include <plugins/in/in_plugin.h>
+#include <plugins/out/out_plugin.h>
 
 namespace Plugins
 {

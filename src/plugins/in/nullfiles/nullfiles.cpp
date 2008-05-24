@@ -20,7 +20,7 @@
 */
 
 
-#include <inplugin_initializer.h>
+#include <plugins/in/inplugin_initializer.h>
 #include "nullfiles.h"
 #include <leak/leak_detector.h>
 #include <engine/engine.h>

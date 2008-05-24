@@ -37,7 +37,7 @@
 #define __TBZ_H__
 
 #include <config.h>
-#include <out_plugin.h>
+#include <plugins/out/out_plugin.h>
 
 class CtbzPlugin : public Plugins::IOutPlugin
 {

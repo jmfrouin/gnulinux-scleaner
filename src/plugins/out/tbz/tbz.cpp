@@ -30,20 +30,15 @@
 #include <sys/stat.h>            ///Get file size.
 #include <wx/dir.h>
 #include <tools/tar_archive.h>
-#include <outplugin_initializer.h>
+#include <plugins/out/outplugin_initializer.h>
 #include <leak/leak_detector.h>
 
 Plugins::CPluginInitializerOut<CtbzPlugin> gTBZ;
 
-CtbzPlugin::CtbzPlugin()
-{
-    SetName("tbz");
-}
+CtbzPlugin::CtbzPlugin() { SetName("tbz"); }
 
 
-CtbzPlugin::~CtbzPlugin()
-{
-}
+CtbzPlugin::~CtbzPlugin() { }
 
 
 void CtbzPlugin::ProcessFileList(std::list<std::string>& fl, const std::string& path, IProgressbar* callback)

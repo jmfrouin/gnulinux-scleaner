@@ -29,7 +29,7 @@
 #include <apt-pkg/progress.h>       //OpProgress
 #include <apt-pkg/init.h>           //For configuration
 #include <apt-pkg/error.h>          //_error
-#include <inplugin_initializer.h>
+#include <plugins/in/inplugin_initializer.h>
 #include <leak/leak_detector.h>
 #include "kernels.h"
 
@@ -130,9 +130,6 @@ bool CkernelsPlugin::Search(const std::string& Name, std::string& Result)
     return Ret;
 }
 
+std::string CkernelsPlugin::Description() { return "Find unused installed kernels"; }
 
-std::string CkernelsPlugin::Description()
-{
-    return "Find unused installed kernels";
-}
 /* vi:set ts=4: */

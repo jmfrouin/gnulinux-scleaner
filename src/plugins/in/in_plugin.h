@@ -23,7 +23,7 @@
 #define __IN_PLUGIN_H__
 
 #include <config.h>
-#include <iplugin.h>
+#include <plugins/iplugin.h>
 
 namespace Plugins
 {
