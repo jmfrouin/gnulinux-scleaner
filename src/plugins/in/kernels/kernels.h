@@ -27,9 +27,8 @@
  * @section desc Description
  * This plugin allow user to remove all <b>kernels</b> unused, automatically installed on system.
  * <br>
- * @section param Parameters
  * @section pb Knows bugs
- * @section todo Todo
+ * Didn't check yet!
  */
 
 #ifndef __KERNELS_H__

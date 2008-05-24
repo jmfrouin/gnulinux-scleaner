@@ -19,19 +19,30 @@
 
 */
 
+
+/*! @page page3 Plugins documentations.
+ * - @subpage orphan
+ */
+
+/*! @page orphan orphan: input plugin.
+ * @section desc Description
+ * <=> sudo dpkg --purge $(COLUMNS=200 dpkg -l | grep "^rc" | tr -s ' ' | cut -d ' ' -f 2)
+ * @section pb Knows bugs
+ * Didn't work yet
+ */
+
 #ifndef __ORPHAN_H__
 #define __ORPHAN_H__
 
 #include <config.h>
-#include <plugins/iplugin.h>
 #include <tools/thread.h>
 
 /*!
  *@brief Thread plugin.
  *
- * This plugin will find / delete orphan folder from "/home/user/.APP".
+ * This plugin will find / delete orphan folder from "/home/user/.application".
  */
-class CorphanPlugin : public IPlugin, public IThread
+class CorphanPlugin : public Plugins::IThreadInPlugin
 {
     public:
         CorphanPlugin();
@@ -42,13 +53,10 @@ class CorphanPlugin : public IPlugin, public IThread
          */
         const std::string Location();
         const std::string Description();
-        bool Threadable() { return true; }
         EType Type();
 
-        /*!
-         *@brief From CThread.
-         */
-        virtual void __Run();
+        //From IThread
+        void Run();
 
 };
 #endif                           //__ORPHAN_H__
