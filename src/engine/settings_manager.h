@@ -66,6 +66,7 @@ namespace Engine
 
             /*!
             * Destructor : Save preferences.
+            * @todo Remove duplicate code
             */
             ~CSettingsManager();
 

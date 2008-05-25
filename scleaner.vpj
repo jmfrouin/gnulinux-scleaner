@@ -455,6 +455,7 @@
 			<F N="src/config.h.cmake"/>
 			<F N="src/def.h"/>
 			<F N="src/homepage.h"/>
+			<F N="scleaner.dox"/>
 			<F N="src/scleaner_wx.cpp"/>
 			<F N="src/scleaner_wx.h"/>
 			<F N="src/sudo_scleaner.desktop"/>

@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007 FROUIN Jean-Michel
+ * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -35,9 +35,7 @@ CMemoryManager::CMemoryManager()
 {
         m_File.open("/tmp/_memoryleaks.log");
         if (!m_File)
-        {
                 std::cout << i8n("[ERR] : Cannot open ") << m_File << std::endl;
-        }
 
         //    throw CLoadingFailed("Memory leaks.log", "Impossible d'accder en criture");
 
@@ -106,10 +104,10 @@ void* CMemoryManager::Allocate(std::size_t _size, const std::string& _file, int 
         NewBlock.Total += _size;
         m_Blocks[Ptr]  = NewBlock;
 
-        #if defined DEBUG && VERBOSE
+        /*#if defined DEBUG && VERBOSE
         std::cout << "[DBG] [CMemoryManager] Allocate()" << Ptr << std::endl;
         std::cout << "[DBG] [CMemoryManager] +++" << " " << Ptr << " " << static_cast<int>(NewBlock.Size) << " " << NewBlock.Total << " " << NewBlock.File << " " << NewBlock.Line << std::endl;
-        #endif
+        #endif*/
 
         m_File << "+++" << " " << Ptr << " " << static_cast<int>(NewBlock.Size) << " " << NewBlock.Total << " " << NewBlock.File << " " << NewBlock.Line << std::endl;
 
@@ -121,9 +119,9 @@ void CMemoryManager::Free(void* _ptr, bool _array)
 {
         TBlockMap::iterator It = m_Blocks.find(_ptr);
 
-        #if defined DEBUG && VERBOSE
+        /*#if defined DEBUG && VERBOSE
         std::cout << "[DBG] [CMemoryManager] Free(" << _ptr << ") " << std::endl;
-        #endif
+        #endif*/
 
         if (It == m_Blocks.end())
         {
@@ -138,19 +136,13 @@ void CMemoryManager::Free(void* _ptr, bool _array)
         }
 
         if(!m_DeleteStack.empty())
-        {
                 m_File << "---" << " " << _ptr << " " << static_cast<int>(It->second.Size) << " " << m_DeleteStack.top().File << " " << m_DeleteStack.top().Line << std::endl;
-        }
         else
-        {
                 m_File << "---" << " " << _ptr << " " << static_cast<int>(It->second.Size) << std::endl;
-        }
 
         m_Blocks.erase(It);
         if(!m_DeleteStack.empty())
-        {
                 m_DeleteStack.pop();
-        }
         free(_ptr);
 }
 
