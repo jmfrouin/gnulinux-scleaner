@@ -78,7 +78,7 @@ class CkernelsPlugin : public Plugins::IThreadInPlugin
         /*!
          *@brief From IPlugin
          */
-        EType Type() { return eRootByFolderInput; }
+        EType Type() { return eRootThreadableInput; }
         std::string Description();
 
     private:

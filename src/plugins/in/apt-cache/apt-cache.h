@@ -66,7 +66,7 @@ class Capt_cachePlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        EType Type() { return eRootByFolderInput; }
+        EType Type() { return eRootInput; }
         std::string Description();
 };
 #endif                           //__APT_CACHE_H__

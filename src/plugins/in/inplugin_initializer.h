@@ -39,17 +39,11 @@ namespace Plugins
                 CPluginManager* PFM = CPluginManager::Instance();
                 T* Obj = new T;
                 if(!Engine::CEngine::IsRoot())
-                {
-                    if( (Obj->Type() != Plugins::IPlugin::eRootInput) && (Obj->Type() != Plugins::IPlugin::eRootByFolderInput) )
-                    {
+                    if( (Obj->Type() != Plugins::IPlugin::eRootInput) && (Obj->Type() != Plugins::IPlugin::eRootThreadableInput) )
                         PFM->Add(Obj);
-                    }
-                }
                 else
-                {
                     PFM->Add(Obj);
-                }
-
+                std::cout << "I add " << Obj->GetName() << '\n';
             }
     };
 } //namespace Plugins

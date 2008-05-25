@@ -19,39 +19,32 @@
 
 */
 
-#ifndef __INPLUGIN_INITIALIZER_H__
-#define __INPLUGIN_INITIALIZER_H__
+#ifndef __THREADINPLUGIN_INITIALIZER_H__
+#define __THREADINPLUGIN_INITIALIZER_H__
 
 #include <config.h>
 #include <iostream>
 #include <engine/engine.h>
 
-#include "plugin_manager.h"
+#include <"plugins/plugin_manager.h">
 
 namespace Plugins
 {
     template <class T>
-    class CPluginInitializerIn
+    class CThreadPluginInitializerIn
     {
         public:
-            CPluginInitializerIn()
+            CThreadPluginInitializerIn()
             {
                 CPluginManager* PFM = CPluginManager::Instance();
                 T* Obj = new T;
                 if(!Engine::CEngine::IsRoot())
-                {
-                    if( (Obj->Type() != Plugins::IPlugin::eRootInput) && (Obj->Type() != Plugins::IPlugin::eRootByFolderInput) )
-                    {
+                    if( (Obj->Type() != Plugins::IPlugin::eRootInput) && (Obj->Type() != Plugins::IPlugin::eRootThreadableInput) )
                         PFM->Add(Obj);
-                    }
-                }
                 else
-                {
                     PFM->Add(Obj);
-                }
-
             }
     };
 } //namespace Plugins
-#endif                           //__INPLUGIN_INITIALIZER_H__
+#endif                           //__THREADINPLUGIN_INITIALIZER_H__
 /* vi:set ts=4: */

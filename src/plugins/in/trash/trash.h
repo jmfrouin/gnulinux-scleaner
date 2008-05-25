@@ -65,7 +65,7 @@ class CtrashPlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        EType Type() { return eUserByFolderInput; }
+        EType Type() { return eThreadableInput; }
         std::string Description();
 };
 #endif                           //__TRASH_H__

@@ -43,12 +43,11 @@ namespace Plugins
             //! All input plugins' type
             enum EType
             {
-                eUserInput,                    /*!< Basic input plugin: call for each files found in user defined folders. */
-                eUserByFolderInput,     /*!< eUserInput which scan a specific folder. */
-                eRootInput,                     /*!< Input plugin which require root privileges.*/
-                eRootByFolderInput,     /*!<  eRootInput which scan a specific folder.*/
-                eThreadableInput,       /*!<  Threadable input plugin, run alone from others.*/
-                eOutput                         /*!<  Output plugin.*/
+                eUserInput,                       /*!< Basic input plugin: call for each files found in user defined folders. */
+                eRootInput,                        /*!< Input plugin which require root privileges.*/
+                eThreadableInput,           /*!<  Threadable input plugin, run alone from others.*/
+                eRootThreadableInput,   /*!< eRootInput + eThreadableInput*/
+                eOutput                             /*!<  Output plugin.*/
             };
 
         public:

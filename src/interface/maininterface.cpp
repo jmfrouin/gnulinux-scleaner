@@ -131,14 +131,10 @@ namespace GUI
     CMainInterface::~CMainInterface()
     {
         if(fIcon)
-        {
             delete fIcon;
-        }
         #if defined(__WXCOCOA__)
         if(fDockIcon)
-        {
             delete fDockIcon;
-        }
         #endif
     }
 
@@ -160,15 +156,11 @@ namespace GUI
         fIcon->setParent(this);
 
         if (!fIcon->SetIcon(scleaner_xpm, wxT(NAME)))
-        {
             std::cout << i8n("[ERR] Could not set icon.\n");
-        }
 
         //Show splash
-        if(fSettings->GetShowSplash() == true)
-        {
+        if(fSettings->GetShowSplash())
             LaunchSplash(5000);
-        }
     }
 
 
@@ -179,10 +171,7 @@ namespace GUI
         wxBitmap bitmap;
 
         if(bitmap.LoadFile(_T("/usr/share/doc/scleaner/splash.png")), wxBITMAP_TYPE_PNG)
-        {
-            //Bitmap successfully loaded
             new wxSplashScreen(bitmap, wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT, delay, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSIMPLE_BORDER|wxSTAY_ON_TOP);
-        }
         #endif
     }
 
@@ -287,9 +276,7 @@ namespace GUI
             Frame->SetStatusBar(fStatusBar);
 
             if(fEngine->IsRoot())
-            {
                 SetStatusText(wxString(i8n("Launched as root/sudo"), wxConvUTF8), 2);
-            }
             else
             {
                 std::string UserName;
@@ -439,9 +426,7 @@ namespace GUI
 
                 //Try to stat file.
                 if(stat(FileName.c_str(), &Info) == -1)
-                {
                     std::cout << i8n("[ERR] : Cannot stat ") << FileName << '\n';
-                }
                 else
                 {
 
@@ -599,15 +584,11 @@ namespace GUI
         }
 
         //First clear lists
-        if(fAddedFolders != 0)
-        {
+        if(fAddedFolders)
             fAddedFolders->DeleteAllItems();
-        }
 
-        if(fExcludedFolders != 0)
-        {
+        if(fExcludedFolders)
             fExcludedFolders->DeleteAllItems();
-        }
 
         //The, fill panel
 

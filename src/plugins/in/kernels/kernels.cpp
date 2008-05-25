@@ -130,6 +130,13 @@ bool CkernelsPlugin::Search(const std::string& Name, std::string& Result)
     return Ret;
 }
 
-std::string CkernelsPlugin::Description() { return "Find unused installed kernels"; }
+std::string CkernelsPlugin::Description()
+{
+    return "Find unused installed kernels";
+}
 
+void CkernelsPlugin::Run()
+{
+
+}
 /* vi:set ts=4: */

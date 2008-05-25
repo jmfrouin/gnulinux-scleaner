@@ -252,6 +252,33 @@
 				<F N="src/interface/tray.h"/>
 			</Folder>
 			<Folder
+				Name="leak"
+				Filters="">
+				<F N="src/leak/CMakeLists.txt"/>
+				<F N="src/leak/leak_detector.h"/>
+				<F N="src/leak/memory_manager.cpp"/>
+				<F N="src/leak/memory_manager.h"/>
+			</Folder>
+			<Folder
+				Name="log"
+				Filters="">
+				<F N="src/log/CMakeLists.txt"/>
+				<F N="src/log/filelog.cpp"/>
+				<F N="src/log/filelog.h"/>
+				<F N="src/log/ilog.cpp"/>
+				<F N="src/log/ilog.h"/>
+			</Folder>
+			<Folder
+				Name="morgue"
+				Filters="">
+				<F N="src/morgue/checktreectrl.cpp"/>
+				<F N="src/morgue/checktreectrl.h"/>
+				<F N="src/morgue/sclean.cpp"/>
+				<F N="src/morgue/tar.c"/>
+				<F N="src/morgue/TarConvert.cpp"/>
+				<F N="src/morgue/testtar.cpp"/>
+			</Folder>
+			<Folder
 				Name="plugins"
 				Filters="">
 				<Folder
@@ -394,6 +421,15 @@
 				<F N="src/plugins/plugin_manager.cpp"/>
 				<F N="src/plugins/plugin_manager.h"/>
 				<F N="src/plugins/README"/>
+			</Folder>
+			<Folder
+				Name="test"
+				Filters="">
+				<F N="src/test/test_exception.cpp"/>
+				<F N="src/test/test_thread"/>
+				<F N="src/test/test_thread.cpp"/>
+				<F N="src/test/thread.cpp"/>
+				<F N="src/test/thread.h"/>
 			</Folder>
 			<Folder
 				Name="tools"
