@@ -40,7 +40,8 @@ namespace Plugins
             std::cout << Size << i8n(" input plugin : ") << '\n';
         std::map<std::string, IInPlugin*>::iterator It;
         for(It = fInputPlugins.begin(); It != fInputPlugins.end(); ++It)
-            std::cout << "[DBG] " << (*It).first << ": ";
+            std::cout << (*It).first << ", ";
+        std::cout << '\n';
 
         //Output plugins
         Size = fOutputPlugins.size();
@@ -85,6 +86,9 @@ namespace Plugins
     void CPluginManager::Add(IInPlugin* toadd)
     {
         fInputPlugins.insert(make_pair(toadd->GetName(), toadd));
+        #if defined DEBUG && defined VERBOSE
+        std::cout << "[DBG] CPluginManager::Add " << toadd->GetName() << '\n';
+        #endif
     }
 
 

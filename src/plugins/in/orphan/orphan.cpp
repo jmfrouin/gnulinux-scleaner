@@ -20,44 +20,36 @@
 */
 
 #include <iostream>
-#include <plugins/plugin_initializer.h>
-#include "orphan.h"
+#include <plugins/in/inplugin_initializer.h>
 #include <leak/leak_detector.h>
+#include "orphan.h"
 
-CPluginInitializer<CorphanPlugin> gOrphan;
+Plugins::CPluginInitializerIn<CorphanPlugin> gOrphan;
 
-CorphanPlugin::CorphanPlugin() { SetName("orphan"); }
-
-
-CorphanPlugin::~CorphanPlugin() { }
-
-
-const std::string CorphanPlugin::Location()
+CorphanPlugin::CorphanPlugin()
 {
-    return "/var/log/orphan.log";
+    SetName("orphan");
 }
 
+CorphanPlugin::~CorphanPlugin()
+{
+}
 
-const std::string CorphanPlugin::Description()
+void GetDirectory(std::string& path)
+{
+    path="/var/log/";
+}
+
+std::string CorphanPlugin::Description()
 {
     return "Application settings orphan cleaner";
 }
 
-
-void CorphanPlugin::__Run()
+void CorphanPlugin::Run()
 {
     std::cout << "I am in the thread !!" << '\n';
     std::cout << "But I am very tired I ll sleep a bit !!" << '\n';
-    usleep(500000);
     std::cout << "Ok ready to ... quit :) !!" << '\n';
-    IThread::__End();
 }
-
-
-IPlugin::EType CorphanPlugin::Type()
-{
-    return eThreadableInput;
-}
-
 
 /* vi:set ts=4: */

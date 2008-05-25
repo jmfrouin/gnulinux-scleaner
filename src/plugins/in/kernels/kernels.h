@@ -62,13 +62,7 @@ class CkernelsPlugin : public Plugins::IThreadInPlugin
          */
         bool Search(const std::string& name, std::string& result);
 
-
-        /*!
-        *@brief From IThread
-        */
-        virtual void Run();
-
-        /*!
+         /*!
          *@brief From IInPlugin
          */
         void ProcessFile(const std::string& filename);
@@ -80,6 +74,11 @@ class CkernelsPlugin : public Plugins::IThreadInPlugin
          */
         EType Type() { return eRootThreadableInput; }
         std::string Description();
+
+        /*!
+        *@brief From IThread
+        */
+        virtual void Run();
 
     private:
         pkgCache*       fCache;

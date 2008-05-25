@@ -35,7 +35,7 @@
 #define __ORPHAN_H__
 
 #include <config.h>
-#include <tools/thread.h>
+#include <plugins/in/thread_in_plugin.h>
 
 /*!
  *@brief Thread plugin.
@@ -48,16 +48,30 @@ class CorphanPlugin : public Plugins::IThreadInPlugin
         CorphanPlugin();
         ~CorphanPlugin();
 
+        bool GrabNullFile()
+        {
+            return false;
+        }
+
+        bool GetDefaultSelection()
+        {
+            return true;
+        }
+
         /*!
-         *@brief From IPlugin.
+         *@brief From Plugins::IInPlugin
          */
-        const std::string Location();
-        const std::string Description();
-        EType Type();
+        void ProcessFile(const std::string& filename);
+        void GetDirectory(std::string& path);
+
+        /*!
+         *@brief From IPlugin
+         */
+        EType Type() { return eThreadableInput; }
+        std::string Description();
 
         //From IThread
-        void Run();
-
+        virtual void Run();
 };
 #endif                           //__ORPHAN_H__
 /* vi:set ts=4: */
