@@ -21,6 +21,7 @@
 
 */
 
+#region headers
 #define _XOPEN_SOURCE 500
 #include <ftw.h>
 #include <stdlib.h>
@@ -40,9 +41,11 @@
 #include "settings_manager.h"
 #include "dpkg-db.h"
 #include "engine.h"
+#endregion
 
 namespace Engine
 {
+    #region ctor
     CEngine::CEngine():
     fAvailableInputPlugs(0), fOutputPlugs(0), fRootPlugin(0), fAsRoot(false),
     fCallback(0), fCount(0), fSelInPlugins(false)
@@ -52,7 +55,9 @@ namespace Engine
         fOutputPlugs = Plugins::CPluginManager::Instance()->GetOutputListPtr();
         fSettings = CSettingsManager::Instance();
     }
+    #endregion
 
+    #region dtor
     CEngine::~CEngine()
     {
         #if defined DEBUG
@@ -63,14 +68,18 @@ namespace Engine
             std::cout << "[DBG]" << *It << '\n';
         #endif
     }
+    #endregion
 
+    #region LoadPlugins
     int CEngine::LoadPlugins(const std::string& path)
     {
         //Plugins manager
         fPFM = Plugins::CPluginManager::Instance();
         return fPFM->LoadPlugins(path);
     }
+    #endregion
 
+    #region LoadInterface
     bool CEngine::LoadInterface()
     {
         bool Ret = false;
@@ -85,8 +94,9 @@ namespace Engine
 
         return Ret;
     }
+    #endregion
 
-
+    #region IsRoot
     bool CEngine::IsRoot()
     {
         if(getuid() || geteuid())
@@ -94,8 +104,9 @@ namespace Engine
         else
             return true;
     }
+    #endregion
 
-
+    #region GetKernelVersion
     bool CEngine::GetKernelVersion(std::string& version)
     {
         bool Ret = false;
@@ -110,8 +121,9 @@ namespace Engine
 
         return Ret;
     }
+    #endregion
 
-
+    #region CallOutputPlugin
     bool CEngine::CallOutputPlugin(std::list<std::string>& list, std::string& name, const std::string& path, IProgressbar* callback)
     {
         bool Ret = false;
@@ -128,8 +140,9 @@ namespace Engine
             std::cout << i8n("[WNG] : null") << '\n';
         return Ret;
     }
+    #endregion
 
-
+    #region GetUsername
     bool CEngine::GetUsername(std::string& username)
     {
         bool Ret = false;
@@ -154,8 +167,9 @@ namespace Engine
 
         return Ret;
     }
+    #endregion
 
-
+    #region FormatSize
     void CEngine::FormatSize(double size, std::string& str)
     {
         std::stringstream Temp;
@@ -175,8 +189,9 @@ namespace Engine
                         Temp << size;
         str += Temp.str();
     }
+    #endregion
 
-
+    #region GetFreeSpace
     double CEngine::GetFreeSpace(const std::string& path, std::string& usedspace, std::string& freespace, std::string& total)
     {
         double Ret = 0;
@@ -237,7 +252,9 @@ namespace Engine
 
         return Ret;
     }
+    #endregion
 
+    #region ScanDisk
     bool CEngine::ScanDisk(IProgressbar* callback)
     {
         bool Ret = false;
@@ -281,7 +298,9 @@ namespace Engine
         }
         return Ret;
     }
+    #endregion
 
+    #region FTWCallback
     int CEngine::FTWCallback(const char* fpath, const struct stat* statp, int tflag, struct FTW* ftwbuf)
     {
         int Ret = 0;
@@ -362,7 +381,9 @@ namespace Engine
         }
         return Ret;                // To tell nftw() to continue
     }
+    #endregion
 
+    #region ScanDirectory
     bool CEngine::ScanDirectory(const std::string& path, bool asroot, Plugins::IInPlugin* rootplugin, bool recursive)
     {
         bool Ret = false;
@@ -382,7 +403,9 @@ namespace Engine
 
         return Ret;
     }
+    #endregion
 
+    #region GetTimestamp
     void CEngine::GetTimestamp(std::string& str)
     {
         time_t Tm;
@@ -435,8 +458,9 @@ namespace Engine
         std::cout << i8n("[DBG] CEngine::getTimestamp Timestamp: ") << str << '\n';
         #endif
     }
+    #endregion
 
-
+    #region GetCRCTable
     void CEngine::GetCRCTable(std::vector<unsigned long>& table)
     {
         unsigned long R;
@@ -454,8 +478,9 @@ namespace Engine
             table.push_back(R);
         }
     }
+    #endregion
 
-
+    #region CalcCRC32
     void CEngine::CalcCRC32(const std::string& filename, unsigned long& crc)
     {
         std::ifstream In(filename.c_str(), std::ios::in | std::ios::binary);
@@ -482,8 +507,9 @@ namespace Engine
         std::cout << "[DBG] calcCRC32 : CRC32 for " << filename << " = " << crc << '\n';
         #endif
     }
+    #endregion
 
-
+    #region AddFileInfo
     void CEngine::AddFileInfo(const std::string& file, unsigned long crc)
     {
         #if defined DEBUG && defined VERBOSE
@@ -491,8 +517,9 @@ namespace Engine
         #endif
         fInfos.insert(make_pair(file, crc));
     }
+    #endregion
 
-
+    #region DetectDuplicates
     int CEngine::DetectDuplicates()
     {
         int Ret = 0;
@@ -523,8 +550,9 @@ namespace Engine
 
         return Ret;
     }
+    #endregion
 
-
+    #region FindPackage
     int CEngine::FindPackage(const std::string& name)
     {
         int Ret = 0;
@@ -537,7 +565,9 @@ namespace Engine
 
         return Ret;
     }
+    #endregion
 
+    #region GetSelectedInputPlugs
     std::map<std::string, Plugins::IInPlugin*>* CEngine::GetSelectedInputPlugs(bool refresh)
     {
         if(refresh || !fSelInPlugins)
@@ -573,6 +603,7 @@ namespace Engine
         }
         return &fSelectedInputPlugs;
     }
+    #endregion
 
 } //namespace Engine
 /* vi:set ts=4: */
