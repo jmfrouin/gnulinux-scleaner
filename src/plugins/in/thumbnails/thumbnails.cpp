@@ -42,7 +42,7 @@ CthumbnailsPlugin::~CthumbnailsPlugin()
 
 void CthumbnailsPlugin::ProcessFile(const std::string& filename)
 {
-    if(filename.find("Thumdb.db", 0) == (filename.length()-8))
+    if(filename.find("Thumbs.db", 0) == (filename.length()-9))
         fFL.push_back(filename);
 }
 
