@@ -25,11 +25,7 @@
 
 /*! @page thumbnails thumbnails: input plugin.
  * @section desc Description
- * This plugin allow user to find thumbnails files : <b>Thumb.db</b> nammed files.
- * <br>
- * In fact it just scan <b>/home/user/</b> and its subfolders.
- * @section param Parameters
- * @section pb Knows bugs
+ * This plugin allow user to find thumbnails files : <b>Thumbs.db</b> nammed files..
  * @todo Support both modes, simple user & root/sudo.
  */
 
