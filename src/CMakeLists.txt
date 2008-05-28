@@ -32,6 +32,7 @@ INCLUDE(FindLATEX)
 INCLUDE(FindUnixCommands)
 INCLUDE(FindwxWidgets)
 INCLUDE(FindBZip2)
+INCLUDE(cmake/FindAPT.cmake)
 
 SET(SCLEANER_CFLAGS "-pg ")
 SET(SCLEANER_LDFLAGS "-pg ")

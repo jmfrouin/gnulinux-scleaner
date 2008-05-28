@@ -28,7 +28,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 574
+#define BUILD 576
 
 //Bash Colors
 #define VERT "\e[0;32m"
