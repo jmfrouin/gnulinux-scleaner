@@ -313,10 +313,6 @@ namespace Engine
                 Engine->SetCount(Engine->GetCount()+1);
         }
 
-        #if defined DEBUG && defined VERBOSE
-        std::cout << i8n("[DBG] FTW_callback : ") << Path << '\n';
-        #endif
-
         if(Engine->AsRoot())
         {
             Plugins::IInPlugin* Root = 0;
@@ -345,12 +341,19 @@ namespace Engine
                     if(stat(Path.c_str(), &Info) == -1)
                         std::cout << i8n("[ERR] : Cannot stat ") << Path << '\n';
                     else
-                        if(Info.st_size == 0)
+                    {
+                        if(!Info.st_size)
+                        {
                             if(It->second->GrabNullFile())
                                 It->second->ProcessFile(Path);
+                        }
                         else
-                            if(!It->second->GrabNullFile())
-                                It->second->ProcessFile(Path);
+                            It->second->ProcessFile(Path);
+                    }
+                    std::cout << "[DBG] Calling : " << It->second->GetName() << '\n';
+                    std::cout << "[DBG] Info.st_size : " << Info.st_size << '\n';
+                    std::cout << "[DBG] It->second->GrabNullFile : " << It->second->GrabNullFile() << '\n';
+
                 }
             }
         }

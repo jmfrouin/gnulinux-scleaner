@@ -20,7 +20,7 @@
 */
 
 /*! @page page3 Plugins documentations.
- * - @subpage thumbnails
+ *- @subpage thumbnails
  */
 
 /*! @page thumbnails thumbnails: input plugin.

@@ -19,6 +19,7 @@
 # 02/11/07 : Adding a build counter
 # 04/09/07 : Adding a cscope rule
 # 17/05/08 : Adding profiling code
+# 28/05/08 : Adding FindAPT.cmake
 
 PROJECT(scleaner)
 
