@@ -51,7 +51,6 @@ void CemptyfoldersPlugin::ProcessFile(const std::string& filename)
     }
     else
     {
-        //std::cout << "Stat : " << "[" << filename << "]" << Stat.st_mode << '\n';
         if(S_ISDIR(Stat.st_mode))
         {
             struct dirent** NameList;

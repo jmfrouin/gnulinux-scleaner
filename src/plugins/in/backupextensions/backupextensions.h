@@ -28,6 +28,7 @@
  * This plugin allow user to find backup files.
  *
  * Complet list of files extensions can be found in .cpp.
+ *
  * Fully functionnal
  */
 

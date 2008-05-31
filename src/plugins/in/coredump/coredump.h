@@ -23,12 +23,10 @@
  * - @subpage coredump
  */
 
-/*! @page coredump coredump: input plugin.
+/*! @page coredump coredump: Find core dump files.
  * @section desc Description
- * <br>
- * @section param Parameters
- * @section pb Knows bugs
- * @todo Support both modes, simple user & root/sudo.
+ *
+ * Fully functionnal.
  */
 
 #ifndef __COREDUMP_H__

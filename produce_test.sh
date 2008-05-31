@@ -64,10 +64,19 @@ echo backupextension > bk.v2i
 echo backupextension > bk.win
 echo backupextension > bk.win
 echo backupextension > bk.xlk
-#wma
-echo music.mp3 > music.mp3
-echo music.wma > music.wma
+#coders
+echo coders > coders.o
+#coredump
+echo coredump > coredump
+#emptyfolders
+mkdir emptyfolders_test
+#iso
+echo iso > test_file.iso
 #latex
 echo latex > latex.toc
 #thumbnails
 echo thumbnails > Thumbs.db
+#wma
+echo music.mp3 > music.mp3
+echo music.wma > music.wma
+

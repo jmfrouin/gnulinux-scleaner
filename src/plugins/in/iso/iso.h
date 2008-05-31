@@ -23,13 +23,11 @@
  * - @subpage iso
  */
 
-/*! @page iso iso: input plugin.
+/*! @page iso iso: Find image disk files.
  * @section desc Description
- * This plugin allow user to clean ISO files : <b>*.iso</b> nammed files.
- * <br>
- * @section param Parameters
- * @section pb Knows bugs
- * @todo Support both modes, simple user & root/sudo.
+ * This plugin allow user to find ISO files : <b>*.iso</b> nammed files.
+ *
+ * Fully functionnal
  */
 
 #ifndef __ISO_H__

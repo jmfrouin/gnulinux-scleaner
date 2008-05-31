@@ -23,14 +23,11 @@
  * - @subpage emptyfolders
  */
 
-/*! @page emptyfolders emptyfolders: input plugin.
+/*! @page emptyfolders emptyfolders: Find empty folders.
  * @section desc Description
- * This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
- * <br>
- * In fact it just scan <b>/home/user/</b> and its subfolders.
- * @section param Parameters
- * @section pb Knows bugs
- * @todo Support both modes, simple user & root/sudo.
+ * Find empty folders
+ *
+ * Fully functionnal.
  */
 
 #ifndef __NULLFOLDERS_H__
