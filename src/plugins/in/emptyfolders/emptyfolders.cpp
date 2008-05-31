@@ -46,9 +46,7 @@ void CemptyfoldersPlugin::ProcessFile(const std::string& filename)
 
     //Try to stat file.
     if(stat(filename.c_str(), &Stat) == -1)
-    {
         std::cout << i8n("[ERR] : Cannot stat ") << filename << '\n';
-    }
     else
     {
         if(S_ISDIR(Stat.st_mode))
@@ -58,13 +56,9 @@ void CemptyfoldersPlugin::ProcessFile(const std::string& filename)
             if(Nb != -1) //Fix Bug 4 : If no error append.
             {
                 if(Nb == 2) //So contain only : . and ..
-                {
                     fFL.push_back(filename);
-                }
                 while (Nb-- > 0)
-                {
                     free(NameList[Nb]);
-                }
                 free(NameList);
             }
         }

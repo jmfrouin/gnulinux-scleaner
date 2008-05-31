@@ -59,7 +59,7 @@ namespace Plugins
              *@brief Return a std::list of files targeted by plugin.
              *@param fl The files list to fill.
              */
-            void GetFileList(std::list<std::string>& fl)
+            virtual void GetFileList(std::list<std::string>& fl)
             {
                 fl.merge(fFL);
             }
@@ -89,7 +89,7 @@ namespace Plugins
             virtual EType Type() { return eUserInput; }
 
         protected:
-            std::list<std::string>      fFL;
+            std::list<std::string> fFL;
     };
 } //namespace Plugins
 #endif                           // __IN_PLUGIN_H__

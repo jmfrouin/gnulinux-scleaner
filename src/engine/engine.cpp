@@ -36,7 +36,8 @@
 #include <sys/stat.h>
 #include <sys/vfs.h>
 #include <sys/utsname.h>
-#include "interface/maininterface.h"
+#include <interface/maininterface.h>
+#include <plugins/in/thread_in_plugin.h>
 #include "settings_manager.h"
 #include "dpkg-db.h"
 #include "engine.h"
@@ -235,43 +236,65 @@ namespace Engine
     bool CEngine::ScanDisk(IProgressbar* callback)
     {
         bool Ret = false;
-
         fCallback = callback;
 
-        //If launch as root
+        //First launch threadable plugin
+        std::map<std::string, Plugins::IInPlugin*>* Input = GetSelectedInputPlugs(true);
+        std::map<std::string, Plugins::IInPlugin*>::iterator It;
+        for(It = Input->begin(); It != Input->end(); ++It)
+        {
+            if(It->second->Type() == Plugins::IPlugin::eThreadableInput)
+            {
+                Plugins::IThreadInPlugin* ThreadablePlugin = (Plugins::IThreadInPlugin*)It->second;
+                std::cout << ROUGE << ThreadablePlugin->GetName() << '\n' << STOP;
+                ThreadablePlugin->Start();
+                //Threads infos :
+                std::cout << VERT << "Thread : " << Tools::IThread::GetCount() << " / " << Tools::IThread::GetMax() << '\n' << STOP;
+            }
+        }
+
+        //Then launch eRootInput plugins
         if(IsRoot())
         {
-            std::map<std::string, Plugins::IInPlugin*>* Input = GetSelectedInputPlugs(true);
-            std::map<std::string, Plugins::IInPlugin*>::iterator It;
-            for(It = Input->begin(); It != Input->end(); ++It)
-            {
-                if(It->second->Type() == Plugins::IPlugin::eRootInput)
-                {
-                    std::string Dir;
+           std::map<std::string, Plugins::IInPlugin*>* Input = GetSelectedInputPlugs(true);
+           std::map<std::string, Plugins::IInPlugin*>::iterator It;
+           for(It = Input->begin(); It != Input->end(); ++It)
+           {
+               if(It->second->Type() == Plugins::IPlugin::eRootInput)
+               {
+                   std::string Dir;
                     (It->second)->GetDirectory(Dir);
                     bool Continue = callback->UpdateProgress(Dir, true);
                     if(!Continue)
                       break;
                     ScanDirectory(Dir, true, It->second);
                 }
-            }
+           }
         }
 
-        //In both case
+        //Then launch eUserInput
         std::list<std::string>* FoldersList = fSettings->GetFoldersListPtr();
         std::list<std::string>::iterator ItFolders;
         for(ItFolders = FoldersList->begin(); ItFolders != FoldersList->end(); ++ItFolders)
         {
-            //#if defined DEBUG
-            std::cout << i8n("[DBG] CEngine::scanDisk Path : ") << *ItFolders << '\n';
-            //#endif
-            if(callback != 0)
+         if(callback != 0)
+         {
+             bool Continue = callback->UpdateProgress(*ItFolders, true);
+             if(!Continue)
+                 break;
+         }
+         ScanDirectory(*ItFolders);
+        }
+
+        std::cout << ROUGE << "Waiting end of threadable plugins : \n" << STOP;
+        for(It = Input->begin(); It != Input->end(); ++It)
+        {
+            if(It->second->Type() == Plugins::IPlugin::eThreadableInput)
             {
-                bool Continue = callback->UpdateProgress(*ItFolders, true);
-                if(!Continue)
-                  break;
+                Plugins::IThreadInPlugin* ThreadablePlugin = (Plugins::IThreadInPlugin*)It->second;
+                std::cout << VERT << ThreadablePlugin->GetName() << '\n' << STOP;
+                ThreadablePlugin->Join();
             }
-            ScanDirectory(*ItFolders);
         }
         return Ret;
     }
@@ -350,10 +373,11 @@ namespace Engine
                         else
                             It->second->ProcessFile(Path);
                     }
+                    /*
                     std::cout << "[DBG] Calling : " << It->second->GetName() << '\n';
                     std::cout << "[DBG] Info.st_size : " << Info.st_size << '\n';
                     std::cout << "[DBG] It->second->GrabNullFile : " << It->second->GrabNullFile() << '\n';
-
+                    */
                 }
             }
         }
@@ -363,6 +387,7 @@ namespace Engine
     bool CEngine::ScanDirectory(const std::string& path, bool asroot, Plugins::IInPlugin* rootplugin, bool recursive)
     {
         bool Ret = false;
+        std::cout << "ScanDirectory : " << path << '\n';
 
         int Flags = FTW_PHYS;
 
@@ -473,16 +498,10 @@ namespace Engine
             }
         }
         In.close();
-        #if defined DEBUG && defined VERBOSE
-        std::cout << "[DBG] calcCRC32 : CRC32 for " << filename << " = " << crc << '\n';
-        #endif
     }
 
     void CEngine::AddFileInfo(const std::string& file, unsigned long crc)
     {
-        #if defined DEBUG && defined VERBOSE
-        std::cout << "[DBG] addFileInfo : " << file << " " << crc << '\n';
-        #endif
         fInfos.insert(make_pair(file, crc));
     }
 

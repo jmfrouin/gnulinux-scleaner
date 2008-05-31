@@ -35,7 +35,12 @@ CorphanPlugin::~CorphanPlugin()
 {
 }
 
-void GetDirectory(std::string& path)
+void CorphanPlugin::ProcessFile(const std::string& filename)
+{
+
+}
+
+void CorphanPlugin::GetDirectory(std::string& path)
 {
     path="/var/log/";
 }
@@ -47,9 +52,7 @@ std::string CorphanPlugin::Description()
 
 void CorphanPlugin::Run()
 {
-    std::cout << "I am in the thread !!" << '\n';
-    std::cout << "But I am very tired I ll sleep a bit !!" << '\n';
-    std::cout << "Ok ready to ... quit :) !!" << '\n';
+
 }
 
 /* vi:set ts=4: */

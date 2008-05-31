@@ -371,18 +371,18 @@ namespace GUI
         double Totalsize = 0;
         // Happend plugins' name available
         std::map<std::string, Plugins::IInPlugin*>::iterator It = fEngine->GetSelectedInputPlugs(true)->begin();
-        for(; It != fEngine->GetSelectedInputPlugs()->end(); ++It)
+        for(; It != fEngine->GetSelectedInputPlugs(true)->end(); ++It)
         {
-            wxString String(((*It).second)->GetName().c_str(), wxConvUTF8);
+            wxString String((It->second)->GetName().c_str(), wxConvUTF8);
 
             std::list<std::string> List;
-            ((*It).second)->GetFileList(List);
+            std::cout << VERT << "For plugin : " << It->second->GetName() << STOP << '\n';
+            It->second->GetFileList(List);
             List.sort();
             std::list<std::string>::iterator It2;
 
-
             #if defined DEBUG && defined VERBOSE
-            std::cout << i8n("[DBG] Size = ") << List.size() << '\n';
+            std::cout << i8n("[DBG] For plugins : ") << It->second->GetName() <<", size = " << List.size() << '\n';
             #endif
             ResultCheckListCtrl* FilesList = new ResultCheckListCtrl(fFoundFiles, ID_RESCHECKLIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 

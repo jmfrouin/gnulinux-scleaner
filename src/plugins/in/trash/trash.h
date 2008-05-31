@@ -37,9 +37,9 @@
 #define __TRASH_H__
 
 #include <config.h>
-#include <plugins/in/in_plugin.h>
+#include <plugins/in/thread_in_plugin.h>
 
-class CtrashPlugin : public Plugins::IInPlugin
+class CtrashPlugin : public Plugins::IThreadInPlugin
 {
     public:
         CtrashPlugin();
@@ -61,12 +61,17 @@ class CtrashPlugin : public Plugins::IInPlugin
          */
         void ProcessFile(const std::string& filename);
         void GetDirectory(std::string& path) { path = ""; }
+        void GetFileList(std::list<std::string>& fl);
 
         /*!
          *@brief From IPlugin
          */
         EType Type() { return eThreadableInput; }
         std::string Description();
+
+        //From IThread
+        virtual void Run();
+
 };
 #endif                           //__TRASH_H__
 /* vi:set ts=4: */

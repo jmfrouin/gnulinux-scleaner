@@ -19,10 +19,12 @@
 
 */
 
+#include "trash.h"
 
 #include <iostream>
+#include <dirent.h>
+
 #include <plugins/in/inplugin_initializer.h>
-#include "trash.h"
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
@@ -37,6 +39,7 @@ CtrashPlugin::CtrashPlugin()
 
 CtrashPlugin::~CtrashPlugin()
 {
+    std::cout << "~CtrashPlugin : " << fFL.size() << '\n';
 }
 
 
@@ -49,5 +52,35 @@ void CtrashPlugin::ProcessFile(const std::string& filename)
 std::string CtrashPlugin::Description()
 {
     return "Find files in your trashbin";
+}
+
+void CtrashPlugin::GetFileList(std::list<std::string>& fl)
+{
+    fl.merge(fFL);
+    std::cout << "CtrashPlugin::GetFileList() : " << fFL.size() << '\n';
+}
+
+void CtrashPlugin::Run()
+{
+    std::string Path("/home/snoogie/.local/share/Trash/files/");
+    while(fRunning)
+    {
+        struct dirent** NameList;
+        int Nb = scandir(Path.c_str(), &NameList, 0, alphasort);
+        if(Nb >= 0) //Fix Bug 4 : If no error append.
+        {
+            while (Nb-- > 0)
+            {
+                std::cout << CYAN << "CtrashPlugin::Run() " << NameList[Nb]->d_name << '\n' << STOP;
+                fFL.push_back(NameList[Nb]->d_name);
+                free(NameList[Nb]);
+            }
+            free(NameList);
+        }
+        else
+            std::cout << "CtrashPlugin::Run() : Error\n";
+        fRunning=false;
+    }
+    std::cout << "CtrashPlugin::Run() : " << fFL.size() << '\n';
 }
 /* vi:set ts=4: */

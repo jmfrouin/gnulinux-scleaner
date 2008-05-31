@@ -61,7 +61,7 @@ class ClogsPlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        EType Type() { return eRootThreadableInput; }
+        EType Type() { return eRootInput; }
         std::string Description();
 };
 #endif                           //__LOGS_H__
