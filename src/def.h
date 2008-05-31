@@ -28,7 +28,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 588
+#define BUILD 591
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -40,11 +40,10 @@
 
 //General app infos
 #define MAJOR 0
-#define MINOR 40
-#define BUG 0
+#define MINOR 50
 #define t(u) #u
-#define VERSION(M,m,b,B) t(M) "." t(m) "." t(b) "." t(B)
-#define VER VERSION(MAJOR,MINOR,BUG,BUILD)
+#define VERSION(M,m,B) t(M) "." t(m) "." t(B)
+#define VER VERSION(MAJOR,MINOR,BUILD)
 #define NAME "scleaner v"VER
 #define SPLASH true
 
