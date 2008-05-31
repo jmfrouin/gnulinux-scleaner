@@ -23,10 +23,12 @@
  *- @subpage thumbnails
  */
 
-/*! @page thumbnails thumbnails: input plugin.
+/*! @page thumbnails thumbnails: Find windows thumbnails files.
  * @section desc Description
- * This plugin allow user to find thumbnails files : <b>Thumbs.db</b> nammed files..
- * @todo Support both modes, simple user & root/sudo.
+ *
+ * This plugin allow user to find thumbnails files : <b>Thumbs.db</b> nammed files.
+ *
+ * Fully functionnal
  */
 
 #ifndef __THUMBNAILS_H__

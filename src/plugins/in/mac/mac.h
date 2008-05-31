@@ -23,14 +23,9 @@
  * - @subpage mac
  */
 
-/*! @page mac mac: input plugin.
+/*! @page mac mac: Find mac .dstore files.
  * @section desc Description
- * This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
- * <br>
- * In fact it just scan <b>/home/user/</b> and its subfolders.
- * @section param Parameters
- * @section pb Knows bugs
- * @todo Support both modes, simple user & root/sudo.
+ * Fully functionnal
  */
 
 #ifndef __MAC_H__

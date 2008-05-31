@@ -23,13 +23,8 @@
  * - @subpage logs
  */
 
-/*! @page logs logs: input plugin.
+/*! @page logs logs: Find logs files locate in /var/log
  * @section desc Description
- * This plugin allow user to clean <b>logs</b> files.
- * <br>
- * In fact it just scan <b>/var/log/</b> and its subfolders.
- * @section param Parameters
- * @section pb Knows bugs
  */
 
 #ifndef __LOGS_H__
@@ -66,7 +61,7 @@ class ClogsPlugin : public Plugins::IInPlugin
         /*!
          *@brief From IPlugin
          */
-        EType Type() { return eRootInput; }
+        EType Type() { return eRootThreadableInput; }
         std::string Description();
 };
 #endif                           //__LOGS_H__

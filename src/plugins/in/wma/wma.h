@@ -23,13 +23,11 @@
  * - @subpage wma
  */
 
-/*! @page wma wma: input plugin.
+/*! @page wma wma: Find music.wma file if music.mp3 exist.
  * @section desc Description
- * This plugin allow user to clean WMA files : <b>*.wma</b> nammed files.
- * <br>
- * @section param Parameters
- * @section pb Knows bugs
- * @todo Support both modes, simple user & root/sudo.
+ * This plugin allow user to clean WMA files : <b>*.wma</b> nammed files. (only if a corresponding *.mp3 files is found)
+ *
+ * Fully functionnal
  */
 
 #ifndef __WMA_H__

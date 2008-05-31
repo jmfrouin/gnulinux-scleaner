@@ -74,6 +74,13 @@ mkdir emptyfolders_test
 echo iso > test_file.iso
 #latex
 echo latex > latex.toc
+echo latex > latex.aux
+#logs
+echo logs > logs.log
+#mac
+echo dstore> max.dstore
+#nullfiles
+touch nullfiles
 #thumbnails
 echo thumbnails > Thumbs.db
 #wma

@@ -23,14 +23,9 @@
  * - @subpage latex
  */
 
-/*! @page latex latex: input plugin.
+/*! @page latex latex: Find temporary files produce by LaTeX
  * @section desc Description
- * This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
- * <br>
- * In fact it just scan <b>/home/user/</b> and its subfolders.
- * @section param Parameters
- * @section pb Knows bugs
- * @todo Support both modes, simple user & root/sudo.
+ * Fully functionnal.
  */
 
 #ifndef __LATEX_H__

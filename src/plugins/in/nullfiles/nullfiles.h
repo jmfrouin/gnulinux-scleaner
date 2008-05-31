@@ -23,13 +23,9 @@
  * - @subpage nullfiles
  */
 
-/*! @page nullfiles nullfiles: input plugin.
+/*! @page nullfiles nullfiles: Find files with size = 0.
  * @section desc Description
- * This plugin allow user to clean <b>nullfiles</b> files.
- * <br>
- * In fact it just scan <b>/var/log/</b> and its subfolders.
- * @section param Parameters
- * @section pb Knows bugs
+ * Fully functionnal
  */
 
 #ifndef __LOGS_H__
