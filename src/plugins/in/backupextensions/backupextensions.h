@@ -20,17 +20,15 @@
 */
 
 /*! @page page3 Plugins documentations.
- * - @subpage backupextensions
+ * @subpage backupextensions
  */
 
-/*! @page backupextensions backupextensions: input plugin.
+/*! @page backupextensions backupextensions: Find backup files.
  * @section desc Description
- * This plugin allow user to clean his backup files : <b>*.bak, *~ or #*</b> nammed files.
- * <br>
- * In fact it just scan <b>/home/user/</b> and its subfolders.
- * @section param Parameters
- * @section pb Knows bugs
- * @todo Support both modes, simple user & root/sudo.
+ * This plugin allow user to find backup files.
+ *
+ * Complet list of files extensions can be found in .cpp.
+ * Fully functionnal
  */
 
 #ifndef __BACKUPEXTENSIONS_H__
