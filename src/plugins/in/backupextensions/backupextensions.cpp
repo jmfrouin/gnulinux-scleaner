@@ -42,7 +42,8 @@ CbackupextensionsPlugin::~CbackupextensionsPlugin()
 
 void CbackupextensionsPlugin::ProcessFile(const std::string& filename)
 {
-    if( (filename.find(".$$$",0) == (filename.length()-4)) ||
+    if((filename.find("~",0) == (filename.length()-1)) ||
+        (filename.find(".$$$",0) == (filename.length()-4)) ||
         (filename.find(".$db",0) == (filename.length()-4)) ||
         (filename.find(".001",0) == (filename.length()-4)) ||
         (filename.find(".001",0) == (filename.length()-4)) ||
@@ -51,7 +52,6 @@ void CbackupextensionsPlugin::ProcessFile(const std::string& filename)
         (filename.find(".abk",0) == (filename.length()-4)) ||
         (filename.find(".bac",0) == (filename.length()-4)) ||
         (filename.find(".backupdb",0) == (filename.length()-9)) ||
-        (filename.find(".bak",0) == (filename.length()-4)) ||
         (filename.find(".bak",0) == (filename.length()-4)) ||
         (filename.find(".bck",0) == (filename.length()-4)) ||
         (filename.find(".bck",0) == (filename.length()-4)) ||

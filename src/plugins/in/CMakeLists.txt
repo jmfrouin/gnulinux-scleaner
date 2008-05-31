@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(folder apt-cache backfiles backupextensions coders  coredump emptyfolders iso kernels latex logs mac nullfiles orphan thumbnails trash wma)
+SET(folder apt-cache backupextensions coders  coredump emptyfolders iso kernels latex logs mac nullfiles orphan thumbnails trash wma)
 
 FOREACH(fold ${folder})
         ADD_SUBDIRECTORY(${fold})

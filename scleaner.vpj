@@ -292,13 +292,6 @@
 						<F N="src/plugins/in/apt-cache/CMakeLists.txt"/>
 					</Folder>
 					<Folder
-						Name="backfiles"
-						Filters="">
-						<F N="src/plugins/in/backfiles/backfiles.cpp"/>
-						<F N="src/plugins/in/backfiles/backfiles.h"/>
-						<F N="src/plugins/in/backfiles/CMakeLists.txt"/>
-					</Folder>
-					<Folder
 						Name="backupextensions"
 						Filters="">
 						<F N="src/plugins/in/backupextensions/backupextensions.cpp"/>
@@ -455,6 +448,7 @@
 			<F N="src/config.h.cmake"/>
 			<F N="src/def.h"/>
 			<F N="src/homepage.h"/>
+			<F N="produce_test.sh"/>
 			<F N="scleaner.dox"/>
 			<F N="src/scleaner_wx.cpp"/>
 			<F N="src/scleaner_wx.h"/>
