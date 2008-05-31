@@ -619,7 +619,7 @@ namespace GUI
 
     void CMainInterface::OnFolderIncAdd(wxCommandEvent& WXUNUSED(event))
     {
-        wxString Message(_T("coucou"));
+        wxString Message;
         wxDirDialog AddDlg(this, wxString(i8n("Select a folder to add to scan"), wxConvUTF8), Message, wxDD_DIR_MUST_EXIST);
         if(AddDlg.ShowModal() == wxID_OK)
         {
@@ -668,7 +668,7 @@ namespace GUI
 
     void CMainInterface::OnFolderExAdd(wxCommandEvent& WXUNUSED(event))
     {
-        wxString Message(_T("coucou"));
+        wxString Message;
         wxDirDialog AddDlg(this, wxString(i8n("Select a folder to add to scan"), wxConvUTF8), Message, wxDD_DIR_MUST_EXIST);
         if(AddDlg.ShowModal() == wxID_OK)
         {
