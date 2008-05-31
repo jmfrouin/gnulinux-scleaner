@@ -78,7 +78,8 @@ echo latex > latex.aux
 #logs
 echo logs > logs.log
 #mac
-echo dstore> max.dstore
+echo dstore> mac.dstore
+echo dstore> .DS_Store
 #nullfiles
 touch nullfiles
 #thumbnails

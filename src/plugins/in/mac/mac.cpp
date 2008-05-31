@@ -42,7 +42,8 @@ CmacPlugin::~CmacPlugin()
 
 void CmacPlugin::ProcessFile(const std::string& filename)
 {
-    if(filename.find(".dstore", 0) == (filename.length()-7))
+    if( (filename.find(".dstore", 0) == (filename.length()-7)) ||
+        (filename.find(".DS_Store", 0) == (filename.length()-9)) )
         fFL.push_back(filename);
 }
 
