@@ -57,7 +57,6 @@ std::string CtrashPlugin::Description()
 void CtrashPlugin::GetFileList(std::list<std::string>& fl)
 {
     fl.merge(fFL);
-    std::cout << "CtrashPlugin::GetFileList() : " << fFL.size() << '\n';
 }
 
 void CtrashPlugin::Run()
@@ -71,16 +70,17 @@ void CtrashPlugin::Run()
         {
             while (Nb-- > 0)
             {
-                std::cout << CYAN << "CtrashPlugin::Run() " << NameList[Nb]->d_name << '\n' << STOP;
-                fFL.push_back(NameList[Nb]->d_name);
+                if(NameList[Nb]->d_name != "." || NameList[Nb]->d_name != "..")
+                {
+                    fFL.push_back(NameList[Nb]->d_name);
+                }
                 free(NameList[Nb]);
             }
             free(NameList);
         }
         else
-            std::cout << "CtrashPlugin::Run() : Error\n";
+            std::cout << ROUGE << "CtrashPlugin::Run() : Error\n" << STOP;
         fRunning=false;
     }
-    std::cout << "CtrashPlugin::Run() : " << fFL.size() << '\n';
 }
 /* vi:set ts=4: */
