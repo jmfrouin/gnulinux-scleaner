@@ -20,7 +20,7 @@
 */
 
 /*! @page page3 Plugins documentations.
- * - @subpage backupextensions
+ * @subpage backupextensions
  */
 
 /*! @page backupextensions backupextensions: Find backup files.
