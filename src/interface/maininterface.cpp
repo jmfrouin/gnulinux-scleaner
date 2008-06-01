@@ -109,7 +109,7 @@ namespace GUI
 
 
     CMainInterface::CMainInterface(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style):
-    fFoundFiles(0), fStatusBar(0), fAui(0), fFolders(0), fAddedFolders(0), fExcludedFolders(0), fInputPlugins(0), fOutputPlugins(0), fProgress(0), fSettings(0)
+    fFoundFiles(0), fToolBar(0), fStatusBar(0), fAui(0), fFolders(0), fAddedFolders(0), fExcludedFolders(0), fInputPlugins(0), fOutputPlugins(0), fProgress(0), fSettings(0)
     {
         Init();
         Create(parent, id, caption, pos, size, style);
@@ -208,15 +208,16 @@ namespace GUI
         //Toolbar
         if(fSettings->GetShowToolbar() == true)
         {
-            wxToolBar* ToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-            ToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
-            ToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
-            ToolBar->AddSeparator();
-            ToolBar->AddTool(ID_PREFS, wxString(i8n("Preferences"), wxConvUTF8), prefs_xpm , prefs_xpm, wxITEM_NORMAL, wxString(i8n("Preferences"), wxConvUTF8), wxEmptyString);
-            ToolBar->AddSeparator();
-            ToolBar->AddTool(wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8),exit_xpm , exit_xpm, wxITEM_NORMAL, wxString(i8n("Quit"), wxConvUTF8), wxEmptyString);
-            ToolBar->Realize();
-            Frame->SetToolBar(ToolBar);
+            fToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
+            fToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
+            fToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
+            fToolBar->EnableTool(ID_PROCESS, false);
+            fToolBar->AddSeparator();
+            fToolBar->AddTool(ID_PREFS, wxString(i8n("Preferences"), wxConvUTF8), prefs_xpm , prefs_xpm, wxITEM_NORMAL, wxString(i8n("Preferences"), wxConvUTF8), wxEmptyString);
+            fToolBar->AddSeparator();
+            fToolBar->AddTool(wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8),exit_xpm , exit_xpm, wxITEM_NORMAL, wxString(i8n("Quit"), wxConvUTF8), wxEmptyString);
+            fToolBar->Realize();
+            Frame->SetToolBar(fToolBar);
         }
 
         //AuiNotebook
@@ -365,6 +366,7 @@ namespace GUI
 
         fEngine->ScanDisk(this);
 
+        fToolBar->EnableTool(ID_PROCESS, true);
         delete fProgress;
         fProgress = 0;
 

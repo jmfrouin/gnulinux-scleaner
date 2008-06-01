@@ -128,6 +128,7 @@ namespace GUI
 
             //GUI tree list which display input plugins and file list.
             wxNotebook*                         fFoundFiles;
+            wxToolBar*                          fToolBar;
 
             //Informations GUI panel
             wxCheckTreeCtrl*                    fTree;
