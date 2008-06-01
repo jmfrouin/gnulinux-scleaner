@@ -70,10 +70,21 @@ void CtrashPlugin::Run()
         {
             while (Nb-- > 0)
             {
-                if(NameList[Nb]->d_name != "." || NameList[Nb]->d_name != "..")
+                std::string Name(NameList[Nb]->d_name);
+                struct stat Stat;
+                //Is it a folder ?
+                if(stat(Name.c_str(), &Stat) == -1)
+                     std::cout << i8n("[ERR] : Cannot stat ") << Name << '\n';
+                else
                 {
-                    fFL.push_back(NameList[Nb]->d_name);
+                    if(S_ISDIR(Stat.st_mode))
+                        std::cout << Name << " is a folder \n";
                 }
+
+                if(Name != "." && Name != "..")
+                    fFL.push_back(Name);
+                else
+                    std::cout << "I skip " << Name << '\n';
                 free(NameList[Nb]);
             }
             free(NameList);

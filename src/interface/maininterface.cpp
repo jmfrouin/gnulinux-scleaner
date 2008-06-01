@@ -376,13 +376,12 @@ namespace GUI
             wxString String((It->second)->GetName().c_str(), wxConvUTF8);
 
             std::list<std::string> List;
-            std::cout << VERT << "For plugin : " << It->second->GetName() << STOP << '\n';
             It->second->GetFileList(List);
             List.sort();
             std::list<std::string>::iterator It2;
 
             #if defined DEBUG && defined VERBOSE
-            std::cout << i8n("[DBG] For plugins : ") << It->second->GetName() <<", size = " << List.size() << '\n';
+            std::cout << CYAN << "For plugin : " << It->second->GetName() << " size = " << List.size() << STOP << '\n';
             #endif
             ResultCheckListCtrl* FilesList = new ResultCheckListCtrl(fFoundFiles, ID_RESCHECKLIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 
