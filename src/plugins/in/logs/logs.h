@@ -31,7 +31,7 @@
 #define __LOGS_H__
 
 #include <config.h>
-#include <plugins/in/in_plugin.h>
+#include <plugins/in/input_plugin.h>
 
 class ClogsPlugin : public Plugins::IInputPlugin
 {
@@ -48,7 +48,7 @@ class ClogsPlugin : public Plugins::IInputPlugin
 
         bool GetDefaultSelection()
         {
-            return true;
+            return false;
         }
 
 

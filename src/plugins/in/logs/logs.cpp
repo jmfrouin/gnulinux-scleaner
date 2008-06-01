@@ -19,11 +19,13 @@
 
 */
 
-
-#include <plugins/in/in_plugin_initializer.h>
 #include "logs.h"
+
+#include <sys/stat.h>
+
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
+#include <plugins/in/in_plugin_initializer.h>
 
 Plugins::CInPluginInitializer<ClogsPlugin> gLogs;
 
@@ -46,7 +48,12 @@ void ClogsPlugin::GetDirectory(std::string& path)
 
 void ClogsPlugin::ProcessFile(const std::string& filename)
 {
-    fFL.push_back(filename);
+    struct stat Stat;
+    if(stat(filename.c_str(), &Stat) == -1)
+        std::cout << i8n("[ERR] : Cannot stat ") << filename << '\n';
+    else
+        if(!S_ISDIR(Stat.st_mode))
+            fFL.push_back(filename);
 }
 
 
