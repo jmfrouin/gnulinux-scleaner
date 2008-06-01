@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007, 2008 FROUIN Jean-Michel
+ * Copyright (C) 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,47 +19,52 @@
 
 */
 
-#ifndef __THREAD_IN_PLUGIN_H__
-#define __THREAD_IN_PLUGIN_H__
+#ifndef __INPUT_PLUGIN_H__
+#define __INPUT_PLUGIN_H__
 
 #include <config.h>
 #include <plugins/in/in_plugin.h>
-#include <tools/thread.h>
 
 namespace Plugins
 {
     /*!
      *@brief Input plugin interface.
      */
-    class IThreadInPlugin : public IInPlugin, public Tools::IThread
+    class IInputPlugin : public IInPlugin
     {
         public:
             /*!
              *@brief ctor
              */
-            IThreadInPlugin() {}
+            IInputPlugin() {}
 
             /*!
              *@brief dtor
              */
-            virtual ~IThreadInPlugin() {}
+            virtual ~IInputPlugin() {}
 
             /*!
-             * @brief From InPlugin
-             * @author snoogie (5/22/2008)
-             * @return bool
+             *@brief Does it need to grab null file size;
+             *@return true if this plugin can grab null file size, false otherwise.
              */
-            bool Threadable() { return true; }
+            virtual bool GrabNullFile() = 0;
 
-            //From IThread
-            virtual void Run() = 0;
+            /*!
+            *@brief This method add, or not, filename to fFL.
+            *@param filename The file name to process.
+            */
+            virtual void ProcessFile(const std::string& filename) = 0;
 
+            /*!
+            *@brief This method fill the directory to process.
+            *@note Usable only if plugin's type is eByFolderInput.
+            *@param path The directory name to process.
+            */
+            virtual void GetDirectory(std::string& path) = 0;
 
             //From IPlugin
+            virtual bool Threadable() { return false; }
             virtual EType Type() { return eUserInput; }
-
-        protected:
-            std::list<std::string>      fFL;
     };
 } //namespace Plugins
-#endif                           // __THREAD_IN_PLUGIN_H__
+#endif                           // __INPUT_PLUGIN_H__

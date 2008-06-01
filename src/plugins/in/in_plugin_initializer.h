@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007, 2008 FROUIN Jean-Michel
+ * Copyright (C) 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,32 +19,34 @@
 
 */
 
-#ifndef __THREADINPLUGIN_INITIALIZER_H__
-#define __THREADINPLUGIN_INITIALIZER_H__
+#ifndef __IN_PLUGIN_INITIALIZER_H__
+#define __IN_PLUGIN_INITIALIZER_H__
 
 #include <config.h>
 #include <iostream>
-#include <engine/engine.h>
 
-#include <"plugins/plugin_manager.h">
+#include <engine/engine.h>
+#include <plugins/plugin_manager.h>
 
 namespace Plugins
 {
     template <class T>
-    class CThreadPluginInitializerIn
+    class CInPluginInitializer
     {
         public:
-            CThreadPluginInitializerIn()
+            CInPluginInitializer()
             {
                 CPluginManager* PFM = CPluginManager::Instance();
                 T* Obj = new T;
                 if(!Engine::CEngine::IsRoot())
+                {
                     if( (Obj->Type() != Plugins::IPlugin::eRootInput) && (Obj->Type() != Plugins::IPlugin::eRootThreadableInput) )
                         PFM->Add(Obj);
+                }
                 else
                     PFM->Add(Obj);
             }
     };
 } //namespace Plugins
-#endif                           //__THREADINPLUGIN_INITIALIZER_H__
+#endif                           //__IN_PLUGIN_INITIALIZER_H__
 /* vi:set ts=4: */

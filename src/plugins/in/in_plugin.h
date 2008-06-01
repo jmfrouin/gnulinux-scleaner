@@ -23,7 +23,7 @@
 #define __IN_PLUGIN_H__
 
 #include <config.h>
-#include <plugins/iplugin.h>
+#include <plugins/plugin.h>
 
 namespace Plugins
 {
@@ -43,13 +43,7 @@ namespace Plugins
              */
             virtual ~IInPlugin() {}
 
-            /*!
-             *@brief Does it need to grab null file size;
-             *@return true if this plugin can grab null file size, false otherwise.
-             */
-            virtual bool GrabNullFile() = 0;
-
-            /*!
+           /*!
              *@brief Selected by default configuration ?
              *@return true if "founded files" have to been pre"set" to Yes, false otherwise
              */
@@ -64,29 +58,16 @@ namespace Plugins
                 fl.merge(fFL);
             }
 
-            /*!
-            *@brief This method add, or not, filename to fFL.
-            *@param filename The file name to process.
-            */
-            virtual void ProcessFile(const std::string& filename) = 0;
-
-            /*!
-            *@brief This method fill the directory to process.
-            *@note Usable only if plugin's type is eByFolderInput.
-            *@param path The directory name to process.
-            */
-            virtual void GetDirectory(std::string& path) = 0;
-
-            /*!
+             /*!
              * @brief Define is a plugin is threadable.
              * @author snoogie (5/22/2008)
              * @return bool true if threadable, false otherwise.
              */
-            virtual bool Threadable() { return false; }
+            virtual bool Threadable() = 0;
 
 
             //From IPlugin
-            virtual EType Type() { return eUserInput; }
+            virtual EType Type() = 0;
 
         protected:
             std::list<std::string> fFL;

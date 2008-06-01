@@ -24,12 +24,12 @@
 #include <iostream>
 #include <dirent.h>
 
-#include <plugins/in/inplugin_initializer.h>
+#include <plugins/in/in_plugin_initializer.h>
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<CtrashPlugin> gTrash;
+Plugins::CInPluginInitializer<CtrashPlugin> gTrash;
 
 CtrashPlugin::CtrashPlugin()
 {
@@ -40,12 +40,6 @@ CtrashPlugin::CtrashPlugin()
 CtrashPlugin::~CtrashPlugin()
 {
     std::cout << "~CtrashPlugin : " << fFL.size() << '\n';
-}
-
-
-void CtrashPlugin::ProcessFile(const std::string& filename)
-{
-    //fFL.push_back(filename);
 }
 
 

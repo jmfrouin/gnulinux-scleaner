@@ -38,7 +38,7 @@
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class CbackupextensionsPlugin : public Plugins::IInPlugin
+class CbackupextensionsPlugin : public Plugins::IInputPlugin
 {
     public:
         CbackupextensionsPlugin();

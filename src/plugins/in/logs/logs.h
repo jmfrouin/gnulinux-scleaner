@@ -33,7 +33,7 @@
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class ClogsPlugin : public Plugins::IInPlugin
+class ClogsPlugin : public Plugins::IInputPlugin
 {
     public:
         ClogsPlugin();

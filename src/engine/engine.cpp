@@ -37,7 +37,9 @@
 #include <sys/vfs.h>
 #include <sys/utsname.h>
 #include <interface/maininterface.h>
-#include <plugins/in/thread_in_plugin.h>
+#include <plugins/in/in_plugin.h>
+#include <plugins/in/input_plugin.h>
+#include <plugins/in/thread_plugin.h>
 #include "settings_manager.h"
 #include "dpkg-db.h"
 #include "engine.h"
@@ -243,9 +245,10 @@ namespace Engine
         std::map<std::string, Plugins::IInPlugin*>::iterator It;
         for(It = Input->begin(); It != Input->end(); ++It)
         {
-            if(It->second->Type() == Plugins::IPlugin::eThreadableInput)
+            if( (It->second->Type() == Plugins::IPlugin::eThreadableInput) ||
+                (IsRoot() && It->second->Type() == Plugins::IPlugin::eRootThreadableInput))
             {
-                Plugins::IThreadInPlugin* ThreadablePlugin = (Plugins::IThreadInPlugin*)It->second;
+                Plugins::IThreadPlugin* ThreadablePlugin = (Plugins::IThreadPlugin*)It->second;
                 std::cout << ROUGE << ThreadablePlugin->GetName() << '\n' << STOP;
                 ThreadablePlugin->Start();
                 //Threads infos :
@@ -263,11 +266,12 @@ namespace Engine
                if(It->second->Type() == Plugins::IPlugin::eRootInput)
                {
                    std::string Dir;
-                    (It->second)->GetDirectory(Dir);
-                    bool Continue = callback->UpdateProgress(Dir, true);
-                    if(!Continue)
-                      break;
-                    ScanDirectory(Dir, true, It->second);
+                   Plugins::IInputPlugin* Plug = (Plugins::IInputPlugin*)It->second;
+                   Plug->GetDirectory(Dir);
+                   bool Continue = callback->UpdateProgress(Dir, true);
+                   if(!Continue)
+                     break;
+                   ScanDirectory(Dir, true, Plug);
                 }
            }
         }
@@ -291,7 +295,7 @@ namespace Engine
         {
             if(It->second->Type() == Plugins::IPlugin::eThreadableInput)
             {
-                Plugins::IThreadInPlugin* ThreadablePlugin = (Plugins::IThreadInPlugin*)It->second;
+                Plugins::IThreadPlugin* ThreadablePlugin = (Plugins::IThreadPlugin*)It->second;
                 std::cout << VERT << ThreadablePlugin->GetName() << '\n' << STOP;
                 ThreadablePlugin->Join();
             }
@@ -338,7 +342,7 @@ namespace Engine
 
         if(Engine->AsRoot())
         {
-            Plugins::IInPlugin* Root = 0;
+            Plugins::IInputPlugin* Root = 0;
             Root = Engine->RootPlugin();
             if(Root)
             {
@@ -357,7 +361,8 @@ namespace Engine
             std::map<std::string, Plugins::IInPlugin*>::iterator It;
             for(It = Input->begin(); It != Input->end(); ++It)
             {
-                if( ((*It).second)->Type() == Plugins::IPlugin::eUserInput)
+                Plugins::IInputPlugin* Plug = (Plugins::IInputPlugin*)It->second;
+                if( Plug->Type() == Plugins::IPlugin::eUserInput)
                 {
                     struct stat Info;
                     //Try to stat file.
@@ -367,24 +372,19 @@ namespace Engine
                     {
                         if(!Info.st_size)
                         {
-                            if(It->second->GrabNullFile())
-                                It->second->ProcessFile(Path);
+                            if(Plug->GrabNullFile())
+                                Plug->ProcessFile(Path);
                         }
                         else
-                            It->second->ProcessFile(Path);
+                            Plug->ProcessFile(Path);
                     }
-                    /*
-                    std::cout << "[DBG] Calling : " << It->second->GetName() << '\n';
-                    std::cout << "[DBG] Info.st_size : " << Info.st_size << '\n';
-                    std::cout << "[DBG] It->second->GrabNullFile : " << It->second->GrabNullFile() << '\n';
-                    */
                 }
             }
         }
         return Ret;                // To tell nftw() to continue
     }
 
-    bool CEngine::ScanDirectory(const std::string& path, bool asroot, Plugins::IInPlugin* rootplugin, bool recursive)
+    bool CEngine::ScanDirectory(const std::string& path, bool asroot, Plugins::IInputPlugin* rootplugin, bool recursive)
     {
         bool Ret = false;
         std::cout << "ScanDirectory : " << path << '\n';

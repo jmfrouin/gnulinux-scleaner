@@ -20,12 +20,12 @@
 */
 
 
-#include <plugins/in/inplugin_initializer.h>
+#include <plugins/in/in_plugin_initializer.h>
 #include "logs.h"
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<ClogsPlugin> gLogs;
+Plugins::CInPluginInitializer<ClogsPlugin> gLogs;
 
 ClogsPlugin::ClogsPlugin()
 {

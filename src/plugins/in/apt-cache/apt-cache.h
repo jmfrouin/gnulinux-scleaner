@@ -36,38 +36,24 @@
 #define __APT_CACHE_H__
 
 #include <config.h>
-#include <plugins/in/in_plugin.h>
+#include <plugins/in/thread_plugin.h>
 
 /*!
  *@brief Find unused apt_cache.
  */
-class Capt_cachePlugin : public Plugins::IInPlugin
+class Capt_cachePlugin : public Plugins::IThreadPlugin
 {
     public:
         Capt_cachePlugin();
         ~Capt_cachePlugin();
 
-        bool GrabNullFile()
-        {
-            return false;
-        }
-
-        bool GetDefaultSelection()
-        {
-            return true;
-        }
-
         /*!
-         *@brief From IInPlugin
+         *@brief From IThreadableInPlugin
          */
-        void GetDirectory(std::string& path);
-        void ProcessFile(const std::string& filename);
-
-        /*!
-         *@brief From IPlugin
-         */
+        bool GetDefaultSelection() { return true; }
         EType Type() { return eRootThreadableInput; }
         std::string Description();
+        virtual void Run();
 };
 #endif                           //__APT_CACHE_H__
 /* vi:set ts=4: */

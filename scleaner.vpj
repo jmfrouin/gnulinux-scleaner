@@ -376,24 +376,24 @@
 						<F N="src/plugins/in/thumbnails/thumbnails.h"/>
 					</Folder>
 					<Folder
-						Name="wma"
-						Filters="">
-						<F N="src/plugins/in/wma/CMakeLists.txt"/>
-						<F N="src/plugins/in/wma/wma.cpp"/>
-						<F N="src/plugins/in/wma/wma.h"/>
-					</Folder>
-					<Folder
 						Name="trash"
 						Filters="">
 						<F N="src/plugins/in/trash/CMakeLists.txt"/>
 						<F N="src/plugins/in/trash/trash.cpp"/>
 						<F N="src/plugins/in/trash/trash.h"/>
 					</Folder>
+					<Folder
+						Name="wma"
+						Filters="">
+						<F N="src/plugins/in/wma/CMakeLists.txt"/>
+						<F N="src/plugins/in/wma/wma.cpp"/>
+						<F N="src/plugins/in/wma/wma.h"/>
+					</Folder>
 					<F N="src/plugins/in/CMakeLists.txt"/>
 					<F N="src/plugins/in/in_plugin.h"/>
-					<F N="src/plugins/in/inplugin_initializer.h"/>
-					<F N="src/plugins/in/thread_in_plugin.h"/>
-					<F N="src/plugins/in/threadinplugin_initializer.h"/>
+					<F N="src/plugins/in/in_plugin_initializer.h"/>
+					<F N="src/plugins/in/input_plugin.h"/>
+					<F N="src/plugins/in/thread_plugin.h"/>
 				</Folder>
 				<Folder
 					Name="out"
@@ -410,7 +410,7 @@
 					<F N="src/plugins/out/outplugin_initializer.h"/>
 				</Folder>
 				<F N="src/plugins/CMakeLists.txt"/>
-				<F N="src/plugins/iplugin.h"/>
+				<F N="src/plugins/plugin.h"/>
 				<F N="src/plugins/plugin_manager.cpp"/>
 				<F N="src/plugins/plugin_manager.h"/>
 				<F N="src/plugins/README"/>

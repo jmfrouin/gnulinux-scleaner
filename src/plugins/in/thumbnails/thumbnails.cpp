@@ -21,13 +21,13 @@
 
 
 #include <iostream>
-#include <plugins/in/inplugin_initializer.h>
+#include <plugins/in/in_plugin_initializer.h>
 #include "thumbnails.h"
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<CthumbnailsPlugin> gBackFiles;
+Plugins::CInPluginInitializer<CthumbnailsPlugin> gBackFiles;
 
 CthumbnailsPlugin::CthumbnailsPlugin()
 {

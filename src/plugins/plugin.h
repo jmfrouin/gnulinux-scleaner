@@ -68,7 +68,7 @@ namespace Plugins
              * @author snoogie (5/22/2008)
              * @return bool true on threadable plugin, false otherwise
              */
-            bool IsThreadable();
+            bool Threadable();
 
             /*!
              * @brief Full 'user friendly' description.

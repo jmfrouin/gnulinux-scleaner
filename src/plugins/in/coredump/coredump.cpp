@@ -21,13 +21,13 @@
 
 
 #include <iostream>
-#include <plugins/in/inplugin_initializer.h>
+#include <plugins/in/in_plugin_initializer.h>
 #include "coredump.h"
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<CcoredumpPlugin> gCoders;
+Plugins::CInPluginInitializer<CcoredumpPlugin> gCoders;
 
 CcoredumpPlugin::CcoredumpPlugin()
 {

@@ -35,7 +35,7 @@
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class CcoredumpPlugin : public Plugins::IInPlugin
+class CcoredumpPlugin : public Plugins::IInputPlugin
 {
     public:
         CcoredumpPlugin();

@@ -37,39 +37,22 @@
 #define __TRASH_H__
 
 #include <config.h>
-#include <plugins/in/thread_in_plugin.h>
+#include <plugins/in/thread_plugin.h>
 
-class CtrashPlugin : public Plugins::IThreadInPlugin
+class CtrashPlugin : public Plugins::IThreadPlugin
 {
     public:
         CtrashPlugin();
         ~CtrashPlugin();
 
-
-        bool GrabNullFile()
-        {
-            return false;
-        }
-
-        bool GetDefaultSelection()
-        {
-            return true;
-        }
-
-        /*!
-         *@brief From Plugins::IInPlugin
-         */
-        void ProcessFile(const std::string& filename);
-        void GetDirectory(std::string& path) { path = ""; }
-        void GetFileList(std::list<std::string>& fl);
+        bool GetDefaultSelection() { return true; }
 
         /*!
          *@brief From IPlugin
          */
         EType Type() { return eThreadableInput; }
         std::string Description();
-
-        //From IThread
+        void GetFileList(std::list<std::string>& fl);
         virtual void Run();
 
 };

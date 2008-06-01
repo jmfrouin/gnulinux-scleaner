@@ -34,7 +34,7 @@
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class ClatexPlugin : public Plugins::IInPlugin
+class ClatexPlugin : public Plugins::IInputPlugin
 {
     public:
         ClatexPlugin();

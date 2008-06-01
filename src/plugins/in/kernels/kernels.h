@@ -35,7 +35,7 @@
 #define __KERNELS_H__
 
 #include <config.h>
-#include <plugins/in/thread_in_plugin.h>
+#include <plugins/in/thread_plugin.h>
 
 class pkgCache;
 class pkgSourceList;
@@ -44,41 +44,29 @@ class MMap;
 /*!
  *@brief Find unused kernels.
  */
-class CkernelsPlugin : public Plugins::IThreadInPlugin
+class CkernelsPlugin : public Plugins::IThreadPlugin
 {
     public:
         CkernelsPlugin();
         ~CkernelsPlugin();
 
-        bool GrabNullFile() { return false; }
+        bool GetDefaultSelection() { return true; }
 
-        bool GetDefaultSelection() { return false; }
+        /*!
+         *@brief From IThreadablePlugin
+         */
+        EType Type() { return eRootThreadableInput; }
+        std::string Description();
+        void GetFileList(std::list<std::string>& fl);
+        virtual void Run();
 
-
+     private:
         /*!
          *@brief Search for a package in cache.
          *@param name The package name.
          *@param result A string containing the first found package.
          */
         bool Search(const std::string& name, std::string& result);
-
-         /*!
-         *@brief From IInPlugin
-         */
-        void ProcessFile(const std::string& filename);
-        void GetDirectory(std::string& path);
-
-
-        /*!
-         *@brief From IPlugin
-         */
-        EType Type() { return eRootThreadableInput; }
-        std::string Description();
-
-        /*!
-        *@brief From IThread
-        */
-        virtual void Run();
 
     private:
         pkgCache*       fCache;

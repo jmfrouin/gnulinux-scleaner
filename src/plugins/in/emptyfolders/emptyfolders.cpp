@@ -24,10 +24,10 @@
 #include <sys/stat.h>
 #include <engine/engine.h>
 #include <leak/leak_detector.h>
-#include <plugins/in/inplugin_initializer.h>
+#include <plugins/in/in_plugin_initializer.h>
 #include "emptyfolders.h"
 
-Plugins::CPluginInitializerIn<CemptyfoldersPlugin> gEmptyFolders;
+Plugins::CInPluginInitializer<CemptyfoldersPlugin> gEmptyFolders;
 
 CemptyfoldersPlugin::CemptyfoldersPlugin()
 {

@@ -35,42 +35,25 @@
 #define __ORPHAN_H__
 
 #include <config.h>
-#include <plugins/in/thread_in_plugin.h>
+#include <plugins/in/thread_plugin.h>
 
 /*!
  *@brief Thread plugin.
  *
  * This plugin will find / delete orphan folder from "/home/user/.application".
  */
-class CorphanPlugin : public Plugins::IThreadInPlugin
+class CorphanPlugin : public Plugins::IThreadPlugin
 {
     public:
         CorphanPlugin();
         ~CorphanPlugin();
 
-        bool GrabNullFile()
-        {
-            return false;
-        }
-
-        bool GetDefaultSelection()
-        {
-            return true;
-        }
-
         /*!
-         *@brief From Plugins::IInPlugin
+         *@brief From IThreadablePlugin
          */
-        void ProcessFile(const std::string& filename);
-        void GetDirectory(std::string& path);
-
-        /*!
-         *@brief From IPlugin
-         */
+        virtual bool GetDefaultSelection() { return true; }
         EType Type() { return eThreadableInput; }
         std::string Description();
-
-        //From IThread
         virtual void Run();
 };
 #endif                           //__ORPHAN_H__

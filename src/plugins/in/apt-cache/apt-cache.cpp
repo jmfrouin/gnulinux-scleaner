@@ -19,12 +19,14 @@
 
 */
 
-#include <iostream>
-#include <plugins/in/inplugin_initializer.h>
 #include "apt-cache.h"
+
+#include <iostream>
+
+#include <plugins/in/in_plugin_initializer.h>
 #include <leak/leak_detector.h>
 
-Plugins::CPluginInitializerIn<Capt_cachePlugin> gAptCache;
+Plugins::CInPluginInitializer<Capt_cachePlugin> gAptCache;
 
 Capt_cachePlugin::Capt_cachePlugin()
 {
@@ -36,21 +38,17 @@ Capt_cachePlugin::~Capt_cachePlugin()
 {
 }
 
-
-void Capt_cachePlugin::GetDirectory(std::string& path)
-{
-    path = "/var/cache/apt/archives/";
-}
-
-
-void Capt_cachePlugin::ProcessFile(const std::string& filename)
-{
-    fFL.push_back(filename);
-}
-
-
 std::string Capt_cachePlugin::Description()
 {
     return "Find apt cache archives";
+}
+
+void Capt_cachePlugin::Run()
+{
+    while(fRunning)
+    {
+        std::cout << "Blob\n";
+        fRunning = false;
+    }
 }
 /* vi:set ts=4: */

@@ -36,7 +36,7 @@
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class CemptyfoldersPlugin : public Plugins::IInPlugin
+class CemptyfoldersPlugin : public Plugins::IInputPlugin
 {
     public:
         CemptyfoldersPlugin();

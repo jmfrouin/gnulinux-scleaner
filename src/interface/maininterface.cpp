@@ -33,7 +33,7 @@
 #include <sstream>
 #include <sys/stat.h>
 #include <plugins/plugin_manager.h>
-#include <plugins/iplugin.h>
+#include <plugins/plugin.h>
 #include <engine/engine.h>
 #include <engine/settings_manager.h>
 #include <wx/radiobox.h>

@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007, 2008 FROUIN Jean-Michel
+ * Copyright (C) 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -19,37 +19,44 @@
 
 */
 
-#ifndef __OUT_PLUGIN_H__
-#define __OUT_PLUGIN_H__
+#ifndef __THREAD_IN_PLUGIN_H__
+#define __THREAD_IN_PLUGIN_H__
 
 #include <config.h>
-#include <engine/iprogress.h>
-#include <plugins/plugin.h>
+#include <plugins/in/in_plugin.h>
+#include <tools/thread.h>
 
 namespace Plugins
 {
     /*!
-     *@brief Output plugin interface.
+     *@brief Input plugin interface.
      */
-    class IOutPlugin : public IPlugin
+    class IThreadPlugin : public IInPlugin, public Tools::IThread
     {
         public:
             /*!
              *@brief ctor
              */
-            IOutPlugin() {}
+            IThreadPlugin() {}
+
             /*!
              *@brief dtor
              */
-            virtual ~IOutPlugin() {}
+            virtual ~IThreadPlugin() {}
 
             /*!
-             *@brief Process all files selected by user.
-             *@param fl Files list to fill.
-             *@param path Where to write output files (if applicable).
-             *@param callback For progress bar support.
+             * @brief From InPlugin
+             * @author snoogie (5/22/2008)
+             * @return bool
              */
-            virtual void ProcessFileList(std::list<std::string>& fl, const std::string& path, IProgressbar* callback) = 0;
+            bool Threadable() { return true; }
+
+            //From IThread
+            virtual void Run() = 0;
+
+            //From IPlugin
+            virtual std::string Description() = 0;
+            virtual EType Type() = 0;
     };
-}
-#endif                           // __OUT_PLUGIN_H__
+} //namespace Plugins
+#endif                           // __THREAD_IN_PLUGIN_H__

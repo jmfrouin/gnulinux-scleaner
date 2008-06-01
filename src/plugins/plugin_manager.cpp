@@ -19,41 +19,19 @@
 
 */
 
+#include "plugin_manager.h"
+
 #include <dlfcn.h>               ///In order to load dyn lib.
 #include <dirent.h>              ///For path manipulation.
 #include <iostream>
 #include <string>
-#include "plugin_manager.h"
+
 #include <leak/leak_detector.h>
 
 namespace Plugins
 {
     CPluginManager::~CPluginManager()
     {
-        #if defined DEBUG && defined VERBOSE
-        //Input plugins
-        int Size = fInputPlugins.size();
-        std::cout << i8n("[DBG] I founded ");
-        if(Size > 2)
-            std::cout << Size << i8n(" input plugins : ") << '\n';
-        else
-            std::cout << Size << i8n(" input plugin : ") << '\n';
-        std::map<std::string, IInPlugin*>::iterator It;
-        for(It = fInputPlugins.begin(); It != fInputPlugins.end(); ++It)
-            std::cout << (*It).first << ", ";
-        std::cout << '\n';
-
-        //Output plugins
-        Size = fOutputPlugins.size();
-        std::cout << i8n("[DBG] I founded ");
-        if(Size > 2)
-            std::cout << Size << i8n(" output plugins : ") << '\n';
-        else
-            std::cout << Size << i8n(" output plugin : ") << '\n';
-        std::map<std::string, IOutPlugin*>::iterator It2;
-        for(It2 = fOutputPlugins.begin(); It2 != fOutputPlugins.end(); ++It2)
-            std::cout << "[DBG] " << (*It2).first << "\n";
-        #endif
     }
 
 
@@ -82,15 +60,10 @@ namespace Plugins
         return Res;
     }
 
-
     void CPluginManager::Add(IInPlugin* toadd)
     {
         fInputPlugins.insert(make_pair(toadd->GetName(), toadd));
-        #if defined DEBUG && defined VERBOSE
-        std::cout << "[DBG] CPluginManager::Add " << toadd->GetName() << '\n';
-        #endif
     }
-
 
     void CPluginManager::Add(IOutPlugin* toadd)
     {
@@ -116,54 +89,6 @@ namespace Plugins
         for(It = fInputPlugins.begin(); It != fInputPlugins.end(); ++It)
             ((*It).second)->GetFileList(fl);
     }
-
-
-    //FIXME : Trash code, to clean one day
-    //int Ret = 0;
-    //int Size = 0;
-
-    //std::map<std::string, IInPlugin*>::iterator lIt;
-    //for(lIt = fInputPlugins.begin(); lIt != fInputPlugins.end(); ++lIt)
-    //{
-    //  std::string l_file = ((*lIt).second)->location();
-    //  std::string lpath = l_file.substr(0, l_file.find_last_of("/"));
-    //  std::string l_mask = l_file.substr(l_file.find_last_of("/") + 1, l_file.length());
-
-    //  wxDir l_dir(lpath);
-    //  Size = 0;
-    //
-    //  //We get all files as well archived one.
-    //  l_mask += "*";
-
-    //  if ( !l_dir.IsOpened() )
-    //  {
-    //      std::cout << "[ERR] Cannot open folder : " << lpath << '\n';
-    //      return 0;
-    //  }
-
-    //  wxString l_filename;
-
-    //  bool cont = l_dir.GetFirst(&l_filename, l_mask, wxDIR_DEFAULT);
-    //  while(cont)
-    //  {
-    //      struct stat l_info;
-    //      std::string l_name(lpath);
-    //      l_name += "/";
-    //      l_name += l_filename.c_str();
-    //      if(stat(l_name.c_str(), &l_info) == -1)
-    //      {
-    //          std::cout << "[ERR] : " __FILE__ << "@" << __LINE__ << ": Cannot stat " << l_filename.c_str() << '\n';
-    //      }
-    //      Size += l_info.st_size;
-    //      cont = l_dir.GetNext(&l_filename);
-    //  }
-    //  Ret += Size;
-    //  std::cout << ((*lIt).second)->getName() << " : " << Size << " bytes" << '\n';
-    //}
-
-    //std::cout << "Total : " << Ret << '\n';
-    //return Ret;
-    //}
 } //namespace Plugins
 
 /* vi:set ts=4: */

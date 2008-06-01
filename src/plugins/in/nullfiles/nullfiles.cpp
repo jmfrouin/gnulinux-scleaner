@@ -20,12 +20,12 @@
 */
 
 
-#include <plugins/in/inplugin_initializer.h>
+#include <plugins/in/in_plugin_initializer.h>
 #include "nullfiles.h"
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<CnullfilesPlugin> gNullFiles;
+Plugins::CInPluginInitializer<CnullfilesPlugin> gNullFiles;
 
 CnullfilesPlugin::CnullfilesPlugin()
 {

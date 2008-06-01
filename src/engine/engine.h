@@ -38,8 +38,8 @@
 namespace Plugins
 {
     class IInPlugin;
+    class IInputPlugin;
     class IOutPlugin;
-    class IRootPlugin;
 }
 
 class CSettingsManager;
@@ -113,7 +113,7 @@ namespace Engine
              *@param recursive If true, enter subfolders.
              *@return true on success, false otherwise.
              */
-            bool ScanDirectory(const std::string& path, bool asroot = false, Plugins::IInPlugin* rootplugin = 0, bool recursive = true);
+            bool ScanDirectory(const std::string& path, bool asroot = false, Plugins::IInputPlugin* rootplugin = 0, bool recursive = true);
 
             /*!
              *@brief Callback : man ftw.
@@ -211,7 +211,7 @@ namespace Engine
 
             bool AsRoot() { return fAsRoot; }
 
-            Plugins::IInPlugin* RootPlugin() { return fRootPlugin; }
+            Plugins::IInputPlugin* RootPlugin() { return fRootPlugin; }
 
             IProgressbar* GetCallback() { return fCallback; }
 
@@ -230,13 +230,13 @@ namespace Engine
             //Input plugins
             std::map<std::string, Plugins::IInPlugin*>*     fAvailableInputPlugs;
             std::map<std::string, Plugins::IInPlugin*>      fSelectedInputPlugs;
-            std::list<std::string>                                          fUnselectedInputPlugs;
+            std::list<std::string>                                       fUnselectedInputPlugs;
 
             //Output plugins
             std::map<std::string, Plugins::IOutPlugin*>*    fOutputPlugs;
 
             //Due to this fuck*** callback
-            Plugins::IInPlugin* fRootPlugin;
+            Plugins::IInputPlugin* fRootPlugin;
             bool fAsRoot;
             IProgressbar* fCallback;
             unsigned int fCount;

@@ -37,7 +37,7 @@
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class CthumbnailsPlugin : public Plugins::IInPlugin
+class CthumbnailsPlugin : public Plugins::IInputPlugin
 {
     public:
         CthumbnailsPlugin();

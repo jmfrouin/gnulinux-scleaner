@@ -21,13 +21,13 @@
 
 
 #include <iostream>
-#include <plugins/in/inplugin_initializer.h>
+#include <plugins/in/in_plugin_initializer.h>
 #include "mac.h"
 #include <sys/stat.h>            ///Get file size.
 #include <leak/leak_detector.h>
 #include <engine/engine.h>
 
-Plugins::CPluginInitializerIn<CmacPlugin> gMac;
+Plugins::CInPluginInitializer<CmacPlugin> gMac;
 
 CmacPlugin::CmacPlugin()
 {

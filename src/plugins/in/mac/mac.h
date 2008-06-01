@@ -34,7 +34,7 @@
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class CmacPlugin : public Plugins::IInPlugin
+class CmacPlugin : public Plugins::IInputPlugin
 {
     public:
         CmacPlugin();

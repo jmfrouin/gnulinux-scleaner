@@ -28,13 +28,13 @@
  * Fully functionnal
  */
 
-#ifndef __LOGS_H__
-#define __LOGS_H__
+#ifndef __NULLFILES_H__
+#define __NULLFILES_H__
 
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class CnullfilesPlugin : public Plugins::IInPlugin
+class CnullfilesPlugin : public Plugins::IInputPlugin
 {
     public:
         CnullfilesPlugin();
@@ -62,5 +62,5 @@ class CnullfilesPlugin : public Plugins::IInPlugin
         EType Type() { return eUserInput; }
         std::string Description();
 };
-#endif                           //__LOGS_H__
+#endif                           //__NULLFILES_H__
 /* vi:set ts=4: */

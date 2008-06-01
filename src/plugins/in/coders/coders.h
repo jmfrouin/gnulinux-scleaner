@@ -37,7 +37,7 @@
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class CcodersPlugin : public Plugins::IInPlugin
+class CcodersPlugin : public Plugins::IInputPlugin
 {
     public:
         CcodersPlugin();

@@ -19,6 +19,8 @@
 
 */
 
+#include "kernels.h"
+
 #include <iostream>
 #include <sys/utsname.h>
 #include <string>
@@ -29,11 +31,12 @@
 #include <apt-pkg/progress.h>       //OpProgress
 #include <apt-pkg/init.h>           //For configuration
 #include <apt-pkg/error.h>          //_error
-#include <plugins/in/inplugin_initializer.h>
-#include <leak/leak_detector.h>
-#include "kernels.h"
+#include <dirent.h>
 
-Plugins::CPluginInitializerIn<CkernelsPlugin> gKernels;
+#include <plugins/in/in_plugin_initializer.h>
+#include <leak/leak_detector.h>
+
+Plugins::CInPluginInitializer<CkernelsPlugin> gKernels;
 
 CkernelsPlugin::CkernelsPlugin():
 fCache(0), fSrcList(0), fMap(0)
@@ -62,30 +65,12 @@ fCache(0), fSrcList(0), fMap(0)
         std::cerr << "[ERR] CkernelsPlugin(): Errors occured\n";
 }
 
-
 CkernelsPlugin::~CkernelsPlugin()
 {
     if(fMap)
         delete fMap;
     if(fCache)
         delete fCache;
-}
-
-
-void CkernelsPlugin::GetDirectory(std::string& path)
-{
-    path = "/boot/";
-}
-
-
-void CkernelsPlugin::ProcessFile(const std::string& filename)
-{
-    if(filename.find("vmlinuz", 0) != std::string::npos)
-    {
-        std::string Res;
-        if(Search(filename, Res))
-            fFL.push_back(Res);
-    }
 }
 
 bool CkernelsPlugin::Search(const std::string& Name, std::string& Result)
@@ -103,17 +88,11 @@ bool CkernelsPlugin::Search(const std::string& Name, std::string& Result)
         regfree(Pattern);
     }
 
-    for (pkgCache::PkgIterator It = fCache->PkgBegin(); It.end() == false; ++It)
+    for (pkgCache::PkgIterator It = fCache->PkgBegin(); !(It.end()); ++It)
     {
-        #if defined DEBUG
-        std::cout << It.Name() << "=" << Filename << '\n';
-        #endif
         if (!regexec(Pattern,It.Name(),0,0,0))
         {
             Result = It.Name();
-            #if defined DEBUG
-            std::cout << Result << '\n';
-            #endif
             Ret = true;
             break;
         }
@@ -135,8 +114,40 @@ std::string CkernelsPlugin::Description()
     return "Find unused installed kernels";
 }
 
+void CkernelsPlugin::GetFileList(std::list<std::string>& fl)
+{
+    std::cout << "CkernelsPlugin::GetFileList " << fFL.size() << '\n';
+    fl.merge(fFL);
+}
+
 void CkernelsPlugin::Run()
 {
-
+    std::string Path("/boot/");
+    while(fRunning)
+    {
+        struct dirent** NameList;
+        int Nb = scandir(Path.c_str(), &NameList, 0, alphasort);
+        if(Nb >= 0) //Fix Bug 4 : If no error append.
+        {
+            while (Nb-- > 0)
+            {
+                std::string Name(NameList[Nb]->d_name);
+                if(Name.find("vmlinuz", 0) != std::string::npos)
+                {
+                    std::string Res;
+                    if(Search(Name, Res))
+                    {
+                        fFL.push_back(Res);
+                        std::cout << CYAN << "CkernelsPlugin : I add : " << Res << STOP << '\n';
+                    }
+                }
+                free(NameList[Nb]);
+            }
+            free(NameList);
+        }
+        else
+            std::cout << ROUGE << "CkernelsPlugin::Run() : Error\n" << STOP;
+        fRunning=false;
+    }
 }
 /* vi:set ts=4: */

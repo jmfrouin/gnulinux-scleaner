@@ -36,7 +36,7 @@
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class CwmaPlugin : public Plugins::IInPlugin
+class CwmaPlugin : public Plugins::IInputPlugin
 {
     public:
         CwmaPlugin();

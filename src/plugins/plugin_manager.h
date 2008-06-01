@@ -28,7 +28,8 @@
 #include <string>
 #include <tools/singleton.h>
 #include <tools/smart_pointer.h>
-#include <plugins/in/in_plugin.h>
+#include <plugins/in/input_plugin.h>
+#include <plugins/in/thread_plugin.h>
 #include <plugins/out/out_plugin.h>
 
 namespace Plugins
@@ -54,11 +55,6 @@ namespace Plugins
              *@param toadd Plugin to add.
              */
             void Add(IInPlugin* toadd);
-
-            /*!
-             *@brief Add a new output plugin to the list of available plugins.
-             *@param toadd Plugin to add.
-             */
             void Add(IOutPlugin* toadd);
 
             /*!
@@ -88,9 +84,9 @@ namespace Plugins
             ~CPluginManager();
 
         private:
-                                     ///< List of available input plugins.
+            ///< List of available input plugins.
             std::map<std::string, IInPlugin*>   fInputPlugins;
-                                     ///< List of available output plugins.
+            ///< List of available output plugins.
             std::map<std::string, IOutPlugin*>  fOutputPlugins;
     };
 } //namespace Plugins

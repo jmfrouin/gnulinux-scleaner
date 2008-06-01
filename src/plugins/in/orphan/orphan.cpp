@@ -19,12 +19,14 @@
 
 */
 
-#include <iostream>
-#include <plugins/in/inplugin_initializer.h>
-#include <leak/leak_detector.h>
 #include "orphan.h"
 
-Plugins::CPluginInitializerIn<CorphanPlugin> gOrphan;
+#include <iostream>
+
+#include <plugins/in/in_plugin_initializer.h>
+#include <leak/leak_detector.h>
+
+Plugins::CInPluginInitializer<CorphanPlugin> gOrphan;
 
 CorphanPlugin::CorphanPlugin()
 {
@@ -35,16 +37,6 @@ CorphanPlugin::~CorphanPlugin()
 {
 }
 
-void CorphanPlugin::ProcessFile(const std::string& filename)
-{
-
-}
-
-void CorphanPlugin::GetDirectory(std::string& path)
-{
-    path="/var/log/";
-}
-
 std::string CorphanPlugin::Description()
 {
     return "Application settings orphan cleaner";
@@ -52,7 +44,11 @@ std::string CorphanPlugin::Description()
 
 void CorphanPlugin::Run()
 {
-
+    while(fRunning)
+    {
+        std::cout << "CorphanPlugin::Run()\n";
+        fRunning = false;
+    }
 }
 
 /* vi:set ts=4: */

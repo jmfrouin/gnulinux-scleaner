@@ -36,7 +36,7 @@
 #include <config.h>
 #include <plugins/in/in_plugin.h>
 
-class CisoPlugin : public Plugins::IInPlugin
+class CisoPlugin : public Plugins::IInputPlugin
 {
     public:
         CisoPlugin();
