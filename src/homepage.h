@@ -39,6 +39,12 @@
  *
  * It used this https://wiki.ubuntu.com/SystemCleanUpTool as guidelines for developpement and add some others ideas.
  *
+ * Others ressources :
+ *
+ * http://www.commentcamarche.net/faq/sujet-7214-faire-le-menage-dans-ubuntu-residus-de-configuration-paquets
+ *
+ * http://doc.ubuntu-fr.org/maintenir_systeme
+ *
  * @section install Installation
  *
  * You can download the last version here : http://www.scleaner.org/ (get *.deb files)
