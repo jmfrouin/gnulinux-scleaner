@@ -298,6 +298,7 @@ namespace Engine
                 Plugins::IThreadPlugin* ThreadablePlugin = (Plugins::IThreadPlugin*)It->second;
                 std::cout << VERT << ThreadablePlugin->GetName() << '\n' << STOP;
                 ThreadablePlugin->Join();
+                std::cout << VERT << "STOPPED" << '\n' << STOP;
             }
         }
         return Ret;

@@ -59,7 +59,7 @@ SET(MANDIR /usr/share/man/man1/)
 SET(ICONS /usr/share/pixmaps/)
 SET(LANG_FR /usr/share/locale/fr/LC_MESSAGES/)
 
-SET(folder engine interface leak log plugins tools)
+SET(folder engine external interface leak log plugins tools)
 FOREACH(fold ${folder})
         ADD_SUBDIRECTORY(${fold})
 ENDFOREACH(fold ${folder})
