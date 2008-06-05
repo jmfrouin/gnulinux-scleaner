@@ -296,7 +296,7 @@ namespace Engine
             if(It->second->Type() == Plugins::IPlugin::eThreadableInput)
             {
                 Plugins::IThreadPlugin* ThreadablePlugin = (Plugins::IThreadPlugin*)It->second;
-                std::cout << VERT << ThreadablePlugin->GetName() << '\n' << STOP;
+                std::cout << ThreadablePlugin->GetName() << ": ";
                 ThreadablePlugin->Join();
                 std::cout << VERT << "STOPPED" << '\n' << STOP;
             }
