@@ -18,3 +18,4 @@
 
 SET(engine_src engine.cpp settings_manager.cpp)
 ADD_LIBRARY(engine ${engine_src})
+TARGET_LINK_LIBRARIES(engine tools)

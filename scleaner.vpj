@@ -440,6 +440,8 @@
 				<F N="src/tools/testbz.cpp"/>
 				<F N="src/tools/thread.cpp"/>
 				<F N="src/tools/thread.h"/>
+				<F N="src/tools/timer.cpp"/>
+				<F N="src/tools/timer.h"/>
 				<F N="src/tools/types.h"/>
 			</Folder>
 			<F N="Annonce_beta.txt"/>

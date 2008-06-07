@@ -40,6 +40,7 @@
 #include <plugins/in/in_plugin.h>
 #include <plugins/in/input_plugin.h>
 #include <plugins/in/thread_plugin.h>
+#include <tools/timer.h>
 #include "settings_manager.h"
 #include "dpkg-db.h"
 #include "engine.h"
@@ -388,6 +389,7 @@ namespace Engine
     bool CEngine::ScanDirectory(const std::string& path, bool asroot, Plugins::IInputPlugin* rootplugin, bool recursive)
     {
         bool Ret = false;
+        Tools::CTimer Timer;
         std::cout << "ScanDirectory : " << path << '\n';
 
         int Flags = FTW_PHYS;
@@ -402,7 +404,7 @@ namespace Engine
             Ret = true;
 
         fAsRoot = false;
-
+        Timer.Snap();
         return Ret;
     }
 
