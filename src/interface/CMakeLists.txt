@@ -16,6 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SET(interface_src aboutdialog.cpp checklistctrl.cpp preferences.cpp maininterface.cpp result_checklistctrl.cpp select_dialog.cpp tray.cpp)
+SET(interface_src aboutdialog.cpp checklistctrl.cpp disclaimer.cpp preferences.cpp maininterface.cpp result_checklistctrl.cpp select_dialog.cpp tray.cpp)
 
 ADD_LIBRARY(interface ${interface_src})

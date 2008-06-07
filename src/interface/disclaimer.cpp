@@ -1,7 +1,7 @@
 /**
  * This file is part of scleaner project.
 
- * Copyright (C) 2007, 2008 FROUIN Jean-Michel
+ * Copyright (C) 2008 FROUIN Jean-Michel
 
  * Visit scleaner website : http://www.scleaner.fr
  * This program is free software; you can redistribute it and/or modify
@@ -29,27 +29,27 @@
 #include "wx/wx.h"
 #endif
 
-#include "aboutdialog.h"
+#include "disclaimer.h"
 #include <def.h>
 
-IMPLEMENT_DYNAMIC_CLASS( CAboutDialog, wxDialog )
+IMPLEMENT_DYNAMIC_CLASS( CDisclaimer, wxDialog )
 
-BEGIN_EVENT_TABLE( CAboutDialog, wxDialog )
+BEGIN_EVENT_TABLE( CDisclaimer, wxDialog )
 
 END_EVENT_TABLE()
 
-CAboutDialog::CAboutDialog()
+CDisclaimer::CDisclaimer()
 {
     Init();
 }
 
-CAboutDialog::CAboutDialog( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+CDisclaimer::CDisclaimer( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
     Init();
     Create(parent, id, caption, pos, size, style);
 }
 
-bool CAboutDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+bool CDisclaimer::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
     SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
@@ -63,17 +63,17 @@ bool CAboutDialog::Create( wxWindow* parent, wxWindowID id, const wxString& capt
     return true;
 }
 
-CAboutDialog::~CAboutDialog()
+CDisclaimer::~CDisclaimer()
 {
 }
 
-void CAboutDialog::Init()
+void CDisclaimer::Init()
 {
 }
 
-void CAboutDialog::CreateControls()
+void CDisclaimer::CreateControls()
 {
-    CAboutDialog* itemDialog1 = this;
+    CDisclaimer* itemDialog1 = this;
 
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
@@ -106,12 +106,12 @@ void CAboutDialog::CreateControls()
     itemBoxSizer2->Add(itemButton11, 0, wxGROW|wxALL, 5);
 }
 
-bool CAboutDialog::ShowToolTips()
+bool CDisclaimer::ShowToolTips()
 {
     return true;
 }
 
-wxBitmap CAboutDialog::GetBitmapResource( const wxString& name )
+wxBitmap CDisclaimer::GetBitmapResource( const wxString& name )
 {
     wxUnusedVar(name);
     if (name == _T("src/gfx/scleaner.png"))
@@ -122,7 +122,7 @@ wxBitmap CAboutDialog::GetBitmapResource( const wxString& name )
     return wxNullBitmap;
 }
 
-wxIcon CAboutDialog::GetIconResource( const wxString& name )
+wxIcon CDisclaimer::GetIconResource( const wxString& name )
 {
     wxUnusedVar(name);
     return wxNullIcon;
