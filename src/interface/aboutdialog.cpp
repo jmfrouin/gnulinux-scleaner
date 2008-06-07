@@ -20,19 +20,12 @@
 #include "wx/wx.h"
 #endif
 
-////@begin includes
-////@end includes
-
 #include "aboutdialog.h"
-
-////@begin XPM images
-////@end XPM images
-
+#include <def.h>
 
 /*!
  * CAboutDialog type definition
  */
-
 IMPLEMENT_DYNAMIC_CLASS( CAboutDialog, wxDialog )
 
 
@@ -125,7 +118,7 @@ void CAboutDialog::CreateControls()
     /*wxStaticBitmap* itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, wxT("/usr/share/pixmaps/scleaner.png"), wxDefaultPosition, wxSize(24, 24), 0 );
     itemBoxSizer3->Add(itemStaticBitmap4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);*/
 
-    wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _("scleaner 0.40.0 beta 1"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _(NAME), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer3->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Copyleft 2007-2008 Frouin Jean-Michel"), wxDefaultPosition, wxDefaultSize, 0 );
