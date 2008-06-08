@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 744
+#define BUILD 751
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -60,15 +60,6 @@
 #define ID_MAININTERFACE_STATUSBAR 10004
 #define ID_MAININTERFACE_PROCESS 10005
 #define ID_SELECT 10006
-
-//About dialog box
-#define SYMBOL_ABOUTDIALOG_TITLE _("AboutDialog")
-#define ID_ABOUTDIALOG 10010
-#define ID_ABOUTDIALOG_WEBLINK 10011
-
-//Disclaimer
-#define SYMBOL_DISCLAIMER_TITLE _("Disclaimer")
-#define ID_DISCLAIMER 10020
 
 //Preferences
 #define SYMBOL_PREFERENCES_TITLE _("Preferences")

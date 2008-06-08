@@ -34,7 +34,6 @@
 #include <engine/settings_manager.h>
 #include <wx/config.h>
 #include <wx/spinbutt.h>
-#include "disclaimer.h"
 #include "preferences.h"
 
 #include <wx/imaglist.h>
@@ -217,17 +216,15 @@ namespace GUI
 
     void CPreferences::OnDelete(wxCommandEvent& WXUNUSED(event))
     {
-        CDisclaimer Disclaimer(NULL, -1, SYMBOL_DISCLAIMER_TITLE, SYMBOL_POSITION);
-        int Res = Disclaimer.ShowModal();
-        std::cout << "OnDelete : " << Res << '\n';
-        switch(Res)
+        wxMessageDialog dialog( NULL, _T("By clicking this option, you understand that you could damage your computer (Until final release)"),
+        _T("Disclaimer"), wxNO_DEFAULT|wxYES_NO|wxICON_ERROR);
+
+        switch ( dialog.ShowModal() )
         {
             case wxID_NO:
                 fDelete->SetValue(false);
                 break;
-            default:
-                std::cout << Res << '\n';
-                break;
+
         }
     }
 }
