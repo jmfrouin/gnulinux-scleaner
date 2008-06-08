@@ -217,11 +217,16 @@ namespace GUI
 
     void CPreferences::OnDelete(wxCommandEvent& WXUNUSED(event))
     {
-        CDisclaimer Disclaimer(NULL, -1, SYMBOL_DISCLAIMER_TITLE, SYMBOL_POSITION, SYMBOL_DIALOG_SIZE, wxNO_DEFAULT|wxYES_NO|wxCANCEL|wxICON_INFORMATION);
-        switch(Disclaimer.ShowModal())
+        CDisclaimer Disclaimer(NULL, -1, SYMBOL_DISCLAIMER_TITLE, SYMBOL_POSITION);
+        int Res = Disclaimer.ShowModal();
+        std::cout << "OnDelete : " << Res << '\n';
+        switch(Res)
         {
             case wxID_NO:
                 fDelete->SetValue(false);
+                break;
+            default:
+                std::cout << Res << '\n';
                 break;
         }
     }

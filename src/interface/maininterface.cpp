@@ -46,12 +46,14 @@
 #include <wx/msgdlg.h>
 #include <wx/aui/auibook.h>
 #include <wx/statline.h>
+#include <wx/generic/aboutdlgg.h>
+#include <wx/aboutdlg.h>
+
 #include "maininterface.h"
 #include "checklistctrl.h"
 #include "result_checklistctrl.h"
 #include "select_dialog.h"
 #include "preferences.h"
-#include "aboutdialog.h"
 
 //App icon
 #include <gfx/scleaner.xpm>
@@ -343,8 +345,18 @@ namespace GUI
     //Menu
     void CMainInterface::OnAbout(wxCommandEvent& WXUNUSED(event))
     {
-        CAboutDialog *Dial = new CAboutDialog(NULL, -1, _T("About"), wxDefaultPosition, wxSize(250, 230));
-        Dial->ShowModal();
+        wxAboutDialogInfo info;
+
+        info.AddArtist(_T("Medina Bastien"));
+        info.AddDeveloper(_T("Jean-Michel Frouin"));
+        info.AddTranslator(_T("French: Jean-Michel Frouin"));
+        info.AddTranslator(_T("German: Peer Voss"));
+        info.AddTranslator(_T("Italian: David Paleino"));
+        info.SetDescription(_T("simple GNU/Linux cleaner"));
+        info.SetName(_T(NAME));
+        info.SetWebSite(_T("http://www.scleaner.org/"), _T("scleaner website"));
+
+        wxAboutBox(info);
     }
 
 
