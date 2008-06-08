@@ -54,6 +54,7 @@
 #include "result_checklistctrl.h"
 #include "select_dialog.h"
 #include "preferences.h"
+#include "systeminfos.h"
 
 //App icon
 #include <gfx/scleaner.xpm>
@@ -91,6 +92,7 @@ namespace GUI
     //Menu
     EVT_MENU(ID_MENU_SCAN, CMainInterface::OnScan)
     EVT_MENU(ID_MENU_ABOUT, CMainInterface::OnAbout)
+    EVT_MENU(ID_MENU_SYSTEM_INFOS, CMainInterface::OnSystemInfos)
     EVT_MENU(ID_MENU_PREFS, CMainInterface::OnPrefs)
     EVT_MENU(wxID_EXIT, CMainInterface::OnQuit)
     EVT_MENU(ID_MAININTERFACE_PROCESS, CMainInterface::OnProcess)
@@ -203,6 +205,8 @@ namespace GUI
         MenuBar->Append(Misc, wxString(i8n("Misc"), wxConvUTF8));
         wxMenuItem* About = new wxMenuItem(Misc, ID_MENU_ABOUT, wxString(i8n("About"), wxConvUTF8));
         About->SetBitmap(menu_about_xpm);
+        wxMenuItem* SystemInfos = new wxMenuItem(Misc, ID_MENU_SYSTEM_INFOS, wxString(i8n("System informations"), wxConvUTF8));
+        Misc->Append(SystemInfos);
         Misc->Append(About);
 
         Frame->SetMenuBar(MenuBar);
@@ -341,7 +345,6 @@ namespace GUI
         }
     }
 
-
     //Menu
     void CMainInterface::OnAbout(wxCommandEvent& WXUNUSED(event))
     {
@@ -356,7 +359,7 @@ namespace GUI
         info.SetName(_T(NAME));
         info.SetLicence(wxString::FromAscii(
         "scleaner a simple GNU/Linux cleaner\n\n"
-        "Copyright (C) 2007, 2008 Frouin Jean-Michel\n\n"
+        "Copyright (C) 2007, 2008 Jean-Michel Frouin\n\n"
         "This program is free software: you can redistribute it and/or modify\n"
         "it under the terms of the GNU General Public License as published by\n"
         "the Free Software Foundation, either version 3 of the License, or\n"
@@ -372,6 +375,12 @@ namespace GUI
         info.SetWebSite(_T("http://www.scleaner.org/"), _T("scleaner website"));
 
         wxAboutBox(info);
+    }
+
+    void CMainInterface::OnSystemInfos(wxCommandEvent& WXUNUSED(event))
+    {
+        CSystemInfos SystemInfos(this, wxID_ANY, wxString(i8n("System Informations"), wxConvUTF8), SYMBOL_POSITION, SYMBOL_DIALOG_SIZE);
+        SystemInfos.ShowModal();
     }
 
 

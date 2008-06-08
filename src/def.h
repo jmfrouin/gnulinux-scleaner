@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 753
+#define BUILD 759
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -61,6 +61,10 @@
 #define ID_MAININTERFACE_PROCESS 10005
 #define ID_SELECT 10006
 
+//System infos
+#define SYMBOL_SYSTEMINFOS_TITLE _("System Infos")
+#define ID_SYSTEMINFOS 10010
+
 //Preferences
 #define SYMBOL_PREFERENCES_TITLE _("Preferences")
 #define ID_PREFERENCES 10030
@@ -81,6 +85,7 @@
 #define ID_MENU_ABOUT 10050
 #define ID_MENU_SCAN 10051
 #define ID_MENU_PREFS 10052
+#define ID_MENU_SYSTEM_INFOS 10053
 
 //Buttons
 #define ID_BUTTON_FOLDER_INC_ADD 10060

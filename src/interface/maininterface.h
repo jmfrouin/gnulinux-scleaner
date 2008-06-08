@@ -97,6 +97,7 @@ namespace GUI
             void OnFolderIncDel(wxCommandEvent& WXUNUSED(event));
             void OnFolderExAdd(wxCommandEvent& WXUNUSED(event));
             void OnFolderExDel(wxCommandEvent& WXUNUSED(event));
+            void OnSystemInfos(wxCommandEvent& WXUNUSED(event));
 
             /*!
              *@brief Call splash screen

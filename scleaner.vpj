@@ -245,6 +245,8 @@
 				<F N="src/interface/result_checklistctrl.h"/>
 				<F N="src/interface/select_dialog.cpp"/>
 				<F N="src/interface/select_dialog.h"/>
+				<F N="src/interface/systeminfos.cpp"/>
+				<F N="src/interface/systeminfos.h"/>
 				<F N="src/interface/tmcimages.h"/>
 				<F N="src/interface/tray.cpp"/>
 				<F N="src/interface/tray.h"/>
