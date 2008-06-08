@@ -80,9 +80,7 @@ namespace GUI
         void OnApply(wxCommandEvent& WXUNUSED(event));
 
         /// User click on 'Delete' button
-        void OnDelete(wxCommandEvent& WXUNUSED(event))
-        {
-        }
+        void OnDelete(wxCommandEvent& WXUNUSED(event));
 
     private:
         //Engine

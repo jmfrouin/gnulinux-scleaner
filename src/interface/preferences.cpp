@@ -34,6 +34,7 @@
 #include <engine/settings_manager.h>
 #include <wx/config.h>
 #include <wx/spinbutt.h>
+#include "disclaimer.h"
 #include "preferences.h"
 
 #include <wx/imaglist.h>
@@ -154,7 +155,7 @@ namespace GUI
         l_Sizer2->Add(l_PBDelay, 1, wxGROW | wxALL, 5);*/
 
         //Delete file after output plugin ?
-        fDelete = new wxCheckBox(PrefPanel, wxID_ANY, _T("Delete files after applying the output plugin"), wxDefaultPosition);
+        fDelete = new wxCheckBox(PrefPanel, ID_PREFERENCES_DELETE, _T("Delete files after applying the output plugin"), wxDefaultPosition);
         fDelete->SetValue(fSettings->GetDelete());
         l_Sizer2->Add(fDelete, 1, wxGROW | wxALL, 5);
 
@@ -212,5 +213,16 @@ namespace GUI
         fSettings->SetShowStatusbar(fStatusbar->GetValue());
         fSettings->SetDelete(fDelete->GetValue());
         Close(true);
+    }
+
+    void CPreferences::OnDelete(wxCommandEvent& WXUNUSED(event))
+    {
+        CDisclaimer Disclaimer(NULL, -1, SYMBOL_DISCLAIMER_TITLE, SYMBOL_POSITION, SYMBOL_DIALOG_SIZE, wxNO_DEFAULT|wxYES_NO|wxCANCEL|wxICON_INFORMATION);
+        switch(Disclaimer.ShowModal())
+        {
+            case wxID_NO:
+                fDelete->SetValue(false);
+                break;
+        }
     }
 }

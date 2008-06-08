@@ -41,10 +41,6 @@ class CDisclaimer: public wxDialog
         void Init();
 
         void CreateControls();
-        wxBitmap GetBitmapResource( const wxString& name );
-
-        wxIcon GetIconResource( const wxString& name );
-        static bool ShowToolTips();
 };
 
 #endif // __DISCLAIMER_H__

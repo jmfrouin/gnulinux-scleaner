@@ -56,9 +56,7 @@ bool CDisclaimer::Create( wxWindow* parent, wxWindowID id, const wxString& capti
 
     CreateControls();
     if (GetSizer())
-    {
         GetSizer()->SetSizeHints(this);
-    }
     Centre();
     return true;
 }
@@ -73,57 +71,22 @@ void CDisclaimer::Init()
 
 void CDisclaimer::CreateControls()
 {
-    CDisclaimer* itemDialog1 = this;
+    CDisclaimer* Disclaimer = this;
 
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    wxBoxSizer* SizerV = new wxBoxSizer(wxVERTICAL);
+    Disclaimer->SetSizer(SizerV);
 
-    wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer3, 0, wxGROW|wxALL, 5);
+    wxStaticText* Content = new wxStaticText(Disclaimer, wxID_STATIC, _("By clicking this option, you understand that you could dammage your computer (Until final version)"), wxDefaultPosition, wxDefaultSize, 0 );
+    SizerV->Add(Content, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    /*wxStaticBitmap* itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, wxT("/usr/share/pixmaps/scleaner.png"), wxDefaultPosition, wxSize(24, 24), 0 );
-    itemBoxSizer3->Add(itemStaticBitmap4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);*/
+    wxBoxSizer* SizerH = new wxBoxSizer(wxHORIZONTAL);
+    SizerV->Add(SizerH, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _(NAME), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer3->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* ButtonYes = new wxButton(Disclaimer, wxID_YES, _("I understand"), wxDefaultPosition, wxDefaultSize, 0 );
+    SizerH->Add(ButtonYes, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Copyleft 2007-2008 Frouin Jean-Michel"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticText6, 0, wxALIGN_RIGHT|wxALL, 5);
+    wxButton* ButtonNo = new wxButton(Disclaimer, wxID_NO, _("I am not sure what to do"), wxDefaultPosition, wxDefaultSize, 0 );
+    SizerH->Add(ButtonNo, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxHyperlinkCtrl* itemHyperlinkCtrl7 = new wxHyperlinkCtrl( itemDialog1, ID_ABOUTDIALOG_WEBLINK, _("Visit website"), _T("http://www.scleaner.fr"), wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
-    itemBoxSizer2->Add(itemHyperlinkCtrl7, 0, wxGROW|wxALL, 5);
-
-    wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxVERTICAL);
-    itemBoxSizer2->Add(itemBoxSizer8, 0, wxGROW|wxALL, 5);
-
-    wxStaticText* itemStaticText9 = new wxStaticText(itemDialog1, wxID_STATIC, _("I want to thanks all people who help me to release this beta (by alphabetical order):\nJacquier Pierre (webmaster of scleaner.fr)\nMedina Bastien (graphist)\nPaleino David(debian packager, italian translator)\nVoss Peer (german translator)\n"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer8->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALL, 5);
-
-    wxStaticText* itemStaticText10 = new wxStaticText( itemDialog1, wxID_STATIC, _("This software used other free softwares :\nwxWidgets for interface, libbz2 for archive compression,\nlibpthread for threads, libgd for plugins implementation,\ncmake for compilation managment.\n"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer8->Add(itemStaticText10, 0, wxALIGN_LEFT|wxALL, 5);
-
-    wxButton* itemButton11 = new wxButton( itemDialog1, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemButton11, 0, wxGROW|wxALL, 5);
 }
 
-bool CDisclaimer::ShowToolTips()
-{
-    return true;
-}
-
-wxBitmap CDisclaimer::GetBitmapResource( const wxString& name )
-{
-    wxUnusedVar(name);
-    if (name == _T("src/gfx/scleaner.png"))
-    {
-        wxBitmap bitmap(_T("src/gfx/scleaner.png"), wxBITMAP_TYPE_PNG);
-        return bitmap;
-    }
-    return wxNullBitmap;
-}
-
-wxIcon CDisclaimer::GetIconResource( const wxString& name )
-{
-    wxUnusedVar(name);
-    return wxNullIcon;
-}
