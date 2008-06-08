@@ -19,16 +19,10 @@
 
 */
 
-#ifndef _PREFERENCES_H_
-#define _PREFERENCES_H_
+#ifndef __PREFERENCES_H__
+#define __PREFERENCES_H__
 
-#define ID_CPREFERENCES 10014
-#define ID_RADIOBOX2 10015
-#define SYMBOL_CPREFERENCES_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_CPREFERENCES_TITLE _("Preferences")
-#define SYMBOL_CPREFERENCES_IDNAME ID_CPREFERENCES
-#define SYMBOL_CPREFERENCES_SIZE wxSize(400, 300)
-#define SYMBOL_CPREFERENCES_POSITION wxDefaultPosition
+#include <def.h>
 
 #include <wx/listbook.h>
 #include <tools/smart_pointer.h>
@@ -56,10 +50,10 @@ namespace GUI
     public:
         /// Constructors
         CPreferences();
-        CPreferences( wxWindow* parent, wxWindowID id = SYMBOL_CPREFERENCES_IDNAME, const wxString& caption = SYMBOL_CPREFERENCES_TITLE, const wxPoint& pos = SYMBOL_CPREFERENCES_POSITION, const wxSize& size = SYMBOL_CPREFERENCES_SIZE, long style = SYMBOL_CPREFERENCES_STYLE );
+        CPreferences( wxWindow* parent, wxWindowID id = ID_PREFERENCES, const wxString& caption = SYMBOL_PREFERENCES_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = SYMBOL_INTERFACE_STYLE );
 
         /// Creation
-        bool Create( wxWindow* parent, wxWindowID id = SYMBOL_CPREFERENCES_IDNAME, const wxString& caption = SYMBOL_CPREFERENCES_TITLE, const wxPoint& pos = SYMBOL_CPREFERENCES_POSITION, const wxSize& size = SYMBOL_CPREFERENCES_SIZE, long style = SYMBOL_CPREFERENCES_STYLE );
+        bool Create( wxWindow* parent, wxWindowID id = ID_PREFERENCES, const wxString& caption = SYMBOL_PREFERENCES_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = SYMBOL_DIALOG_STYLE );
 
         /// Destructor
         ~CPreferences();
@@ -85,6 +79,11 @@ namespace GUI
         /// User click Apply button
         void OnApply(wxCommandEvent& WXUNUSED(event));
 
+        /// User click on 'Delete' button
+        void OnDelete(wxCommandEvent& WXUNUSED(event))
+        {
+        }
+
     private:
         //Engine
         Tools::TSmartPtr<Engine::CEngine>               fEngine;
@@ -99,4 +98,4 @@ namespace GUI
         wxCheckBox*     fDelete;
     };
 }
-#endif // _PREFERENCES_H_
+#endif // __PREFERENCES_H__

@@ -98,7 +98,7 @@ void CMainDialog::Init(void)
 
         wxCheckListBox* itemCheckListBox4 = new wxCheckListBox( itemSplitterWindow3, ID_CHECKLISTBOX1, wxDefaultPosition, wxDefaultSize, itemCheckListBox4Strings, wxLB_SINGLE );
 
-        wxPanel* itemPanel5 = new wxPanel( itemSplitterWindow3, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+        wxPanel* itemPanel5 = new wxPanel( itemSplitterWindow3, ID_PREFERENCES_PANEL, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
 
         wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxVERTICAL);
         itemPanel5->SetSizer(itemBoxSizer7);

@@ -19,19 +19,11 @@
 
 */
 
-#ifndef _ABOUTDIALOG_H_
-#define _ABOUTDIALOG_H_
+#ifndef __ABOUTDIALOG_H__
+#define __ABOUTDIALOG_H__
 
+#include <def.h>
 #include "wx/hyperlink.h"
-
-#define ID_CABOUTDIALOG 10011
-#define ID_HYPERLINKCTRL1 10013
-#define ID_BUTTON 10000
-#define SYMBOL_CABOUTDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxTAB_TRAVERSAL
-#define SYMBOL_CABOUTDIALOG_TITLE _("AboutDialog")
-#define SYMBOL_CABOUTDIALOG_IDNAME ID_CABOUTDIALOG
-#define SYMBOL_CABOUTDIALOG_SIZE wxSize(400, 300)
-#define SYMBOL_CABOUTDIALOG_POSITION wxDefaultPosition
 
 class CAboutDialog: public wxDialog
 {
@@ -41,10 +33,10 @@ class CAboutDialog: public wxDialog
 public:
     /// Constructors
     CAboutDialog();
-    CAboutDialog( wxWindow* parent, wxWindowID id = SYMBOL_CABOUTDIALOG_IDNAME, const wxString& caption = SYMBOL_CABOUTDIALOG_TITLE, const wxPoint& pos = SYMBOL_CABOUTDIALOG_POSITION, const wxSize& size = SYMBOL_CABOUTDIALOG_SIZE, long style = SYMBOL_CABOUTDIALOG_STYLE );
+    CAboutDialog( wxWindow* parent, wxWindowID id = ID_ABOUTDIALOG, const wxString& caption = SYMBOL_ABOUTDIALOG_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = SYMBOL_DIALOG_STYLE );
 
     /// Creation
-    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_CABOUTDIALOG_IDNAME, const wxString& caption = SYMBOL_CABOUTDIALOG_TITLE, const wxPoint& pos = SYMBOL_CABOUTDIALOG_POSITION, const wxSize& size = SYMBOL_CABOUTDIALOG_SIZE, long style = SYMBOL_CABOUTDIALOG_STYLE );
+    bool Create( wxWindow* parent, wxWindowID id = ID_ABOUTDIALOG, const wxString& caption = SYMBOL_ABOUTDIALOG_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = SYMBOL_DIALOG_STYLE );
 
     /// Destructor
     ~CAboutDialog();

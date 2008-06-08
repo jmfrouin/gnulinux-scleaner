@@ -80,7 +80,7 @@ namespace Engine
         bool Ret = false;
 
         GUI::CMainInterface* Main = 0;
-        Main = new GUI::CMainInterface(NULL, wxID_ANY, wxT(NAME), SYMBOL_MAININTERFACE_POSITION, SYMBOL_MAININTERFACE_SIZE);
+        Main = new GUI::CMainInterface(NULL, wxID_ANY, wxT(NAME), SYMBOL_POSITION, SYMBOL_INTERFACE_SIZE);
         if(Main)
         {
             Main->Show(true);

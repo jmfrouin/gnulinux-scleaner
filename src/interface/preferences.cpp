@@ -42,24 +42,14 @@
 
 namespace GUI
 {
-    /*!
-     * CPreferences type definition
-     */
     IMPLEMENT_DYNAMIC_CLASS( CPreferences, wxDialog )
 
-
-    /*!
-     * CPreferences event table definition
-     */
     BEGIN_EVENT_TABLE( CPreferences, wxDialog )
         EVT_BUTTON(wxOK, CPreferences::OnApply)
         EVT_BUTTON(wxCANCEL, CPreferences::OnCancel)
+        EVT_CHECKBOX(ID_PREFERENCES_DELETE, CPreferences::OnDelete)
     END_EVENT_TABLE()
 
-
-    /*!
-     * CPreferences constructors
-     */
     CPreferences::CPreferences():
     fSplashScreen(0), fToolbar(0), fStatusbar(0), fDelete(0)
     {
@@ -71,11 +61,6 @@ namespace GUI
         Init();
         Create(parent, id, caption, pos, size, style);
     }
-
-
-    /*!
-     * CPreferences creator
-     */
 
     bool CPreferences::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
     {
@@ -91,31 +76,19 @@ namespace GUI
         return true;
     }
 
-
-    /*!
-     * CPreferences destructor
-     */
     CPreferences::~CPreferences()
     {
     }
 
-
-    /*!
-     * Member initialisation
-     */
     void CPreferences::Init()
     {
         fEngine = Engine::CEngine::Instance();
         fSettings = Engine::CSettingsManager::Instance();
     }
 
-
-    /*!
-     * Control creation for CPreferences
-     */
     void CPreferences::CreateControls()
     {
-        wxPanel* l_MainPanel = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+        wxPanel* l_MainPanel = new wxPanel(this, ID_PREFERENCES_PANEL, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
 
         wxBoxSizer* l_Sizer0 = new wxBoxSizer(wxVERTICAL);
         l_MainPanel->SetSizer(l_Sizer0);
@@ -132,7 +105,7 @@ namespace GUI
         l_Sizer0->Add(l_ButtonSizer, 0, wxGROW | wxALL, 1);
 
 
-        wxPanel* PluginsPanel = new wxPanel(PrefListbook, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+        wxPanel* PluginsPanel = new wxPanel(PrefListbook, ID_PREFERENCES_PANEL, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
 
         wxBoxSizer* l_Sizer = new wxBoxSizer(wxVERTICAL);
         PluginsPanel->SetSizer(l_Sizer);
@@ -148,7 +121,7 @@ namespace GUI
             l_Sizer->Add(l_PluginCB, 1, wxGROW | wxALL, 5);
         }
 
-        wxPanel* PrefPanel = new wxPanel(PrefListbook, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+        wxPanel* PrefPanel = new wxPanel(PrefListbook, ID_PREFERENCES_PANEL, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
 
         wxBoxSizer* l_Sizer2 = new wxBoxSizer(wxVERTICAL);
         PrefPanel->SetSizer(l_Sizer2);
@@ -157,7 +130,7 @@ namespace GUI
         //wxArrayString itemRadioBox3Strings;
         //itemRadioBox3Strings.Add(_("&CRC32"));
         //itemRadioBox3Strings.Add(_("&MD5"));
-        //wxRadioBox* itemRadioBox3 = new wxRadioBox(PrefPanel, ID_RADIOBOX2, _("Duplicates files method"), wxDefaultPosition, wxDefaultSize, itemRadioBox3Strings, 1, wxRA_SPECIFY_ROWS );
+        //wxRadioBox* itemRadioBox3 = new wxRadioBox(PrefPanel, ID_PREFERENCES_RADIOBOX, _("Duplicates files method"), wxDefaultPosition, wxDefaultSize, itemRadioBox3Strings, 1, wxRA_SPECIFY_ROWS );
         //itemRadioBox3->SetSelection(0);
         //l_Sizer2->Add(itemRadioBox3, 1, wxGROW | wxALL, 5);
 
@@ -208,19 +181,11 @@ namespace GUI
         PrefListbook->AddPage(PluginsPanel, _T("Plugins"), false, 1);
     }
 
-
-
-    /*!
-     * Should we show tooltips?
-     */
     bool CPreferences::ShowToolTips()
     {
         return true;
     }
 
-    /*!
-     * Get bitmap resources
-     */
     wxBitmap CPreferences::GetBitmapResource( const wxString& name )
     {
         // Bitmap retrieval
@@ -228,9 +193,6 @@ namespace GUI
         return wxNullBitmap;
     }
 
-    /*!
-     * Get icon resources
-     */
     wxIcon CPreferences::GetIconResource( const wxString& name )
     {
         // Icon retrieval

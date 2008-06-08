@@ -41,9 +41,9 @@ namespace GUI
         EVT_MOUSE_EVENTS(wxCheckListCtrl::OnMouseEvent)
         EVT_CHAR(wxCheckListCtrl::OnKeyDown)
         EVT_CONTEXT_MENU(wxCheckListCtrl::OnContextMenu)
-        EVT_MENU(ID_SELECT_ALL, wxCheckListCtrl::OnSelectAll)
-        EVT_MENU(ID_UNSELECT_ALL, wxCheckListCtrl::OnUnselectAll)
-        EVT_MENU(ID_INVERT_SELECTION, wxCheckListCtrl::OnInvertSelection)
+        EVT_MENU(ID_CHECKLIST_SELECT_ALL, wxCheckListCtrl::OnSelectAll)
+        EVT_MENU(ID_CHECKLIST_UNSELECT_ALL, wxCheckListCtrl::OnUnselectAll)
+        EVT_MENU(ID_CHECKLIST_INVERT_SELECTION, wxCheckListCtrl::OnInvertSelection)
     END_EVENT_TABLE()
 
     wxCheckListCtrl::wxCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
@@ -140,9 +140,9 @@ namespace GUI
     {
         wxMenu menu;
 
-        menu.Append(ID_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
-        menu.Append(ID_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
-        menu.Append(ID_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
+        menu.Append(ID_CHECKLIST_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
+        menu.Append(ID_CHECKLIST_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
+        menu.Append(ID_CHECKLIST_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
 
         PopupMenu(&menu, pos.x, pos.y);
     }

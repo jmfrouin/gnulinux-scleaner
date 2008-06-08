@@ -73,9 +73,9 @@ namespace GUI
             public:
             /// Constructors
             CMainInterface();
-            CMainInterface(wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE);
+            CMainInterface(wxWindow* parent, wxWindowID id = ID_MAININTERFACE, const wxString& caption = _(NAME), const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_INTERFACE_SIZE, long style = SYMBOL_INTERFACE_STYLE);
 
-            bool Create(wxWindow* parent, wxWindowID id = SYMBOL_MAININTERFACE_IDNAME, const wxString& caption = SYMBOL_MAININTERFACE_TITLE, const wxPoint& pos = SYMBOL_MAININTERFACE_POSITION, const wxSize& size = SYMBOL_MAININTERFACE_SIZE, long style = SYMBOL_MAININTERFACE_STYLE );
+            bool Create(wxWindow* parent, wxWindowID id = ID_MAININTERFACE, const wxString& caption = _(NAME), const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_INTERFACE_SIZE, long style = SYMBOL_INTERFACE_STYLE );
 
             virtual ~CMainInterface();
 

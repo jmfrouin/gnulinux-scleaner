@@ -19,8 +19,8 @@
 
 */
 
-#ifndef _SELECT_DIALOG_H_
-#define _SELECT_DIALOG_H_
+#ifndef __SELECT_DIALOG_H__
+#define __SELECT_DIALOG_H__
 
 #include <list>
 #include <string>
@@ -31,32 +31,32 @@ class wxPanel;
 
 namespace GUI
 {
-	/*!
-	*@brief Dialog to select input plugins.
-	*/
-	class CSelectDialog : public wxFrame
-	{
-		public:
-			/*!
-			*@brief Constructor
-			*@param _title The dialog box title.
-			*@param _pluginList Available plugin list.
-			*/
-			CSelectDialog(const wxString& _title, std::list<std::string>& _pluginList);
-	
-			/*!
-			*@brief Destructor
-			*/
-			virtual ~CSelectDialog();
-	
-			//Callbacks
-			void OnListbox(wxCommandEvent& event);
-	
-		protected:
-	    	wxCheckListBox*	m_Input;
-			wxPanel*		m_Panel;
-	
-	    DECLARE_EVENT_TABLE()
-	};
+        /*!
+        *@brief Dialog to select input plugins.
+        */
+        class CSelectDialog : public wxFrame
+        {
+                public:
+                        /*!
+                        *@brief Constructor
+                        *@param _title The dialog box title.
+                        *@param _pluginList Available plugin list.
+                        */
+                        CSelectDialog(const wxString& _title, std::list<std::string>& _pluginList);
+
+                        /*!
+                        *@brief Destructor
+                        */
+                        virtual ~CSelectDialog();
+
+                        //Callbacks
+                        void OnListbox(wxCommandEvent& event);
+
+                protected:
+                wxCheckListBox* m_Input;
+                        wxPanel*                m_Panel;
+
+            DECLARE_EVENT_TABLE()
+        };
 }
-#endif// _SELECT_DIALOG_H_
+#endif// __SELECT_DIALOG_H__

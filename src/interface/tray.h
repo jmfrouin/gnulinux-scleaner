@@ -19,49 +19,49 @@
 
 */
 
-#ifndef _TRAY_H_
-#define _TRAY_H_
+#ifndef __TRAY_H__
+#define __TRAY_H__
 
 #include <wx/taskbar.h>
 #include <tools/smart_pointer.h>
 
 namespace GUI
 {
-	class CMainInterface;
+        class CMainInterface;
 }
 
 namespace GUI
 {
-	class CTrayIcon: public wxTaskBarIcon, public Tools::CSmartCpt
-	{
-		private:
-			enum
-			{
-				PU_RESTORE = 10001,
-				PU_EXIT,
-			};
-	
-		public:
-		#if defined(__WXCOCOA__)
-			CTrayIcon(wxTaskBarIconType iconType = DEFAULT_TYPE):
-			wxTaskBarIcon(iconType), m_Parent(0)
-			#else
-				CTrayIcon():
-			m_Parent(0)
-			#endif
-				{}
-	
-			void setParent(CMainInterface* _parent);
-			void OnLeftButtonDClick(wxTaskBarIconEvent&);
-			void OnMenuRestore(wxCommandEvent&);
-			void OnMenuExit(wxCommandEvent&);
-			virtual wxMenu *CreatePopupMenu();
-	
-		public:
-			CMainInterface* m_Parent;
-	
-			DECLARE_EVENT_TABLE()
-	};
+        class CTrayIcon: public wxTaskBarIcon, public Tools::CSmartCpt
+        {
+                private:
+                        enum
+                        {
+                                PU_RESTORE = 10001,
+                                PU_EXIT,
+                        };
+
+                public:
+                #if defined(__WXCOCOA__)
+                        CTrayIcon(wxTaskBarIconType iconType = DEFAULT_TYPE):
+                        wxTaskBarIcon(iconType), m_Parent(0)
+                        #else
+                                CTrayIcon():
+                        m_Parent(0)
+                        #endif
+                                {}
+
+                        void setParent(CMainInterface* _parent);
+                        void OnLeftButtonDClick(wxTaskBarIconEvent&);
+                        void OnMenuRestore(wxCommandEvent&);
+                        void OnMenuExit(wxCommandEvent&);
+                        virtual wxMenu *CreatePopupMenu();
+
+                public:
+                        CMainInterface* m_Parent;
+
+                        DECLARE_EVENT_TABLE()
+        };
 }
-#endif							 //_TRAY_H_
+#endif                                                   //_TRAY_H_
 /* vi:set ts=4: */

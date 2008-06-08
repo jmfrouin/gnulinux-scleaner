@@ -84,21 +84,21 @@ namespace GUI
 
     BEGIN_EVENT_TABLE( CMainInterface, wxFrame )
 
-    EVT_NOTEBOOK_PAGE_CHANGED(ID_NOTEBOOK, CMainInterface::OnNotebook)
+    EVT_NOTEBOOK_PAGE_CHANGED(ID_MAININTERFACE_NOTEBOOK, CMainInterface::OnNotebook)
 
     //Menu
-    EVT_MENU(ID_SCAN, CMainInterface::OnScan)
-    EVT_MENU(ID_ABOUT, CMainInterface::OnAbout)
-    EVT_MENU(ID_PREFS, CMainInterface::OnPrefs)
+    EVT_MENU(ID_MENU_SCAN, CMainInterface::OnScan)
+    EVT_MENU(ID_MENU_ABOUT, CMainInterface::OnAbout)
+    EVT_MENU(ID_MENU_PREFS, CMainInterface::OnPrefs)
     EVT_MENU(wxID_EXIT, CMainInterface::OnQuit)
-    EVT_MENU(ID_PROCESS, CMainInterface::OnProcess)
+    EVT_MENU(ID_MAININTERFACE_PROCESS, CMainInterface::OnProcess)
     EVT_MENU(ID_SELECT, CMainInterface::OnSelect)
 
     //ListBook
-    EVT_BUTTON(ID_FOLDER_INC_ADD, CMainInterface::OnFolderIncAdd)
-    EVT_BUTTON(ID_FOLDER_INC_DEL, CMainInterface::OnFolderIncDel)
-    EVT_BUTTON(ID_FOLDER_EX_ADD, CMainInterface::OnFolderExAdd)
-    EVT_BUTTON(ID_FOLDER_EX_DEL, CMainInterface::OnFolderExDel)
+    EVT_BUTTON(ID_BUTTON_FOLDER_INC_ADD, CMainInterface::OnFolderIncAdd)
+    EVT_BUTTON(ID_BUTTON_FOLDER_INC_DEL, CMainInterface::OnFolderIncDel)
+    EVT_BUTTON(ID_BUTTON_FOLDER_EX_ADD, CMainInterface::OnFolderExAdd)
+    EVT_BUTTON(ID_BUTTON_FOLDER_EX_DEL, CMainInterface::OnFolderExDel)
 
     END_EVENT_TABLE()
 
@@ -193,13 +193,13 @@ namespace GUI
 
         //Folders menu
         MenuBar->Append(Edit, wxString(i8n("Edit"), wxConvUTF8));
-        wxMenuItem* Prefs = new wxMenuItem(Edit, ID_PREFS, wxString(i8n("Preferences\tCtrl-P"), wxConvUTF8));
+        wxMenuItem* Prefs = new wxMenuItem(Edit, ID_MENU_PREFS, wxString(i8n("Preferences\tCtrl-P"), wxConvUTF8));
         Prefs->SetBitmap(menu_prefs_xpm);
         Edit->Append(Prefs);
 
         //Misc menu
         MenuBar->Append(Misc, wxString(i8n("Misc"), wxConvUTF8));
-        wxMenuItem* About = new wxMenuItem(Misc, ID_ABOUT, wxString(i8n("About"), wxConvUTF8));
+        wxMenuItem* About = new wxMenuItem(Misc, ID_MENU_ABOUT, wxString(i8n("About"), wxConvUTF8));
         About->SetBitmap(menu_about_xpm);
         Misc->Append(About);
 
@@ -208,12 +208,12 @@ namespace GUI
         //Toolbar
         if(fSettings->GetShowToolbar() == true)
         {
-            fToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR1 );
-            fToolBar->AddTool(ID_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
-            fToolBar->AddTool(ID_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
-            fToolBar->EnableTool(ID_PROCESS, false);
+            fToolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_MAININTERFACE_TOOLBAR );
+            fToolBar->AddTool(ID_MENU_SCAN, wxString(i8n("Use input plugins to find files."), wxConvUTF8), scan_xpm, scan_xpm, wxITEM_NORMAL, wxString(i8n("Use input plugins to find files."), wxConvUTF8), wxEmptyString);
+            fToolBar->AddTool(ID_MAININTERFACE_PROCESS, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8),run_xpm , run_xpm, wxITEM_NORMAL, wxString(i8n("Apply output plugin on selected files."), wxConvUTF8), wxEmptyString);
+            fToolBar->EnableTool(ID_MAININTERFACE_PROCESS, false);
             fToolBar->AddSeparator();
-            fToolBar->AddTool(ID_PREFS, wxString(i8n("Preferences"), wxConvUTF8), prefs_xpm , prefs_xpm, wxITEM_NORMAL, wxString(i8n("Preferences"), wxConvUTF8), wxEmptyString);
+            fToolBar->AddTool(ID_MENU_PREFS, wxString(i8n("Preferences"), wxConvUTF8), prefs_xpm , prefs_xpm, wxITEM_NORMAL, wxString(i8n("Preferences"), wxConvUTF8), wxEmptyString);
             fToolBar->AddSeparator();
             fToolBar->AddTool(wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8),exit_xpm , exit_xpm, wxITEM_NORMAL, wxString(i8n("Quit"), wxConvUTF8), wxEmptyString);
             fToolBar->Realize();
@@ -221,7 +221,7 @@ namespace GUI
         }
 
         //AuiNotebook
-        fAui = new wxAuiNotebook(Frame, ID_AUI, wxDefaultPosition, wxDefaultSize, wxAUI_NB_TOP|wxAUI_NB_TAB_SPLIT|wxAUI_NB_TAB_MOVE|wxAUI_NB_SCROLL_BUTTONS);
+        fAui = new wxAuiNotebook(Frame, ID_MAININTERFACE_AUI, wxDefaultPosition, wxDefaultSize, wxAUI_NB_TOP|wxAUI_NB_TAB_SPLIT|wxAUI_NB_TAB_MOVE|wxAUI_NB_SCROLL_BUTTONS);
 
         //Folder AuiNotebook page
         int Flags = wxBK_TOP | wxNB_MULTILINE | wxDOUBLE_BORDER;
@@ -267,12 +267,12 @@ namespace GUI
 
         //Found files AuiNotebook page
         //FIXME: Display it only when "scan" has been launched
-        fFoundFiles = new wxNotebook(fAui, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, Flags);
+        fFoundFiles = new wxNotebook(fAui, ID_MAININTERFACE_NOTEBOOK, wxDefaultPosition, wxDefaultSize, Flags);
         fAui->AddPage(fFoundFiles, wxString(i8n("Founded files"), wxConvUTF8), false);
 
         if(fSettings->GetShowStatusbar() == true)
         {
-            fStatusBar = new wxStatusBar(Frame, ID_STATUSBAR1, wxST_SIZEGRIP|wxNO_BORDER );
+            fStatusBar = new wxStatusBar(Frame, ID_MAININTERFACE_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
             fStatusBar->SetFieldsCount(6);
             Frame->SetStatusBar(fStatusBar);
 
@@ -343,7 +343,6 @@ namespace GUI
     //Menu
     void CMainInterface::OnAbout(wxCommandEvent& WXUNUSED(event))
     {
-        //LaunchSplash(3000);
         CAboutDialog *Dial = new CAboutDialog(NULL, -1, _T("About"), wxDefaultPosition, wxSize(250, 230));
         Dial->ShowModal();
     }
@@ -366,7 +365,7 @@ namespace GUI
 
         fEngine->ScanDisk(this);
 
-        fToolBar->EnableTool(ID_PROCESS, true);
+        fToolBar->EnableTool(ID_MAININTERFACE_PROCESS, true);
         delete fProgress;
         fProgress = 0;
 
@@ -555,8 +554,8 @@ namespace GUI
             Sizer->Add(fAddedFolders, 1, wxGROW | wxALL, 5);
 
             wxSizer* Sizer2 = new wxBoxSizer(wxHORIZONTAL);
-            Sizer2->Add(new wxButton(fFolders, ID_FOLDER_INC_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
-            Sizer2->Add(new wxButton(fFolders, ID_FOLDER_INC_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
+            Sizer2->Add(new wxButton(fFolders, ID_BUTTON_FOLDER_INC_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
+            Sizer2->Add(new wxButton(fFolders, ID_BUTTON_FOLDER_INC_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
 
             Sizer->Add(Sizer2, 0, wxGROW | wxALL, 5);
 
@@ -578,8 +577,8 @@ namespace GUI
             Sizer->Add(fExcludedFolders, 1, wxGROW | wxALL, 5);
 
             Sizer2 = new wxBoxSizer(wxHORIZONTAL);
-            Sizer2->Add(new wxButton(fFolders, ID_FOLDER_EX_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
-            Sizer2->Add(new wxButton(fFolders, ID_FOLDER_EX_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
+            Sizer2->Add(new wxButton(fFolders, ID_BUTTON_FOLDER_EX_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
+            Sizer2->Add(new wxButton(fFolders, ID_BUTTON_FOLDER_EX_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
 
             Sizer->Add(Sizer2, 0, wxGROW | wxALL, 5);
         }

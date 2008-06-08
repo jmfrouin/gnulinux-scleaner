@@ -74,11 +74,11 @@ namespace GUI
         EVT_CHAR(ResultCheckListCtrl::OnKeyDown)
         EVT_CONTEXT_MENU(ResultCheckListCtrl::OnContextMenu)
         EVT_LIST_COL_CLICK(ID_RESCHECKLIST, ResultCheckListCtrl::OnColClick)
-        EVT_MENU(ID_SELECT_ALL, ResultCheckListCtrl::OnSelectAll)
-        EVT_MENU(ID_UNSELECT_ALL, ResultCheckListCtrl::OnUnselectAll)
-        EVT_MENU(ID_INVERT_SELECTION, ResultCheckListCtrl::OnInvertSelection)
-        EVT_MENU(ID_SELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnSelectFromSameFolder)
-        EVT_MENU(ID_UNSELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnUnselectFromSameFolder)
+        EVT_MENU(ID_CHECKLIST_SELECT_ALL, ResultCheckListCtrl::OnSelectAll)
+        EVT_MENU(ID_CHECKLIST_UNSELECT_ALL, ResultCheckListCtrl::OnUnselectAll)
+        EVT_MENU(ID_CHECKLIST_INVERT_SELECTION, ResultCheckListCtrl::OnInvertSelection)
+        EVT_MENU(ID_CHECKLIST_SELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnSelectFromSameFolder)
+        EVT_MENU(ID_CHECKLIST_UNSELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnUnselectFromSameFolder)
     END_EVENT_TABLE()
 
     ResultCheckListCtrl::ResultCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
@@ -183,19 +183,19 @@ namespace GUI
         if(GetSelectionCount() ==1)
         {
             //Context menu for 1 selected item by user
-            menu.Append(ID_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
-            menu.Append(ID_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
-            menu.Append(ID_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
+            menu.Append(ID_CHECKLIST_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
+            menu.Append(ID_CHECKLIST_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
+            menu.Append(ID_CHECKLIST_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
             menu.AppendSeparator();
-            menu.Append(ID_SELECT_FROM_SAME_FOLDER, wxString(i8n("&Select all files from same folder"), wxConvUTF8));
-            menu.Append(ID_UNSELECT_FROM_SAME_FOLDER, wxString(i8n("&Unselect all files from same folder"), wxConvUTF8));
+            menu.Append(ID_CHECKLIST_SELECT_FROM_SAME_FOLDER, wxString(i8n("&Select all files from same folder"), wxConvUTF8));
+            menu.Append(ID_CHECKLIST_UNSELECT_FROM_SAME_FOLDER, wxString(i8n("&Unselect all files from same folder"), wxConvUTF8));
         }
         else
         {
             //Context menu for more than 1 selected item by user
-            menu.Append(ID_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
-            menu.Append(ID_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
-            menu.Append(ID_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
+            menu.Append(ID_CHECKLIST_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
+            menu.Append(ID_CHECKLIST_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
+            menu.Append(ID_CHECKLIST_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
         }
 
         PopupMenu(&menu, pos.x, pos.y);

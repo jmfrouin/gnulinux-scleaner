@@ -22,14 +22,8 @@
 #ifndef __DISCLAIMER_H__
 #define __DISCLAIMER_H__
 
+#include <def.h>
 #include "wx/hyperlink.h"
-
-#define ID_CDISCLAIMER 10011
-#define SYMBOL_CDISCLAIMER_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxTAB_TRAVERSAL
-#define SYMBOL_CDISCLAIMER_TITLE _("Disclaimer")
-#define SYMBOL_CDISCLAIMER_IDNAME ID_CDISCLAIMER
-#define SYMBOL_CDISCLAIMER_SIZE wxSize(400, 300)
-#define SYMBOL_CDISCLAIMER_POSITION wxDefaultPosition
 
 class CDisclaimer: public wxDialog
 {
@@ -38,9 +32,9 @@ class CDisclaimer: public wxDialog
 
     public:
         CDisclaimer();
-        CDisclaimer( wxWindow* parent, wxWindowID id = SYMBOL_CDISCLAIMER_IDNAME, const wxString& caption = SYMBOL_CDISCLAIMER_TITLE, const wxPoint& pos = SYMBOL_CDISCLAIMER_POSITION, const wxSize& size = SYMBOL_CDISCLAIMER_SIZE, long style = SYMBOL_CDISCLAIMER_STYLE );
+        CDisclaimer( wxWindow* parent, wxWindowID id = ID_DISCLAIMER, const wxString& caption = SYMBOL_DISCLAIMER_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = SYMBOL_DIALOG_STYLE );
 
-        bool Create( wxWindow* parent, wxWindowID id = SYMBOL_CDISCLAIMER_IDNAME, const wxString& caption = SYMBOL_CDISCLAIMER_TITLE, const wxPoint& pos = SYMBOL_CDISCLAIMER_POSITION, const wxSize& size = SYMBOL_CDISCLAIMER_SIZE, long style = SYMBOL_CDISCLAIMER_STYLE );
+        bool Create( wxWindow* parent, wxWindowID id = ID_DISCLAIMER, const wxString& caption = SYMBOL_DISCLAIMER_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = SYMBOL_DIALOG_STYLE );
 
         ~CDisclaimer();
 
