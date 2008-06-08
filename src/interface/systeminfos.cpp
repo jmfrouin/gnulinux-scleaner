@@ -30,6 +30,7 @@
 #endif
 
 #include "systeminfos.h"
+#include <engine/engine.h>
 
 IMPLEMENT_DYNAMIC_CLASS( CSystemInfos, wxDialog )
 
@@ -75,13 +76,19 @@ void CSystemInfos::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("CPU Type (Freq)"), wxDefaultPosition, wxDefaultSize, 0 );
+    std::string CPUInfos;
+    Engine::CEngine::Instance()->GetCPUInfos(CPUInfos);
+    wxString UCPUInfos(CPUInfos.c_str(), wxConvUTF8);
+    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, UCPUInfos, wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticText3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
         wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _("Kernel version"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, _("Avail / Free / Total RAM"), wxDefaultPosition, wxDefaultSize, 0 );
+    std::string RAMInfos;
+    Engine::CEngine::Instance()->GetRAMInfos(RAMInfos);
+    wxString URAMInfos(RAMInfos.c_str(), wxConvUTF8);
+    wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, URAMInfos, wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticText4, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Avail / Free / Total Disk 1"), wxDefaultPosition, wxDefaultSize, 0 );

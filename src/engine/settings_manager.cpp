@@ -69,7 +69,7 @@ namespace Engine
             while(1)
             {
                 File >> Label;
-                if(File.eof() == true)
+                if(File.eof())
                     break;
                 std::string Folder;
                 switch(Label)

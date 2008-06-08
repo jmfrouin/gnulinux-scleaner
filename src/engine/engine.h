@@ -157,7 +157,7 @@ namespace Engine
 
             /*!
             *@brief Get a timestamp.
-            *@param str The str to fill.
+            *@param str The string to fill.
             */
             static void GetTimestamp(std::string& str);
 
@@ -169,6 +169,17 @@ namespace Engine
             */
             static void CalcCRC32(const std::string& filename, unsigned long& crc);
 
+            /*!
+             * @brief Get CPU infos: CPU type, cache size.
+             * @param str The string to fill.
+             */
+            static void GetCPUInfos(std::string& str);
+
+            /*!
+             * @brief Get RAM infos:
+             * @param str The string to fill.
+             */
+            static void GetRAMInfos(std::string& str);
         private:
             /*!
             *@brief Calc CRC32's table

@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 759
+#define BUILD 768
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -50,6 +50,8 @@
 
 //Paths
 #define PLUG_FOLDER "/usr/share/scleaner/plugs"
+#define CPUINFO "/proc/cpuinfo"
+#define MEMINFO "/proc/meminfo"
 
 //Controls identifiers
 //Main interface
