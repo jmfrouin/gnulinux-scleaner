@@ -94,6 +94,7 @@ namespace GUI
         wxCheckBox*     fToolbar;
         wxCheckBox*     fStatusbar;
         wxCheckBox*     fDelete;
+        wxCheckBox*     fSystemFiles;
     };
 }
 #endif // __PREFERENCES_H__

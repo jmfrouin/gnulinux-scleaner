@@ -103,6 +103,8 @@ namespace Engine
 
             bool GetDelete() { return fDelete; }
 
+            bool GetSystemFiles() { return fSystemFiles; }
+
             /*!
             * Mutators
             */
@@ -114,6 +116,8 @@ namespace Engine
 
             void SetDelete(bool val) { fDelete = val; }
 
+            void SetSystemFiles(bool val) { fSystemFiles = val; }
+
         private:
             bool                    fShowSplash;       ///Display splash (only in GUI) ?
 
@@ -124,6 +128,7 @@ namespace Engine
             bool                    fShowToolbar;      ///Display toolbar (only in GUI) ?
             bool                    fShowStatusbar;    ///Display statusbar (only in GUI) ?
             bool                    fDelete; ///Delete files after applying the ouput plugin ?
+            bool                    fSystemFiles; ///Include system file and folders (.*) ?
     };
 } //namespace Engine
 

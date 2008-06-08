@@ -123,8 +123,8 @@ namespace GUI
 
         wxPanel* PrefPanel = new wxPanel(PrefListbook, ID_PREFERENCES_PANEL, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
 
-        wxBoxSizer* l_Sizer2 = new wxBoxSizer(wxVERTICAL);
-        PrefPanel->SetSizer(l_Sizer2);
+        wxBoxSizer* Sizer2 = new wxBoxSizer(wxVERTICAL);
+        PrefPanel->SetSizer(Sizer2);
 
         //Duplicate file method : Not fully implemented !
         //wxArrayString itemRadioBox3Strings;
@@ -132,31 +132,36 @@ namespace GUI
         //itemRadioBox3Strings.Add(_("&MD5"));
         //wxRadioBox* itemRadioBox3 = new wxRadioBox(PrefPanel, ID_PREFERENCES_RADIOBOX, _("Duplicates files method"), wxDefaultPosition, wxDefaultSize, itemRadioBox3Strings, 1, wxRA_SPECIFY_ROWS );
         //itemRadioBox3->SetSelection(0);
-        //l_Sizer2->Add(itemRadioBox3, 1, wxGROW | wxALL, 5);
+        //Sizer2->Add(itemRadioBox3, 1, wxGROW | wxALL, 5);
 
         //Show splashscreen ?
         fSplashScreen = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show splash screen on startup"), wxDefaultPosition);
         fSplashScreen->SetValue(fSettings->GetShowSplash());
-        l_Sizer2->Add(fSplashScreen, 1, wxGROW | wxALL, 5);
+        Sizer2->Add(fSplashScreen, 1, wxGROW | wxALL, 5);
 
         //Show toolbar ?
         fToolbar = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show toolbar (need reboot)"), wxDefaultPosition);
         fToolbar->SetValue(fSettings->GetShowToolbar());
-        l_Sizer2->Add(fToolbar, 1, wxGROW | wxALL, 5);
+        Sizer2->Add(fToolbar, 1, wxGROW | wxALL, 5);
 
         //Show statusbar ?
         fStatusbar = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show status bar (need reboot)"), wxDefaultPosition);
         fStatusbar->SetValue(fSettings->GetShowStatusbar());
-        l_Sizer2->Add(fStatusbar, 1, wxGROW | wxALL, 5);
+        Sizer2->Add(fStatusbar, 1, wxGROW | wxALL, 5);
 
         //Progress bar refresh's delay
         /*wxSpinButton* l_PBDelay = new wxSpinButton(PrefPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_HORIZONTAL, _T("Progress bar update's delay"));
-        l_Sizer2->Add(l_PBDelay, 1, wxGROW | wxALL, 5);*/
+        Sizer2->Add(l_PBDelay, 1, wxGROW | wxALL, 5);*/
 
         //Delete file after output plugin ?
         fDelete = new wxCheckBox(PrefPanel, ID_PREFERENCES_DELETE, _T("Delete files after applying the output plugin"), wxDefaultPosition);
         fDelete->SetValue(fSettings->GetDelete());
-        l_Sizer2->Add(fDelete, 1, wxGROW | wxALL, 5);
+        Sizer2->Add(fDelete, 1, wxGROW | wxALL, 5);
+
+        //Delete file after output plugin ?
+        fSystemFiles = new wxCheckBox(PrefPanel, ID_PREFERENCES_SYSTEM_FILES, _T("Include system files (and folders) to scan"), wxDefaultPosition);
+        fSystemFiles->SetValue(fSettings->GetSystemFiles());
+        Sizer2->Add(fSystemFiles, 1, wxGROW | wxALL, 5);
 
         //Append pages, by alphabetical order:
         //Add image :

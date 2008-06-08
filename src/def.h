@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 751
+#define BUILD 753
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -67,6 +67,7 @@
 #define ID_PREFERENCES_PANEL 10031
 #define ID_PREFERENCES_DELETE 10032
 #define ID_PREFERENCES_RADIOBOX 10033
+#define ID_PREFERENCES_SYSTEM_FILES 10034
 
 //Checklists
 #define ID_RESCHECKLIST 10040
