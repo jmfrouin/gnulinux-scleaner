@@ -588,11 +588,9 @@ namespace Engine
         return &fSelectedInputPlugs;
     }
 
-    void CEngine::GetCPUInfos(std::string& str)
+    void CEngine::PROCInfo(const std::string& pattern, const std::string& file, std::string& str)
     {
-        std::string Pattern1 = "model name";
-        std::string Pattern2 = "cache size";
-        std::ifstream File(CPUINFO, std::ios::in);
+        std::ifstream File(file.c_str(), std::ios::in);
         std::string Line;
         if(File.good())
         {
@@ -601,70 +599,17 @@ namespace Engine
                 if(File.eof())
                     break;
                 getline(File, Line);
-                unsigned int Pos = Line.find(Pattern1);
+                unsigned int Pos = Line.find(pattern);
                 if(Pos != std::string::npos)
                 {
                     Pos = Line.find(':');
                     if(Pos != std::string::npos)
                     {
-                        Pos += 2;
-                        str = Line.substr(Pos, Line.length());
-                    }
-                }
-                Pos = Line.find(Pattern2);
-                if(Pos != std::string::npos)
-                {
-                    Pos = Line.find(':');
-                    if(Pos != std::string::npos)
-                    {
-                        str += " (";
                         Pos += 2;
                         str += Line.substr(Pos, Line.length());
-                        str += ")";
+                        break;
                     }
                 }
-
-            }
-            File.close();
-        }
-    }
-
-    void CEngine::GetRAMInfos(std::string& str)
-    {
-        std::string Pattern1 = "MemFree";
-        std::string Pattern2 = "MemTotal";
-        std::ifstream File(MEMINFO, std::ios::in);
-        std::string Line;
-        if(File.good())
-        {
-            while(1)
-            {
-                if(File.eof())
-                    break;
-                getline(File, Line);
-                unsigned int Pos = Line.find(Pattern1);
-                if(Pos != std::string::npos)
-                {
-                    Pos = Line.find(':');
-                    if(Pos != std::string::npos)
-                    {
-                        str += "| Free: ";
-                        Pos += 2;
-                        str += Line.substr(Pos, Line.length());
-                    }
-                }
-                Pos = Line.find(Pattern2);
-                if(Pos != std::string::npos)
-                {
-                    Pos = Line.find(':');
-                    if(Pos != std::string::npos)
-                    {
-                        str += "RAM Total : ";
-                        Pos += 2;
-                        str += Line.substr(Pos, Line.length());
-                    }
-                }
-
             }
             File.close();
         }

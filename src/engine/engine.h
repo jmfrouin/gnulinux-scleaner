@@ -170,16 +170,13 @@ namespace Engine
             static void CalcCRC32(const std::string& filename, unsigned long& crc);
 
             /*!
-             * @brief Get CPU infos: CPU type, cache size.
+             * @brief Get informations from /proc/
+             * @param pattern The pattern to find.
+             * @param file The file, where find.
              * @param str The string to fill.
              */
-            static void GetCPUInfos(std::string& str);
+            static void PROCInfo(const std::string& pattern, const std::string& file, std::string& str);
 
-            /*!
-             * @brief Get RAM infos:
-             * @param str The string to fill.
-             */
-            static void GetRAMInfos(std::string& str);
         private:
             /*!
             *@brief Calc CRC32's table

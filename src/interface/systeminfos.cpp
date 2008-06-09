@@ -73,24 +73,30 @@ void CSystemInfos::CreateControls()
 {
     CSystemInfos* itemDialog1 = this;
 
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    wxBoxSizer* Sizer = new wxBoxSizer(wxVERTICAL);
+    itemDialog1->SetSizer(Sizer);
 
     std::string CPUInfos;
-    Engine::CEngine::Instance()->GetCPUInfos(CPUInfos);
+    //Get model name
+    Engine::CEngine::Instance()->PROCInfo("model name", CPUINFO, CPUInfos);
+    CPUInfos += "(";
+    Engine::CEngine::Instance()->PROCInfo("cache size", CPUINFO, CPUInfos);
+    CPUInfos += ")";
     wxString UCPUInfos(CPUInfos.c_str(), wxConvUTF8);
-    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, UCPUInfos, wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticText3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxStaticText* CPU = new wxStaticText( itemDialog1, wxID_STATIC, UCPUInfos, wxDefaultPosition, wxDefaultSize, 0 );
+    Sizer->Add(CPU, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
         wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _("Kernel version"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    Sizer->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    std::string RAMInfos;
-    Engine::CEngine::Instance()->GetRAMInfos(RAMInfos);
+    std::string RAMInfos("Ram : ");
+    Engine::CEngine::Instance()->PROCInfo("MemFree", MEMINFO, RAMInfos);
+    RAMInfos += " / ";
+    Engine::CEngine::Instance()->PROCInfo("MemTotal", MEMINFO, RAMInfos);
     wxString URAMInfos(RAMInfos.c_str(), wxConvUTF8);
-    wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, URAMInfos, wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticText4, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxStaticText* RAM = new wxStaticText( itemDialog1, wxID_STATIC, URAMInfos, wxDefaultPosition, wxDefaultSize, 0 );
+    Sizer->Add(RAM, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Avail / Free / Total Disk 1"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    Sizer->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 }
