@@ -101,7 +101,7 @@
 #define SYMBOL_TOOLBAR_STYLE = wxTB_FLAT | wxTB_DOCKABLE | wxTB_TEXT
 
 //Size
-#define SYMBOL_INTERFACE_SIZE wxSize(1024, 770)
+#define SYMBOL_INTERFACE_SIZE wxSize(1024, 768)
 #define SYMBOL_DIALOG_SIZE wxSize(400, 300)
 
 //Position
