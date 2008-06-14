@@ -3,7 +3,7 @@
 
  * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
- * Visit scleaner website : http://www.scleaner.fr
+ * Visit scleaner website : http://www.scleaner.org
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -27,6 +27,8 @@
 #if defined LEAKS
 #include <leak/leak_detector.h>
 #endif
+
+#include <tools/mutex.h>
 
 typedef unsigned int SmartCptType;
 
@@ -90,18 +92,14 @@ namespace Tools
             TSmartPtr<T>& operator=(T* object)
             {
                 if(object)
-                {
                     object->_IncRef();
-                }
 
                 if(fObject)
                 {
                     SmartCptType Cpt;
                     Cpt = fObject->_DecRef();
-                    if(Cpt == 0)
-                    {
+                    if(!Cpt)
                         delete fObject;
-                    }
                 }
                 fObject = object;
                 return *this;
@@ -119,20 +117,11 @@ namespace Tools
             /*!
              *@brief In order to use it, as a dumb pointer.
              */
-            operator T*()
-            {
-                return fObject;
-            }
+            operator T*() { return fObject; }
 
-            bool operator==(const int& value) const
-            {
-                return ((int)this == value);
-            }
+            bool operator==(const int& value) const { return ((int)this == value); }
 
-            bool operator!=(const int& value) const
-            {
-                return ((int)this != value);
-            }
+            bool operator!=(const int& value) const { return ((int)this != value); }
 
             /*!
              *@brief Dereferencement operators for object.

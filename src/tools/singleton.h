@@ -22,8 +22,6 @@
 #ifndef __SINGLETON_H__
 #define __SINGLETON_H__
 
-#include <leak/leak_detector.h>
-
 namespace Tools
 {
     /*!

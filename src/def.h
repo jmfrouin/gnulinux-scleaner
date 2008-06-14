@@ -3,7 +3,7 @@
 
  * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
- * Visit scleaner website : http://www.scleaner.fr
+ * Visit scleaner website : http://www.scleaner.org
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 770
+#define BUILD 865
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -46,12 +46,16 @@
 #define MAJOR 0
 #define MINOR 70
 #define NAME "scleaner RC1 v"VER
-#define SPLASH true
+#define VERSION_MEMORY_MANAGER 0.3
+#define VERSION_FILELOG 0.2
 
 //Paths
 #define PLUG_FOLDER "/usr/share/scleaner/plugs"
 #define CPUINFO "/proc/cpuinfo"
 #define MEMINFO "/proc/meminfo"
+#define LOGFILE "/tmp/scleaner.log"
+#define LEAKFILE "/tmp/scleaner_leaks.log"
+#define CONFFILE "/.scleaner/prefs.conf"
 
 //Controls identifiers
 //Main interface
@@ -113,7 +117,7 @@
 #include <locale.h>
 
 //CRC32 stuff
-#define CRC_POLY_REV 0xEDB88320
+#define CRC_POLY_REV 0xEDB88650
 
 #endif                           // __DEF_H__
 /* vi:set ts=4: */

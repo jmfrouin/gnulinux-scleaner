@@ -5,7 +5,7 @@
  * Copyright (c) 2007 Sylvain Beucler.
  * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
- * Visit scleaner website : http://www.scleaner.fr
+ * Visit scleaner website : http://www.scleaner.org
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -31,6 +31,7 @@
 #include <sys/stat.h>
 #include <engine/iprogress.h>
 #include <engine/settings_manager.h>
+#include <log/log.h>
 
 namespace Tools
 {
@@ -193,12 +194,12 @@ namespace Tools
             strncpy(header.chksum, l_checksumstr.c_str(), 8);
 
             #if defined DEBUG && defined VERBOSE
-            std::cout << "[DBG] Mode (8bytes) : " << header.mode << '\n';
-            std::cout << "[DBG] UID (8b) : " << header.uid << '\n';
-            std::cout << "[DBG] GID (8b) : " << header.gid << '\n';
-            std::cout << "[DBG] Size (12b) : " << header.size << '\n';
-            std::cout << "[DBG] Time (12b) : " << header.mtime << '\n';
-            std::cout << "[DBG] Checksum : " << header.chksum << '\n';
+            Log::CLog::Instance()->Log(__FILE__, __LINE__, "Mode (8bytes) : ", header.mode, true);
+            Log::CLog::Instance()->Log(__FILE__, __LINE__, "UID (8b) : ", header.uid, true);
+            Log::CLog::Instance()->Log(__FILE__, __LINE__, "GID (8b) : ", header.gid, true);
+            Log::CLog::Instance()->Log(__FILE__, __LINE__, "Size (12b) : ", header.size, true);
+            Log::CLog::Instance()->Log(__FILE__, __LINE__, "Time (12b) : ", header.mtime, true);
+            Log::CLog::Instance()->Log(__FILE__, __LINE__, "Checksum : ", header.chksum, true);
             #endif
             #endif
             Ret=true;
@@ -345,7 +346,7 @@ namespace Tools
             else
             {
                 unlink(output.c_str());
-                std::cout << i8n("[ERR] Due to error(s) on CleanClose, I delete ") << output << '\n';
+                std::cerr << i8n("[ERR] Due to error(s) on CleanClose, I delete ") << output << '\n';
                 Ret = false;
             }
         }
@@ -355,7 +356,8 @@ namespace Tools
                 for(It = filenames.begin(); It != filenames.end(); ++It)
                 {
                     #if defined DEBUG
-                    std::cout << "[DBG] " << It->c_str() << " deleted ! \n";
+                    Log::CLog::Instance()->Log(__FILE__, __LINE__, It->c_str());
+                    Log::CLog::Instance()->Log(__FILE__, __LINE__, " deleted ! \n");
                     #endif
                     unlink(It->c_str());
                 }

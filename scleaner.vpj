@@ -263,10 +263,8 @@
 				Name="log"
 				Filters="">
 				<F N="src/log/CMakeLists.txt"/>
-				<F N="src/log/filelog.cpp"/>
-				<F N="src/log/filelog.h"/>
-				<F N="src/log/ilog.cpp"/>
-				<F N="src/log/ilog.h"/>
+				<F N="src/log/log.cpp"/>
+				<F N="src/log/log.h"/>
 			</Folder>
 			<Folder
 				Name="morgue"

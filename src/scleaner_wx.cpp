@@ -27,6 +27,7 @@
 CMemoryManager g_mm;
 
 #include <leak/leak_detector.h>
+#include <log/log.h>
 
 IMPLEMENT_APP(CSClean)
 
@@ -34,6 +35,10 @@ CSClean::CSClean()
 {
 }
 
+CSClean::~CSClean()
+{
+    //delete Log::CLog::Instance();
+}
 
 bool CSClean::OnInit(void)
 {
@@ -50,13 +55,13 @@ bool CSClean::OnInit(void)
     wxImage::AddHandler(new wxPNGHandler);
 
     //Retrieve Engine::CEngine instance pointer.
-    m_engine = Engine::CEngine::Instance();
+    fEngine = Engine::CEngine::Instance();
 
     //Load plugins
-    m_engine->LoadPlugins(PLUG_FOLDER);
+    fEngine->LoadPlugins(PLUG_FOLDER);
 
     //Load GFX interface
-    Ret = m_engine->LoadInterface();
+    Ret = fEngine->LoadInterface();
 
     return Ret;
 }

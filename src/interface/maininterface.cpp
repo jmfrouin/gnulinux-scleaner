@@ -3,7 +3,7 @@
 
  * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
- * Visit scleaner website : http://www.scleaner.fr
+ * Visit scleaner website : http://www.scleaner.org
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -170,13 +170,11 @@ namespace GUI
 
     void CMainInterface::LaunchSplash(int delay)
     {
-        #if defined(SPLASH)
         //Splash
         wxBitmap bitmap;
 
         if(bitmap.LoadFile(_T("/usr/share/doc/scleaner/splash.png")), wxBITMAP_TYPE_PNG)
             new wxSplashScreen(bitmap, wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT, delay, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSIMPLE_BORDER|wxSTAY_ON_TOP);
-        #endif
     }
 
 
@@ -513,10 +511,10 @@ namespace GUI
         GetSelectedFiles(SelectionectedFiles);
 
         #if defined DEBUG && defined VERBOSE
-        std::cout << i8n("[DBG] You have selected: ") << '\n';
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "[DBG] You have selected: ", true);
         std::list<std::string>::iterator It;
         for(It = SelectionectedFiles.begin(); It != SelectionectedFiles.end(); ++It)
-            std::cout << "[DBG] " << *It << '\n';
+            Log::CLog::Instance()->Log(__FILE__, __LINE__, *It, true);
         #endif
 
         fProgress = new wxProgressDialog(wxString(i8n("scleaner process your files ..."), wxConvUTF8),

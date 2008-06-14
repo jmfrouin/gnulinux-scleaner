@@ -3,7 +3,7 @@
 
  * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
- * Visit scleaner website : http://www.scleaner.fr
+ * Visit scleaner website : http://www.scleaner.org
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -49,12 +49,13 @@ namespace Engine
         {
                 int Res = mkdir(Path.c_str(), 01777);
                 #if defined DEBUG
-                std::cout << "[DBG] " << Path << " didn't exist need to created it \n";
-                std::cout << "[DBG] " << Path << " creation :";
+                Log::CLog::Instance()->Log(__FILE__, __LINE__, Path);
+                Log::CLog::Instance()->Log(__FILE__, __LINE__, " didn't exist need to created it \n");
+                Log::CLog::Instance()->Log(__FILE__, __LINE__, "Creation :");
                 if(!Res)
-                    std::cout << "OK\n";
+                    Log::CLog::Instance()->Log(__FILE__, __LINE__, "OK\n");
                 else
-                    std::cout << "KO\n";
+                    Log::CLog::Instance()->Log(__FILE__, __LINE__, "KO\n");
                 #endif
         }
 
@@ -107,11 +108,11 @@ namespace Engine
         }
 
         #if defined DEBUG && defined VERBOSE
-        std::cout << "[DBG] Loading pref : \n";
-        std::cout << "[DBG] fShowSplash = " << fShowSplash << '\n';
-        std::cout << "[DBG] fShowToolbar = " << fShowToolbar << '\n';
-        std::cout << "[DBG] fShowStatusbar = " << fShowStatusbar << '\n';
-        std::cout << "[DBG] fDelete = " << fDelete << '\n';
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "Loading pref : \n");
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowSplash = ", fShowSplash, true);
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowToolbar = ", fShowToolbar, true);
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowStatusbar = ", fShowStatusbar, true);
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fDelete = ", fDelete, true);
         #endif
     }
 
@@ -129,20 +130,18 @@ namespace Engine
             CEngine::GetUsername(User);
             Path += User;
         }
-
-        std::string Config(Path);
-        Config += "/.scleaner/prefs.conf";
-
-        std::ofstream File(Config.c_str());
+        Path += CONFFILE;
 
         //Debug
         #if defined DEBUG && defined VERBOSE
-        std::cout << "[DBG] Saving pref\n";
-        std::cout << "[DBG] fShowSplash = " << fShowSplash << '\n';
-        std::cout << "[DBG] fShowToolbar = " << fShowToolbar << '\n';
-        std::cout << "[DBG] fShowStatusbar = " << fShowStatusbar << '\n';
-        std::cout << "[DBG] fDelete = " << fDelete << '\n';
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, std::string("Saving pref"), true);
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowSplash = ", fShowSplash, true);
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowToolbar = ", fShowToolbar, true);
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowStatusbar = ", fShowStatusbar, true);
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fDelete = ", fDelete, true);
         #endif
+
+        std::ofstream File(Path.c_str());
 
         //Write splash screen
         File << eShowSplash << ' ' << fShowSplash << '\n';
@@ -152,7 +151,7 @@ namespace Engine
         for(It = fFoldersList.begin(); It != fFoldersList.end(); ++It)
         {
             #if defined DEBUG
-            std::cout << "[DBG] Adding :" << *It << '\n';
+            Log::CLog::Instance()->Log(__FILE__, __LINE__, "Adding :", *It, true);
             #endif
             File << eFolderInc << ' ' << *It << '\n';
         }
@@ -161,7 +160,7 @@ namespace Engine
         for(It = fExcludedFoldersList.begin(); It != fExcludedFoldersList.end(); ++It)
         {
             #if defined DEBUG
-            std::cout << "[DBG] Excluding :" << *It << '\n';
+            Log::CLog::Instance()->Log(__FILE__, __LINE__, "Excluding :", *It, true);
             #endif
             File << eFolderEx << ' ' << *It << '\n';
         }
@@ -174,6 +173,11 @@ namespace Engine
 
         //Delete files after output plugin
         File << eDelete << ' ' << fDelete << '\n';
+        #if defined DEBUG
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "eShowToolbar :", fShowToolbar, true);
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "eShowStatusbar :", fShowStatusbar, true);
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "eDelete :", fDelete, true);
+        #endif
     }
 
 

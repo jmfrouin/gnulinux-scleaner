@@ -35,10 +35,11 @@ class CSClean: public wxApp
 {
         public:
                 CSClean();
+                ~CSClean();
                 bool OnInit(void);
 
         private:
-                Tools::TSmartPtr<Engine::CEngine>          m_engine;
+                Tools::TSmartPtr<Engine::CEngine>          fEngine;
 };
 #endif                                                   // _APP_H_
 /* vi:set ts=4: */

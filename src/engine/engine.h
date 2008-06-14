@@ -5,7 +5,7 @@
  * Copyright (C) 2000 Yann Guidon <whygee@f-cpu.org>
  * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
- * Visit scleaner website : http://www.scleaner.fr
+ * Visit scleaner website : http://www.scleaner.org
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -31,6 +31,8 @@
 #include <tools/smart_pointer.h>
 #include <tools/singleton.h>
 #include <plugins/plugin_manager.h>
+#include <interface/maininterface.h>
+#include <log/log.h>
 #include "iprogress.h"
 
 //forward declarations
@@ -233,6 +235,7 @@ namespace Engine
             void SetCount(unsigned int nb) { fCount = nb; }
 
         private:
+            GUI::CMainInterface* fInterface;
             Tools::TSmartPtr<Plugins::CPluginManager>       fPFM;
 
             //Input plugins

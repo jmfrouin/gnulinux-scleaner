@@ -3,7 +3,7 @@
 
  * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
- * Visit scleaner website : http://www.scleaner.fr
+ * Visit scleaner website : http://www.scleaner.org
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -26,6 +26,8 @@
 #include <sstream>
 #include <iostream>
 #include <config.h>
+#include <def.h>
+#include <log/log.h>
 
 #include "memory_manager.h"
 
@@ -33,37 +35,38 @@ std::size_t CMemoryManager::TBlock::Total = 0;
 
 CMemoryManager::CMemoryManager()
 {
-        m_File.open("/tmp/_memoryleaks.log");
-        if (!m_File)
-                std::cout << i8n("[ERR] : Cannot open ") << m_File << std::endl;
+        fFile.open(LEAKFILE);
+        if (!fFile)
+                std::cout << i8n("[ERR] : Cannot open ") << fFile << '\n';
 
         //    throw CLoadingFailed("Memory leaks.log", "Impossible d'accder en criture");
 
-        m_File << " MemoryManager v" << VERSION_MEMORY_MANAGER << i8n(" - Report (Compiled on ") << __DATE__ << " @ " << __TIME__ << ")" << std::endl;
+        fFile << " MemoryManager v" << VERSION_MEMORY_MANAGER << i8n(" - Report (Compiled on ") << __DATE__ << " @ " << __TIME__ << ")" << '\n';
 }
 
 
 CMemoryManager::~CMemoryManager()
 {
         #if defined DEBUG
-        std::cout << "[DBG] [CMemoryManager] ~CMemoryManager()" << std::endl;
+        //Log::CLog::Instance()->Log(__FILE__, __LINE__, "[CMemoryManager] ~CMemoryManager()");
         #endif
 
-        if (m_Blocks.empty())
+        if (fBlocks.empty())
         {
-                m_File << std::endl;
-                m_File << "====================================================================================" << std::endl;
-                m_File << i8n("   No leak detected, congratulations !  ") << std::endl;
-                m_File << "====================================================================================" << std::endl << std::endl;
+                fFile << '\n';
+                fFile << "====================================================================================" << '\n';
+                fFile << i8n("   No leak detected, congratulations !  ") << '\n';
+                fFile << "====================================================================================" << '\n';
         }
         else
         {
-                m_File << std::endl;
-                m_File << "====================================================================================" << std::endl;
-                m_File << i8n(" Oops... Some leaks have been detected  ") << std::endl;
-                m_File << "====================================================================================" << std::endl << std::endl;
-                m_File << std::endl;
+                fFile << '\n';
+                fFile << "====================================================================================" << '\n';
+                fFile << i8n(" Oops... Some leaks have been detected  ") << '\n';
+                fFile << "====================================================================================" << '\n';
+                fFile << '\n';
                 Report();
+                fFile << "Byeeeeeeeeeeee\n";
         }
 }
 
@@ -71,89 +74,89 @@ CMemoryManager::~CMemoryManager()
 void CMemoryManager::Report()
 {
         #if defined DEBUG
-        std::cout << "[DBG] [CMemoryManager] ReportLeaks()" << std::endl;
+        //Log::CLog::Instance()->Log(__FILE__, __LINE__, "[CMemoryManager] ReportLeaks()");;
         #endif
 
         std::size_t TotalSize = 0;
-        for (TBlockMap::iterator i = m_Blocks.end(); --i != m_Blocks.begin();)
+        for (TBlockMap::iterator i = fBlocks.end(); --i != fBlocks.begin();)
         {
                 TotalSize += i->second.Size;
-                m_File << "-> 0x" << i->first
-                        << " | "   << std::setw(7) << std::setfill(' ') << static_cast<int>(i->second.Size) << i8n(" bytes")
-                        << " | "   << i->second.File << " (" << i->second.Line << ")" << std::endl;
+                fFile << "-> 0x" << i->first
+                << " | "   << std::setw(7) << std::setfill(' ') << static_cast<int>(i->second.Size) << i8n(" bytes")
+                << " | "   << i->second.File << " (" << i->second.Line << ")" << '\n';
                 free(i->first);
         }
 
-        m_File << std::endl << std::endl << "-- "
-                << static_cast<int>(m_Blocks.size()) << i8n(" blocs not empty, ")
+        fFile << '\n' << "-- "
+                << static_cast<int>(fBlocks.size()) << i8n(" blocs not empty, ")
                 << static_cast<int>(TotalSize)       << i8n(" bytes --")
-                << std::endl;
+                << '\n';
 
 }
 
 
-void* CMemoryManager::Allocate(std::size_t _size, const std::string& _file, int _line, bool _array)
+void* CMemoryManager::Allocate(std::size_t size, const std::string& file, int line, bool array)
 {
-        void* Ptr = malloc(_size);
+        void* Ptr = malloc(size);
 
         TBlock NewBlock;
-        NewBlock.Size  = _size;
-        NewBlock.File  = _file;
-        NewBlock.Line  = _line;
-        NewBlock.Array = _array;
-        NewBlock.Total += _size;
-        m_Blocks[Ptr]  = NewBlock;
+        NewBlock.Size  = size;
+        NewBlock.File  = file;
+        NewBlock.Line  = line;
+        NewBlock.Array = array;
+        NewBlock.Total += size;
+        fBlocks[Ptr]  = NewBlock;
 
         /*#if defined DEBUG && VERBOSE
-        std::cout << "[DBG] [CMemoryManager] Allocate()" << Ptr << std::endl;
-        std::cout << "[DBG] [CMemoryManager] +++" << " " << Ptr << " " << static_cast<int>(NewBlock.Size) << " " << NewBlock.Total << " " << NewBlock.File << " " << NewBlock.Line << std::endl;
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "[CMemoryManager] Allocate()" << Ptr << '\n';
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "[CMemoryManager] +++" << " " << Ptr << " " << static_cast<int>(NewBlock.Size) << " " << NewBlock.Total << " " << NewBlock.File << " " << NewBlock.Line << '\n';
         #endif*/
 
-        m_File << "+++" << " " << Ptr << " " << static_cast<int>(NewBlock.Size) << " " << NewBlock.Total << " " << NewBlock.File << " " << NewBlock.Line << std::endl;
+        fFile << "+++" << " " << Ptr << " " << static_cast<int>(NewBlock.Size) << " " << NewBlock.Total << " " << NewBlock.File << " " << NewBlock.Line << '\n';
 
         return Ptr;
 }
 
 
-void CMemoryManager::Free(void* _ptr, bool _array)
+void CMemoryManager::Free(void* ptr, bool array)
 {
-        TBlockMap::iterator It = m_Blocks.find(_ptr);
+        TBlockMap::iterator It = fBlocks.find(ptr);
 
         /*#if defined DEBUG && VERBOSE
-        std::cout << "[DBG] [CMemoryManager] Free(" << _ptr << ") " << std::endl;
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "[CMemoryManager] Free(" << ptr << ") " << '\n';
         #endif*/
 
-        if (It == m_Blocks.end())
+        if (It == fBlocks.end())
         {
-                free(_ptr);
+                free(ptr);
                 return;
         }
 
-        if (It->second.Array != _array)
+        if (It->second.Array != array)
         {
-                m_File << "-- ERR | 0x" << _ptr << " @ " << It->second.File << i8n(" Line : ") << It->second.Line << std::endl;
+                fFile << "-- ERR | 0x" << ptr << " @ " << It->second.File << i8n(" Line : ") << It->second.Line << '\n';
                 return;
         }
 
-        if(!m_DeleteStack.empty())
-                m_File << "---" << " " << _ptr << " " << static_cast<int>(It->second.Size) << " " << m_DeleteStack.top().File << " " << m_DeleteStack.top().Line << std::endl;
+        if(!fDeleteStack.empty())
+                fFile << "---" << " " << ptr << " " << static_cast<int>(It->second.Size) << " " << fDeleteStack.top().File << " " << fDeleteStack.top().Line << '\n';
         else
-                m_File << "---" << " " << _ptr << " " << static_cast<int>(It->second.Size) << std::endl;
+                fFile << "---" << " " << ptr << " " << static_cast<int>(It->second.Size) << '\n';
 
-        m_Blocks.erase(It);
-        if(!m_DeleteStack.empty())
-                m_DeleteStack.pop();
-        free(_ptr);
+        fBlocks.erase(It);
+        if(!fDeleteStack.empty())
+                fDeleteStack.pop();
+        free(ptr);
 }
 
 
-void CMemoryManager::NextDelete(const std::string& _file, int _line)
+void CMemoryManager::NextDelete(const std::string& file, int line)
 {
         TBlock Delete;
-        Delete.File = _file;
-        Delete.Line = _line;
+        Delete.File = file;
+        Delete.Line = line;
 
-        m_DeleteStack.push(Delete);
+        fDeleteStack.push(Delete);
 }
 
 

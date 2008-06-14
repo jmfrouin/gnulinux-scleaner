@@ -1,11 +1,11 @@
 /**
  * This file is part of scleaner project.
 
- * Visit scleaner website : http://www.scleaner.fr
+ * Visit scleaner website : http://www.scleaner.org
  * Copyright (C) 2000 Yann Guidon <whygee@f-cpu.org>
  * Copyright (C) 2007, 2008 FROUIN Jean-Michel
 
- * Visit scleaner website : http://www.scleaner.fr
+ * Visit scleaner website : http://www.scleaner.org
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -36,11 +36,11 @@
 #include <sys/stat.h>
 #include <sys/vfs.h>
 #include <sys/utsname.h>
-#include <interface/maininterface.h>
 #include <plugins/in/in_plugin.h>
 #include <plugins/in/input_plugin.h>
 #include <plugins/in/thread_plugin.h>
 #include <tools/timer.h>
+#include <log/log.h>
 #include "settings_manager.h"
 #include "dpkg-db.h"
 #include "engine.h"
@@ -48,23 +48,24 @@
 namespace Engine
 {
     CEngine::CEngine():
-    fAvailableInputPlugs(0), fOutputPlugs(0), fRootPlugin(0), fAsRoot(false),
+    fInterface(0), fAvailableInputPlugs(0), fOutputPlugs(0), fRootPlugin(0), fAsRoot(false),
     fCallback(0), fCount(0), fSelInPlugins(false)
     {
         //Initialisation
         fAvailableInputPlugs = Plugins::CPluginManager::Instance()->GetInputListPtr();
         fOutputPlugs = Plugins::CPluginManager::Instance()->GetOutputListPtr();
         fSettings = CSettingsManager::Instance();
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "[DBG] CEngine started", "", true);
     }
 
     CEngine::~CEngine()
     {
         #if defined DEBUG
-        std::cout << "[DBG] ~CEngine\n";
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "[DBG] ~CEngine\n");
         std::list<std::string>::iterator It;
-        std::cout << "[DBG] fUnselectedInputPlugs : \n";
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fUnselectedInputPlugs : \n");
         for(It = fUnselectedInputPlugs.begin(); It != fUnselectedInputPlugs.end(); ++It)
-            std::cout << "[DBG]" << *It << '\n';
+            Log::CLog::Instance()->Log(__FILE__, __LINE__,  *It);
         #endif
     }
 
@@ -79,11 +80,10 @@ namespace Engine
     {
         bool Ret = false;
 
-        GUI::CMainInterface* Main = 0;
-        Main = new GUI::CMainInterface(NULL, wxID_ANY, wxT(NAME), SYMBOL_POSITION, SYMBOL_INTERFACE_SIZE);
-        if(Main)
+        fInterface = new GUI::CMainInterface(NULL, wxID_ANY, wxT(NAME), SYMBOL_POSITION, SYMBOL_INTERFACE_SIZE);
+        if(fInterface)
         {
-            Main->Show(true);
+            fInterface->Show(true);
             Ret = true;
         }
 
@@ -140,14 +140,14 @@ namespace Engine
         Passwd = getpwuid(Uid);
 
         #if defined DEBUG
-        std::cout << i8n("[DBG] CEngine::getUsername UID: ") << Uid << '\n';
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, i8n("[DBG] CEngine::getUsername UID: "), Uid, true);
         #endif
 
         if (Passwd)
         {
             username = Passwd->pw_name;
             #if defined DEBUG
-            std::cout << i8n("[DBG] CEngine::getUsername Username: ") << username << '\n';
+            Log::CLog::Instance()->Log(__FILE__, __LINE__, i8n("[DBG] CEngine::getUsername Username: "), username, true);
             #endif
             Ret = true;
         }
@@ -513,7 +513,7 @@ namespace Engine
         int Ret = 0;
 
         #if defined DEBUG
-        std::cout << "[DBG] detectDuplicates : Detect duplicate " << std::endl;
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "detectDuplicates : Detect duplicate\n");
         #endif
 
         std::map<std::string, unsigned long>::iterator It;
@@ -534,7 +534,7 @@ namespace Engine
                 }
             }
         }
-        std::cout << "Founded " << Ret << " duplicates files" << std::endl;
+        std::cout << "Founded " << Ret << " duplicates files" << '\n';
 
         return Ret;
     }
@@ -573,7 +573,7 @@ namespace Engine
                         Unsel = true;
 
                         #if defined DEBUG && defined VERBOSE
-                        std::cout << "[DBG] " << *It2 << " is unselected !!\n";
+                        Log::CLog::Instance()->Log(__FILE__, __LINE__, *It2, " is unselected !!\n");
                         #endif
 
                         break;
