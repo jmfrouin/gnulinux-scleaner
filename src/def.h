@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 877
+#define BUILD 885
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -70,6 +70,11 @@
 //System infos
 #define SYMBOL_SYSTEMINFOS_TITLE _("System Infos")
 #define ID_SYSTEMINFOS 10010
+
+//Review your choice
+#define SYMBOL_REVIEW_TITLE _("Review")
+#define ID_REVIEW 10020
+#define ID_REVIEW_LISTCTRL 10021
 
 //Preferences
 #define SYMBOL_PREFERENCES_TITLE _("Preferences")

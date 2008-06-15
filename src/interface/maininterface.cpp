@@ -55,6 +55,7 @@
 #include "select_dialog.h"
 #include "preferences.h"
 #include "systeminfos.h"
+#include "review.h"
 
 //App icon
 #include <gfx/scleaner.xpm>
@@ -496,8 +497,9 @@ namespace GUI
             }
 
             static int Count = 0;
-            UpdateProgress(It->first, false, ((++Count)*100)/SelInpPlug->size());
-
+            bool Continue = UpdateProgress(It->first, false, ((++Count)*100)/SelInpPlug->size());
+            if(!Continue)
+                break;
             FilesList->SetColumnWidth(0, wxLIST_AUTOSIZE);
             FilesList->SetColumnWidth(1, wxLIST_AUTOSIZE);
             FilesList->SetColumnWidth(2, wxLIST_AUTOSIZE);
@@ -519,8 +521,10 @@ namespace GUI
     void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))
     {
         std::list<std::string> SelectionectedFiles;
-        //GetSelectedFilesRecursively(fFoundFiles->GetRootItem(), SelectionectedFiles);
         GetSelectedFiles(SelectionectedFiles);
+
+        CReview Review(SelectionectedFiles, this, wxID_ANY, wxString(i8n("Review your choice"), wxConvUTF8), wxDefaultPosition, wxSize(600,300));
+        Review.ShowModal();
 
         #if defined DEBUG && defined VERBOSE
         Log::CLog::Instance()->Log(__FILE__, __LINE__, "[DBG] You have selected: ", true);
