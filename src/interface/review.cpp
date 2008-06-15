@@ -102,7 +102,6 @@ namespace GUI
             static int Count = 0;
             long Tmp = List->InsertItem(Count++, String, 0);
             List->SetItemData(Tmp, Count);
-            std::cout << "DEBUG : " << *It << '\n';
         }
         List->Show();
         List->SetColumnWidth(0, wxLIST_AUTOSIZE);
