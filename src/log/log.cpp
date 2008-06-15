@@ -49,8 +49,8 @@ namespace Log
 
         void CLog::Close()
         {
-                /*if(fFile.is_open())
-                        fFile.close();*/
+                if(fFile.is_open())
+                        fFile.close();
         }
 
 

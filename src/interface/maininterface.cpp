@@ -403,10 +403,17 @@ namespace GUI
         delete fProgress;
         fProgress = 0;
 
+        //Build files list
+        fProgress = new wxProgressDialog(wxString(i8n("scleaner construct files' list"), wxConvUTF8),
+            wxString(i8n("this is a information"), wxConvUTF8), 100, this,
+            wxPD_CAN_ABORT | wxPD_APP_MODAL | wxPD_AUTO_HIDE | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME | wxPD_SMOOTH           // - makes indeterminate mode bar on WinXP very small
+            );
+
         double Totalsize = 0;
         // Happend plugins' name available
-        std::map<std::string, Plugins::IInPlugin*>::iterator It = fEngine->GetSelectedInputPlugs(true)->begin();
-        for(; It != fEngine->GetSelectedInputPlugs(true)->end(); ++It)
+        std::map<std::string, Plugins::IInPlugin*>* SelInpPlug = fEngine->GetSelectedInputPlugs(true);
+        std::map<std::string, Plugins::IInPlugin*>::iterator It = SelInpPlug->begin();
+        for(; It != SelInpPlug->end(); ++It)
         {
             wxString String((It->second)->GetName().c_str(), wxConvUTF8);
 
@@ -488,6 +495,9 @@ namespace GUI
                 ++Counter;
             }
 
+            static int Count = 0;
+            UpdateProgress(It->first, false, ((++Count)*100)/SelInpPlug->size());
+
             FilesList->SetColumnWidth(0, wxLIST_AUTOSIZE);
             FilesList->SetColumnWidth(1, wxLIST_AUTOSIZE);
             FilesList->SetColumnWidth(2, wxLIST_AUTOSIZE);
@@ -501,6 +511,8 @@ namespace GUI
 
         fFoundFiles->AdvanceSelection();
         fEngine->DetectDuplicates();
+        delete fProgress;
+        fProgress = 0;
     }
 
 

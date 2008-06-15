@@ -37,7 +37,6 @@ CSClean::CSClean()
 
 CSClean::~CSClean()
 {
-    //delete Log::CLog::Instance();
 }
 
 bool CSClean::OnInit(void)
