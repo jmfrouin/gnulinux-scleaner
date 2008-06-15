@@ -3378,7 +3378,7 @@
               <bool name="proxy-wxFIXED_MINSIZE">0</bool>
               <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
               <document>
-                <string name="title">"wxButton: ID_BUTTON10"</string>
+                <string name="title">"wxButton: ID_BUTTON9"</string>
                 <string name="type">"dialog-control-document"</string>
                 <string name="filename">""</string>
                 <string name="icon-name">"dialogcontrol"</string>
@@ -3444,7 +3444,7 @@
                 <string name="proxy-Custom ctor arguments">""</string>
               </document>
               <document>
-                <string name="title">"wxButton: ID_BUTTON9"</string>
+                <string name="title">"wxButton: ID_BUTTON10"</string>
                 <string name="type">"dialog-control-document"</string>
                 <string name="filename">""</string>
                 <string name="icon-name">"dialogcontrol"</string>
