@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 877
+#define BUILD 911
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -71,6 +71,11 @@
 #define SYMBOL_SYSTEMINFOS_TITLE _("System Infos")
 #define ID_SYSTEMINFOS 10010
 
+//Review your choice
+#define SYMBOL_REVIEW_TITLE _("Review")
+#define ID_REVIEW 10020
+#define ID_REVIEW_LISTCTRL 10021
+
 //Preferences
 #define SYMBOL_PREFERENCES_TITLE _("Preferences")
 #define ID_PREFERENCES 10030
@@ -101,7 +106,7 @@
 
 //Style
 #define SYMBOL_INTERFACE_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX
-#define SYMBOL_DIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
+#define SYMBOL_DIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxMAXIMIZE_BOX
 #define SYMBOL_TOOLBAR_STYLE = wxTB_FLAT | wxTB_DOCKABLE | wxTB_TEXT
 
 //Size
@@ -117,7 +122,7 @@
 #include <locale.h>
 
 //CRC32 stuff
-#define CRC_POLY_REV 0xEDB88650
+#define CRC_POLY_REV 0xEDB91150
 
 #endif                           // __DEF_H__
 /* vi:set ts=4: */
