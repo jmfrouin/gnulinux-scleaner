@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 911
+#define BUILD 913
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -122,7 +122,7 @@
 #include <locale.h>
 
 //CRC32 stuff
-#define CRC_POLY_REV 0xEDB91150
+#define CRC_POLY_REV 0xEDB91350
 
 #endif                           // __DEF_H__
 /* vi:set ts=4: */
