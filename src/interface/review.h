@@ -21,6 +21,7 @@
 #ifndef __REVIEW_H__
 #define __REVIEW_H__
 
+#include "checklistctrl.h"
 #include "wx/listctrl.h"
 #include <list>
 #include <string>
@@ -33,23 +34,29 @@ namespace GUI
         DECLARE_DYNAMIC_CLASS( CReview )
         DECLARE_EVENT_TABLE()
 
-    public:
-        CReview();
-        CReview(std::list<std::string> filelist, wxWindow* parent, wxWindowID id = ID_REVIEW, const wxString& caption = SYMBOL_REVIEW_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxTAB_TRAVERSAL);
+        public:
+            CReview();
+            CReview(std::list<std::string>* filelist, wxWindow* parent, wxWindowID id = ID_REVIEW, const wxString& caption = SYMBOL_REVIEW_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxTAB_TRAVERSAL);
 
-        bool Create(std::list<std::string> filelist, wxWindow* parent, wxWindowID id = ID_REVIEW, const wxString& caption = SYMBOL_REVIEW_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxTAB_TRAVERSAL);
+            bool Create(std::list<std::string>* filelist, wxWindow* parent, wxWindowID id = ID_REVIEW, const wxString& caption = SYMBOL_REVIEW_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxTAB_TRAVERSAL);
 
-        ~CReview();
+            ~CReview();
 
-        void Init();
+            void Init();
 
-        void CreateControls(std::list<std::string> filelist);
+            void CreateControls(std::list<std::string>* filelist);
 
-        wxBitmap GetBitmapResource( const wxString& name );
+            wxBitmap GetBitmapResource( const wxString& name );
 
-        wxIcon GetIconResource( const wxString& name );
+            wxIcon GetIconResource( const wxString& name );
 
-        static bool ShowToolTips();
+            static bool ShowToolTips();
+
+            void EndModal(int ret);
+
+        private:
+            wxCheckListCtrl* fList;
+            std::list<std::string>* fFileList;
     };
 }
 #endif    // __REVIEW_H__

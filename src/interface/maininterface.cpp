@@ -523,7 +523,7 @@ namespace GUI
         std::list<std::string> SelectionectedFiles;
         GetSelectedFiles(SelectionectedFiles);
 
-        CReview Review(SelectionectedFiles, this, wxID_ANY, wxString(i8n("Review your choice"), wxConvUTF8), wxDefaultPosition, wxSize(600,600));
+        CReview Review(&SelectionectedFiles, this, wxID_ANY, wxString(i8n("Review your choice"), wxConvUTF8), wxDefaultPosition, wxSize(600,600));
         Review.ShowModal();
 
         #if defined DEBUG && defined VERBOSE

@@ -27,7 +27,6 @@
 #include "wx/wx.h"
 #endif
 
-#include "checklistctrl.h"
 #include "review.h"
 
 namespace GUI
@@ -40,18 +39,19 @@ namespace GUI
     END_EVENT_TABLE()
 
 
-    CReview::CReview()
+    CReview::CReview():
+    fFileList(0)
     {
         Init();
     }
 
-    CReview::CReview(std::list<std::string> filelist, wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
+    CReview::CReview(std::list<std::string>* filelist, wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
     {
         Init();
         Create(filelist, parent, id, caption, pos, size, style);
     }
 
-    bool CReview::Create(std::list<std::string> filelist, wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
+    bool CReview::Create(std::list<std::string>* filelist, wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
     {
         SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
         wxDialog::Create( parent, id, caption, pos, size, style );
@@ -69,16 +69,17 @@ namespace GUI
     {
     }
 
-    void CReview::CreateControls(std::list<std::string> filelist)
+    void CReview::CreateControls(std::list<std::string>* filelist)
     {
         CReview* Dialog = this;
+        fFileList = filelist;
 
         wxBoxSizer* Sizer = new wxBoxSizer(wxVERTICAL);
         Dialog->SetSizer(Sizer);
 
-        wxCheckListCtrl* List = new wxCheckListCtrl(Dialog, ID_REVIEW_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT  | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+        fList = new wxCheckListCtrl(Dialog, ID_REVIEW_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT  | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 
-        Sizer->Add(List, 1, wxGROW | wxALL, 5);
+        Sizer->Add(fList, 1, wxGROW | wxALL, 5);
 
         wxBoxSizer* Sizer2 = new wxBoxSizer(wxHORIZONTAL);
         Sizer->Add(Sizer2, 0, wxGROW|wxALL, 5);
@@ -92,19 +93,19 @@ namespace GUI
         wxListItem ItemCol;
         ItemCol.SetText(wxString(i8n("File name"), wxConvUTF8));
         ItemCol.SetImage(-1);
-        List->InsertColumn(0, ItemCol);
+        fList->InsertColumn(0, ItemCol);
 
-        std::list<std::string>::iterator It = filelist.begin();
-        for(; It != filelist.end(); It++)
+        std::list<std::string>::iterator It = filelist->begin();
+        for(; It != filelist->end(); It++)
         {
             wxString String(It->c_str(), wxConvUTF8);
-            List->InsertItem(List->GetItemCount(), String);
+            fList->InsertItem(fList->GetItemCount(), String);
             static int Count = 0;
-            long Tmp = List->InsertItem(Count++, String, 0);
-            List->SetItemData(Tmp, Count);
+            long Tmp = fList->InsertItem(Count++, String, 0);
+            fList->SetItemData(Tmp, Count);
         }
-        List->Show();
-        List->SetColumnWidth(0, wxLIST_AUTOSIZE);
+        fList->Show();
+        fList->SetColumnWidth(0, wxLIST_AUTOSIZE);
     }
 
     bool CReview::ShowToolTips()
@@ -122,5 +123,30 @@ namespace GUI
     {
         wxUnusedVar(name);
         return wxNullIcon;
+    }
+
+    void CReview::EndModal(int ret)
+    {
+        if(ret == wxID_OK && fFileList)
+        {
+            long Item = -1;
+            for(;;)
+            {
+                Item = fList->GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+                if(Item == -1)
+                    break;
+                else
+                {
+                    int Count = 0;
+                    std::list<std::string>::iterator It = fFileList->begin();
+                    for(; It!=fFileList->end(); It++)
+                    {
+                        Count++;
+                            if(Count == Item)
+                                std::cout << *It << '\n';
+                    }
+                }
+            }
+        }
     }
 }
