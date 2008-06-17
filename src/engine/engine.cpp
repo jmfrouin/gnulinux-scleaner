@@ -520,7 +520,7 @@ namespace Engine
 
         for(It = fInfos.begin(); It != fInfos.end(); ++It)
         {
-            if(It->second != 0)
+            if(It->second)
             {
                 std::map<std::string, unsigned long>::iterator It2 = It;
                 for(++It2; It2 != fInfos.end(); ++It2)
@@ -528,14 +528,17 @@ namespace Engine
                     if(It->second == It2->second)
                         if(fDuplicatesFilesList[It->second] == "")
                         {
+                            std::cout << It->second << " " << It->first << '\n';
                             fDuplicatesFilesList.insert(make_pair(It->second, It->first));
                             Ret++;
                         }
                 }
             }
         }
-        std::cout << "Founded " << Ret << " duplicates files" << '\n';
-
+        std::cout << "Founded " << fDuplicatesFilesList.size() << " duplicates files" << '\n';
+        std::map<unsigned long, std::string>::iterator It3;
+        for(It3 = fDuplicatesFilesList.begin(); It3 != fDuplicatesFilesList.end(); ++It3)
+            std::cout << It3->first << ", " << It3->second << '\n';
         return Ret;
     }
 

@@ -420,8 +420,9 @@ namespace GUI
 
             std::list<std::string> List;
             It->second->GetFileList(List);
+            std::cout << "List : " << List.size() << '\n';
             List.sort();
-            std::list<std::string>::iterator It2;
+            std::cout << "List : " << List.size() << '\n';
 
             #if defined DEBUG && defined VERBOSE
             std::cout << CYAN << "For plugin : " << It->second->GetName() << " size = " << List.size() << STOP << '\n';
@@ -448,8 +449,8 @@ namespace GUI
 
             // to speed up inserting, we hide the control temporarily
             FilesList->Hide();
-
             int Counter = 0;
+            std::list<std::string>::iterator It2;
             for(It2 = List.begin(); It2 != List.end(); ++It2)
             {
                 std::string FileName(*It2);
@@ -505,6 +506,7 @@ namespace GUI
             FilesList->SetColumnWidth(2, wxLIST_AUTOSIZE);
             FilesList->SetColumnWidth(3, wxLIST_AUTOSIZE);
             FilesList->SetColumnWidth(4, wxLIST_AUTOSIZE);
+            std::cout << "List : " << List.size() << '\n';
 
             FilesList->Show();
             fFoundFiles->AddPage(FilesList, String, true);
