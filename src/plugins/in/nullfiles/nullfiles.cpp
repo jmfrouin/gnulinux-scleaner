@@ -40,7 +40,14 @@ CnullfilesPlugin::~CnullfilesPlugin()
 
 void CnullfilesPlugin::ProcessFile(const std::string& filename)
 {
-    fFL.push_back(filename);
+    struct stat Stat;
+
+    //Try to stat file.
+    if(stat(filename.c_str(), &Stat) == -1)
+        std::cout << i8n("[ERR] : Cannot stat ") << filename << '\n';
+    else
+        if(!Stat.st_size)
+            fFL.push_back(filename);
 }
 
 
