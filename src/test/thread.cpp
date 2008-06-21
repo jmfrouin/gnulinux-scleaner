@@ -18,8 +18,7 @@
 
  * This file is based on file from Laurent Gomilla :
  * http://loulou.developpez.com/tutoriels/moteur3d/
-*/
-
+ */
 
 #include <iostream>
 #include "thread.h"
@@ -38,31 +37,31 @@ CThread::~CThread()
 
 int CThread::Run()
 {
-        int Ret;
+  int Ret;
 
-        int l_tmp;
-        std::cout << "Launching thread ..." << '\n';
-        l_tmp = pthread_create(&m_Thread, 0, link, this);
+  int l_tmp;
+  std::cout << "Launching thread ..." << '\n';
+  l_tmp = pthread_create(&m_Thread, 0, link, this);
 
-        if(l_tmp != 0)
-        {
-                std::cerr <<  Ret << strerror(Ret) << '\n';
-                Ret = EXIT_FAILURE;
-        }
-        std::cout << "Waiting end of thread ..." << '\n';
+  if(l_tmp != 0)
+  {
+    std::cerr <<  Ret << strerror(Ret) << '\n';
+    Ret = EXIT_FAILURE;
+  }
+  std::cout << "Waiting end of thread ..." << '\n';
 
-        pthread_join(m_Thread, 0);
+  pthread_join(m_Thread, 0);
 
 }
 
 
 void CThread::__Run()
 {
-        std::cout << "I am in the thread !!" << '\n';
-        std::cout << "But I am very tired I ll sleep a bit !!" << '\n';
-        usleep(500000);
-        std::cout << "Ok ready to ... quit :) !!" << '\n';
-        pthread_exit(0);
+  std::cout << "I am in the thread !!" << '\n';
+  std::cout << "But I am very tired I ll sleep a bit !!" << '\n';
+  usleep(500000);
+  std::cout << "Ok ready to ... quit :) !!" << '\n';
+  pthread_exit(0);
 }
 
 

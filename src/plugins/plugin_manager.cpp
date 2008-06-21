@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #include "plugin_manager.h"
 
@@ -30,65 +30,62 @@
 
 namespace Plugins
 {
-    CPluginManager::~CPluginManager()
+  CPluginManager::~CPluginManager()
+  {
+  }
+
+  int CPluginManager::LoadPlugins(const std::string& path)
+  {
+    struct dirent** Namelist;
+    int Res = 0;
+    int Nb = scandir(path.c_str(), &Namelist, 0, alphasort);
+    while (Nb-- > 0)
     {
+      std::string Tmp = path;
+      Tmp += "/";
+      Tmp += Namelist[Nb]->d_name;
+      free(Namelist[Nb]);
+
+      if (Tmp.length() > 28)
+      {
+        void* Handler = dlopen (Tmp.c_str(), RTLD_NOW);
+        if (Handler != 0)
+          Res++;
+        else
+          std::cerr << "[ERR] loadPlugins " << dlerror() << '\n';
+      }
     }
+    free(Namelist);
+    return Res;
+  }
 
+  void CPluginManager::Add(IInPlugin* toadd)
+  {
+    fInputPlugins.insert(make_pair(toadd->GetName(), toadd));
+  }
 
-    int CPluginManager::LoadPlugins(const std::string& path)
-    {
-        struct dirent** Namelist;
-        int Res = 0;
-        int Nb = scandir(path.c_str(), &Namelist, 0, alphasort);
-        while (Nb-- > 0)
-        {
-            std::string Tmp = path;
-            Tmp += "/";
-            Tmp += Namelist[Nb]->d_name;
-            free(Namelist[Nb]);
+  void CPluginManager::Add(IOutPlugin* toadd)
+  {
+    fOutputPlugins.insert(make_pair(toadd->GetName(), toadd));
+  }
 
-            if (Tmp.length() > 28)
-            {
-                void* Handler = dlopen (Tmp.c_str(), RTLD_NOW);
-                if (Handler != 0)
-                    Res++;
-                else
-                    std::cerr << "[ERR] loadPlugins " << dlerror() << '\n';
-            }
-        }
-        free(Namelist);
-        return Res;
-    }
+  std::map<std::string, IInPlugin*>* CPluginManager::GetInputListPtr()
+  {
+    return &fInputPlugins;
+  }
 
-    void CPluginManager::Add(IInPlugin* toadd)
-    {
-        fInputPlugins.insert(make_pair(toadd->GetName(), toadd));
-    }
+  std::map<std::string, IOutPlugin*>* CPluginManager::GetOutputListPtr()
+  {
+    return &fOutputPlugins;
+  }
 
-    void CPluginManager::Add(IOutPlugin* toadd)
-    {
-        fOutputPlugins.insert(make_pair(toadd->GetName(), toadd));
-    }
+  void CPluginManager::GetFileList(std::list<std::string>& fl)
+  {
+    std::map<std::string, IInPlugin*>::iterator It;
+    for(It = fInputPlugins.begin(); It != fInputPlugins.end(); ++It)
+      ((*It).second)->GetFileList(fl);
+  }
+}                                //namespace Plugins
 
-
-    std::map<std::string, IInPlugin*>* CPluginManager::GetInputListPtr()
-    {
-        return &fInputPlugins;
-    }
-
-
-    std::map<std::string, IOutPlugin*>* CPluginManager::GetOutputListPtr()
-    {
-        return &fOutputPlugins;
-    }
-
-
-    void CPluginManager::GetFileList(std::list<std::string>& fl)
-    {
-        std::map<std::string, IInPlugin*>::iterator It;
-        for(It = fInputPlugins.begin(); It != fInputPlugins.end(); ++It)
-            ((*It).second)->GetFileList(fl);
-    }
-} //namespace Plugins
 
 /* vi:set ts=4: */

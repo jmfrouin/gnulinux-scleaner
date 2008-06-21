@@ -8,11 +8,11 @@ class A : public Tools::IThread
     ~A() { }
     void Run()
     {
-       for(int i=10; --i;)
-       {
-         std::cout << "A ";
-         sleep(1);
-       }
+      for(int i=10; --i;)
+      {
+        std::cout << "A ";
+        sleep(1);
+      }
     }
 };
 
@@ -23,11 +23,11 @@ class B : public Tools::IThread
     ~B() { }
     void Run()
     {
-       while(fRunning)
-       {
-         std::cout << "B ";
-         sleep(1);
-       }
+      while(fRunning)
+      {
+        std::cout << "B ";
+        sleep(1);
+      }
     }
 };
 
@@ -35,7 +35,7 @@ int main(int, char**)
 {
   A CA;
   B CB;
-  std::cout << "A started §\n";
+  std::cout << "A started \247\n";
   std::cout << "B started !\n";
   CA.Start();
   CB.Start();

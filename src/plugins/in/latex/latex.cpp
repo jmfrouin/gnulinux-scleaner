@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-
+ */
 
 #include <iostream>
 #include <plugins/in/in_plugin_initializer.h>
@@ -31,7 +30,7 @@ Plugins::CInPluginInitializer<ClatexPlugin> gLatex;
 
 ClatexPlugin::ClatexPlugin()
 {
-    SetName("latex");
+  SetName("latex");
 }
 
 
@@ -42,15 +41,17 @@ ClatexPlugin::~ClatexPlugin()
 
 void ClatexPlugin::ProcessFile(const std::string& filename)
 {
-    if((filename.find(".aux", 0) == (filename.length()-4)) || (filename.find(".toc", 0) == (filename.length()-4)))
-    {
-        fFL.push_back(filename);
-    }
+  if((filename.find(".aux", 0) == (filename.length()-4)) || (filename.find(".toc", 0) == (filename.length()-4)))
+  {
+    fFL.push_back(filename);
+  }
 }
 
 
 std::string ClatexPlugin::Description()
 {
-    return "Find LaTeX temp files (*.aux and *.toc files)";
+  return "Find LaTeX temp files (*.aux and *.toc files)";
 }
+
+
 /* vi:set ts=4: */

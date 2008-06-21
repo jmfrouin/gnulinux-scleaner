@@ -16,32 +16,31 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #include "name.h"
 #include <leak/leak_detector.h>
 
 namespace Tools
 {
-    CName::CName()
-    {
-    }
+  CName::CName()
+  {
+  }
 
+  CName::~CName()
+  {
+  }
 
-    CName::~CName()
-    {
-    }
+  const std::string& CName::GetName()
+  {
+    return fName;
+  }
 
-
-    const std::string& CName::GetName()
-    {
-        return fName;
-    }
-
-
-    void CName::SetName(const std::string& name)
-    {
-        fName.assign(name);
-    }
+  void CName::SetName(const std::string& name)
+  {
+    fName.assign(name);
+  }
 }
+
+
 /* vi:set ts=4: */

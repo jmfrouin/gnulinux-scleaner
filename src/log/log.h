@@ -16,7 +16,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #ifndef __LOG_H__
 #define __LOG_H__
@@ -30,51 +30,50 @@
 
 namespace Log
 {
-        class CLog : public Tools::TSingleton<CLog>
-        {
-                 public :
-                        /*!
-                         * @brief Logger
-                         * @version 15.11.2007
-                         * @author Jean-Michel Frouin (jmfrouin@gmail.com)
-                         */
-                        CLog(const std::string& file = LOGFILE);
+  class CLog : public Tools::TSingleton<CLog>
+  {
+    public :
+      /*!
+       * @brief Logger
+       * @version 15.11.2007
+       * @author Jean-Michel Frouin (jmfrouin@gmail.com)
+       */
+      CLog(const std::string& file = LOGFILE);
 
-                        ~CLog();
+      ~CLog();
 
-                        void Open(const std::string& file = LOGFILE);
+      void Open(const std::string& file = LOGFILE);
 
-                        void Close();
+      void Close();
 
-                        void Log(const std::string&  file, const int& line, const std::string& tolog, bool nl = false);
+      void Log(const std::string&  file, const int& line, const std::string& tolog, bool nl = false);
 
-                        template <class T, class U>
-                        void Log(const std::string& file, const int& line, const T& tolog, const U& tolog2, bool nl = false)
-                        {
-                            fFile << VERT << "[DBG] [" << file << ':' << line << "] "  << tolog << tolog2 << STOP;
-                            if(nl)
-                                fFile << '\n';
-                            fFile.flush();
-                        }
+      template <class T, class U>
+        void Log(const std::string& file, const int& line, const T& tolog, const U& tolog2, bool nl = false)
+      {
+        fFile << VERT << "[DBG] [" << file << ':' << line << "] "  << tolog << tolog2 << STOP;
+        if(nl)
+          fFile << '\n';
+        fFile.flush();
+      }
 
-                protected :
-                        /*!
-                         * @brief Display current date.
-                         * @return std::string Date.
-                         */
-                        std::string Date() const { return __DATE__; }
+    protected :
+      /*!
+       * @brief Display current date.
+       * @return std::string Date.
+       */
+      std::string Date() const { return __DATE__; }
 
-                        /*!
-                         * @brief Display current time.
-                         * @return std::string Time
-                         */
-                        std::string Time() const {return __TIME__; }
+      /*!
+       * @brief Display current time.
+       * @return std::string Time
+       */
+      std::string Time() const {return __TIME__; }
 
-                private:
-                    std::ofstream fFile;
-        };
+    private:
+      std::ofstream fFile;
+  };
 
 }
-
-#endif                                                   // __LOG_H__
+#endif                           // __LOG_H__
 /* vi:set ts=4: */

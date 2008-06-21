@@ -18,7 +18,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #include "tbz.h"
 #include <iostream>
@@ -37,119 +37,119 @@ Plugins::CPluginInitializerOut<CtbzPlugin> gTBZ;
 
 CtbzPlugin::CtbzPlugin() { SetName("tbz"); }
 
-
 CtbzPlugin::~CtbzPlugin() { }
-
 
 void CtbzPlugin::ProcessFileList(std::list<std::string>& fl, const std::string& path, IProgressbar* callback)
 {
-    Tools::CTarArchive Tar;
+  Tools::CTarArchive Tar;
 
-    std::string Date;
-    Engine::CEngine::GetTimestamp(Date);
+  std::string Date;
+  Engine::CEngine::GetTimestamp(Date);
 
-    if(Tar.Create(fl, path + "/backup_" + Date + ".tar" , callback))
+  if(Tar.Create(fl, path + "/backup_" + Date + ".tar" , callback))
+  {
+    if(Compress(path + "/backup_" + Date + ".tar" , path + "/backup_" + Date + ".tbz", callback))
     {
-        if(Compress(path + "/backup_" + Date + ".tar" , path + "/backup_" + Date + ".tbz", callback))
-        {
-            std::string Del(path);
-            Del += "/backup_" + Date + ".tar";
-            unlink(Del.c_str());
-        }
-        else
-            std::cerr << i8n("[ERR] Due to user input or an error occured during compression so I left ") << path + "/backup_" + Date + ".tar" << '\n';
+      std::string Del(path);
+      Del += "/backup_" + Date + ".tar";
+      unlink(Del.c_str());
     }
+    else
+      std::cerr << i8n("[ERR] Due to user input or an error occured during compression so I left ") << path + "/backup_" + Date + ".tar" << '\n';
+  }
 }
 
 
 //Private methods
 bool CtbzPlugin::Compress(const std::string& input, const std::string& output, IProgressbar* callback)
 {
-    bool Ret = false;
-    FILE* Out = fopen(output.c_str(), "wb");
+  bool Ret = false;
+  FILE* Out = fopen(output.c_str(), "wb");
 
-    // Open up the output file
-    if(!Out)
+  // Open up the output file
+  if(!Out)
+  {
+    std::cout << i8n("Error out file!") << '\n';
+    Ret = false;
+  }
+  else
+  {
+    BZFILE* BZ = 0;
+    int Err = 0;
+    BZ = BZ2_bzWriteOpen(&Err, Out, 9, 0, 90);
+
+    if(Err != BZ_OK)
     {
-        std::cout << i8n("Error out file!") << '\n';
-        Ret = false;
+      std::cout << i8n("Error bzWriteOpen!") << '\n';
+      Ret = false;
     }
     else
     {
-        BZFILE* BZ = 0;
-        int Err = 0;
-        BZ = BZ2_bzWriteOpen(&Err, Out, 9, 0, 90);
+      // Open up the input file
+      std::ifstream In(input.c_str(), std::ios::in | std::ios::binary);
 
-        if(Err != BZ_OK)
+      if(!In.good())
+      {
+        std::cout << i8n("Error in file!") << '\n';
+        Ret = false;
+      }
+      else
+      {
+        // Get the file size. (I hate C I/O, so don't use them :D )
+        struct stat Info;
+        double Total;
+        //Try to stat file.
+        if(stat(input.c_str(), &Info) == -1)
         {
-            std::cout << i8n("Error bzWriteOpen!") << '\n';
-            Ret = false;
+          std::cout << i8n("Cannot stat ") << input.c_str() << '\n';
+          Ret = false;
         }
         else
         {
-            // Open up the input file
-            std::ifstream In(input.c_str(), std::ios::in | std::ios::binary);
+          char Buffer[4096];
+          memset(Buffer, 0, 4096);
+          Total = Info.st_size;
+          double Done = 0;
+          do
+          {
+            In.read(Buffer, 4096);
+            std::streamsize BytesRead = In.gcount();
+            Done += BytesRead;
+            int Result = static_cast<int>((Done*50)/Total)+50;
+            std::string Mess(i8n("bz2 compression of\n"));
+            std::stringstream DoneStr;
+            DoneStr << (Result-50)*2;
+            Mess += output + " :  " + DoneStr.str() + "%";
+            bool Continue = callback->UpdateProgress(Mess, false, Result);
+            if(!Continue)
+              break;
+            BZ2_bzWrite(&Err, BZ, Buffer, BytesRead);
+          } while(In.good());
 
-            if(!In.good())
-            {
-                std::cout << i8n("Error in file!") << '\n';
-                Ret = false;
-            }
-            else
-            {
-                // Get the file size. (I hate C I/O, so don't use them :D )
-                struct stat Info;
-                double Total;
-                //Try to stat file.
-                if(stat(input.c_str(), &Info) == -1)
-                {
-                    std::cout << i8n("Cannot stat ") << input.c_str() << '\n';
-                    Ret = false;
-                }
-                else
-                {
-                    char Buffer[4096];
-                    memset(Buffer, 0, 4096);
-                    Total = Info.st_size;
-                    double Done = 0;
-                    do
-                    {
-                        In.read(Buffer, 4096);
-                        std::streamsize BytesRead = In.gcount();
-                        Done += BytesRead;
-                        int Result = static_cast<int>((Done*50)/Total)+50;
-                        std::string Mess(i8n("bz2 compression of\n"));
-                        std::stringstream DoneStr;
-                        DoneStr << (Result-50)*2;
-                        Mess += output + " :  " + DoneStr.str() + "%";
-                        bool Continue = callback->UpdateProgress(Mess, false, Result);
-                        if(!Continue)
-                            break;
-                        BZ2_bzWrite(&Err, BZ, Buffer, BytesRead);
-                    } while(In.good());
+          if( In.bad() || !In.eof() )
+            Ret = false;
+          else
+            Ret = true;
 
-                    if( In.bad() || !In.eof() )
-                        Ret = false;
-                    else
-                        Ret = true;
-
-                    In.close();
-                }
-
-                // Close up.
-                BZ2_bzWriteClose(&Err, BZ, 0, 0, 0);
-                fclose(Out);
-                Out = 0;
-            }
+          In.close();
         }
-    }
 
-    return Ret;
+        // Close up.
+        BZ2_bzWriteClose(&Err, BZ, 0, 0, 0);
+        fclose(Out);
+        Out = 0;
+      }
+    }
+  }
+
+  return Ret;
 }
 
 
 std::string CtbzPlugin::Description()
 {
-    return "Create a tar + bzip2 archive";
+  return "Create a tar + bzip2 archive";
 }
+
+
 /* vi:set ts=4: */

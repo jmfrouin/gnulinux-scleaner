@@ -15,7 +15,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #include <iostream>
 #include <config.h>
@@ -30,18 +30,18 @@ CMemoryManager g_mm;
 
 int main()
 {
-        std::cout << "sclean " << VER << '\n';
+  std::cout << "sclean " << VER << '\n';
 
-        bool Ret = false;
-        TSmartPtr<CPluginManager> PFM;
-        PFM = CPluginManager::Instance();
-        Ret = PFM->loadPlugins("plugs");
-        PFM->SpaceUsed();
+  bool Ret = false;
+  TSmartPtr<CPluginManager> PFM;
+  PFM = CPluginManager::Instance();
+  Ret = PFM->loadPlugins("plugs");
+  PFM->SpaceUsed();
 
-        std::cout << "Launch" << '\n';
+  std::cout << "Launch" << '\n';
 
-        //delete PFM; //Not need anymore : thanks smart pointers.
-        return Ret;
+  //delete PFM; //Not need anymore : thanks smart pointers.
+  return Ret;
 }
 
 

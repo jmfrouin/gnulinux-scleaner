@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #include <fstream>
 #include <sys/stat.h>
@@ -26,260 +26,258 @@
 
 namespace Engine
 {
-    CSettingsManager::CSettingsManager():
-    fShowSplash(true), fShowToolbar(true), fShowStatusbar(true)
+  CSettingsManager::CSettingsManager():
+  fShowSplash(true), fShowToolbar(true), fShowStatusbar(true)
+  {
+    std::string Path;
+
+    if(CEngine::IsRoot())
+      Path += "/root";
+    else
     {
-        std::string Path;
-
-        if(CEngine::IsRoot())
-            Path += "/root";
-        else
-        {
-            Path += "/home/";
-            std::string User;
-            CEngine::GetUsername(User);
-            Path += User;
-        }
-
-        Path += "/.scleaner/";
-
-        //Check that folder exist.
-        struct stat Info;
-        if(stat(Path.c_str(), &Info) == -1)
-        {
-                int Res = mkdir(Path.c_str(), 01777);
-                #if defined DEBUG
-                Log::CLog::Instance()->Log(__FILE__, __LINE__, Path);
-                Log::CLog::Instance()->Log(__FILE__, __LINE__, " didn't exist need to created it \n");
-                Log::CLog::Instance()->Log(__FILE__, __LINE__, "Creation :");
-                if(!Res)
-                    Log::CLog::Instance()->Log(__FILE__, __LINE__, "OK\n");
-                else
-                    Log::CLog::Instance()->Log(__FILE__, __LINE__, "KO\n");
-                #endif
-        }
-
-        std::string Config(Path);
-        Config += "prefs.conf";
-
-        std::ifstream File(Config.c_str());
-        unsigned int Label;
-
-        if(File.good())
-        {
-            while(1)
-            {
-                File >> Label;
-                if(File.eof())
-                    break;
-                std::string Folder;
-                switch(Label)
-                {
-                    case eShowSplash:
-                        File >> fShowSplash;
-                        break;
-                    case eFolderInc:
-                        File >> Folder;
-                        fFoldersList.push_back(Folder);
-                        break;
-                    case eFolderEx:
-                        File >> Folder;
-                        fExcludedFoldersList.push_back(Folder);
-                        break;
-                    case eShowToolbar:
-                        File >> fShowToolbar;
-                        break;
-                    case eShowStatusbar:
-                        File >> fShowStatusbar;
-                        break;
-                    case eDelete:
-                        File >> fDelete;
-                        break;
-                    default:
-                        continue;
-                }
-            }
-        }
-        else
-        {
-            //Default configuration
-            fFoldersList.push_back("/home");
-            fExcludedFoldersList.push_back(Path);
-        }
-
-        #if defined DEBUG && defined VERBOSE
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "Loading pref : \n");
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowSplash = ", fShowSplash, true);
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowToolbar = ", fShowToolbar, true);
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowStatusbar = ", fShowStatusbar, true);
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fDelete = ", fDelete, true);
-        #endif
+      Path += "/home/";
+      std::string User;
+      CEngine::GetUsername(User);
+      Path += User;
     }
 
+    Path += "/.scleaner/";
 
-    CSettingsManager::~CSettingsManager()
+    //Check that folder exist.
+    struct stat Info;
+    if(stat(Path.c_str(), &Info) == -1)
     {
-        std::string Path;
+      int Res = mkdir(Path.c_str(), 01777);
+      #if defined DEBUG
+      Log::CLog::Instance()->Log(__FILE__, __LINE__, Path);
+      Log::CLog::Instance()->Log(__FILE__, __LINE__, " didn't exist need to created it \n");
+      Log::CLog::Instance()->Log(__FILE__, __LINE__, "Creation :");
+      if(!Res)
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "OK\n");
+      else
+        Log::CLog::Instance()->Log(__FILE__, __LINE__, "KO\n");
+      #endif
+    }
 
-        if(CEngine::IsRoot())
-            Path += "/root";
+    std::string Config(Path);
+    Config += "prefs.conf";
+
+    std::ifstream File(Config.c_str());
+    unsigned int Label;
+
+    if(File.good())
+    {
+      while(1)
+      {
+        File >> Label;
+        if(File.eof())
+          break;
+        std::string Folder;
+        switch(Label)
+        {
+          case eShowSplash:
+            File >> fShowSplash;
+            break;
+          case eFolderInc:
+            File >> Folder;
+            fFoldersList.push_back(Folder);
+            break;
+          case eFolderEx:
+            File >> Folder;
+            fExcludedFoldersList.push_back(Folder);
+            break;
+          case eShowToolbar:
+            File >> fShowToolbar;
+            break;
+          case eShowStatusbar:
+            File >> fShowStatusbar;
+            break;
+          case eDelete:
+            File >> fDelete;
+            break;
+          default:
+            continue;
+        }
+      }
+    }
+    else
+    {
+      //Default configuration
+      fFoldersList.push_back("/home");
+      fExcludedFoldersList.push_back(Path);
+    }
+
+    #if defined DEBUG && defined VERBOSE
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "Loading pref : \n");
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowSplash = ", fShowSplash, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowToolbar = ", fShowToolbar, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowStatusbar = ", fShowStatusbar, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fDelete = ", fDelete, true);
+    #endif
+  }
+
+  CSettingsManager::~CSettingsManager()
+  {
+    std::string Path;
+
+    if(CEngine::IsRoot())
+      Path += "/root";
+    else
+    {
+      Path += "/home/";
+      std::string User;
+      CEngine::GetUsername(User);
+      Path += User;
+    }
+    Path += CONFFILE;
+
+    //Debug
+    #if defined DEBUG && defined VERBOSE
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, std::string("Saving pref"), true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowSplash = ", fShowSplash, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowToolbar = ", fShowToolbar, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowStatusbar = ", fShowStatusbar, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fDelete = ", fDelete, true);
+    #endif
+
+    std::ofstream File(Path.c_str());
+
+    //Write splash screen
+    File << eShowSplash << ' ' << fShowSplash << '\n';
+
+    //Folders include in scan
+    std::list<std::string>::iterator It;
+    for(It = fFoldersList.begin(); It != fFoldersList.end(); ++It)
+    {
+      #if defined DEBUG
+      Log::CLog::Instance()->Log(__FILE__, __LINE__, "Adding :", *It, true);
+      #endif
+      File << eFolderInc << ' ' << *It << '\n';
+    }
+
+    //Folders exclude from scan
+    for(It = fExcludedFoldersList.begin(); It != fExcludedFoldersList.end(); ++It)
+    {
+      #if defined DEBUG
+      Log::CLog::Instance()->Log(__FILE__, __LINE__, "Excluding :", *It, true);
+      #endif
+      File << eFolderEx << ' ' << *It << '\n';
+    }
+
+    //Show toolbar
+    File << eShowToolbar << ' ' << fShowToolbar << '\n';
+
+    //Show status bar
+    File << eShowStatusbar << ' ' << fShowStatusbar << '\n';
+
+    //Delete files after output plugin
+    File << eDelete << ' ' << fDelete << '\n';
+    #if defined DEBUG
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "eShowToolbar :", fShowToolbar, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "eShowStatusbar :", fShowStatusbar, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "eDelete :", fDelete, true);
+    #endif
+  }
+
+  bool CSettingsManager::AddFolder(std::string dir, std::string& parent, eFoldersType type)
+  {
+    bool Ret = true;
+
+    std::list<std::string>* FileList;
+
+    switch(type)
+    {
+      case eFoldersInc:
+        FileList = &fFoldersList;
+        break;
+      case eFoldersEx:
+        FileList = &fExcludedFoldersList;
+        break;
+      default:
+        FileList = 0;
+        break;
+    }
+
+    //Search a parent folder:
+    std::list<std::string>::iterator It;
+    bool Clean = false;
+    for(It = FileList->begin(); It != FileList->end(); ++It)
+    {
+      //If a parent is found
+      if(dir.find(*It, 0) != std::string::npos)
+      {
+        parent = *It;
+        Ret = false;
+        break;
+      }
+      else
+      {
+        //If _dir is a parent :D
+        if((*It).find(dir, 0) != std::string::npos)
+        {
+          Clean = true;
+          break;
+        }
+      }
+    }
+
+    if(Clean)
+    {
+      It = FileList->begin();
+      do
+      {
+        if((*It).find(dir, 0) != std::string::npos)
+        {
+          std::list<std::string>::iterator It2erase = It;
+          ++It;
+          FileList->erase(It2erase);
+        }
         else
-        {
-            Path += "/home/";
-            std::string User;
-            CEngine::GetUsername(User);
-            Path += User;
-        }
-        Path += CONFFILE;
-
-        //Debug
-        #if defined DEBUG && defined VERBOSE
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, std::string("Saving pref"), true);
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowSplash = ", fShowSplash, true);
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowToolbar = ", fShowToolbar, true);
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowStatusbar = ", fShowStatusbar, true);
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "fDelete = ", fDelete, true);
-        #endif
-
-        std::ofstream File(Path.c_str());
-
-        //Write splash screen
-        File << eShowSplash << ' ' << fShowSplash << '\n';
-
-        //Folders include in scan
-        std::list<std::string>::iterator It;
-        for(It = fFoldersList.begin(); It != fFoldersList.end(); ++It)
-        {
-            #if defined DEBUG
-            Log::CLog::Instance()->Log(__FILE__, __LINE__, "Adding :", *It, true);
-            #endif
-            File << eFolderInc << ' ' << *It << '\n';
-        }
-
-        //Folders exclude from scan
-        for(It = fExcludedFoldersList.begin(); It != fExcludedFoldersList.end(); ++It)
-        {
-            #if defined DEBUG
-            Log::CLog::Instance()->Log(__FILE__, __LINE__, "Excluding :", *It, true);
-            #endif
-            File << eFolderEx << ' ' << *It << '\n';
-        }
-
-        //Show toolbar
-        File << eShowToolbar << ' ' << fShowToolbar << '\n';
-
-        //Show status bar
-        File << eShowStatusbar << ' ' << fShowStatusbar << '\n';
-
-        //Delete files after output plugin
-        File << eDelete << ' ' << fDelete << '\n';
-        #if defined DEBUG
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "eShowToolbar :", fShowToolbar, true);
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "eShowStatusbar :", fShowStatusbar, true);
-        Log::CLog::Instance()->Log(__FILE__, __LINE__, "eDelete :", fDelete, true);
-        #endif
+          ++It;
+      }while(It != FileList->end());
     }
 
-
-    bool CSettingsManager::AddFolder(std::string dir, std::string& parent, eFoldersType type)
+    if(Ret)
+      FileList->push_back(dir);
+    else
     {
-        bool Ret = true;
-
-        std::list<std::string>* FileList;
-
-        switch(type)
-        {
-            case eFoldersInc:
-                FileList = &fFoldersList;
-                break;
-            case eFoldersEx:
-                FileList = &fExcludedFoldersList;
-                break;
-            default:
-                FileList = 0;
-                break;
-        }
-
-        //Search a parent folder:
-        std::list<std::string>::iterator It;
-        bool Clean = false;
-        for(It = FileList->begin(); It != FileList->end(); ++It)
-        {
-            //If a parent is found
-            if(dir.find(*It, 0) != std::string::npos)
-            {
-                parent = *It;
-                Ret = false;
-                break;
-            }
-            else
-            {
-                //If _dir is a parent :D
-                if((*It).find(dir, 0) != std::string::npos)
-                {
-                    Clean = true;
-                    break;
-                }
-            }
-        }
-
-        if(Clean)
-        {
-            It = FileList->begin();
-            do
-            {
-                if((*It).find(dir, 0) != std::string::npos)
-                {
-                    std::list<std::string>::iterator It2erase = It;
-                    ++It;
-                    FileList->erase(It2erase);
-                }
-                else
-                    ++It;
-            }while(It != FileList->end());
-        }
-
-        if(Ret)
-            FileList->push_back(dir);
-        else
-        {
-            //If a parent folder is found, no need to add is child.
-            #if defined DEBUG
-            std::cerr << "[WRG] Parent folder found : " << (*It) << " no need to add " << dir << '\n';
-            #endif
-        }
-
-        return Ret;
+      //If a parent folder is found, no need to add is child.
+      #if defined DEBUG
+      std::cerr << "[WRG] Parent folder found : " << (*It) << " no need to add " << dir << '\n';
+      #endif
     }
 
-    void CSettingsManager::DelFolder(const std::string dir, eFoldersType type)
+    return Ret;
+  }
+
+  void CSettingsManager::DelFolder(const std::string dir, eFoldersType type)
+  {
+    std::list<std::string>::iterator It;
+    std::list<std::string>* FileList;
+
+    switch(type)
     {
-        std::list<std::string>::iterator It;
-        std::list<std::string>* FileList;
-
-        switch(type)
-        {
-            case eFoldersInc:
-                FileList = &fFoldersList;
-                break;
-            case eFoldersEx:
-                FileList = &fExcludedFoldersList;
-                break;
-            default:
-                FileList = 0;
-                break;
-        }
-
-        if(FileList != 0)
-        {
-            for(It = FileList->begin(); It != FileList->end(); ++It)
-            {
-                if((*It) == dir)
-                {
-                    FileList->erase(It);
-                    break;
-                }
-            }
-        }
+      case eFoldersInc:
+        FileList = &fFoldersList;
+        break;
+      case eFoldersEx:
+        FileList = &fExcludedFoldersList;
+        break;
+      default:
+        FileList = 0;
+        break;
     }
-} //namespace Engine
+
+    if(FileList != 0)
+    {
+      for(It = FileList->begin(); It != FileList->end(); ++It)
+      {
+        if((*It) == dir)
+        {
+          FileList->erase(It);
+          break;
+        }
+      }
+    }
+  }
+}                                //namespace Engine

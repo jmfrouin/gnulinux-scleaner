@@ -19,3 +19,4 @@
 SET(interface_src checklistctrl.cpp preferences.cpp maininterface.cpp result_checklistctrl.cpp review.cpp select_dialog.cpp systeminfos.cpp tray.cpp)
 
 ADD_LIBRARY(interface ${interface_src})
+TARGET_LINK_LIBRARIES(interface notify)

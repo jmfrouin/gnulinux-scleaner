@@ -27,34 +27,33 @@
 namespace Tools
 {
   /*!
-  *@brief Mutex
-  */
+   *@brief Mutex
+   */
   class CMutex
   {
     public:
       /*!
-      *@brief ctor
-      */
+       *@brief ctor
+       */
       CMutex();
 
       /*!
-      *@brief dtor.
-      */
+       *@brief dtor.
+       */
       ~CMutex();
 
       /*!
-      *@brief pthread_mutex_lock encapsulation
-      */
+       *@brief pthread_mutex_lock encapsulation
+       */
       void Lock();
 
       /*!
-      *@brief pthread_mutex_unlock encapsulation
-      */
+       *@brief pthread_mutex_unlock encapsulation
+       */
       void UnLock();
 
     private:
       Mutex fMutex;
   };
-} // namespace Tools
-
-#endif // __MUTEX_H__
+}                                // namespace Tools
+#endif                           // __MUTEX_H__

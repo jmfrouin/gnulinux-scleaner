@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-
+ */
 
 #include <plugins/in/in_plugin_initializer.h>
 #include "nullfiles.h"
@@ -29,7 +28,7 @@ Plugins::CInPluginInitializer<CnullfilesPlugin> gNullFiles;
 
 CnullfilesPlugin::CnullfilesPlugin()
 {
-    SetName("null files");
+  SetName("null files");
 }
 
 
@@ -40,19 +39,21 @@ CnullfilesPlugin::~CnullfilesPlugin()
 
 void CnullfilesPlugin::ProcessFile(const std::string& filename)
 {
-    struct stat Stat;
+  struct stat Stat;
 
-    //Try to stat file.
-    if(stat(filename.c_str(), &Stat) == -1)
-        std::cout << i8n("[ERR] : Cannot stat ") << filename << '\n';
-    else
-        if(!Stat.st_size)
-            fFL.push_back(filename);
+  //Try to stat file.
+  if(stat(filename.c_str(), &Stat) == -1)
+    std::cout << i8n("[ERR] : Cannot stat ") << filename << '\n';
+  else
+  if(!Stat.st_size)
+    fFL.push_back(filename);
 }
 
 
 std::string CnullfilesPlugin::Description()
 {
-    return "Find empty file size";
+  return "Find empty file size";
 }
+
+
 /* vi:set ts=4: */

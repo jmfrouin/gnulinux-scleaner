@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #ifndef __OUTPLUGIN_INITIALIZER_H__
 #define __OUTPLUGIN_INITIALIZER_H__
@@ -30,17 +30,17 @@
 
 namespace Plugins
 {
-    template <class T>
+  template <class T>
     class CPluginInitializerOut
-    {
-        public:
-            CPluginInitializerOut()
-            {
-                CPluginManager* PFM = CPluginManager::Instance();
-                T* Obj = new T;
-                PFM->Add(Obj);
-            }
-    };
+  {
+    public:
+      CPluginInitializerOut()
+      {
+        CPluginManager* PFM = CPluginManager::Instance();
+        T* Obj = new T;
+        PFM->Add(Obj);
+      }
+  };
 }
 #endif                           //_OUTPLUGIN_INITIALIZER_H_
 /* vi:set ts=4: */

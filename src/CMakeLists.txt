@@ -45,7 +45,7 @@ ENDIF(PROFILE)
 
 ADD_DEFINITIONS(-Wall -MD -fPIC -pg -g -DLEAK_DETECTOR `wx-config --cxxflags` -DwxUSE_UNICODE -DDEBUG -DVERBOSE)
 
-INCLUDE_DIRECTORIES(AFTER SYSTEM . ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR})
+INCLUDE_DIRECTORIES(AFTER SYSTEM . ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR} /usr/include/gtk-2.0 /usr/lib/gtk-2.0/include /usr/include/atk-1.0 /usr/include/cairo /usr/include/pango-1.0 /usr/include/glib-2.0 /usr/lib/glib-2.0/include /usr/include/freetype2 /usr/include/libpng12 /usr/include/pixman-1 /usr/include/glib-2.0 /usr/lib/glib-2.0/include)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
 
 SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})

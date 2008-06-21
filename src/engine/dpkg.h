@@ -60,7 +60,7 @@
 #define OLDOLDDEBDIR       ".DEBIAN"
 #define OLDDEBDIR          "DEBIAN"
 #define REMOVECONFFEXTS    "~", ".bak", "%", \
-                           DPKGTEMPEXT, DPKGNEWEXT, DPKGOLDEXT, DPKGDISTEXT
+  DPKGTEMPEXT, DPKGNEWEXT, DPKGOLDEXT, DPKGDISTEXT
 
 #ifndef ARCHBINFMT
 #define ARCHBINFMT
@@ -121,36 +121,37 @@
 #define PKGSCRIPTMAXARGS     10
 #define MD5HASHLEN           32
 
-#define CONFFOPTCELLS  /* int conffoptcells[2] {* 1= user edited *}              \
-                                           [2] {* 1= distributor edited *} = */  \
-                                  /* dist not */     /* dist edited */           \
-   /* user did not edit */    {     cfo_keep,           cfo_install    },        \
-   /* user did edit     */    {     cfo_keep,         cfo_prompt_keep  }
+#define CONFFOPTCELLS
+/* int conffoptcells[2] {* 1= user edited *}              \ 
+                                           [2] {* 1= distributor edited *} = */
+/* dist not */     /* dist edited */ \
+/* user did not edit */    {     cfo_keep,           cfo_install    }, \
+/* user did edit     */    {     cfo_keep,         cfo_prompt_keep  }
 
 #define ARCHIVE_FILENAME_PATTERN "*.deb"
 
-#define BACKEND		"dpkg-deb"
-#define DPKGQUERY	"dpkg-query"
-#define SPLITTER	"dpkg-split"
-#define DSELECT		"dselect"
-#define DPKG		"dpkg"
-#define DEBSIGVERIFY	"/usr/bin/debsig-verify"
+#define BACKEND   "dpkg-deb"
+#define DPKGQUERY "dpkg-query"
+#define SPLITTER  "dpkg-split"
+#define DSELECT   "dselect"
+#define DPKG    "dpkg"
+#define DEBSIGVERIFY  "/usr/bin/debsig-verify"
 
-#define TAR		"tar"
-#define GZIP		"gzip"
-#define BZIP2		"bzip2"
-#define RM		"rm"
-#define FIND		"find"
-#define SHELL		"sh"
-#define DIFF		"diff"
+#define TAR   "tar"
+#define GZIP    "gzip"
+#define BZIP2   "bzip2"
+#define RM    "rm"
+#define FIND    "find"
+#define SHELL   "sh"
+#define DIFF    "diff"
 
-#define SHELLENVIR	"SHELL"
+#define SHELLENVIR  "SHELL"
 
 #define FIND_EXPRSTARTCHARS "-(),!"
 
-#define TARBLKSZ	512
+#define TARBLKSZ  512
 
-extern const char thisname[]; /* defined separately in each program */
+extern const char thisname[];    /* defined separately in each program */
 extern const char printforhelp[];
 
 #if HAVE_C_ATTRIBUTE
@@ -170,38 +171,40 @@ extern const char printforhelp[];
 /*** from startup.c ***/
 
 #define standard_startup(ejbuf, argc, argv, prog, loadcfg, cmdinfos) do {\
-  setlocale(LC_ALL, "");\
-  bindtextdomain(PACKAGE, LOCALEDIR);\
-  textdomain(PACKAGE);\
-  if (setjmp(*ejbuf)) { /* expect warning about possible clobbering of argv */\
-    error_unwind(ehflag_bombout); exit(2);\
-  }\
-  push_error_handler(ejbuf,print_error_fatal,0);\
-  umask(022); /* Make sure all our status databases are readable. */\
-  if (loadcfg)\
+    setlocale(LC_ALL, "");\
+    bindtextdomain(PACKAGE, LOCALEDIR);\
+    textdomain(PACKAGE);\
+    if (setjmp(*ejbuf)) \
+    { \
+      /* expect warning about possible clobbering of argv */\
+      error_unwind(ehflag_bombout); exit(2);\
+    }\
+    push_error_handler(ejbuf,print_error_fatal,0);\
+    umask(022); /* Make sure all our status databases are readable. */\
+    if (loadcfg)\
     loadcfgfile(prog, cmdinfos);\
-  myopt(argv,cmdinfos);\
-} while (0)
+    myopt(argv,cmdinfos);\
+  } while (0)
 
 #define standard_shutdown(freemem) do {\
-  set_error_display(0,0);\
-  error_unwind(ehflag_normaltidy);\
-  if (freemem)\
+    set_error_display(0,0);\
+    error_unwind(ehflag_normaltidy);\
+    if (freemem)\
     nffreeall();\
-} while (0)
+  } while (0)
 
-/*** from ehandle.c ***/
+      /*** from ehandle.c ***/
 
-void push_error_handler(jmp_buf *jbufp,
-                        void (*printerror)(const char *, const char *),
-                        const char *contextstring);
+      void push_error_handler(jmp_buf *jbufp,
+      void (*printerror)(const char *, const char *),
+      const char *contextstring);
 void set_error_display(void (*printerror)(const char *, const char *),
-                       const char *contextstring);
+const char *contextstring);
 void print_error_fatal(const char *emsg, const char *contextstring);
 void error_unwind(int flagset);
 void push_cleanup(void (*f1)(int argc, void **argv), int flagmask1,
-                  void (*f2)(int argc, void **argv), int flagmask2,
-                  unsigned int nargs, ...);
+void (*f2)(int argc, void **argv), int flagmask2,
+unsigned int nargs, ...);
 void push_checkpoint(int mask, int value);
 void pop_cleanup(int flagset);
 enum { ehflag_normaltidy=01, ehflag_bombout=02, ehflag_recursiveerror=04 };
@@ -250,12 +253,14 @@ int waitsubproc(pid_t pid, const char *description, int flags);
 
 typedef struct buffer_data *buffer_data_t;
 typedef off_t (*buffer_proc_t)(buffer_data_t data, void *buf, off_t size, const char *desc);
-typedef union buffer_arg {
+typedef union buffer_arg
+{
   void *ptr;
   int i;
 } buffer_arg;
 
-struct buffer_data {
+struct buffer_data
+{
   buffer_proc_t proc;
   buffer_arg data;
   int type;
@@ -263,99 +268,103 @@ struct buffer_data {
 
 #if HAVE_C99
 # define fd_md5(fd, hash, limit, ...)\
-	buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
-			 	 hash, BUFFER_WRITE_MD5, NULL, \
-				 limit, __VA_ARGS__)
+  buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
+  hash, BUFFER_WRITE_MD5, NULL, \
+  limit, __VA_ARGS__)
 # define stream_md5(file, hash, limit, ...)\
-	buffer_copy_setup_PtrPtr(file, BUFFER_READ_STREAM, NULL, \
-				 hash, BUFFER_WRITE_MD5, NULL, \
-				 limit, __VA_ARGS__)
+  buffer_copy_setup_PtrPtr(file, BUFFER_READ_STREAM, NULL, \
+  hash, BUFFER_WRITE_MD5, NULL, \
+  limit, __VA_ARGS__)
 # define fd_fd_copy(fd1, fd2, limit, ...)\
-	buffer_copy_setup_IntInt(fd1, BUFFER_READ_FD, NULL, \
-				 fd2, BUFFER_WRITE_FD, NULL, \
-				 limit, __VA_ARGS__)
+  buffer_copy_setup_IntInt(fd1, BUFFER_READ_FD, NULL, \
+  fd2, BUFFER_WRITE_FD, NULL, \
+  limit, __VA_ARGS__)
 # define fd_buf_copy(fd, buf, limit, ...)\
-	buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
-				 buf, BUFFER_WRITE_BUF, NULL, \
-				 limit, __VA_ARGS__)
+  buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
+  buf, BUFFER_WRITE_BUF, NULL, \
+  limit, __VA_ARGS__)
 # define fd_vbuf_copy(fd, buf, limit, ...)\
-	buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
-				 buf, BUFFER_WRITE_VBUF, NULL, \
-				 limit, __VA_ARGS__)
+  buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
+  buf, BUFFER_WRITE_VBUF, NULL, \
+  limit, __VA_ARGS__)
 # define fd_null_copy(fd, limit, ...) \
-	if (lseek(fd, limit, SEEK_CUR) == -1) { \
-	    if(errno != ESPIPE) ohshite(__VA_ARGS__); \
-	    buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
-				     0, BUFFER_WRITE_NULL, NULL, \
-				     limit, __VA_ARGS__);\
-	}
+  if (lseek(fd, limit, SEEK_CUR) == -1) \
+  { \
+    if(errno != ESPIPE) ohshite(__VA_ARGS__); \
+    buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
+    0, BUFFER_WRITE_NULL, NULL, \
+    limit, __VA_ARGS__);\
+  }
 # define stream_null_copy(file, limit, ...) \
-	if (fseek(file, limit, SEEK_CUR) == -1) { \
-	    if(errno != EBADF) ohshite(__VA_ARGS__); \
-	    buffer_copy_setup_PtrPtr(file, BUFFER_READ_STREAM, NULL, \
-				     0, BUFFER_WRITE_NULL, NULL, \
-				     limit, __VA_ARGS__);\
-	}
+  if (fseek(file, limit, SEEK_CUR) == -1) \
+  { \
+    if(errno != EBADF) ohshite(__VA_ARGS__); \
+    buffer_copy_setup_PtrPtr(file, BUFFER_READ_STREAM, NULL, \
+    0, BUFFER_WRITE_NULL, NULL, \
+    limit, __VA_ARGS__);\
+  }
 # define stream_fd_copy(file, fd, limit, ...)\
-	buffer_copy_setup_PtrInt(file, BUFFER_READ_STREAM, NULL, \
-				 fd, BUFFER_WRITE_FD, NULL, \
-				 limit, __VA_ARGS__)
-#else /* HAVE_C99 */
+  buffer_copy_setup_PtrInt(file, BUFFER_READ_STREAM, NULL, \
+  fd, BUFFER_WRITE_FD, NULL, \
+  limit, __VA_ARGS__)
+#else                            /* HAVE_C99 */
 # define fd_md5(fd, hash, limit, desc...)\
-	buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
-			 	 hash, BUFFER_WRITE_MD5, NULL, \
-				 limit, desc)
+  buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
+  hash, BUFFER_WRITE_MD5, NULL, \
+  limit, desc)
 # define stream_md5(file, hash, limit, desc...)\
-	buffer_copy_setup_PtrPtr(file, BUFFER_READ_STREAM, NULL, \
-				 hash, BUFFER_WRITE_MD5, NULL, \
-				 limit, desc)
+  buffer_copy_setup_PtrPtr(file, BUFFER_READ_STREAM, NULL, \
+  hash, BUFFER_WRITE_MD5, NULL, \
+  limit, desc)
 # define fd_fd_copy(fd1, fd2, limit, desc...)\
-	buffer_copy_setup_IntInt(fd1, BUFFER_READ_FD, NULL, \
-				 fd2, BUFFER_WRITE_FD, NULL, \
-				 limit, desc)
+  buffer_copy_setup_IntInt(fd1, BUFFER_READ_FD, NULL, \
+  fd2, BUFFER_WRITE_FD, NULL, \
+  limit, desc)
 # define fd_buf_copy(fd, buf, limit, desc...)\
-	buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
-				 buf, BUFFER_WRITE_BUF, NULL, \
-				 limit, desc)
+  buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
+  buf, BUFFER_WRITE_BUF, NULL, \
+  limit, desc)
 # define fd_vbuf_copy(fd, buf, limit, desc...)\
-	buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
-				 buf, BUFFER_WRITE_VBUF, NULL, \
-				 limit, desc)
+  buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
+  buf, BUFFER_WRITE_VBUF, NULL, \
+  limit, desc)
 # define fd_null_copy(fd, limit, desc...) \
-	if (lseek(fd, limit, SEEK_CUR) == -1) { \
-	    if(errno != ESPIPE) ohshite(desc); \
-	    buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
-				     0, BUFFER_WRITE_NULL, NULL, \
-				     limit, desc);\
-	}
+  if (lseek(fd, limit, SEEK_CUR) == -1) \
+  { \
+    if(errno != ESPIPE) ohshite(desc); \
+    buffer_copy_setup_IntPtr(fd, BUFFER_READ_FD, NULL, \
+    0, BUFFER_WRITE_NULL, NULL, \
+    limit, desc);\
+  }
 # define stream_null_copy(file, limit, desc...) \
-	if (fseek(file, limit, SEEK_CUR) == -1) { \
-	    if(errno != EBADF) ohshite(desc); \
-	    buffer_copy_setup_PtrPtr(file, BUFFER_READ_STREAM, NULL, \
-				     0, BUFFER_WRITE_NULL, NULL, \
-				     limit, desc);\
-	}
+  if (fseek(file, limit, SEEK_CUR) == -1) \
+  { \
+    if(errno != EBADF) ohshite(desc); \
+    buffer_copy_setup_PtrPtr(file, BUFFER_READ_STREAM, NULL, \
+    0, BUFFER_WRITE_NULL, NULL, \
+    limit, desc);\
+  }
 # define stream_fd_copy(file, fd, limit, desc...)\
-	buffer_copy_setup_PtrInt(file, BUFFER_READ_STREAM, NULL, \
-				 fd, BUFFER_WRITE_FD, NULL, \
-				 limit, desc)
-#endif /* HAVE_C99 */
+  buffer_copy_setup_PtrInt(file, BUFFER_READ_STREAM, NULL, \
+  fd, BUFFER_WRITE_FD, NULL, \
+  limit, desc)
+#endif                           /* HAVE_C99 */
 
-off_t buffer_copy_setup_PtrInt(void *p, int typeIn, void *procIn,
-					int i, int typeOut, void *procOut,
-					off_t limit, const char *desc, ...);
+                off_t buffer_copy_setup_PtrInt(void *p, int typeIn, void *procIn,
+                int i, int typeOut, void *procOut,
+                off_t limit, const char *desc, ...);
 off_t buffer_copy_setup_PtrPtr(void *p1, int typeIn, void *procIn,
-					void *p2, int typeOut, void *procOut,
-					off_t limit, const char *desc, ...);
+void *p2, int typeOut, void *procOut,
+off_t limit, const char *desc, ...);
 off_t buffer_copy_setup_IntPtr(int i, int typeIn, void *procIn,
-					void *p, int typeOut, void *procOut,
-					off_t limit, const char *desc, ...);
+void *p, int typeOut, void *procOut,
+off_t limit, const char *desc, ...);
 off_t buffer_copy_setup_IntInt(int i1, int typeIn, void *procIn,
-					int i2, int typeOut, void *procOut,
-					off_t limit, const char *desc, ...);
+int i2, int typeOut, void *procOut,
+off_t limit, const char *desc, ...);
 off_t buffer_copy_setup(buffer_arg argIn, int typeIn, void *procIn,
-		       buffer_arg argOut, int typeOut, void *procOut,
-		       off_t limit, const char *desc);
+buffer_arg argOut, int typeOut, void *procOut,
+off_t limit, const char *desc);
 off_t buffer_write(buffer_data_t data, void *buf, off_t length, const char *desc);
 off_t buffer_read(buffer_data_t data, void *buf, off_t length, const char *desc);
 off_t buffer_copy(buffer_data_t read_data, buffer_data_t write_data, off_t limit, const char *desc);
@@ -392,8 +401,8 @@ const char *strsignal(int);
 #ifndef HAVE_SCANDIR
 struct dirent;
 int scandir(const char *dir, struct dirent ***namelist,
-	    int (*select)(const struct dirent *),
-	    int (*compar)(const void*, const void*));
+int (*select)(const struct dirent *),
+int (*compar)(const void*, const void*));
 #endif
 
 #ifndef HAVE_ALPHASORT
@@ -438,5 +447,4 @@ void unsetenv(const char *x);
 /* Make gettext a little friendlier */
 #define _(String) gettext (String)
 #define N_(String) gettext_noop (String)
-
-#endif /* DPKG_H */
+#endif                           /* DPKG_H */

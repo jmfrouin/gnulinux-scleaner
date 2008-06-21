@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #ifndef __THREAD_IN_PLUGIN_H__
 #define __THREAD_IN_PLUGIN_H__
@@ -28,35 +28,35 @@
 
 namespace Plugins
 {
-    /*!
-     *@brief Input plugin interface.
-     */
-    class IThreadPlugin : public IInPlugin, public Tools::IThread
-    {
-        public:
-            /*!
-             *@brief ctor
-             */
-            IThreadPlugin() {}
+  /*!
+   *@brief Input plugin interface.
+   */
+  class IThreadPlugin : public IInPlugin, public Tools::IThread
+  {
+    public:
+      /*!
+       *@brief ctor
+       */
+      IThreadPlugin() {}
 
-            /*!
-             *@brief dtor
-             */
-            virtual ~IThreadPlugin() {}
+      /*!
+       *@brief dtor
+       */
+      virtual ~IThreadPlugin() {}
 
-            /*!
-             * @brief From InPlugin
-             * @author snoogie (5/22/2008)
-             * @return bool
-             */
-            bool Threadable() { return true; }
+      /*!
+       * @brief From InPlugin
+       * @author snoogie (5/22/2008)
+       * @return bool
+       */
+      bool Threadable() { return true; }
 
-            //From IThread
-            virtual void Run() = 0;
+      //From IThread
+      virtual void Run() = 0;
 
-            //From IPlugin
-            virtual std::string Description() = 0;
-            virtual EType Type() = 0;
-    };
-} //namespace Plugins
+      //From IPlugin
+      virtual std::string Description() = 0;
+      virtual EType Type() = 0;
+  };
+}                                //namespace Plugins
 #endif                           // __THREAD_IN_PLUGIN_H__

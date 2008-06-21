@@ -16,7 +16,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #ifndef __TIMER_H__
 #define __TIMER_H__
@@ -26,20 +26,18 @@ namespace Tools
   class CTimer
   {
     public:
-    CTimer();
-    CTimer(const unsigned long long msectime);
-    CTimer(const CTimer& timer);
+      CTimer();
+      CTimer(const unsigned long long msectime);
+      CTimer(const CTimer& timer);
 
-    ~CTimer(void);
+      ~CTimer(void);
 
-    unsigned long long TimeStamp();
+      unsigned long long TimeStamp();
 
-    void Snap();
+      void Snap();
 
-  private:
-    unsigned long long fTimeStamp;
+    private:
+      unsigned long long fTimeStamp;
   };
-} // namespace Tools
-
-#endif // __TIMER_H__
-
+}                                // namespace Tools
+#endif                           // __TIMER_H__

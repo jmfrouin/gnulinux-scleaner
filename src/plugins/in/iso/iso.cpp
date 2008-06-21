@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-
+ */
 
 #include <iostream>
 #include <plugins/in/in_plugin_initializer.h>
@@ -31,7 +30,7 @@ Plugins::CInPluginInitializer<CisoPlugin> gCoders;
 
 CisoPlugin::CisoPlugin()
 {
-    SetName("iso");
+  SetName("iso");
 }
 
 
@@ -42,13 +41,15 @@ CisoPlugin::~CisoPlugin()
 
 void CisoPlugin::ProcessFile(const std::string& filename)
 {
-    if( filename.find(".iso", 0) == (filename.length()-4) )
-        fFL.push_back(filename);
+  if( filename.find(".iso", 0) == (filename.length()-4) )
+    fFL.push_back(filename);
 }
 
 
 std::string CisoPlugin::Description()
 {
-    return "Find disc image files (*.iso files)";
+  return "Find disc image files (*.iso files)";
 }
+
+
 /* vi:set ts=4: */

@@ -18,17 +18,16 @@
 
  * This file is based on file from Laurent Gomilla :
  * http://loulou.developpez.com/tutoriels/moteur3d/
-*/
-
+ */
 
 #include <iostream>
 #include "thread.h"
 
 int main()
 {
-	CThread l_thread;
-	l_thread.Run();
-	return EXIT_SUCCESS;
+  CThread l_thread;
+  l_thread.Run();
+  return EXIT_SUCCESS;
 }
 
 

@@ -16,60 +16,55 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #include <iostream>
 #include "thread.h"
-
 
 int Tools::IThread::fCount = 0;
 int Tools::IThread::fMax = 16;
 
 namespace Tools
 {
-    IThread::IThread():
-    fRunning(false)
-    {
+  IThread::IThread():
+  fRunning(false)
+  {
 
-    }
+  }
 
+  IThread::~IThread()
+  {
+    Stop();
+  }
 
-    IThread::~IThread()
-    {
-        Stop();
-    }
+  void IThread::Start()
+  {
+    if(fCount < fMax)
+      pthread_create(&fThread, 0, IThread::__Run, this);
+  }
 
+  void* IThread::__Run(void* thread)
+  {
+    IThread* T = (IThread*)thread;
+    T->fLock.Lock();
+    T->fRunning = true;
+    T->fCount++;
+    T->Run();
+    T->fCount--;
+    T->fRunning = false;
+    T->fLock.UnLock();
+    return 0;
+  }
 
-    void IThread::Start()
-    {
-        if(fCount < fMax)
-            pthread_create(&fThread, 0, IThread::__Run, this);
-    }
+  void IThread::Stop()
+  {
+    fRunning = false;
+    Join();
+  }
 
-
-    void* IThread::__Run(void* thread)
-    {
-        IThread* T = (IThread*)thread;
-        T->fLock.Lock();
-        T->fRunning = true;
-        T->fCount++;
-        T->Run();
-        T->fCount--;
-        T->fRunning = false;
-        T->fLock.UnLock();
-        return 0;
-    }
-
-    void IThread::Stop()
-    {
-        fRunning = false;
-        Join();
-    }
-
-    void IThread::Join()
-    {
-        fLock.Lock();
-        fLock.UnLock();
-    }
+  void IThread::Join()
+  {
+    fLock.Lock();
+    fLock.UnLock();
+  }
 }
-

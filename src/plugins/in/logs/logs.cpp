@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #include "logs.h"
 
@@ -31,7 +31,7 @@ Plugins::CInPluginInitializer<ClogsPlugin> gLogs;
 
 ClogsPlugin::ClogsPlugin()
 {
-    SetName("logs");
+  SetName("logs");
 }
 
 
@@ -42,23 +42,25 @@ ClogsPlugin::~ClogsPlugin()
 
 void ClogsPlugin::GetDirectory(std::string& path)
 {
-    path = "/var/log/";
+  path = "/var/log/";
 }
 
 
 void ClogsPlugin::ProcessFile(const std::string& filename)
 {
-    struct stat Stat;
-    if(stat(filename.c_str(), &Stat) == -1)
-        std::cout << i8n("[ERR] : Cannot stat ") << filename << '\n';
-    else
-        if(!S_ISDIR(Stat.st_mode))
-            fFL.push_back(filename);
+  struct stat Stat;
+  if(stat(filename.c_str(), &Stat) == -1)
+    std::cout << i8n("[ERR] : Cannot stat ") << filename << '\n';
+  else
+  if(!S_ISDIR(Stat.st_mode))
+    fFL.push_back(filename);
 }
 
 
 std::string ClogsPlugin::Description()
 {
-    return "Find old logs";
+  return "Find old logs";
 }
+
+
 /* vi:set ts=4: */

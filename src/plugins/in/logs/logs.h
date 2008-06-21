@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 /*! @page page3 Plugins documentations.
  * - @subpage logs
@@ -35,34 +35,31 @@
 
 class ClogsPlugin : public Plugins::IInputPlugin
 {
-    public:
-        ClogsPlugin();
-        ~ClogsPlugin();
+  public:
+    ClogsPlugin();
+    ~ClogsPlugin();
 
+    bool GrabNullFile()
+    {
+      return false;
+    }
 
-        bool GrabNullFile()
-        {
-            return false;
-        }
+    bool GetDefaultSelection()
+    {
+      return false;
+    }
 
+    /*!
+     *@brief From IInPlugin
+     */
+    void ProcessFile(const std::string& filename);
+    void GetDirectory(std::string& path);
 
-        bool GetDefaultSelection()
-        {
-            return false;
-        }
-
-
-        /*!
-         *@brief From IInPlugin
-         */
-        void ProcessFile(const std::string& filename);
-        void GetDirectory(std::string& path);
-
-        /*!
-         *@brief From IPlugin
-         */
-        EType Type() { return eRootInput; }
-        std::string Description();
+    /*!
+     *@brief From IPlugin
+     */
+    EType Type() { return eRootInput; }
+    std::string Description();
 };
 #endif                           //__LOGS_H__
 /* vi:set ts=4: */

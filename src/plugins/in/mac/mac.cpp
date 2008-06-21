@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-
+ */
 
 #include <iostream>
 #include <plugins/in/in_plugin_initializer.h>
@@ -31,7 +30,7 @@ Plugins::CInPluginInitializer<CmacPlugin> gMac;
 
 CmacPlugin::CmacPlugin()
 {
-    SetName("mac");
+  SetName("mac");
 }
 
 
@@ -42,14 +41,16 @@ CmacPlugin::~CmacPlugin()
 
 void CmacPlugin::ProcessFile(const std::string& filename)
 {
-    if( (filename.find(".dstore", 0) == (filename.length()-7)) ||
-        (filename.find(".DS_Store", 0) == (filename.length()-9)) )
-        fFL.push_back(filename);
+  if( (filename.find(".dstore", 0) == (filename.length()-7)) ||
+    (filename.find(".DS_Store", 0) == (filename.length()-9)) )
+    fFL.push_back(filename);
 }
 
 
 std::string CmacPlugin::Description()
 {
-    return "Find .dstore file";
+  return "Find .dstore file";
 }
+
+
 /* vi:set ts=4: */

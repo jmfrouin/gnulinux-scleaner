@@ -15,7 +15,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 #include <iostream>
 #include <list>
 #include <string>
@@ -23,23 +23,23 @@
 
 int main()
 {
-        int Ret;
-        CTarArchive l_tar;
-        std::string l_1("test.txt");
-        std::string l_2("test2.txt");
-        std::list<std::string> l_list;
-        l_list.push_back(l_1);
-        l_list.push_back(l_2);
-        bool res = l_tar.Create(l_list, "test.tar");
-        if(res)
-        {
-                Ret = EXIT_SUCCESS;
-        }
-        else
-        {
-                Ret = EXIT_FAILURE;
-        }
-        return Ret;
+  int Ret;
+  CTarArchive l_tar;
+  std::string l_1("test.txt");
+  std::string l_2("test2.txt");
+  std::list<std::string> l_list;
+  l_list.push_back(l_1);
+  l_list.push_back(l_2);
+  bool res = l_tar.Create(l_list, "test.tar");
+  if(res)
+  {
+    Ret = EXIT_SUCCESS;
+  }
+  else
+  {
+    Ret = EXIT_FAILURE;
+  }
+  return Ret;
 }
 
 

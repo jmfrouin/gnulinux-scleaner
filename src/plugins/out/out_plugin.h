@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #ifndef __OUT_PLUGIN_H__
 #define __OUT_PLUGIN_H__
@@ -28,28 +28,28 @@
 
 namespace Plugins
 {
-    /*!
-     *@brief Output plugin interface.
-     */
-    class IOutPlugin : public IPlugin
-    {
-        public:
-            /*!
-             *@brief ctor
-             */
-            IOutPlugin() {}
-            /*!
-             *@brief dtor
-             */
-            virtual ~IOutPlugin() {}
+  /*!
+   *@brief Output plugin interface.
+   */
+  class IOutPlugin : public IPlugin
+  {
+    public:
+      /*!
+       *@brief ctor
+       */
+      IOutPlugin() {}
+      /*!
+       *@brief dtor
+       */
+      virtual ~IOutPlugin() {}
 
-            /*!
-             *@brief Process all files selected by user.
-             *@param fl Files list to fill.
-             *@param path Where to write output files (if applicable).
-             *@param callback For progress bar support.
-             */
-            virtual void ProcessFileList(std::list<std::string>& fl, const std::string& path, IProgressbar* callback) = 0;
-    };
+      /*!
+       *@brief Process all files selected by user.
+       *@param fl Files list to fill.
+       *@param path Where to write output files (if applicable).
+       *@param callback For progress bar support.
+       */
+      virtual void ProcessFileList(std::list<std::string>& fl, const std::string& path, IProgressbar* callback) = 0;
+  };
 }
 #endif                           // __OUT_PLUGIN_H__

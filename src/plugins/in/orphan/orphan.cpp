@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #include "orphan.h"
 
@@ -30,25 +30,29 @@ Plugins::CInPluginInitializer<CorphanPlugin> gOrphan;
 
 CorphanPlugin::CorphanPlugin()
 {
-    SetName("orphan");
+  SetName("orphan");
 }
+
 
 CorphanPlugin::~CorphanPlugin()
 {
 }
 
+
 std::string CorphanPlugin::Description()
 {
-    return "Application settings orphan cleaner";
+  return "Application settings orphan cleaner";
 }
+
 
 void CorphanPlugin::Run()
 {
-    while(fRunning)
-    {
-        std::cout << "CorphanPlugin::Run()\n";
-        fRunning = false;
-    }
+  while(fRunning)
+  {
+    std::cout << "CorphanPlugin::Run()\n";
+    fRunning = false;
+  }
 }
+
 
 /* vi:set ts=4: */

@@ -18,8 +18,7 @@
 
  * This file is based on file from Laurent Gomilla :
  * http://loulou.developpez.com/tutoriels/moteur3d/
-*/
-
+ */
 
 #ifndef _THREAD_H_
 #define _THREAD_H_
@@ -28,30 +27,30 @@
 
 class CThread
 {
-	public:
-		CThread();
-		~CThread();
+  public:
+    CThread();
+    ~CThread();
 
-		/*!
-		 *@brief Launch thread
-		 */
-		int Run();
+    /*!
+     *@brief Launch thread
+     */
+    int Run();
 
-		/*!
-		 *@brief The function to run to be pure virtual.
-		 */
-		void __Run();
+    /*!
+     *@brief The function to run to be pure virtual.
+     */
+    void __Run();
 
-	private:
-		pthread_t m_Thread;
+  private:
+    pthread_t m_Thread;
 
 };
 
 static void* link(void* _context)
 {
-	//CThread* l_Thread = dynamic_cast<CThread*>(_context);
-	CThread* l_Thread = (CThread*)_context;
-	l_Thread->__Run();
+  //CThread* l_Thread = dynamic_cast<CThread*>(_context);
+  CThread* l_Thread = (CThread*)_context;
+  l_Thread->__Run();
 }
-#endif							 //_THREAD_H_
+#endif                           //_THREAD_H_
 /* vi:set ts=4: */

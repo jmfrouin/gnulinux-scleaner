@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 /*! @page page3 Plugins documentations.
  * - @subpage apt_cache
@@ -43,17 +43,17 @@
  */
 class Capt_cachePlugin : public Plugins::IThreadPlugin
 {
-    public:
-        Capt_cachePlugin();
-        ~Capt_cachePlugin();
+  public:
+    Capt_cachePlugin();
+    ~Capt_cachePlugin();
 
-        /*!
-         *@brief From IThreadableInPlugin
-         */
-        bool GetDefaultSelection() { return true; }
-        EType Type() { return eRootThreadableInput; }
-        std::string Description();
-        virtual void Run();
+    /*!
+     *@brief From IThreadableInPlugin
+     */
+    bool GetDefaultSelection() { return true; }
+    EType Type() { return eRootThreadableInput; }
+    std::string Description();
+    virtual void Run();
 };
 #endif                           //__APT_CACHE_H__
 /* vi:set ts=4: */

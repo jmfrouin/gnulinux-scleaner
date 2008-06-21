@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 /*! @page page3 Plugins documentations.
  * - @subpage latex
@@ -36,32 +36,31 @@
 
 class ClatexPlugin : public Plugins::IInputPlugin
 {
-    public:
-        ClatexPlugin();
-        ~ClatexPlugin();
+  public:
+    ClatexPlugin();
+    ~ClatexPlugin();
 
+    bool GrabNullFile()
+    {
+      return false;
+    }
 
-        bool GrabNullFile()
-        {
-            return false;
-        }
+    bool GetDefaultSelection()
+    {
+      return true;
+    }
 
-        bool GetDefaultSelection()
-        {
-            return true;
-        }
+    /*!
+     *@brief From Plugins::IInPlugin
+     */
+    void ProcessFile(const std::string& filename);
+    void GetDirectory(std::string& path) { path = ""; }
 
-        /*!
-         *@brief From Plugins::IInPlugin
-         */
-        void ProcessFile(const std::string& filename);
-        void GetDirectory(std::string& path) { path = ""; }
-
-        /*!
-         *@brief From IPlugin
-         */
-        EType Type() { return eUserInput; }
-        std::string Description();
+    /*!
+     *@brief From IPlugin
+     */
+    EType Type() { return eUserInput; }
+    std::string Description();
 };
 #endif                           //__LATEX_H__
 /* vi:set ts=4: */

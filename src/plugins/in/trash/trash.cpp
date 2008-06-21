@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #include "trash.h"
 
@@ -33,59 +33,63 @@ Plugins::CInPluginInitializer<CtrashPlugin> gTrash;
 
 CtrashPlugin::CtrashPlugin()
 {
-    SetName("trash");
+  SetName("trash");
 }
 
 
 CtrashPlugin::~CtrashPlugin()
 {
-    std::cout << "~CtrashPlugin : " << fFL.size() << '\n';
+  std::cout << "~CtrashPlugin : " << fFL.size() << '\n';
 }
 
 
 std::string CtrashPlugin::Description()
 {
-    return "Find files in your trashbin";
+  return "Find files in your trashbin";
 }
+
 
 void CtrashPlugin::GetFileList(std::list<std::string>& fl)
 {
-    fl.merge(fFL);
+  fl.merge(fFL);
 }
+
 
 void CtrashPlugin::Run()
 {
-    std::string Path("/home/snoogie/.local/share/Trash/files/");
-    while(fRunning)
+  std::string Path("/home/snoogie/.local/share/Trash/files/");
+  while(fRunning)
+  {
+    struct dirent** NameList;
+    int Nb = scandir(Path.c_str(), &NameList, 0, alphasort);
+    if(Nb >= 0)                  //Fix Bug 4 : If no error append.
     {
-        struct dirent** NameList;
-        int Nb = scandir(Path.c_str(), &NameList, 0, alphasort);
-        if(Nb >= 0) //Fix Bug 4 : If no error append.
-        {
-            while (Nb-- > 0)
-            {
-                std::string Name(NameList[Nb]->d_name);
-                struct stat Stat;
-                //Is it a folder ?
-                if(stat(Name.c_str(), &Stat) == -1)
-                     std::cout << i8n("[ERR] : Cannot stat ") << Name << '\n';
-                else
-                {
-                    if(S_ISDIR(Stat.st_mode))
-                        std::cout << Name << " is a folder \n";
-                }
-
-                if(Name != "." && Name != "..")
-                    fFL.push_back(Name);
-                else
-                    std::cout << "I skip " << Name << '\n';
-                free(NameList[Nb]);
-            }
-            free(NameList);
-        }
+      while (Nb-- > 0)
+      {
+        std::string Name(NameList[Nb]->d_name);
+        struct stat Stat;
+        //Is it a folder ?
+        if(stat(Name.c_str(), &Stat) == -1)
+          std::cout << i8n("[ERR] : Cannot stat ") << Name << '\n';
         else
-            std::cout << ROUGE << "CtrashPlugin::Run() : Error\n" << STOP;
-        fRunning=false;
+        {
+          if(S_ISDIR(Stat.st_mode))
+            std::cout << Name << " is a folder \n";
+        }
+
+        if(Name != "." && Name != "..")
+          fFL.push_back(Name);
+        else
+          std::cout << "I skip " << Name << '\n';
+        free(NameList[Nb]);
+      }
+      free(NameList);
     }
+    else
+      std::cout << ROUGE << "CtrashPlugin::Run() : Error\n" << STOP;
+    fRunning=false;
+  }
 }
+
+
 /* vi:set ts=4: */

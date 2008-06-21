@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #ifndef __INPUT_PLUGIN_H__
 #define __INPUT_PLUGIN_H__
@@ -27,44 +27,44 @@
 
 namespace Plugins
 {
-    /*!
-     *@brief Input plugin interface.
-     */
-    class IInputPlugin : public IInPlugin
-    {
-        public:
-            /*!
-             *@brief ctor
-             */
-            IInputPlugin() {}
+  /*!
+   *@brief Input plugin interface.
+   */
+  class IInputPlugin : public IInPlugin
+  {
+    public:
+      /*!
+       *@brief ctor
+       */
+      IInputPlugin() {}
 
-            /*!
-             *@brief dtor
-             */
-            virtual ~IInputPlugin() {}
+      /*!
+       *@brief dtor
+       */
+      virtual ~IInputPlugin() {}
 
-            /*!
-             *@brief Does it need to grab null file size;
-             *@return true if this plugin can grab null file size, false otherwise.
-             */
-            virtual bool GrabNullFile() = 0;
+      /*!
+       *@brief Does it need to grab null file size;
+       *@return true if this plugin can grab null file size, false otherwise.
+       */
+      virtual bool GrabNullFile() = 0;
 
-            /*!
-            *@brief This method add, or not, filename to fFL.
-            *@param filename The file name to process.
-            */
-            virtual void ProcessFile(const std::string& filename) = 0;
+      /*!
+       *@brief This method add, or not, filename to fFL.
+       *@param filename The file name to process.
+       */
+      virtual void ProcessFile(const std::string& filename) = 0;
 
-            /*!
-            *@brief This method fill the directory to process.
-            *@note Usable only if plugin's type is eByFolderInput.
-            *@param path The directory name to process.
-            */
-            virtual void GetDirectory(std::string& path) = 0;
+      /*!
+       *@brief This method fill the directory to process.
+       *@note Usable only if plugin's type is eByFolderInput.
+       *@param path The directory name to process.
+       */
+      virtual void GetDirectory(std::string& path) = 0;
 
-            //From IPlugin
-            virtual bool Threadable() { return false; }
-            virtual EType Type() { return eUserInput; }
-    };
-} //namespace Plugins
+      //From IPlugin
+      virtual bool Threadable() { return false; }
+      virtual EType Type() { return eUserInput; }
+  };
+}                                //namespace Plugins
 #endif                           // __INPUT_PLUGIN_H__

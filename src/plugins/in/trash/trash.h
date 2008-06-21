@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 /*! @page page3 Plugins documentations.
  * - @subpage trash
@@ -41,19 +41,19 @@
 
 class CtrashPlugin : public Plugins::IThreadPlugin
 {
-    public:
-        CtrashPlugin();
-        ~CtrashPlugin();
+  public:
+    CtrashPlugin();
+    ~CtrashPlugin();
 
-        bool GetDefaultSelection() { return true; }
+    bool GetDefaultSelection() { return true; }
 
-        /*!
-         *@brief From IPlugin
-         */
-        EType Type() { return eThreadableInput; }
-        std::string Description();
-        void GetFileList(std::list<std::string>& fl);
-        virtual void Run();
+    /*!
+     *@brief From IPlugin
+     */
+    EType Type() { return eThreadableInput; }
+    std::string Description();
+    void GetFileList(std::list<std::string>& fl);
+    virtual void Run();
 
 };
 #endif                           //__TRASH_H__

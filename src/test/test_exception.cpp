@@ -18,21 +18,20 @@
 
  * This file is based on file from Laurent Gomilla :
  * http://loulou.developpez.com/tutoriels/moteur3d/
-*/
-
+ */
 
 #include <iostream>
 #include <string>
 
 int main()
 {
-	try
-	{
-		throw(std::string("Uh-oh"));
-	}
-	catch(std::string& s)
-	{
-		std::cout << s << '\n';
-	}
-	return EXIT_SUCCESS;
+  try
+  {
+    throw(std::string("Uh-oh"));
+  }
+  catch(std::string& s)
+  {
+    std::cout << s << '\n';
+  }
+  return EXIT_SUCCESS;
 }

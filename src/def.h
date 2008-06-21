@@ -16,7 +16,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 /*
  *@brief :      Commons definition file
@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 924
+#define BUILD 935
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -122,7 +122,6 @@
 #include <locale.h>
 
 //CRC32 stuff
-#define CRC_POLY_REV 0xEDB92450
-
+#define CRC_POLY_REV 0xEDB93550
 #endif                           // __DEF_H__
 /* vi:set ts=4: */

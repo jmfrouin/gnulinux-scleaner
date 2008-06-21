@@ -16,7 +16,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
@@ -32,121 +32,120 @@
 namespace GUI
 {
 
-    IMPLEMENT_DYNAMIC_CLASS( CReview, wxDialog )
+  IMPLEMENT_DYNAMIC_CLASS( CReview, wxDialog )
 
     BEGIN_EVENT_TABLE( CReview, wxDialog )
 
     END_EVENT_TABLE()
 
-
     CReview::CReview():
-    fFileList(0)
+  fFileList(0)
+  {
+    Init();
+  }
+
+  CReview::CReview(std::list<std::string>* filelist, wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
+  {
+    Init();
+    Create(filelist, parent, id, caption, pos, size, style);
+  }
+
+  bool CReview::Create(std::list<std::string>* filelist, wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
+  {
+    SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
+    wxDialog::Create( parent, id, caption, pos, size, style );
+
+    CreateControls(filelist);
+    Centre();
+    return true;
+  }
+
+  CReview::~CReview()
+  {
+  }
+
+  void CReview::Init()
+  {
+  }
+
+  void CReview::CreateControls(std::list<std::string>* filelist)
+  {
+    CReview* Dialog = this;
+    fFileList = filelist;
+
+    wxBoxSizer* Sizer = new wxBoxSizer(wxVERTICAL);
+    Dialog->SetSizer(Sizer);
+
+    fList = new wxCheckListCtrl(Dialog, ID_REVIEW_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT  | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
+
+    Sizer->Add(fList, 1, wxGROW | wxALL, 5);
+
+    wxBoxSizer* Sizer2 = new wxBoxSizer(wxHORIZONTAL);
+    Sizer->Add(Sizer2, 0, wxGROW|wxALL, 5);
+
+    wxButton* Cancel = new wxButton( Dialog, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    Sizer2->Add(Cancel, 1, wxGROW|wxALL, 5);
+
+    wxButton* OK = new wxButton( Dialog, wxID_OK, _("Process"), wxDefaultPosition, wxDefaultSize, 0 );
+    Sizer2->Add(OK, 1, wxGROW|wxALL, 5);
+
+    wxListItem ItemCol;
+    ItemCol.SetText(wxString(i8n("File name"), wxConvUTF8));
+    ItemCol.SetImage(-1);
+    fList->InsertColumn(0, ItemCol);
+
+    std::list<std::string>::iterator It = filelist->begin();
+    for(; It != filelist->end(); It++)
     {
-        Init();
+      wxString String(It->c_str(), wxConvUTF8);
+      fList->InsertItem(fList->GetItemCount(), String);
+      static int Count = 0;
+      long Tmp = fList->InsertItem(Count++, String, 0);
+      fList->SetItemData(Tmp, Count);
     }
+    fList->Show();
+    fList->SetColumnWidth(0, wxLIST_AUTOSIZE);
+  }
 
-    CReview::CReview(std::list<std::string>* filelist, wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
+  bool CReview::ShowToolTips()
+  {
+    return true;
+  }
+
+  wxBitmap CReview::GetBitmapResource( const wxString& name )
+  {
+    wxUnusedVar(name);
+    return wxNullBitmap;
+  }
+
+  wxIcon CReview::GetIconResource( const wxString& name )
+  {
+    wxUnusedVar(name);
+    return wxNullIcon;
+  }
+
+  void CReview::EndModal(int ret)
+  {
+    if(ret == wxID_OK && fFileList)
     {
-        Init();
-        Create(filelist, parent, id, caption, pos, size, style);
-    }
-
-    bool CReview::Create(std::list<std::string>* filelist, wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
-    {
-        SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
-        wxDialog::Create( parent, id, caption, pos, size, style );
-
-        CreateControls(filelist);
-        Centre();
-        return true;
-    }
-
-    CReview::~CReview()
-    {
-    }
-
-    void CReview::Init()
-    {
-    }
-
-    void CReview::CreateControls(std::list<std::string>* filelist)
-    {
-        CReview* Dialog = this;
-        fFileList = filelist;
-
-        wxBoxSizer* Sizer = new wxBoxSizer(wxVERTICAL);
-        Dialog->SetSizer(Sizer);
-
-        fList = new wxCheckListCtrl(Dialog, ID_REVIEW_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT  | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
-
-        Sizer->Add(fList, 1, wxGROW | wxALL, 5);
-
-        wxBoxSizer* Sizer2 = new wxBoxSizer(wxHORIZONTAL);
-        Sizer->Add(Sizer2, 0, wxGROW|wxALL, 5);
-
-        wxButton* Cancel = new wxButton( Dialog, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-        Sizer2->Add(Cancel, 1, wxGROW|wxALL, 5);
-
-        wxButton* OK = new wxButton( Dialog, wxID_OK, _("Process"), wxDefaultPosition, wxDefaultSize, 0 );
-        Sizer2->Add(OK, 1, wxGROW|wxALL, 5);
-
-        wxListItem ItemCol;
-        ItemCol.SetText(wxString(i8n("File name"), wxConvUTF8));
-        ItemCol.SetImage(-1);
-        fList->InsertColumn(0, ItemCol);
-
-        std::list<std::string>::iterator It = filelist->begin();
-        for(; It != filelist->end(); It++)
+      long Item = -1;
+      for(;;)
+      {
+        Item = fList->GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if(Item == -1)
+          break;
+        else
         {
-            wxString String(It->c_str(), wxConvUTF8);
-            fList->InsertItem(fList->GetItemCount(), String);
-            static int Count = 0;
-            long Tmp = fList->InsertItem(Count++, String, 0);
-            fList->SetItemData(Tmp, Count);
+          int Count = 0;
+          std::list<std::string>::iterator It = fFileList->begin();
+          for(; It!=fFileList->end(); It++)
+          {
+            Count++;
+            if(Count == Item)
+              std::cout << *It << '\n';
+          }
         }
-        fList->Show();
-        fList->SetColumnWidth(0, wxLIST_AUTOSIZE);
+      }
     }
-
-    bool CReview::ShowToolTips()
-    {
-        return true;
-    }
-
-    wxBitmap CReview::GetBitmapResource( const wxString& name )
-    {
-        wxUnusedVar(name);
-        return wxNullBitmap;
-    }
-
-    wxIcon CReview::GetIconResource( const wxString& name )
-    {
-        wxUnusedVar(name);
-        return wxNullIcon;
-    }
-
-    void CReview::EndModal(int ret)
-    {
-        if(ret == wxID_OK && fFileList)
-        {
-            long Item = -1;
-            for(;;)
-            {
-                Item = fList->GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-                if(Item == -1)
-                    break;
-                else
-                {
-                    int Count = 0;
-                    std::list<std::string>::iterator It = fFileList->begin();
-                    for(; It!=fFileList->end(); It++)
-                    {
-                        Count++;
-                            if(Count == Item)
-                                std::cout << *It << '\n';
-                    }
-                }
-            }
-        }
-    }
+  }
 }

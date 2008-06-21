@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 // Include XPM icons
 #include <gfx/checked.xpm>
@@ -29,380 +29,380 @@
 #include <engine/engine.h>
 #include "result_checklistctrl.h"
 
-
 /*!
-  * @brief Comparaison callbacks.
-  * @author snoogie(5/4/2008)
-  */
- int wxCALLBACK CompareByName(long item1, long item2, long sortData)
+ * @brief Comparaison callbacks.
+ * @author snoogie(5/4/2008)
+ */
+int wxCALLBACK CompareByName(long item1, long item2, long sortData)
 {
-    if(sortData == 0)
-    {
-        if (item1 < item2)
-            return -1;
-        if (item1 > item2)
-            return 1;
-    }
-    else
-    {
-        if (item1 > item2)
-            return -1;
-        if (item1 < item2)
-            return 1;
-    }
-
-    return 0;
-}
-
- int wxCALLBACK CompareBySize(long item1, long item2, long sortData)
-{
-    std::cout << "Comparing " << item1 << " and " << item2 << '\n';
-    // inverse the order
-    if (item1 > item2)
-        return -1;
+  if(sortData == 0)
+  {
     if (item1 < item2)
-        return 1;
-    return 0;
+      return -1;
+    if (item1 > item2)
+      return 1;
+  }
+  else
+  {
+    if (item1 > item2)
+      return -1;
+    if (item1 < item2)
+      return 1;
+  }
+
+  return 0;
 }
+
+
+int wxCALLBACK CompareBySize(long item1, long item2, long sortData)
+{
+  std::cout << "Comparing " << item1 << " and " << item2 << '\n';
+  // inverse the order
+  if (item1 > item2)
+    return -1;
+  if (item1 < item2)
+    return 1;
+  return 0;
+}
+
 
 namespace GUI
 {
-    IMPLEMENT_CLASS(ResultCheckListCtrl, wxListCtrl)
+  IMPLEMENT_CLASS(ResultCheckListCtrl, wxListCtrl)
 
     BEGIN_EVENT_TABLE(ResultCheckListCtrl, wxListCtrl)
-        EVT_MOUSE_EVENTS(ResultCheckListCtrl::OnMouseEvent)
-        EVT_CHAR(ResultCheckListCtrl::OnKeyDown)
-        EVT_CONTEXT_MENU(ResultCheckListCtrl::OnContextMenu)
-        EVT_LIST_COL_CLICK(ID_RESCHECKLIST, ResultCheckListCtrl::OnColClick)
-        EVT_MENU(ID_CHECKLIST_SELECT_ALL, ResultCheckListCtrl::OnSelectAll)
-        EVT_MENU(ID_CHECKLIST_UNSELECT_ALL, ResultCheckListCtrl::OnUnselectAll)
-        EVT_MENU(ID_CHECKLIST_INVERT_SELECTION, ResultCheckListCtrl::OnInvertSelection)
-        EVT_MENU(ID_CHECKLIST_SELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnSelectFromSameFolder)
-        EVT_MENU(ID_CHECKLIST_UNSELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnUnselectFromSameFolder)
+    EVT_MOUSE_EVENTS(ResultCheckListCtrl::OnMouseEvent)
+    EVT_CHAR(ResultCheckListCtrl::OnKeyDown)
+    EVT_CONTEXT_MENU(ResultCheckListCtrl::OnContextMenu)
+    EVT_LIST_COL_CLICK(ID_RESCHECKLIST, ResultCheckListCtrl::OnColClick)
+    EVT_MENU(ID_CHECKLIST_SELECT_ALL, ResultCheckListCtrl::OnSelectAll)
+    EVT_MENU(ID_CHECKLIST_UNSELECT_ALL, ResultCheckListCtrl::OnUnselectAll)
+    EVT_MENU(ID_CHECKLIST_INVERT_SELECTION, ResultCheckListCtrl::OnInvertSelection)
+    EVT_MENU(ID_CHECKLIST_SELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnSelectFromSameFolder)
+    EVT_MENU(ID_CHECKLIST_UNSELECT_FROM_SAME_FOLDER, ResultCheckListCtrl::OnUnselectFromSameFolder)
     END_EVENT_TABLE()
 
     ResultCheckListCtrl::ResultCheckListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pt,
     const wxSize& sz, long style):
-    wxListCtrl(parent, id, pt, sz, style), fSort(false)
+  wxListCtrl(parent, id, pt, sz, style), fSort(false)
+  {
+    LoadIcons();
+  }
+
+  bool ResultCheckListCtrl::LoadIcons()
+  {
+    //FIXME : Manual delete need
+    fImageList = new wxImageList(16, 16, true);
+    AssignImageList(fImageList, wxIMAGE_LIST_SMALL);
+
+    fImageList->Add(wxIcon(checked_xpm));
+    fImageList->Add(wxIcon(unchecked_xpm));
+    fImageList->Add(wxIcon(folder_xpm));
+
+    return true;
+  }
+
+  ResultCheckListCtrl::~ResultCheckListCtrl()
+  {
+  }
+
+  bool ResultCheckListCtrl::SetIcon(long& item)
+  {
+    bool Ret = true;
+
+    wxListItem l_item;
+    l_item.SetId(item);
+    GetItem(l_item);
+    wxString l_text = l_item.GetText();
+
+    if(l_item.GetImage() == 0)
     {
-        LoadIcons();
+      Engine::CEngine::Instance()->SetUnselectedInputPlugs(std::string(l_text.ToAscii()));
+      SetItemImage(item, 1);
+    }
+    else
+      SetItemImage(item, 0);
+
+    return Ret;
+  }
+
+  void ResultCheckListCtrl::OnMouseEvent(wxMouseEvent& event)
+  {
+    int l_flags = 0;
+    long l_subitem;
+    long l_item = HitTest(wxPoint(event.GetX(), event.GetY()), l_flags, &l_subitem);
+
+    if (event.LeftDown())
+    {
+      if (l_flags & wxLIST_HITTEST_ONITEMICON)
+      {
+        SetIcon(l_item);
+      }
     }
 
-    bool ResultCheckListCtrl::LoadIcons()
+    event.Skip();
+  }
+
+  void ResultCheckListCtrl::OnKeyDown(wxKeyEvent& event)
+  {
+    int l_flags = 0;
+    long l_subitem;
+    long l_item = HitTest(wxPoint(event.GetX(), event.GetY()), l_flags, &l_subitem);
+
+    if (event.GetKeyCode() == WXK_SPACE)
     {
-        //FIXME : Manual delete need
-        fImageList = new wxImageList(16, 16, true);
-        AssignImageList(fImageList, wxIMAGE_LIST_SMALL);
+      SetIcon(l_item);
+    }
+    else
+    {
+      event.Skip();
+    }
+  }
 
-        fImageList->Add(wxIcon(checked_xpm));
-        fImageList->Add(wxIcon(unchecked_xpm));
-        fImageList->Add(wxIcon(folder_xpm));
+  void ResultCheckListCtrl::OnContextMenu(wxContextMenuEvent& event)
+  {
+    wxPoint point = event.GetPosition();
+    //std::cout << "Right click detected\n";
+    // If from keyboard
+    if (point.x == -1 && point.y == -1)
+    {
+      wxSize size = GetSize();
+      point.x = size.x / 2;
+      point.y = size.y / 2;
+    }
+    else
+    {
+      point = ScreenToClient(point);
+    }
+    ShowContextMenu(point);
+  }
 
-        return true;
+  void ResultCheckListCtrl::ShowContextMenu(const wxPoint& pos)
+  {
+    wxMenu menu;
+
+    if(GetSelectionCount() ==1)
+    {
+      //Context menu for 1 selected item by user
+      menu.Append(ID_CHECKLIST_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
+      menu.Append(ID_CHECKLIST_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
+      menu.Append(ID_CHECKLIST_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
+      menu.AppendSeparator();
+      menu.Append(ID_CHECKLIST_SELECT_FROM_SAME_FOLDER, wxString(i8n("&Select all files from same folder"), wxConvUTF8));
+      menu.Append(ID_CHECKLIST_UNSELECT_FROM_SAME_FOLDER, wxString(i8n("&Unselect all files from same folder"), wxConvUTF8));
+    }
+    else
+    {
+      //Context menu for more than 1 selected item by user
+      menu.Append(ID_CHECKLIST_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
+      menu.Append(ID_CHECKLIST_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
+      menu.Append(ID_CHECKLIST_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
     }
 
-    ResultCheckListCtrl::~ResultCheckListCtrl()
+    PopupMenu(&menu, pos.x, pos.y);
+  }
+
+  void ResultCheckListCtrl::OnSelectAll(wxCommandEvent& WXUNUSED(event))
+  {
+    long Item = -1;
+    if(GetSelectionCount() == 1)
     {
+      //If user has selected only 1 item, that apply to all files
+      for ( ;; )
+      {
+        Item = GetNextItem(Item);
+        if(Item == -1)
+          break;
+        SetItemImage(Item, 0);
+      }
     }
-
-    bool ResultCheckListCtrl::SetIcon(long& item)
+    else
     {
-        bool Ret = true;
+      //If user has selected more than 1 item, that apply to selected files
+      for ( ;; )
+      {
+        Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if(Item == -1)
+          break;
+        SetItemImage(Item, 0);
+      }
+    }
+  }
 
-        wxListItem l_item;
-        l_item.SetId(item);
-        GetItem(l_item);
-        wxString l_text = l_item.GetText();
+  void ResultCheckListCtrl::OnUnselectAll(wxCommandEvent& WXUNUSED(event))
+  {
+    long Item = -1;
+    if(GetSelectionCount() == 1)
+    {
+      //If user has selected only 1 item, that apply to all files
+      for ( ;; )
+      {
+        Item = GetNextItem(Item);
+        if(Item == -1)
+          break;
+        SetItemImage(Item, 1);
+      }
+    }
+    else
+    {
+      //If user has selected more than 1 item, that apply to selected files
+      for ( ;; )
+      {
+        Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if(Item == -1)
+          break;
+        SetItemImage(Item, 1);
+      }
+    }
+  }
 
-        if(l_item.GetImage() == 0)
-        {
-            Engine::CEngine::Instance()->SetUnselectedInputPlugs(std::string(l_text.ToAscii()));
-            SetItemImage(item, 1);
-        }
+  void ResultCheckListCtrl::OnInvertSelection(wxCommandEvent& event)
+  {
+    long Item = -1;
+    if(GetSelectionCount() == 1)
+    {
+      //If user has selected only 1 item, that apply to all files
+      for ( ;; )
+      {
+        Item = GetNextItem(Item);
+        if(Item == -1)
+          break;
+
+        wxListItem LItem;
+        LItem.SetId(Item);
+        GetItem(LItem);
+
+        if(LItem.GetImage())
+          SetItemImage(Item, 0);
         else
-            SetItemImage(item, 0);
-
-        return Ret;
+          SetItemImage(Item, 1);
+      }
     }
-
-
-    void ResultCheckListCtrl::OnMouseEvent(wxMouseEvent& event)
+    else
     {
-        int l_flags = 0;
-        long l_subitem;
-        long l_item = HitTest(wxPoint(event.GetX(), event.GetY()), l_flags, &l_subitem);
+      //If user has selected more than 1 item, that apply to selected files
+      for ( ;; )
+      {
+        Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if(Item == -1)
+          break;
 
-        if (event.LeftDown())
-        {
-            if (l_flags & wxLIST_HITTEST_ONITEMICON)
-            {
-                SetIcon(l_item);
-            }
-        }
+        wxListItem LItem;
+        LItem.SetId(Item);
+        GetItem(LItem);
 
-        event.Skip();
-    }
-
-
-    void ResultCheckListCtrl::OnKeyDown(wxKeyEvent& event)
-    {
-        int l_flags = 0;
-        long l_subitem;
-        long l_item = HitTest(wxPoint(event.GetX(), event.GetY()), l_flags, &l_subitem);
-
-        if (event.GetKeyCode() == WXK_SPACE)
-        {
-            SetIcon(l_item);
-        }
+        if(LItem.GetImage())
+          SetItemImage(Item, 0);
         else
-        {
-            event.Skip();
-        }
+          SetItemImage(Item, 1);
+      }
     }
+  }
 
-    void ResultCheckListCtrl::OnContextMenu(wxContextMenuEvent& event)
+  void ResultCheckListCtrl::OnSelectFromSameFolder(wxCommandEvent& event)
+  {
+    long Item = -1;
+    wxString Folder = GetSelectionFolderName();
+    for ( ;; )
     {
-        wxPoint point = event.GetPosition();
-        //std::cout << "Right click detected\n";
-        // If from keyboard
-        if (point.x == -1 && point.y == -1) {
-            wxSize size = GetSize();
-            point.x = size.x / 2;
-            point.y = size.y / 2;
-        } else {
-            point = ScreenToClient(point);
-        }
-        ShowContextMenu(point);
+      Item = GetNextItem(Item);
+      if(Item == -1)
+        break;
+
+      wxListItem LItem;
+      LItem.SetId(Item);
+      LItem.SetColumn(2);
+      GetItem(LItem);
+      std::cout << LItem.m_text << " = ";
+      std::cout << Folder << '\n';
+      if(LItem.m_text.Find(Folder) != wxNOT_FOUND)
+        SetItemImage(Item, 0);
     }
+  }
 
-
-    void ResultCheckListCtrl::ShowContextMenu(const wxPoint& pos)
+  void ResultCheckListCtrl::OnUnselectFromSameFolder(wxCommandEvent& event)
+  {
+    long Item = -1;
+    wxString Folder = GetSelectionFolderName();
+    for ( ;; )
     {
-        wxMenu menu;
+      Item = GetNextItem(Item);
+      if(Item == -1)
+        break;
 
-        if(GetSelectionCount() ==1)
-        {
-            //Context menu for 1 selected item by user
-            menu.Append(ID_CHECKLIST_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
-            menu.Append(ID_CHECKLIST_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
-            menu.Append(ID_CHECKLIST_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
-            menu.AppendSeparator();
-            menu.Append(ID_CHECKLIST_SELECT_FROM_SAME_FOLDER, wxString(i8n("&Select all files from same folder"), wxConvUTF8));
-            menu.Append(ID_CHECKLIST_UNSELECT_FROM_SAME_FOLDER, wxString(i8n("&Unselect all files from same folder"), wxConvUTF8));
-        }
-        else
-        {
-            //Context menu for more than 1 selected item by user
-            menu.Append(ID_CHECKLIST_SELECT_ALL, wxString(i8n("&Select all files"), wxConvUTF8));
-            menu.Append(ID_CHECKLIST_UNSELECT_ALL, wxString(i8n("&Unselect all files"), wxConvUTF8));
-            menu.Append(ID_CHECKLIST_INVERT_SELECTION, wxString(i8n("&Invert selection"), wxConvUTF8));
-        }
-
-        PopupMenu(&menu, pos.x, pos.y);
+      wxListItem LItem;
+      LItem.SetId(Item);
+      LItem.SetColumn(2);
+      GetItem(LItem);
+      if(LItem.m_text.Find(Folder) != wxNOT_FOUND)
+        SetItemImage(Item, 1);
     }
+  }
 
-    void ResultCheckListCtrl::OnSelectAll(wxCommandEvent& WXUNUSED(event))
+  void ResultCheckListCtrl::OnColClick(wxListEvent& event)
+  {
+    int col = event.GetColumn();
+
+    switch(col)                  //FIXME : Add col ID in def.h and used them here !
     {
-        long Item = -1;
-        if(GetSelectionCount() == 1)
-        {
-            //If user has selected only 1 item, that apply to all files
-            for ( ;; )
-            {
-                Item = GetNextItem(Item);
-                if(Item == -1)
-                    break;
-                SetItemImage(Item, 0);
-            }
-        }
-        else
-        {
-            //If user has selected more than 1 item, that apply to selected files
-            for ( ;; )
-            {
-                Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-                if(Item == -1)
-                    break;
-                SetItemImage(Item, 0);
-            }
-        }
+      case 0:
+        SortItems(CompareByName, fSort);
+        break;
     }
+    fSort = !fSort;
+  }
 
-    void ResultCheckListCtrl::OnUnselectAll(wxCommandEvent& WXUNUSED(event))
+  //Private
+  long ResultCheckListCtrl::GetSelection()
+  {
+    long Item = -1;
+    for(;;)
     {
-        long Item = -1;
-        if(GetSelectionCount() == 1)
-        {
-            //If user has selected only 1 item, that apply to all files
-            for ( ;; )
-            {
-                Item = GetNextItem(Item);
-                if(Item == -1)
-                    break;
-                SetItemImage(Item, 1);
-            }
-        }
-        else
-        {
-            //If user has selected more than 1 item, that apply to selected files
-            for ( ;; )
-            {
-                Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-                if(Item == -1)
-                    break;
-                SetItemImage(Item, 1);
-            }
-        }
-    }
+      Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 
-    void ResultCheckListCtrl::OnInvertSelection(wxCommandEvent& event)
-    {
-        long Item = -1;
-        if(GetSelectionCount() == 1)
-        {
-            //If user has selected only 1 item, that apply to all files
-            for ( ;; )
-            {
-                Item = GetNextItem(Item);
-                if(Item == -1)
-                    break;
-
-                wxListItem LItem;
-                LItem.SetId(Item);
-                GetItem(LItem);
-
-                if(LItem.GetImage())
-                    SetItemImage(Item, 0);
-                else
-                    SetItemImage(Item, 1);
-            }
-        }
-        else
-        {
-            //If user has selected more than 1 item, that apply to selected files
-            for ( ;; )
-            {
-                Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-                if(Item == -1)
-                    break;
-
-                wxListItem LItem;
-                LItem.SetId(Item);
-                GetItem(LItem);
-
-                if(LItem.GetImage())
-                    SetItemImage(Item, 0);
-                else
-                    SetItemImage(Item, 1);
-            }
-        }
-    }
-
-    void ResultCheckListCtrl::OnSelectFromSameFolder(wxCommandEvent& event)
-    {
-        long Item = -1;
-        wxString Folder = GetSelectionFolderName();
-        for ( ;; )
-        {
-            Item = GetNextItem(Item);
-            if(Item == -1)
-                break;
-
-            wxListItem LItem;
-            LItem.SetId(Item);
-            LItem.SetColumn(2);
-            GetItem(LItem);
-            std::cout << LItem.m_text << " = ";
-            std::cout << Folder << '\n';
-            if(LItem.m_text.Find(Folder) != wxNOT_FOUND)
-                SetItemImage(Item, 0);
-        }
-    }
-
-    void ResultCheckListCtrl::OnUnselectFromSameFolder(wxCommandEvent& event)
-    {
-        long Item = -1;
-        wxString Folder = GetSelectionFolderName();
-        for ( ;; )
-        {
-            Item = GetNextItem(Item);
-            if(Item == -1)
-                break;
-
-            wxListItem LItem;
-            LItem.SetId(Item);
-            LItem.SetColumn(2);
-            GetItem(LItem);
-            if(LItem.m_text.Find(Folder) != wxNOT_FOUND)
-                SetItemImage(Item, 1);
-        }
-    }
-
-    void ResultCheckListCtrl::OnColClick(wxListEvent& event)
-    {
-        int col = event.GetColumn();
-
-        switch(col) //FIXME : Add col ID in def.h and used them here !
-        {
-            case 0:
-                SortItems(CompareByName, fSort);
-                break;
-        }
-        fSort = !fSort;
-    }
-
-    //Private
-    long ResultCheckListCtrl::GetSelection()
-    {
-        long Item = -1;
-        for(;;)
-        {
-            Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-
-            if(Item == -1)
-                break;
-            else
-                return Item;
-        }
+      if(Item == -1)
+        break;
+      else
         return Item;
     }
+    return Item;
+  }
 
-    wxString ResultCheckListCtrl::GetSelectionFolderName()
+  wxString ResultCheckListCtrl::GetSelectionFolderName()
+  {
+    long Item = -1;
+    wxString Res;
+    for(;;)
     {
-        long Item = -1;
-        wxString Res;
-        for(;;)
-        {
-            Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+      Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 
-            if(Item == -1)
-                break;
-            else
-            {
-                wxListItem LItem;
-                LItem.SetId(Item);
-                LItem.SetColumn(2);
-                GetItem(LItem);
-                return LItem.m_text;
-            }
-        }
-        return Res;
+      if(Item == -1)
+        break;
+      else
+      {
+        wxListItem LItem;
+        LItem.SetId(Item);
+        LItem.SetColumn(2);
+        GetItem(LItem);
+        return LItem.m_text;
+      }
     }
+    return Res;
+  }
 
-     int ResultCheckListCtrl::GetSelectionCount()
+  int ResultCheckListCtrl::GetSelectionCount()
+  {
+    int Count = 0;
+    long Item = -1;
+    for(;;)
     {
-        int Count = 0;
-        long Item = -1;
-        for(;;)
-        {
-            Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-            if(Item == -1)
-                break;
-            else
-                Count++;
-        }
-        return Count;
+      Item = GetNextItem(Item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+      if(Item == -1)
+        break;
+      else
+        Count++;
     }
+    return Count;
+  }
 
 }
-

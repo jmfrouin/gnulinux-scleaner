@@ -19,7 +19,7 @@
 
  * This file is based on file from Laurent Gomilla :
  * http://loulou.developpez.com/tutoriels/moteur3d/
-*/
+ */
 
 #ifndef __MEMORY_MANAGER_H__
 #define __MEMORY_MANAGER_H__
@@ -37,57 +37,57 @@
  */
 class CMemoryManager
 {
-        public :
-                /*!
-                 * @brief       Default constructor.
-                 */
-                CMemoryManager();
-                /*!
-                 * @brief       Destructor.
-                 */
-                ~CMemoryManager();
+  public :
+    /*!
+     * @brief       Default constructor.
+     */
+    CMemoryManager();
+    /*!
+     * @brief       Destructor.
+     */
+    ~CMemoryManager();
 
-                /*!
-                 * @brief       Do memory allocation.
-                 * @param       _size Size to allocate.
-                 * @param       _file Store the file where delete is did.
-                 * @param       _line Store the line where delete is did.
-                 * @param       _array Pointer point on array type ?.
-                 */
-                void* Allocate(std::size_t size, const std::string& file, int line, bool array);
-                /*!
-                 * @brief       Free memory.
-                 * @param       _ptr Pointer on memory zone to free.
-                 * @param       _array Pointer point on array type ?.
-                 */
-                void Free(void* ptr, bool array);
-                /*!
-                 * @brief       Default constructor.
-                 * @param       _file Store the file where delete is did.
-                 * @param       _line Store the line where delete is did.
-                 */
-                void NextDelete(const std::string& file, int line);
+    /*!
+     * @brief       Do memory allocation.
+     * @param       _size Size to allocate.
+     * @param       _file Store the file where delete is did.
+     * @param       _line Store the line where delete is did.
+     * @param       _array Pointer point on array type ?.
+     */
+    void* Allocate(std::size_t size, const std::string& file, int line, bool array);
+    /*!
+     * @brief       Free memory.
+     * @param       _ptr Pointer on memory zone to free.
+     * @param       _array Pointer point on array type ?.
+     */
+    void Free(void* ptr, bool array);
+    /*!
+     * @brief       Default constructor.
+     * @param       _file Store the file where delete is did.
+     * @param       _line Store the line where delete is did.
+     */
+    void NextDelete(const std::string& file, int line);
 
-                void Report();
+    void Report();
 
-        private:
-                /*!
-                 * @brief Memory stucture.
-                 */
-                struct TBlock
-                {
-                        std::size_t             Size;
-                        std::string             File;
-                        unsigned int            Line;
-                        bool                    Array;
-                        static std::size_t      Total;
-                };
+  private:
+    /*!
+     * @brief Memory stucture.
+     */
+    struct TBlock
+    {
+      std::size_t             Size;
+      std::string             File;
+      unsigned int            Line;
+      bool                    Array;
+      static std::size_t      Total;
+    };
 
-                typedef std::map<void*, TBlock> TBlockMap;
+    typedef std::map<void*, TBlock> TBlockMap;
 
-                TBlockMap          fBlocks;
-                std::stack<TBlock> fDeleteStack;
-                std::ofstream fFile;
+    TBlockMap          fBlocks;
+    std::stack<TBlock> fDeleteStack;
+    std::ofstream fFile;
 };
-#endif                                                   // __MEMORY_MANAGER_H__
+#endif                           // __MEMORY_MANAGER_H__
 /* vi:set ts=4: */

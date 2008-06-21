@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #ifndef __SELECT_DIALOG_H__
 #define __SELECT_DIALOG_H__
@@ -31,32 +31,32 @@ class wxPanel;
 
 namespace GUI
 {
-        /*!
-        *@brief Dialog to select input plugins.
-        */
-        class CSelectDialog : public wxFrame
-        {
-                public:
-                        /*!
-                        *@brief Constructor
-                        *@param _title The dialog box title.
-                        *@param _pluginList Available plugin list.
-                        */
-                        CSelectDialog(const wxString& _title, std::list<std::string>& _pluginList);
+  /*!
+   *@brief Dialog to select input plugins.
+   */
+  class CSelectDialog : public wxFrame
+  {
+    public:
+      /*!
+       *@brief Constructor
+       *@param _title The dialog box title.
+       *@param _pluginList Available plugin list.
+       */
+      CSelectDialog(const wxString& _title, std::list<std::string>& _pluginList);
 
-                        /*!
-                        *@brief Destructor
-                        */
-                        virtual ~CSelectDialog();
+      /*!
+       *@brief Destructor
+       */
+      virtual ~CSelectDialog();
 
-                        //Callbacks
-                        void OnListbox(wxCommandEvent& event);
+      //Callbacks
+      void OnListbox(wxCommandEvent& event);
 
-                protected:
-                wxCheckListBox* m_Input;
-                        wxPanel*                m_Panel;
+    protected:
+      wxCheckListBox* m_Input;
+      wxPanel*                m_Panel;
 
-            DECLARE_EVENT_TABLE()
-        };
+      DECLARE_EVENT_TABLE()
+  };
 }
-#endif// __SELECT_DIALOG_H__
+#endif                           // __SELECT_DIALOG_H__

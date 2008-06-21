@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #include <wx/wxprec.h>
 
@@ -30,45 +30,43 @@
 
 namespace GUI
 {
-        BEGIN_EVENT_TABLE(CTrayIcon, wxTaskBarIcon)
-        EVT_MENU(PU_RESTORE, CTrayIcon::OnMenuRestore)
-        EVT_MENU(PU_EXIT,    CTrayIcon::OnMenuExit)
-        END_EVENT_TABLE()
+  BEGIN_EVENT_TABLE(CTrayIcon, wxTaskBarIcon)
+    EVT_MENU(PU_RESTORE, CTrayIcon::OnMenuRestore)
+    EVT_MENU(PU_EXIT,    CTrayIcon::OnMenuExit)
+    END_EVENT_TABLE()
 
-        void CTrayIcon::setParent(CMainInterface* _parent)
-        {
-                m_Parent = _parent;
-        }
+    void CTrayIcon::setParent(CMainInterface* _parent)
+  {
+    m_Parent = _parent;
+  }
 
+  void CTrayIcon::OnMenuRestore(wxCommandEvent& )
+  {
+    m_Parent->Show(true);
+  }
 
-        void CTrayIcon::OnMenuRestore(wxCommandEvent& )
-        {
-                m_Parent->Show(true);
-        }
+  void CTrayIcon::OnMenuExit(wxCommandEvent& )
+  {
+    m_Parent->Close(true);
+  }
 
+  // Overridables
+  wxMenu *CTrayIcon::CreatePopupMenu()
+  {
+    wxMenu *menu = new wxMenu;
+    menu->Append(PU_RESTORE, _T(NAME));
+    #ifndef __WXMAC_OSX__        /*Mac has built-in quit menu*/
+    menu->AppendSeparator();
+    menu->Append(PU_EXIT, wxString(i8n("E&xit"), wxConvUTF8));
+    #endif
+    return menu;
+  }
 
-        void CTrayIcon::OnMenuExit(wxCommandEvent& )
-        {
-                m_Parent->Close(true);
-        }
-
-
-        // Overridables
-        wxMenu *CTrayIcon::CreatePopupMenu()
-        {
-                wxMenu *menu = new wxMenu;
-                menu->Append(PU_RESTORE, _T(NAME));
-                #ifndef __WXMAC_OSX__            /*Mac has built-in quit menu*/
-                menu->AppendSeparator();
-                menu->Append(PU_EXIT, wxString(i8n("E&xit"), wxConvUTF8));
-                #endif
-                return menu;
-        }
-
-
-        void CTrayIcon::OnLeftButtonDClick(wxTaskBarIconEvent&)
-        {
-                m_Parent->Show(true);
-        }
+  void CTrayIcon::OnLeftButtonDClick(wxTaskBarIconEvent&)
+  {
+    m_Parent->Show(true);
+  }
 }
+
+
 /* vi:set ts=4: */

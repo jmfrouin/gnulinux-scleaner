@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #include "apt-cache.h"
 
@@ -30,7 +30,7 @@ Plugins::CInPluginInitializer<Capt_cachePlugin> gAptCache;
 
 Capt_cachePlugin::Capt_cachePlugin()
 {
-    SetName("apt cache");
+  SetName("apt cache");
 }
 
 
@@ -38,17 +38,21 @@ Capt_cachePlugin::~Capt_cachePlugin()
 {
 }
 
+
 std::string Capt_cachePlugin::Description()
 {
-    return "Find apt cache archives";
+  return "Find apt cache archives";
 }
+
 
 void Capt_cachePlugin::Run()
 {
-    while(fRunning)
-    {
-        std::cout << "Blob\n";
-        fRunning = false;
-    }
+  while(fRunning)
+  {
+    std::cout << "Blob\n";
+    fRunning = false;
+  }
 }
+
+
 /* vi:set ts=4: */

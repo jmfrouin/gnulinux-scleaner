@@ -16,7 +16,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #ifndef __TYPES_H__
 #define __TYPES_H__
@@ -25,5 +25,4 @@ typedef pthread_t Thread;
 typedef pthread_mutex_t Mutex;
 typedef wchar_t WChar;
 typedef wchar_t* PWChar;
-
-#endif //__TYPES_H__
+#endif                           //__TYPES_H__

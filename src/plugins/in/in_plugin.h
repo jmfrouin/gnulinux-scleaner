@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #ifndef __IN_PLUGIN_H__
 #define __IN_PLUGIN_H__
@@ -27,50 +27,49 @@
 
 namespace Plugins
 {
-    /*!
-     *@brief Input plugin interface.
-     */
-    class IInPlugin : public IPlugin
-    {
-        public:
-            /*!
-             *@brief ctor
-             */
-            IInPlugin() {}
+  /*!
+   *@brief Input plugin interface.
+   */
+  class IInPlugin : public IPlugin
+  {
+    public:
+      /*!
+       *@brief ctor
+       */
+      IInPlugin() {}
 
-            /*!
-             *@brief dtor
-             */
-            virtual ~IInPlugin() {}
+      /*!
+       *@brief dtor
+       */
+      virtual ~IInPlugin() {}
 
-           /*!
-             *@brief Selected by default configuration ?
-             *@return true if "founded files" have to been pre"set" to Yes, false otherwise
-             */
-            virtual bool GetDefaultSelection() = 0;
+      /*!
+       *@brief Selected by default configuration ?
+       *@return true if "founded files" have to been pre"set" to Yes, false otherwise
+       */
+      virtual bool GetDefaultSelection() = 0;
 
-            /*!
-             *@brief Return a std::list of files targeted by plugin.
-             *@param fl The files list to fill.
-             */
-            virtual void GetFileList(std::list<std::string>& fl)
-            {
-                fl.merge(fFL);
-            }
+      /*!
+       *@brief Return a std::list of files targeted by plugin.
+       *@param fl The files list to fill.
+       */
+      virtual void GetFileList(std::list<std::string>& fl)
+      {
+        fl.merge(fFL);
+      }
 
-             /*!
-             * @brief Define is a plugin is threadable.
-             * @author snoogie (5/22/2008)
-             * @return bool true if threadable, false otherwise.
-             */
-            virtual bool Threadable() = 0;
+      /*!
+       * @brief Define is a plugin is threadable.
+       * @author snoogie (5/22/2008)
+       * @return bool true if threadable, false otherwise.
+       */
+      virtual bool Threadable() = 0;
 
+      //From IPlugin
+      virtual EType Type() = 0;
 
-            //From IPlugin
-            virtual EType Type() = 0;
-
-        protected:
-            std::list<std::string> fFL;
-    };
-} //namespace Plugins
+    protected:
+      std::list<std::string> fFL;
+  };
+}                                //namespace Plugins
 #endif                           // __IN_PLUGIN_H__

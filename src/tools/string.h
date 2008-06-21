@@ -16,7 +16,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #ifndef __STRING_H__
 #define __STRING_H__
@@ -26,39 +26,39 @@
 
 namespace Tools
 {
-    /**
-     * @brief In order to enhance std::string.
-     */
-    class CString : public std::string
-    {
-        public:
-            /*!
-             *@brief Default constructor.
-             */
-            CString():
-            std::string()
-            {
-            }
+  /**
+   * @brief In order to enhance std::string.
+   */
+  class CString : public std::string
+  {
+    public:
+      /*!
+       *@brief Default constructor.
+       */
+      CString():
+      std::string()
+      {
+      }
 
-            /*!
-             *@brief Destructor.
-             */
-            virtual ~CString();
+      /*!
+       *@brief Destructor.
+       */
+      virtual ~CString();
 
-            /*!
-            *@brief lowercase string.
-            */
-            void ToLower()
-            {
-                for(int i=Length(); --i>=0; )
-                {
-                    if(this->at(i) >= 0x41 && this->at(i) <= 0x5A)
-                    {
-                        this->at(i) = this->at(i) + 0x20;
-                    }
-                }
-            }
-    };
+      /*!
+       *@brief lowercase string.
+       */
+      void ToLower()
+      {
+        for(int i=Length(); --i>=0; )
+        {
+          if(this->at(i) >= 0x41 && this->at(i) <= 0x5A)
+          {
+            this->at(i) = this->at(i) + 0x20;
+          }
+        }
+      }
+  };
 }
 #endif                           //_STRING_H_
 /* vi:set ts=4: */

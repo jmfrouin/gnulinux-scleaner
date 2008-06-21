@@ -16,7 +16,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #ifndef __IPROGRESS_H__
 #define __IPROGRESS_H__
@@ -30,14 +30,14 @@
  */
 class IProgressbar
 {
-    public:
-        /*!
-         *@brief Update process progress bar callback.
-         *@param pulse Put it in indeterminate state.
-         *@param nb Update number.
-         *@return true on continue, false on stop
-         */
-        virtual bool UpdateProgress(const std::string& mess, bool pulse, int nb = 0) = 0;
+  public:
+    /*!
+     *@brief Update process progress bar callback.
+     *@param pulse Put it in indeterminate state.
+     *@param nb Update number.
+     *@return true on continue, false on stop
+     */
+    virtual bool UpdateProgress(const std::string& mess, bool pulse, int nb = 0) = 0;
 };
 #endif                           //_IPROGRESS_H_
 /* vi:set ts=4: */

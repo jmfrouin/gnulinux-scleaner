@@ -27,13 +27,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct versionrevision {
+struct versionrevision
+{
   unsigned long epoch;
   const char *version;
   const char *revision;
 };
 
-enum deptype {
+enum deptype
+{
   dep_suggests,
   dep_recommends,
   dep_depends,
@@ -45,7 +47,8 @@ enum deptype {
   dep_enhances
 };
 
-enum depverrel {
+enum depverrel
+{
   dvrf_earlier=      0001,
   dvrf_later=        0002,
   dvrf_strict=       0010,
@@ -59,14 +62,16 @@ enum depverrel {
   dvr_exact=         0400
 };
 
-struct dependency {
+struct dependency
+{
   struct pkginfo *up;
   struct dependency *next;
   struct deppossi *list;
   enum deptype type;
 };
 
-struct deppossi {
+struct deppossi
+{
   struct dependency *up;
   struct pkginfo *ed;
   struct deppossi *next, *nextrev, *backrev;
@@ -75,20 +80,23 @@ struct deppossi {
   int cyclebreak;
 };
 
-struct arbitraryfield {
+struct arbitraryfield
+{
   struct arbitraryfield *next;
   char *name;
   char *value;
 };
 
-struct conffile {
+struct conffile
+{
   struct conffile *next;
   const char *name;
   const char *hash;
   int obsolete;
 };
 
-struct filedetails {
+struct filedetails
+{
   struct filedetails *next;
   char *name;
   char *msdosname;
@@ -96,40 +104,47 @@ struct filedetails {
   char *md5sum;
 };
 
-struct pkginfoperfile { /* pif */
+struct pkginfoperfile            /* pif */
+{
   int valid;
   struct dependency *depends;
   struct deppossi *depended;
-  int essential; /* The `essential' flag, 1=yes, 0=no (absent) */
+  int essential;                 /* The `essential' flag, 1=yes, 0=no (absent) */
   char *description, *maintainer, *source, *architecture, *installedsize, *origin, *bugs;
   struct versionrevision version;
   struct conffile *conffiles;
   struct arbitraryfield *arbs;
 };
 
-struct perpackagestate; /* dselect and dpkg have different versions of this */
+struct perpackagestate;          /* dselect and dpkg have different versions of this */
 
-struct pkginfo { /* pig */
+struct pkginfo                   /* pig */
+{
   struct pkginfo *next;
   const char *name;
-  enum pkgwant {
+  enum pkgwant
+  {
     want_unknown, want_install, want_hold, want_deinstall, want_purge,
-    want_sentinel /* Not allowed except as special sentinel value
-                     in some places */
+    want_sentinel
+    /* Not allowed except as special sentinel value
+                         in some places */
   } want;
-  enum pkgeflag {
+  enum pkgeflag
+  {
     eflagf_reinstreq    = 01,
     eflagf_obsoletehold = 02,
     eflagv_ok           = 0,
     eflagv_reinstreq    =    eflagf_reinstreq,
     eflagv_obsoletehold =                       eflagf_obsoletehold,
     eflagv_obsoleteboth =    eflagf_reinstreq | eflagf_obsoletehold
-  } eflag; /* bitmask, but obsoletehold no longer used except when reading */
-  enum pkgstatus {
+  } eflag;                       /* bitmask, but obsoletehold no longer used except when reading */
+  enum pkgstatus
+  {
     stat_notinstalled, stat_unpacked, stat_halfconfigured,
     stat_installed, stat_halfinstalled, stat_configfiles
   } status;
-  enum pkgpriority {
+  enum pkgpriority
+  {
     pri_required, pri_important, pri_standard, pri_recommended,
     pri_optional, pri_extra, pri_contrib,
     pri_other, pri_unknown, pri_unset=-1
@@ -141,7 +156,10 @@ struct pkginfo { /* pig */
   struct pkginfoperfile installed;
   struct pkginfoperfile available;
   struct perpackagestate *clientdata;
-  enum { white, gray, black } color;  /* used during cycle detection */
+  enum                           /* used during cycle detection */
+  {
+    white, gray, black
+  } color;
 };
 
 /*** from lock.c ***/
@@ -151,7 +169,8 @@ void unlockdatabase(const char *admindir);
 
 /*** from dbmodify.c ***/
 
-enum modstatdb_rw {
+enum modstatdb_rw
+{
   /* Those marked with \*s*\ are possible returns from modstatdb_init. */
   msdbrw_readonly/*s*/, msdbrw_needsuperuserlockonly/*s*/,
   msdbrw_writeifposs,
@@ -162,7 +181,8 @@ enum modstatdb_rw {
   msdbrw_noavail= 0100,
 };
 
-struct pipef {
+struct pipef
+{
   int fd;
   struct pipef *next;
 };
@@ -172,7 +192,8 @@ enum modstatdb_rw modstatdb_init(const char *admindir, enum modstatdb_rw reqrwfl
 void modstatdb_note(struct pkginfo *pkg);
 void modstatdb_shutdown(void);
 
-extern char *statusfile, *availablefile; /* initialised by modstatdb_init */
+                                 /* initialised by modstatdb_init */
+extern char *statusfile, *availablefile;
 
 void log_message(const char *fmt, ...);
 
@@ -194,24 +215,26 @@ void hashreport(FILE*);
 
 /*** from parse.c ***/
 
-enum parsedbflags {
-  pdb_recordavailable   =001, /* Store in `available' in-core structures, not `status' */
-  pdb_rejectstatus      =002, /* Throw up an error if `Status' encountered             */
-  pdb_weakclassification=004, /* Ignore priority/section info if we already have any   */
-  pdb_ignorefiles       =010  /* Ignore files info if we already have them             */
+enum parsedbflags
+{
+  pdb_recordavailable   =001,    /* Store in `available' in-core structures, not `status' */
+  pdb_rejectstatus      =002,    /* Throw up an error if `Status' encountered             */
+  pdb_weakclassification=004,    /* Ignore priority/section info if we already have any   */
+  pdb_ignorefiles       =010     /* Ignore files info if we already have them             */
 };
 
 const char *illegal_packagename(const char *p, const char **ep);
 int parsedb(const char *filename, enum parsedbflags, struct pkginfo **donep,
-            FILE *warnto, int *warncount);
+FILE *warnto, int *warncount);
 void copy_dependency_links(struct pkginfo *pkg,
-                           struct dependency **updateme,
-                           struct dependency *newdepends,
-                           int available);
+struct dependency **updateme,
+struct dependency *newdepends,
+int available);
 
 /*** from parsehelp.c ***/
 
-struct namevalue {
+struct namevalue
+{
   const char *name;
   int value, length;
 };
@@ -228,10 +251,10 @@ int informativeversion(const struct versionrevision *version);
 
 enum versiondisplayepochwhen { vdew_never, vdew_nonambig, vdew_always };
 void varbufversion(struct varbuf*, const struct versionrevision*,
-                   enum versiondisplayepochwhen);
+enum versiondisplayepochwhen);
 const char *parseversion(struct versionrevision *rversion, const char*);
 const char *versiondescribe(const struct versionrevision*,
-                            enum versiondisplayepochwhen);
+enum versiondisplayepochwhen);
 
 /*** from varbuf.c ***/
 
@@ -262,11 +285,12 @@ extern void varbufaddbuf(struct varbuf *v, const void *s, const int l);
  *
  * Callers using C++ need not worry about any of this.
  */
-struct varbuf {
+struct varbuf
+{
   size_t used, size;
   char *buf;
 
-#ifdef __cplusplus
+  #ifdef __cplusplus
   void init() { varbufinit(this); }
   void free() { varbuffree(this); }
   varbuf() { varbufinit(this); }
@@ -276,30 +300,30 @@ struct varbuf {
   void terminate(void/*to shut 2.6.3 up*/) { varbufaddc(this,0); used--; }
   void reset() { used=0; }
   const char *string() { terminate(); return buf; }
-#endif
+  #endif
 };
 
 /*** from dump.c ***/
 
 void writerecord(FILE*, const char*,
-                 const struct pkginfo*, const struct pkginfoperfile*);
+const struct pkginfo*, const struct pkginfoperfile*);
 
 void writedb(const char *filename, int available, int mustsync);
 
 void varbufrecord(struct varbuf*, const struct pkginfo*, const struct pkginfoperfile*);
 void varbufdependency(struct varbuf *vb, struct dependency *dep);
-  /* NB THE VARBUF MUST HAVE BEEN INITIALISED AND WILL NOT BE NULL-TERMINATED */
+/* NB THE VARBUF MUST HAVE BEEN INITIALISED AND WILL NOT BE NULL-TERMINATED */
 
 /*** from vercmp.c ***/
 
 int versionsatisfied(struct pkginfoperfile *it, struct deppossi *against);
 int versionsatisfied3(const struct versionrevision *it,
-                      const struct versionrevision *ref,
-                      enum depverrel verrel);
+const struct versionrevision *ref,
+enum depverrel verrel);
 int versioncompare(const struct versionrevision *version,
-                   const struct versionrevision *refversion);
+const struct versionrevision *refversion);
 int epochsdiffer(const struct versionrevision *a,
-                 const struct versionrevision *b);
+const struct versionrevision *b);
 
 /*** from nfmalloc.c ***/
 extern void *nfmalloc(size_t);
@@ -314,4 +338,4 @@ struct lstitem;
 struct lstitem* parseformat(const char* fmt);
 void freeformat(struct lstitem* head);
 void show1package(const struct lstitem* head, struct pkginfo *pkg);
-#endif /* DPKG_DB_H */
+#endif                           /* DPKG_DB_H */

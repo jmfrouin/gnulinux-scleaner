@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 /*! @page page3 Plugins documentations.
  * - @subpage nullfiles
@@ -36,31 +36,31 @@
 
 class CnullfilesPlugin : public Plugins::IInputPlugin
 {
-    public:
-        CnullfilesPlugin();
-        ~CnullfilesPlugin();
+  public:
+    CnullfilesPlugin();
+    ~CnullfilesPlugin();
 
-        bool GrabNullFile()
-        {
-            return true;
-        }
+    bool GrabNullFile()
+    {
+      return true;
+    }
 
-        bool GetDefaultSelection()
-        {
-            return true;
-        }
+    bool GetDefaultSelection()
+    {
+      return true;
+    }
 
-        /*!
-         *@brief From IInPlugin
-         */
-        void ProcessFile(const std::string& filename);
-        void GetDirectory(std::string& path) { path = ""; }
+    /*!
+     *@brief From IInPlugin
+     */
+    void ProcessFile(const std::string& filename);
+    void GetDirectory(std::string& path) { path = ""; }
 
-        /*!
-         *@brief From IPlugin
-         */
-        EType Type() { return eUserInput; }
-        std::string Description();
+    /*!
+     *@brief From IPlugin
+     */
+    EType Type() { return eUserInput; }
+    std::string Description();
 };
 #endif                           //__NULLFILES_H__
 /* vi:set ts=4: */

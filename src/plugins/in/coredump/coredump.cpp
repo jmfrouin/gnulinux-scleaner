@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-
+ */
 
 #include <iostream>
 #include <plugins/in/in_plugin_initializer.h>
@@ -31,7 +30,7 @@ Plugins::CInPluginInitializer<CcoredumpPlugin> gCoders;
 
 CcoredumpPlugin::CcoredumpPlugin()
 {
-    SetName("coredump");
+  SetName("coredump");
 }
 
 
@@ -42,13 +41,15 @@ CcoredumpPlugin::~CcoredumpPlugin()
 
 void CcoredumpPlugin::ProcessFile(const std::string& filename)
 {
-    if( filename.find("coredump", 0) == (filename.length()-8) )
-        fFL.push_back(filename);
+  if( filename.find("coredump", 0) == (filename.length()-8) )
+    fFL.push_back(filename);
 }
 
 
 std::string CcoredumpPlugin::Description()
 {
-    return "Find core dump files (coredump files)";
+  return "Find core dump files (coredump files)";
 }
+
+
 /* vi:set ts=4: */

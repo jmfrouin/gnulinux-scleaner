@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-
+ */
 
 #include <iostream>
 #include <plugins/in/in_plugin_initializer.h>
@@ -31,7 +30,7 @@ Plugins::CInPluginInitializer<CwmaPlugin> gCoders;
 
 CwmaPlugin::CwmaPlugin()
 {
-    SetName("wma");
+  SetName("wma");
 }
 
 
@@ -42,20 +41,22 @@ CwmaPlugin::~CwmaPlugin()
 
 void CwmaPlugin::ProcessFile(const std::string& filename)
 {
-    struct stat Info;
-    unsigned int FindWMA = filename.find(".wma", 0);
-    if(FindWMA == (filename.length()-4) )
-    {
-        std::string MP3File(filename.substr(0, FindWMA-1));
-        MP3File += ".mp3";
-        if(stat(MP3File.c_str(), &Info) == -1)
-           fFL.push_back(filename);
-    }
+  struct stat Info;
+  unsigned int FindWMA = filename.find(".wma", 0);
+  if(FindWMA == (filename.length()-4) )
+  {
+    std::string MP3File(filename.substr(0, FindWMA-1));
+    MP3File += ".mp3";
+    if(stat(MP3File.c_str(), &Info) == -1)
+      fFL.push_back(filename);
+  }
 }
 
 
 std::string CwmaPlugin::Description()
 {
-    return "Find music.wma if music.mp3 exist";
+  return "Find music.wma if music.mp3 exist";
 }
+
+
 /* vi:set ts=4: */

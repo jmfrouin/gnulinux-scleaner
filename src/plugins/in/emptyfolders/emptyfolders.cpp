@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #include <iostream>
 #include <dirent.h>              ///For path manipulation.
@@ -31,7 +31,7 @@ Plugins::CInPluginInitializer<CemptyfoldersPlugin> gEmptyFolders;
 
 CemptyfoldersPlugin::CemptyfoldersPlugin()
 {
-    SetName("empty folders");
+  SetName("empty folders");
 }
 
 
@@ -42,32 +42,34 @@ CemptyfoldersPlugin::~CemptyfoldersPlugin()
 
 void CemptyfoldersPlugin::ProcessFile(const std::string& filename)
 {
-    struct stat Stat;
+  struct stat Stat;
 
-    //Try to stat file.
-    if(stat(filename.c_str(), &Stat) == -1)
-        std::cout << i8n("[ERR] : Cannot stat ") << filename << '\n';
-    else
+  //Try to stat file.
+  if(stat(filename.c_str(), &Stat) == -1)
+    std::cout << i8n("[ERR] : Cannot stat ") << filename << '\n';
+  else
+  {
+    if(S_ISDIR(Stat.st_mode))
     {
-        if(S_ISDIR(Stat.st_mode))
-        {
-            struct dirent** NameList;
-            int Nb = scandir(filename.c_str(), &NameList, 0, alphasort);
-            if(Nb != -1) //Fix Bug 4 : If no error append.
-            {
-                if(Nb == 2) //So contain only : . and ..
-                    fFL.push_back(filename);
-                while (Nb-- > 0)
-                    free(NameList[Nb]);
-                free(NameList);
-            }
-        }
+      struct dirent** NameList;
+      int Nb = scandir(filename.c_str(), &NameList, 0, alphasort);
+      if(Nb != -1)               //Fix Bug 4 : If no error append.
+      {
+        if(Nb == 2)              //So contain only : . and ..
+          fFL.push_back(filename);
+        while (Nb-- > 0)
+          free(NameList[Nb]);
+        free(NameList);
+      }
     }
+  }
 }
 
 
 std::string CemptyfoldersPlugin::Description()
 {
-    return "Find empty folder size";
+  return "Find empty folder size";
 }
+
+
 /* vi:set ts=4: */

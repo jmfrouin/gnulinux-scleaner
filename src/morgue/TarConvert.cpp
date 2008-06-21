@@ -47,12 +47,12 @@
 //
 std::string CTar::DecToOct(int n)
 {
-	std::stringstream ss;
+  std::stringstream ss;
 
-	ss.clear();
-	ss << std::oct << n;
+  ss.clear();
+  ss << std::oct << n;
 
-	return ss.str();
+  return ss.str();
 }
 
 
@@ -64,26 +64,26 @@ std::string CTar::DecToOct(int n)
 //
 std::string CTar::OctToDec(int n)
 {
-	int iN = n;
-	int iPlace = 0, iDigit = 0;
-	double dResult = 0;
+  int iN = n;
+  int iPlace = 0, iDigit = 0;
+  double dResult = 0;
 
-	while(iN > 0)
-	{
-		// Take the ones digit.
-		iDigit = iN % 10;
+  while(iN > 0)
+  {
+    // Take the ones digit.
+    iDigit = iN % 10;
 
-		// Get rid of the last digit.
-		iN /= 10;
+    // Get rid of the last digit.
+    iN /= 10;
 
-		// Add it to the total. (8^Pos * digit).
-		dResult += iDigit * pow(static_cast<double>(8), static_cast<double>(iPlace));
+    // Add it to the total. (8^Pos * digit).
+    dResult += iDigit * pow(static_cast<double>(8), static_cast<double>(iPlace));
 
-		// Move the place forward.
-		iPlace++;
-	}
+    // Move the place forward.
+    iPlace++;
+  }
 
-	return ToString(static_cast<int>(dResult));
+  return ToString(static_cast<int>(dResult));
 }
 
 
@@ -95,11 +95,11 @@ std::string CTar::OctToDec(int n)
 //
 std::string CTar::ToString(int n)
 {
-	std::ostringstream ss;
+  std::ostringstream ss;
 
-	ss << n;
+  ss << n;
 
-	return ss.str();
+  return ss.str();
 }
 
 
@@ -111,14 +111,14 @@ std::string CTar::ToString(int n)
 //
 int CTar::RoundTo512(int n)
 {
-	if(n % 512 == 0)
-	{
-		return n;
-	}
-	else
-	{
-		return (n - (n % 512)) + 512;
-	}
+  if(n % 512 == 0)
+  {
+    return n;
+  }
+  else
+  {
+    return (n - (n % 512)) + 512;
+  }
 }
 
 
@@ -134,15 +134,15 @@ int CTar::RoundTo512(int n)
 //
 void CTar::PrependString(std::vector<std::string> &FileList, const char *szString)
 {
-	std::string strStr = szString;
-	strStr.append(1, '/');
+  std::string strStr = szString;
+  strStr.append(1, '/');
 
-	for(unsigned int i = 0; i < FileList.size(); ++i)
-	{
-		FileList.at(i).insert(0, strStr);
-	}
+  for(unsigned int i = 0; i < FileList.size(); ++i)
+  {
+    FileList.at(i).insert(0, strStr);
+  }
 
-	strPrefix = strStr;
+  strPrefix = strStr;
 }
 
 
@@ -154,27 +154,27 @@ void CTar::PrependString(std::vector<std::string> &FileList, const char *szStrin
 //
 std::string CTar::PadWithZeros(std::string &s, int iAcheiveSize)
 {
-	std::string str;
-	int iSize = iAcheiveSize - 1;
-	int iPadSize = iSize - s.size();
+  std::string str;
+  int iSize = iAcheiveSize - 1;
+  int iPadSize = iSize - s.size();
 
-	if(s.size() <= iSize)
-	{
-		for(int i = 0; i < iPadSize; i++)
-		{
-			str.append(1, '0');
-		}
-	}
-	else
-	{
-		// Crash it so we don't seriously screw up the file and think it's the
-		// tar algorithm.
-		return static_cast<std::string>(0);
-	}
+  if(s.size() <= iSize)
+  {
+    for(int i = 0; i < iPadSize; i++)
+    {
+      str.append(1, '0');
+    }
+  }
+  else
+  {
+    // Crash it so we don't seriously screw up the file and think it's the
+    // tar algorithm.
+    return static_cast<std::string>(0);
+  }
 
-	str.append(s);
+  str.append(s);
 
-	return str;
+  return str;
 }
 
 
@@ -190,31 +190,31 @@ std::string CTar::PadWithZeros(std::string &s, int iAcheiveSize)
 //          False otherwise.
 bool CTar::VerifyChecksum(TarHeader *Header)
 {
-	char *CheckRecord = 0;
-	int iChksum = 0;
-	std::string strPreChksum = Header->Chksum;
+  char *CheckRecord = 0;
+  int iChksum = 0;
+  std::string strPreChksum = Header->Chksum;
 
-	// Checksum is counted as if it was blank.  Let's back it up and clear it.
-	memset(Header->Chksum, 0, sizeof(Header->Chksum));
+  // Checksum is counted as if it was blank.  Let's back it up and clear it.
+  memset(Header->Chksum, 0, sizeof(Header->Chksum));
 
-	// Prepare the incrementor.
-	CheckRecord = reinterpret_cast<char*>(Header);
+  // Prepare the incrementor.
+  CheckRecord = reinterpret_cast<char*>(Header);
 
-	// Find the checksum.
-	for(CheckRecord; (CheckRecord - reinterpret_cast<char*>(Header)) < 512; ++CheckRecord)
-	{
-		iChksum += static_cast<int>(*CheckRecord);
-	}
+  // Find the checksum.
+  for(CheckRecord; (CheckRecord - reinterpret_cast<char*>(Header)) < 512; ++CheckRecord)
+  {
+    iChksum += static_cast<int>(*CheckRecord);
+  }
 
-	// Add 256 (2^8)
-	iChksum += 256;
+  // Add 256 (2^8)
+  iChksum += 256;
 
-	std::string strChksum = DecToOct(iChksum);
+  std::string strChksum = DecToOct(iChksum);
 
-	if(atoi(strChksum.c_str()) == atoi(strChksum.c_str()))
-	{
-		return true;
-	}
+  if(atoi(strChksum.c_str()) == atoi(strChksum.c_str()))
+  {
+    return true;
+  }
 
-	return false;
+  return false;
 }

@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-
+ */
 
 #include <iostream>
 #include <plugins/in/in_plugin_initializer.h>
@@ -31,7 +30,7 @@ Plugins::CInPluginInitializer<CthumbnailsPlugin> gBackFiles;
 
 CthumbnailsPlugin::CthumbnailsPlugin()
 {
-    SetName("thumbnails");
+  SetName("thumbnails");
 }
 
 
@@ -42,13 +41,15 @@ CthumbnailsPlugin::~CthumbnailsPlugin()
 
 void CthumbnailsPlugin::ProcessFile(const std::string& filename)
 {
-    if(filename.find("Thumbs.db", 0) == (filename.length()-9))
-        fFL.push_back(filename);
+  if(filename.find("Thumbs.db", 0) == (filename.length()-9))
+    fFL.push_back(filename);
 }
 
 
 std::string CthumbnailsPlugin::Description()
 {
-    return "Find thumbnails files (Thumb.db)";
+  return "Find thumbnails files (Thumb.db)";
 }
+
+
 /* vi:set ts=4: */

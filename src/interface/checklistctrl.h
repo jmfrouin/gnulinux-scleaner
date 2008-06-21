@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #ifndef _WX_CHECKLISTCTRL_H_
 #define _WX_CHECKLISTCTRL_H_
@@ -27,45 +27,45 @@
 
 namespace GUI
 {
-    /*!
-     * wxCheckListCtrl
-     * The options hierarchy viewer.
-     */
+  /*!
+   * wxCheckListCtrl
+   * The options hierarchy viewer.
+   */
 
-    class wxCheckListCtrl: public wxListCtrl
-    {
+  class wxCheckListCtrl: public wxListCtrl
+  {
     DECLARE_CLASS(wxCheckListCtrl)
-        public:
-            wxCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition, const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
-            virtual ~wxCheckListCtrl();
+      public:
+      wxCheckListCtrl(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pt = wxDefaultPosition, const wxSize& sz = wxDefaultSize, long style = wxLC_REPORT | wxSUNKEN_BORDER | wxLC_HRULES);
+      virtual ~wxCheckListCtrl();
 
-            void OnContextMenu(wxContextMenuEvent& event);
-            void ShowContextMenu(const wxPoint& pos);
-            void OnSelectAll(wxCommandEvent& event);
-            void OnUnselectAll(wxCommandEvent& event);
-            void OnInvertSelection(wxCommandEvent& event);
-            virtual void OnMouseEvent(wxMouseEvent& event);
-            virtual void OnKeyDown(wxKeyEvent& event);
+      void OnContextMenu(wxContextMenuEvent& event);
+      void ShowContextMenu(const wxPoint& pos);
+      void OnSelectAll(wxCommandEvent& event);
+      void OnUnselectAll(wxCommandEvent& event);
+      void OnInvertSelection(wxCommandEvent& event);
+      virtual void OnMouseEvent(wxMouseEvent& event);
+      virtual void OnKeyDown(wxKeyEvent& event);
 
-            /*!
-            *@brief Load the icons
-            */
-            virtual bool LoadIcons();
+      /*!
+       *@brief Load the icons
+       */
+      virtual bool LoadIcons();
 
-            /*!
-             * @brief Count how many selected items (In wxListCtrl by CTRL & SHIFT)
-             * @author snoogie (5/4/2008)
-             * @return Number of selected items.
-             */
-            int GetSelectionCount();
+      /*!
+       * @brief Count how many selected items (In wxListCtrl by CTRL & SHIFT)
+       * @author snoogie (5/4/2008)
+       * @return Number of selected items.
+       */
+      int GetSelectionCount();
 
-            /// Set the appropriate icon
-            virtual bool SetIcon(long& item);
+      /// Set the appropriate icon
+      virtual bool SetIcon(long& item);
 
-        protected:
-            wxImageList*        fImageList;
+    protected:
+      wxImageList*        fImageList;
 
-    DECLARE_EVENT_TABLE()
-    };
-} // namespace
+      DECLARE_EVENT_TABLE()
+  };
+}                                // namespace
 #endif                           // _WB_CHECKLISTCTRL_H_

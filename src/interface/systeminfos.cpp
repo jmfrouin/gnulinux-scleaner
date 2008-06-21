@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #include "wx/wxprec.h"
 
@@ -40,63 +40,68 @@ END_EVENT_TABLE()
 
 CSystemInfos::CSystemInfos()
 {
-    Init();
+  Init();
 }
+
 
 CSystemInfos::CSystemInfos( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
-    Init();
-    Create(parent, id, caption, pos, size, style);
+  Init();
+  Create(parent, id, caption, pos, size, style);
 }
+
 
 bool CSystemInfos::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
-    SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
-    wxDialog::Create( parent, id, caption, pos, size, style );
+  SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
+  wxDialog::Create( parent, id, caption, pos, size, style );
 
-    CreateControls();
-    if (GetSizer())
-        GetSizer()->SetSizeHints(this);
-    Centre();
-    return true;
+  CreateControls();
+  if (GetSizer())
+    GetSizer()->SetSizeHints(this);
+  Centre();
+  return true;
 }
+
 
 CSystemInfos::~CSystemInfos()
 {
 }
 
+
 void CSystemInfos::Init()
 {
 }
 
+
 void CSystemInfos::CreateControls()
 {
-    CSystemInfos* itemDialog1 = this;
+  CSystemInfos* itemDialog1 = this;
 
-    wxBoxSizer* Sizer = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(Sizer);
+  wxBoxSizer* Sizer = new wxBoxSizer(wxVERTICAL);
+  itemDialog1->SetSizer(Sizer);
 
-    std::string CPUInfos;
-    //Get model name
-    Engine::CEngine::Instance()->PROCInfo("model name", CPUINFO, CPUInfos);
-    CPUInfos += "(";
-    Engine::CEngine::Instance()->PROCInfo("cache size", CPUINFO, CPUInfos);
-    CPUInfos += ")";
-    wxString UCPUInfos(CPUInfos.c_str(), wxConvUTF8);
-    wxStaticText* CPU = new wxStaticText( itemDialog1, wxID_STATIC, UCPUInfos, wxDefaultPosition, wxDefaultSize, 0 );
-    Sizer->Add(CPU, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+  std::string CPUInfos;
+  //Get model name
+  Engine::CEngine::Instance()->PROCInfo("model name", CPUINFO, CPUInfos);
+  CPUInfos += "(";
+  Engine::CEngine::Instance()->PROCInfo("cache size", CPUINFO, CPUInfos);
+  CPUInfos += ")";
+  wxString UCPUInfos(CPUInfos.c_str(), wxConvUTF8);
+  wxStaticText* CPU = new wxStaticText( itemDialog1, wxID_STATIC, UCPUInfos, wxDefaultPosition, wxDefaultSize, 0 );
+  Sizer->Add(CPU, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-        wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _("Kernel version"), wxDefaultPosition, wxDefaultSize, 0 );
-    Sizer->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+  wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _("Kernel version"), wxDefaultPosition, wxDefaultSize, 0 );
+  Sizer->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    std::string RAMInfos("Ram : ");
-    Engine::CEngine::Instance()->PROCInfo("MemFree", MEMINFO, RAMInfos);
-    RAMInfos += " / ";
-    Engine::CEngine::Instance()->PROCInfo("MemTotal", MEMINFO, RAMInfos);
-    wxString URAMInfos(RAMInfos.c_str(), wxConvUTF8);
-    wxStaticText* RAM = new wxStaticText( itemDialog1, wxID_STATIC, URAMInfos, wxDefaultPosition, wxDefaultSize, 0 );
-    Sizer->Add(RAM, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+  std::string RAMInfos("Ram : ");
+  Engine::CEngine::Instance()->PROCInfo("MemFree", MEMINFO, RAMInfos);
+  RAMInfos += " / ";
+  Engine::CEngine::Instance()->PROCInfo("MemTotal", MEMINFO, RAMInfos);
+  wxString URAMInfos(RAMInfos.c_str(), wxConvUTF8);
+  wxStaticText* RAM = new wxStaticText( itemDialog1, wxID_STATIC, URAMInfos, wxDefaultPosition, wxDefaultSize, 0 );
+  Sizer->Add(RAM, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Avail / Free / Total Disk 1"), wxDefaultPosition, wxDefaultSize, 0 );
-    Sizer->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+  wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Avail / Free / Total Disk 1"), wxDefaultPosition, wxDefaultSize, 0 );
+  Sizer->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 }

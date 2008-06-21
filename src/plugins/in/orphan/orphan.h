@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-
+ */
 
 /*! @page page3 Plugins documentations.
  * - @subpage orphan
@@ -44,17 +43,17 @@
  */
 class CorphanPlugin : public Plugins::IThreadPlugin
 {
-    public:
-        CorphanPlugin();
-        ~CorphanPlugin();
+  public:
+    CorphanPlugin();
+    ~CorphanPlugin();
 
-        /*!
-         *@brief From IThreadablePlugin
-         */
-        virtual bool GetDefaultSelection() { return true; }
-        EType Type() { return eThreadableInput; }
-        std::string Description();
-        virtual void Run();
+    /*!
+     *@brief From IThreadablePlugin
+     */
+    virtual bool GetDefaultSelection() { return true; }
+    EType Type() { return eThreadableInput; }
+    std::string Description();
+    virtual void Run();
 };
 #endif                           //__ORPHAN_H__
 /* vi:set ts=4: */

@@ -16,7 +16,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #include "scleaner_wx.h"
 #include <config.h>
@@ -35,34 +35,36 @@ CSClean::CSClean()
 {
 }
 
+
 CSClean::~CSClean()
 {
 }
 
+
 bool CSClean::OnInit(void)
 {
-    //i8n
-    setlocale( LC_ALL, "" );
-    bindtextdomain( "scleaner", "/usr/share/locale" );
-    textdomain( "scleaner" );
+  //i8n
+  setlocale( LC_ALL, "" );
+  bindtextdomain( "scleaner", "/usr/share/locale" );
+  textdomain( "scleaner" );
 
-    #if defined DEBUG
-    std::cout << i8n("[DBG] scleaner starting ...\n");
-    #endif
+  #if defined DEBUG
+  std::cout << i8n("[DBG] scleaner starting ...\n");
+  #endif
 
-    bool Ret = false;
-    wxImage::AddHandler(new wxPNGHandler);
+  bool Ret = false;
+  wxImage::AddHandler(new wxPNGHandler);
 
-    //Retrieve Engine::CEngine instance pointer.
-    fEngine = Engine::CEngine::Instance();
+  //Retrieve Engine::CEngine instance pointer.
+  fEngine = Engine::CEngine::Instance();
 
-    //Load plugins
-    fEngine->LoadPlugins(PLUG_FOLDER);
+  //Load plugins
+  fEngine->LoadPlugins(PLUG_FOLDER);
 
-    //Load GFX interface
-    Ret = fEngine->LoadInterface();
+  //Load GFX interface
+  Ret = fEngine->LoadInterface();
 
-    return Ret;
+  return Ret;
 }
 
 

@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 //#ifdef !DEBUG
 
@@ -33,7 +33,7 @@ extern CMemoryManager g_mm;
  */
 inline void* operator new(std::size_t Size, const char* File, int Line)
 {
-        return g_mm.Allocate(Size, File, Line, false);
+  return g_mm.Allocate(Size, File, Line, false);
 }
 
 
@@ -42,7 +42,7 @@ inline void* operator new(std::size_t Size, const char* File, int Line)
  */
 inline void* operator new[](std::size_t Size, const char* File, int Line)
 {
-        return g_mm.Allocate(Size, File, Line, true);
+  return g_mm.Allocate(Size, File, Line, true);
 }
 
 
@@ -51,7 +51,7 @@ inline void* operator new[](std::size_t Size, const char* File, int Line)
  */
 inline void operator delete(void* Ptr)
 {
-        g_mm.Free(Ptr, false);
+  g_mm.Free(Ptr, false);
 }
 
 
@@ -60,23 +60,23 @@ inline void operator delete(void* Ptr)
  */
 inline void operator delete(void* Ptr, const char* File, int Line)
 {
-        g_mm.NextDelete(File, Line);
-        g_mm.Free(Ptr, false);
+  g_mm.NextDelete(File, Line);
+  g_mm.Free(Ptr, false);
 }
 
 
 inline void operator delete[](void* Ptr)
 {
-        g_mm.Free(Ptr, true);
+  g_mm.Free(Ptr, true);
 }
 
 
 inline void operator delete[](void* Ptr, const char* File, int Line)
 {
-        g_mm.NextDelete(File, Line);
-        g_mm.Free(Ptr, true);
+  g_mm.NextDelete(File, Line);
+  g_mm.Free(Ptr, true);
 }
-#endif                                                   // _LEAK_DETECTOR_H__
+#endif                           // _LEAK_DETECTOR_H__
 
 #undef delete
 

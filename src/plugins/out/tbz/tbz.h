@@ -18,7 +18,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 /*! @page page3 Plugins documentations.
  * - @subpage tbz
@@ -41,34 +41,34 @@
 
 class CtbzPlugin : public Plugins::IOutPlugin
 {
-    public:
-        CtbzPlugin();
-        ~CtbzPlugin();
+  public:
+    CtbzPlugin();
+    ~CtbzPlugin();
 
-        /*!
-         *@brief From IPlugin.
-         */
-        EType Type() { return eOutput; }
+    /*!
+     *@brief From IPlugin.
+     */
+    EType Type() { return eOutput; }
 
-        /*!
-        *@brief From IOutPlugin
-        */
-        void ProcessFileList(std::list<std::string>& fl, const std::string& path, IProgressbar* callback);
+    /*!
+     *@brief From IOutPlugin
+     */
+    void ProcessFileList(std::list<std::string>& fl, const std::string& path, IProgressbar* callback);
 
-    private:
-        /*!
-         *@brief Compress a file using bz algo.
-         *@param input Input file name.
-         *@param output Output file name.
-         *@param callback For the progress bar.
-         *@return true on success, false otherwise.
-         */
-        bool Compress(const std::string& input, const std::string& output, IProgressbar* callback);
+  private:
+    /*!
+     *@brief Compress a file using bz algo.
+     *@param input Input file name.
+     *@param output Output file name.
+     *@param callback For the progress bar.
+     *@return true on success, false otherwise.
+     */
+    bool Compress(const std::string& input, const std::string& output, IProgressbar* callback);
 
-        /*!
-         *@brief From IPlugin
-         */
-        std::string Description();
+    /*!
+     *@brief From IPlugin
+     */
+    std::string Description();
 };
 #endif                           //__TBZ_H__
 /* vi:set ts=4: */

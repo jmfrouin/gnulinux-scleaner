@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 #ifndef __SYSTEMINFOS_H__
 #define __SYSTEMINFOS_H__
 
@@ -25,10 +25,10 @@
 
 class CSystemInfos: public wxDialog
 {
-    DECLARE_DYNAMIC_CLASS( CSystemInfos )
+  DECLARE_DYNAMIC_CLASS( CSystemInfos )
     DECLARE_EVENT_TABLE()
 
-public:
+    public:
     CSystemInfos();
     CSystemInfos( wxWindow* parent, wxWindowID id = ID_SYSTEMINFOS, const wxString& caption = SYMBOL_SYSTEMINFOS_TITLE, const wxPoint& pos = SYMBOL_POSITION, const wxSize& size = SYMBOL_DIALOG_SIZE, long style = SYMBOL_DIALOG_STYLE );
 
@@ -40,6 +40,5 @@ public:
 
     void CreateControls();
 };
-
 #endif
-    // __SYSTEMINFOS_H__
+// __SYSTEMINFOS_H__

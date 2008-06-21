@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #ifndef __IPLUGIN_H__
 #define __IPLUGIN_H__
@@ -28,63 +28,63 @@
 #include <tools/name.h>
 
 /*!
-*@brief Define a plugin.
-*/
+ *@brief Define a plugin.
+ */
 namespace Plugins
 {
-    /**
-     * @brief Plugin Interface
-     * @version 06.05.2007
-     * @author Jean-Michel Frouin (jmfrouin@gmail.com)
-     */
-    class IPlugin : public Tools::CName
-    {
-        public:
-            //! All input plugins' type
-            enum EType
-            {
-                eUserInput,                       /*!< Basic input plugin: call for each files found in user defined folders. */
-                eRootInput,                        /*!< Input plugin which require root privileges.*/
-                eThreadableInput,           /*!<  Threadable input plugin, run alone from others.*/
-                eRootThreadableInput,   /*!< eRootInput + eThreadableInput*/
-                eOutput                             /*!<  Output plugin.*/
-            };
+  /**
+   * @brief Plugin Interface
+   * @version 06.05.2007
+   * @author Jean-Michel Frouin (jmfrouin@gmail.com)
+   */
+  class IPlugin : public Tools::CName
+  {
+    public:
+      //! All input plugins' type
+      enum EType
+      {
+        eUserInput,              /*!< Basic input plugin: call for each files found in user defined folders. */
+        eRootInput,              /*!< Input plugin which require root privileges.*/
+        eThreadableInput,        /*!<  Threadable input plugin, run alone from others.*/
+        eRootThreadableInput,    /*!< eRootInput + eThreadableInput*/
+        eOutput                  /*!<  Output plugin.*/
+      };
 
-        public:
-            /*!
-             * @brief ctor
-             * @author snoogie (5/22/2008)
-             */
-            IPlugin(){}
+    public:
+      /*!
+       * @brief ctor
+       * @author snoogie (5/22/2008)
+       */
+      IPlugin(){}
 
-            /*!
-             * @brief dtor
-             * @author snoogie (5/22/2008)
-             */
-            virtual ~IPlugin(){}
+      /*!
+       * @brief dtor
+       * @author snoogie (5/22/2008)
+       */
+      virtual ~IPlugin(){}
 
-            /*!
-             * @brief Threadable plugin ?
-             * @author snoogie (5/22/2008)
-             * @return bool true on threadable plugin, false otherwise
-             */
-            bool Threadable();
+      /*!
+       * @brief Threadable plugin ?
+       * @author snoogie (5/22/2008)
+       * @return bool true on threadable plugin, false otherwise
+       */
+      bool Threadable();
 
-            /*!
-             * @brief Full 'user friendly' description.
-             * @todo Add a 'tech friendly' description.
-             * @author snoogie (5/22/2008)
-             * @return std::string
-             */
-            virtual std::string Description() = 0;
+      /*!
+       * @brief Full 'user friendly' description.
+       * @todo Add a 'tech friendly' description.
+       * @author snoogie (5/22/2008)
+       * @return std::string
+       */
+      virtual std::string Description() = 0;
 
-            /*!
-             * @brief Type from EType.
-             * @author snoogie (5/22/2008)
-             * @return EType
-             */
-            virtual EType Type() = 0;
-    };
-} //namespace Plugins
+      /*!
+       * @brief Type from EType.
+       * @author snoogie (5/22/2008)
+       * @return EType
+       */
+      virtual EType Type() = 0;
+  };
+}                                //namespace Plugins
 #endif                           //__IPLUGIN_H__
 /* vi:set ts=4: */

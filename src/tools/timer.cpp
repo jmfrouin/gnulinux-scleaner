@@ -39,5 +39,4 @@ namespace Tools
     std::cout << ROUGE << "Timer : " << fTimeStamp << '\n' << STOP;
   }
 
-} // namespace Tools
-
+}                                // namespace Tools

@@ -16,7 +16,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #ifndef _APP_H_
 #define _APP_H_
@@ -33,13 +33,13 @@
 // Define a new application
 class CSClean: public wxApp
 {
-        public:
-                CSClean();
-                ~CSClean();
-                bool OnInit(void);
+  public:
+    CSClean();
+    ~CSClean();
+    bool OnInit(void);
 
-        private:
-                Tools::TSmartPtr<Engine::CEngine>          fEngine;
+  private:
+    Tools::TSmartPtr<Engine::CEngine>          fEngine;
 };
-#endif                                                   // _APP_H_
+#endif                           // _APP_H_
 /* vi:set ts=4: */

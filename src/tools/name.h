@@ -16,8 +16,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
+ */
 
 #ifndef __NAME_H__
 #define __NAME_H__
@@ -26,42 +25,42 @@
 #include <string>
 
 /*!
-*@brief Various tools classes.
-*/
+ *@brief Various tools classes.
+ */
 namespace Tools
 {
-    /**
-     * @brief A base class who named an object.
-     */
-    class CName
-    {
-        public:
-            /*!
-             *@brief Default constructor.
-             */
-            CName();
+  /**
+   * @brief A base class who named an object.
+   */
+  class CName
+  {
+    public:
+      /*!
+       *@brief Default constructor.
+       */
+      CName();
 
-            /*!
-             *@brief Destructor.
-             */
-            virtual ~CName();
+      /*!
+       *@brief Destructor.
+       */
+      virtual ~CName();
 
-            /*!
-             *@brief Retrieve the current name.
-             *@return A string which contain the name.
-             */
-            virtual const std::string& GetName();
+      /*!
+       *@brief Retrieve the current name.
+       *@return A string which contain the name.
+       */
+      virtual const std::string& GetName();
 
-            /*!
-             *@brief Set the current name.
-             *@param name A string which contain the name.
-             */
-            virtual void SetName(const std::string& name);
+      /*!
+       *@brief Set the current name.
+       *@param name A string which contain the name.
+       */
+      virtual void SetName(const std::string& name);
 
-        private:
-            std::string     fName;  ///< The name.
+    private:
+      std::string     fName;     ///< The name.
 
-    };
+  };
 }
 #endif                           //__NAME_H__
 /* vi:set ts=4: */

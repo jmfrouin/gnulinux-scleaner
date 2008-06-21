@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 /*! @page page3 Plugins documentations.
  * - @subpage kernels
@@ -46,32 +46,32 @@ class MMap;
  */
 class CkernelsPlugin : public Plugins::IThreadPlugin
 {
-    public:
-        CkernelsPlugin();
-        ~CkernelsPlugin();
+  public:
+    CkernelsPlugin();
+    ~CkernelsPlugin();
 
-        bool GetDefaultSelection() { return true; }
+    bool GetDefaultSelection() { return true; }
 
-        /*!
-         *@brief From IThreadablePlugin
-         */
-        EType Type() { return eRootThreadableInput; }
-        std::string Description();
-        void GetFileList(std::list<std::string>& fl);
-        virtual void Run();
+    /*!
+     *@brief From IThreadablePlugin
+     */
+    EType Type() { return eRootThreadableInput; }
+    std::string Description();
+    void GetFileList(std::list<std::string>& fl);
+    virtual void Run();
 
-     private:
-        /*!
-         *@brief Search for a package in cache.
-         *@param name The package name.
-         *@param result A string containing the first found package.
-         */
-        bool Search(const std::string& name, std::string& result);
+  private:
+    /*!
+     *@brief Search for a package in cache.
+     *@param name The package name.
+     *@param result A string containing the first found package.
+     */
+    bool Search(const std::string& name, std::string& result);
 
-    private:
-        pkgCache*       fCache;
-        pkgSourceList*  fSrcList;
-        MMap*           fMap;
+  private:
+    pkgCache*       fCache;
+    pkgSourceList*  fSrcList;
+    MMap*           fMap;
 };
 #endif                           //__KERNELS_H__
 /* vi:set ts=4: */

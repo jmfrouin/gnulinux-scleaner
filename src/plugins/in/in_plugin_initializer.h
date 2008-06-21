@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 #ifndef __IN_PLUGIN_INITIALIZER_H__
 #define __IN_PLUGIN_INITIALIZER_H__
@@ -30,23 +30,23 @@
 
 namespace Plugins
 {
-    template <class T>
+  template <class T>
     class CInPluginInitializer
-    {
-        public:
-            CInPluginInitializer()
-            {
-                CPluginManager* PFM = CPluginManager::Instance();
-                T* Obj = new T;
-                if(!Engine::CEngine::IsRoot())
-                {
-                    if( (Obj->Type() != Plugins::IPlugin::eRootInput) && (Obj->Type() != Plugins::IPlugin::eRootThreadableInput) )
-                        PFM->Add(Obj);
-                }
-                else
-                    PFM->Add(Obj);
-            }
-    };
-} //namespace Plugins
+  {
+    public:
+      CInPluginInitializer()
+      {
+        CPluginManager* PFM = CPluginManager::Instance();
+        T* Obj = new T;
+        if(!Engine::CEngine::IsRoot())
+        {
+          if( (Obj->Type() != Plugins::IPlugin::eRootInput) && (Obj->Type() != Plugins::IPlugin::eRootThreadableInput) )
+            PFM->Add(Obj);
+        }
+        else
+          PFM->Add(Obj);
+      }
+  };
+}                                //namespace Plugins
 #endif                           //__IN_PLUGIN_INITIALIZER_H__
 /* vi:set ts=4: */
