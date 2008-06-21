@@ -239,6 +239,8 @@
 				<F N="src/interface/CMakeLists.txt"/>
 				<F N="src/interface/maininterface.cpp"/>
 				<F N="src/interface/maininterface.h"/>
+				<F N="src/interface/notif.cpp"/>
+				<F N="src/interface/notif.h"/>
 				<F N="src/interface/preferences.cpp"/>
 				<F N="src/interface/preferences.h"/>
 				<F N="src/interface/result_checklistctrl.cpp"/>

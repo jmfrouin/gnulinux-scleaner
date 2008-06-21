@@ -32,7 +32,6 @@
 #include <string>
 #include <sstream>
 #include <sys/stat.h>
-#include <libnotify/notify.h>
 #include <plugins/plugin_manager.h>
 #include <plugins/plugin.h>
 #include <engine/engine.h>
@@ -57,6 +56,7 @@
 #include "preferences.h"
 #include "systeminfos.h"
 #include "review.h"
+#include  "notif.h"
 
 //App icon
 #include <gfx/scleaner.xpm>
@@ -306,13 +306,13 @@ namespace GUI
     return true;
   }
 
-  wxBitmap CMainInterface::GetBitmapResource( const wxString& name )
+  wxBitmap CMainInterface::GetBitmapResource(const wxString& name)
   {
     wxUnusedVar(name);
     return wxNullBitmap;
   }
 
-  wxIcon CMainInterface::GetIconResource( const wxString& name )
+  wxIcon CMainInterface::GetIconResource(const wxString& name)
   {
     wxUnusedVar(name);
     return wxNullIcon;
@@ -333,18 +333,8 @@ namespace GUI
       wxString Totalsize(Total.c_str(), wxConvUTF8);
       SetStatusText(Totalsize, 0);
 
-      NotifyNotification* Notif;
-
-      notify_init("fun");
-
-      Notif = notify_notification_new("scleaner informs you: ", Total.c_str(), 0, 0);
-                                 // 5 seconds
-      notify_notification_set_timeout(Notif, 1000);
-
-      if (!notify_notification_show (Notif, 0))
-        std::cerr << "[ERR] Failed to send notification\n";
-      else
-        g_object_unref(G_OBJECT(Notif));
+      Interface::CNotif TotalNotif("scleaner", Total);
+      TotalNotif.Display();
     }
   }
 

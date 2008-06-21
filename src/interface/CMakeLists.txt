@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SET(interface_src checklistctrl.cpp preferences.cpp maininterface.cpp result_checklistctrl.cpp review.cpp select_dialog.cpp systeminfos.cpp tray.cpp)
+SET(interface_src checklistctrl.cpp preferences.cpp maininterface.cpp notif.cpp result_checklistctrl.cpp review.cpp select_dialog.cpp systeminfos.cpp tray.cpp)
 
 ADD_LIBRARY(interface ${interface_src})
 TARGET_LINK_LIBRARIES(interface notify)
