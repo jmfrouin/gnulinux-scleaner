@@ -339,7 +339,7 @@ namespace GUI
 
       Notif = notify_notification_new("scleaner informs you: ", Total.c_str(), 0, 0);
                                  // 5 seconds
-      notify_notification_set_timeout(Notif, 5000);
+      notify_notification_set_timeout(Notif, 1000);
 
       if (!notify_notification_show (Notif, 0))
         std::cerr << "[ERR] Failed to send notification\n";
@@ -354,7 +354,8 @@ namespace GUI
     wxAboutDialogInfo info;
 
     info.AddArtist(_T("Medina Bastien"));
-    info.AddDeveloper(_T("Jean-Michel Frouin"));
+    info.AddDeveloper(_T("Source code: Jean-Michel Frouin"));
+    info.AddDeveloper(_T("Website : Pierre Jacquier"));
     info.AddTranslator(_T("French: Jean-Michel Frouin"));
     info.AddTranslator(_T("German: Peer Voss"));
     info.AddTranslator(_T("Italian: David Paleino"));

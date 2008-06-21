@@ -155,6 +155,4 @@ void CMemoryManager::NextDelete(const std::string& file, int line)
 
   fDeleteStack.push(Delete);
 }
-
-
 /* vi:set ts=4: */
