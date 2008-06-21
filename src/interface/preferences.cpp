@@ -44,14 +44,14 @@ namespace GUI
 {
   IMPLEMENT_DYNAMIC_CLASS( CPreferences, wxDialog )
 
-    BEGIN_EVENT_TABLE( CPreferences, wxDialog )
-    EVT_BUTTON(wxOK, CPreferences::OnApply)
-    EVT_BUTTON(wxCANCEL, CPreferences::OnCancel)
-    EVT_CHECKBOX(ID_PREFERENCES_DELETE, CPreferences::OnDelete)
-    END_EVENT_TABLE()
+  BEGIN_EVENT_TABLE( CPreferences, wxDialog )
+  EVT_BUTTON(wxOK, CPreferences::OnApply)
+  EVT_BUTTON(wxCANCEL, CPreferences::OnCancel)
+  EVT_CHECKBOX(ID_PREFERENCES_DELETE, CPreferences::OnDelete)
+  END_EVENT_TABLE()
 
-    CPreferences::CPreferences():
-  fSplashScreen(0), fToolbar(0), fStatusbar(0), fDelete(0)
+  CPreferences::CPreferences():
+  fSplashScreen(0), fToolbar(0), fStatusbar(0), fDelete(0), fSystemFiles(0), fRecursiveScan(0)
   {
     Init();
   }
@@ -94,7 +94,6 @@ namespace GUI
     l_MainPanel->SetSizer(l_Sizer0);
 
     //Preferences ListBook
-    //FIXME : Need to add bitmap
     wxListbook* PrefListbook = new wxListbook(l_MainPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
     l_Sizer0->Add(PrefListbook, 1, wxGROW | wxALL, 5);
 
@@ -139,12 +138,12 @@ namespace GUI
     Sizer2->Add(fSplashScreen, 1, wxGROW | wxALL, 5);
 
     //Show toolbar ?
-    fToolbar = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show toolbar (need reboot)"), wxDefaultPosition);
+    fToolbar = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show toolbar (need restart)"), wxDefaultPosition);
     fToolbar->SetValue(fSettings->GetShowToolbar());
     Sizer2->Add(fToolbar, 1, wxGROW | wxALL, 5);
 
     //Show statusbar ?
-    fStatusbar = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show status bar (need reboot)"), wxDefaultPosition);
+    fStatusbar = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show status bar (need restart)"), wxDefaultPosition);
     fStatusbar->SetValue(fSettings->GetShowStatusbar());
     Sizer2->Add(fStatusbar, 1, wxGROW | wxALL, 5);
 
@@ -161,6 +160,11 @@ namespace GUI
     fSystemFiles = new wxCheckBox(PrefPanel, ID_PREFERENCES_SYSTEM_FILES, _T("Include system files (and folders) to scan"), wxDefaultPosition);
     fSystemFiles->SetValue(fSettings->GetSystemFiles());
     Sizer2->Add(fSystemFiles, 1, wxGROW | wxALL, 5);
+
+    //Recursive scan
+    fRecursiveScan = new wxCheckBox(PrefPanel, ID_PREFERENCES_RECURSIVE_SCAN, _T("Recursive scan"), wxDefaultPosition);
+    fRecursiveScan->SetValue(fSettings->GetRecursiveScan());
+    Sizer2->Add(fRecursiveScan, 1, wxGROW | wxALL, 5);
 
     //Append pages, by alphabetical order:
     //Add image :
@@ -215,6 +219,8 @@ namespace GUI
     fSettings->SetShowToolbar(fToolbar->GetValue());
     fSettings->SetShowStatusbar(fStatusbar->GetValue());
     fSettings->SetDelete(fDelete->GetValue());
+    fSettings->SetSystemFiles(fSystemFiles->GetValue());
+    fSettings->SetRecursiveScan(fRecursiveScan->GetValue());
     Close(true);
   }
 

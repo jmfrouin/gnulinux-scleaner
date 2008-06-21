@@ -27,7 +27,8 @@
 namespace Engine
 {
   CSettingsManager::CSettingsManager():
-  fShowSplash(true), fShowToolbar(true), fShowStatusbar(true)
+  fShowSplash(true), fShowToolbar(true), fShowStatusbar(true),
+  fDelete(false), fSystemFiles(true), fRecursiveScan(true)
   {
     std::string Path;
 
@@ -95,6 +96,12 @@ namespace Engine
           case eDelete:
             File >> fDelete;
             break;
+          case eSystemFiles:
+            File >> fSystemFiles;
+            break;
+          case eRecursiveScan:
+            File >> fRecursiveScan;
+            break;
           default:
             continue;
         }
@@ -113,6 +120,8 @@ namespace Engine
     Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowToolbar = ", fShowToolbar, true);
     Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowStatusbar = ", fShowStatusbar, true);
     Log::CLog::Instance()->Log(__FILE__, __LINE__, "fDelete = ", fDelete, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fSystemFiles = ", fSystemFiles, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fRecursiveScan = ", fRecursiveScan, true);
     #endif
   }
 
@@ -138,6 +147,8 @@ namespace Engine
     Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowToolbar = ", fShowToolbar, true);
     Log::CLog::Instance()->Log(__FILE__, __LINE__, "fShowStatusbar = ", fShowStatusbar, true);
     Log::CLog::Instance()->Log(__FILE__, __LINE__, "fDelete = ", fDelete, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fSystemFiles = ", fSystemFiles, true);
+    Log::CLog::Instance()->Log(__FILE__, __LINE__, "fRecursiveScan = ", fRecursiveScan, true);
     #endif
 
     std::ofstream File(Path.c_str());
@@ -164,19 +175,11 @@ namespace Engine
       File << eFolderEx << ' ' << *It << '\n';
     }
 
-    //Show toolbar
     File << eShowToolbar << ' ' << fShowToolbar << '\n';
-
-    //Show status bar
     File << eShowStatusbar << ' ' << fShowStatusbar << '\n';
-
-    //Delete files after output plugin
     File << eDelete << ' ' << fDelete << '\n';
-    #if defined DEBUG
-    Log::CLog::Instance()->Log(__FILE__, __LINE__, "eShowToolbar :", fShowToolbar, true);
-    Log::CLog::Instance()->Log(__FILE__, __LINE__, "eShowStatusbar :", fShowStatusbar, true);
-    Log::CLog::Instance()->Log(__FILE__, __LINE__, "eDelete :", fDelete, true);
-    #endif
+    File << eSystemFiles << ' ' << fSystemFiles << '\n';
+    File << eRecursiveScan << ' ' << fRecursiveScan << '\n';
   }
 
   bool CSettingsManager::AddFolder(std::string dir, std::string& parent, eFoldersType type)
@@ -198,55 +201,51 @@ namespace Engine
         break;
     }
 
-    //Search a parent folder:
-    std::list<std::string>::iterator It;
-    bool Clean = false;
-    for(It = FileList->begin(); It != FileList->end(); ++It)
+    if(fRecursiveScan)
     {
-      //If a parent is found
-      if(dir.find(*It, 0) != std::string::npos)
+      //Search a parent folder:
+      std::list<std::string>::iterator It;
+      bool Clean = false;
+      for(It = FileList->begin(); It != FileList->end(); ++It)
       {
-        parent = *It;
-        Ret = false;
-        break;
-      }
-      else
-      {
-        //If _dir is a parent :D
-        if((*It).find(dir, 0) != std::string::npos)
+        //If a parent is found
+        if(dir.find(*It, 0) != std::string::npos)
         {
-          Clean = true;
+          parent = *It;
+          Ret = false;
           break;
         }
-      }
-    }
-
-    if(Clean)
-    {
-      It = FileList->begin();
-      do
-      {
-        if((*It).find(dir, 0) != std::string::npos)
-        {
-          std::list<std::string>::iterator It2erase = It;
-          ++It;
-          FileList->erase(It2erase);
-        }
         else
-          ++It;
-      }while(It != FileList->end());
+        {
+          //If dir is a parent :D
+          if((*It).find(dir, 0) != std::string::npos)
+          {
+            Clean = true;
+            break;
+          }
+        }
+      }
+  
+      if(Clean)
+      {
+        It = FileList->begin();
+        do
+        {
+          if((*It).find(dir, 0) != std::string::npos)
+          {
+            std::list<std::string>::iterator It2erase = It;
+            ++It;
+            FileList->erase(It2erase);
+          }
+          else
+            ++It;
+        }while(It != FileList->end());
+      }
     }
 
     if(Ret)
       FileList->push_back(dir);
-    else
-    {
-      //If a parent folder is found, no need to add is child.
-      #if defined DEBUG
-      std::cerr << "[WRG] Parent folder found : " << (*It) << " no need to add " << dir << '\n';
-      #endif
-    }
-
+    
     return Ret;
   }
 

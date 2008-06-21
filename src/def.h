@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 939
+#define BUILD 944
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -83,6 +83,7 @@
 #define ID_PREFERENCES_DELETE 10032
 #define ID_PREFERENCES_RADIOBOX 10033
 #define ID_PREFERENCES_SYSTEM_FILES 10034
+#define ID_PREFERENCES_RECURSIVE_SCAN 10035
 
 //Checklists
 #define ID_RESCHECKLIST 10040
@@ -122,6 +123,6 @@
 #include <locale.h>
 
 //CRC32 stuff
-#define CRC_POLY_REV 0xEDB93950
+#define CRC_POLY_REV 0xEDB94450
 #endif                           // __DEF_H__
 /* vi:set ts=4: */

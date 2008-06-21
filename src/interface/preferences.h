@@ -96,6 +96,7 @@ namespace GUI
       wxCheckBox*     fStatusbar;
       wxCheckBox*     fDelete;
       wxCheckBox*     fSystemFiles;
+      wxCheckBox*     fRecursiveScan;
   };
 }
 #endif                           // __PREFERENCES_H__

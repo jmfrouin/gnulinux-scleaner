@@ -91,9 +91,6 @@ void CSystemInfos::CreateControls()
   wxStaticText* CPU = new wxStaticText( itemDialog1, wxID_STATIC, UCPUInfos, wxDefaultPosition, wxDefaultSize, 0 );
   Sizer->Add(CPU, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-  wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _("Kernel version"), wxDefaultPosition, wxDefaultSize, 0 );
-  Sizer->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-
   std::string RAMInfos("Ram : ");
   Engine::CEngine::Instance()->PROCInfo("MemFree", MEMINFO, RAMInfos);
   RAMInfos += " / ";
@@ -101,7 +98,4 @@ void CSystemInfos::CreateControls()
   wxString URAMInfos(RAMInfos.c_str(), wxConvUTF8);
   wxStaticText* RAM = new wxStaticText( itemDialog1, wxID_STATIC, URAMInfos, wxDefaultPosition, wxDefaultSize, 0 );
   Sizer->Add(RAM, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-
-  wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("Avail / Free / Total Disk 1"), wxDefaultPosition, wxDefaultSize, 0 );
-  Sizer->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 }

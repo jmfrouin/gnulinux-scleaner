@@ -48,7 +48,9 @@ namespace Engine
         eFolderEx,
         eShowToolbar,
         eShowStatusbar,
-        eDelete
+        eDelete,
+        eSystemFiles,
+        eRecursiveScan
       };
 
       enum eFoldersType
@@ -104,6 +106,8 @@ namespace Engine
 
       bool GetSystemFiles() { return fSystemFiles; }
 
+      bool GetRecursiveScan() { return fRecursiveScan; }
+
       /*!
        * Mutators
        */
@@ -116,6 +120,8 @@ namespace Engine
       void SetDelete(bool val) { fDelete = val; }
 
       void SetSystemFiles(bool val) { fSystemFiles = val; }
+
+      void SetRecursiveScan(bool val) { fRecursiveScan = val; }
 
     private:
                                  ///Display splash (only in GUI) ?
@@ -133,6 +139,8 @@ namespace Engine
       bool                    fDelete;
                                  ///Include system file and folders (.*) ?
       bool                    fSystemFiles;
+                                 ///Recursive scan ?
+      bool                    fRecursiveScan;
   };
 }                                //namespace Engine
 #endif                           //__SETTINGS_MANAGER_H__

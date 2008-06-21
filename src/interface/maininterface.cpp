@@ -673,11 +673,11 @@ namespace GUI
       //std::cout << SelectionPath << '\n';
       if(!fSettings->AddFolder(SelectionPath, Parent, Engine::CSettingsManager::eFoldersInc))
       {
-        wxString Text(i8n("I cannot add "), wxConvUTF8);
+        wxString Text(i8n("I cannot add \""), wxConvUTF8);
         Text += wxString(SelectionPath.c_str(), wxConvUTF8);
-        Text += wxString(i8n(" since "), wxConvUTF8);
+        Text += wxString(i8n("\" since \""), wxConvUTF8);
         Text += wxString(Parent.c_str(), wxConvUTF8);
-        Text += wxString(i8n(" is already in the folders list."), wxConvUTF8);
+        Text += wxString(i8n("\" is already in the folders list."), wxConvUTF8);
 
         wxMessageBox(Text, wxString(i8n("scleaner information"), wxConvUTF8), wxICON_INFORMATION);
       }
@@ -719,11 +719,11 @@ namespace GUI
       std::string Parent;
       if(!fSettings->AddFolder(SelectionPath, Parent, Engine::CSettingsManager::eFoldersEx))
       {
-        wxString Text(i8n("I cannot add "), wxConvUTF8);
+        wxString Text(i8n("I cannot add \""), wxConvUTF8);
         Text += wxString(SelectionPath.c_str(), wxConvUTF8);
-        Text += wxString(i8n(" since "), wxConvUTF8);
+        Text += wxString(i8n("\" since \""), wxConvUTF8);
         Text += wxString(Parent.c_str(), wxConvUTF8);
-        Text += wxString(i8n(" is already in the folders list."), wxConvUTF8);
+        Text += wxString(i8n("\" is already in the folders list."), wxConvUTF8);
 
         wxMessageBox(Text, wxString(i8n("scleaner information"), wxConvUTF8), wxICON_INFORMATION);
       }
