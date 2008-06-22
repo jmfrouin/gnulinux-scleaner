@@ -617,6 +617,33 @@ namespace Engine
       File.close();
     }
   }
+
+  void CEngine::ScanDir(const std::string& filename)
+  {
+      struct dirent** NameList;
+      int Nb = scandir(filename.c_str(), &NameList, 0, alphasort);
+      if(Nb != -1) //Fix Bug 4 : If no error append.
+      {
+          while (Nb-- > 0)
+          {
+              struct stat Stat;
+              std::string Temp(filename);
+              Temp += "/";
+              Temp += NameList[Nb]->d_name;
+              std::string Dir(NameList[Nb]->d_name);
+              if(Dir.length() <= 2)
+                  continue;
+              if(stat(Temp.c_str(), &Stat) == -1)
+                  std::cout << "[ERR] : Cannot stat " << Temp << '\n';
+              else
+                  if(S_ISDIR(Stat.st_mode))
+                      ScanDir(Temp.c_str());
+              free(NameList[Nb]);
+          }
+          free(NameList);
+      }
+  }
+
 }                                //namespace Engine
 
 

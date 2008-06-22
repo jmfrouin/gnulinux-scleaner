@@ -74,7 +74,6 @@ namespace Engine
        */
       ~CEngine();
 
-    public:
       /*!
        *@brief Call load plugins in PluginManager.
        *@param path The folder location.
@@ -94,64 +93,11 @@ namespace Engine
       static bool IsRoot();
 
       /*!
-       *@brief Detect kernel version
-       */
-      static bool GetKernelVersion(std::string& version);
-
-      /*!
-       *@brief callOutputPlugins with a list of files
-       *@param list A files list.
-       *@param name Name of plugin.
-       *@param path Path to save (if applicable) the output file.
-       *@param callback For progress bar.
-       *@return true on success, false otherwise.
-       *@todo Implement errors code.
-       */
-      bool CallOutputPlugin(std::list<std::string>& list, std::string& name, const std::string& path, IProgressbar* callback);
-
-      /*!
-       *@brief Replace wxDir usage.
-       *@param path Where retrieve file list.
-       *@param asroot Scan in root mode.
-       *@param rootplugin Root plugin.
-       *@param recursive If true, enter subfolders.
-       *@return true on success, false otherwise.
-       */
-      bool ScanDirectory(const std::string& path, bool asroot = false, Plugins::IInputPlugin* rootplugin = 0, bool recursive = true);
-
-      /*!
-       *@brief Callback : man ftw.
-       *@param fpath Directory.
-       *@param stat Where retrieve file list.
-       *@param tflag Flags.
-       *@param ftwbuf the TFW buffer.
-       *@return true on success, false otherwise.
-       */
-      static int FTWCallback(const char* fpath, const struct stat* statp, int tflag, struct FTW* ftwbuf);
-
-      /*!
-       *@brief Retrieve username.
-       *@param username The std::string to fill.
-       *@return true on success, false otherwise.
-       */
-      static bool GetUsername(std::string& username);
-
-      /*!
        *@brief Better size display.
        *@param size Size to format.
        *@param str String to fill.
        */
       static void FormatSize(double size, std::string& str);
-
-      /*!
-       *@brief Get free space on system (Using mount table : by default /etc/fstab).
-       *@param path To get space from a path.
-       *@param used Used space correctly formatted.
-       *@param free Available space correctly formatted.
-       *@param total Total space correctly formatted.
-       *@return free space size in bytes.
-       */
-      static double GetFreeSpace(const std::string& path, std::string& usedspace, std::string& freespace, std::string& total);
 
       /*!
        *@brief Launch a scan and pass each file to input plugin, to allow them to build file list.
@@ -181,14 +127,24 @@ namespace Engine
        */
       static void PROCInfo(const std::string& pattern, const std::string& file, std::string& str);
 
-    private:
+      /*!
+       *@brief Detect kernel version
+       */
+      static bool GetKernelVersion(std::string& version);
+
+      /*!
+       *@brief Retrieve username.
+       *@param username The std::string to fill.
+       *@return true on success, false otherwise.
+       */
+      static bool GetUsername(std::string& username);
+
       /*!
        *@brief Calc CRC32's table
        *@param table The CRC32's table to fill
        */
       static void GetCRCTable(std::vector<unsigned long>& table);
 
-    public:
       /*!
        *@brief Add a file to files list
        *@param file File name
@@ -202,7 +158,67 @@ namespace Engine
        */
       int DetectDuplicates();
 
-    public:
+      /*!
+       *@brief Get free space on system (Using mount table : by default /etc/fstab).
+       *@param path To get space from a path.
+       *@param used Used space correctly formatted.
+       *@param free Available space correctly formatted.
+       *@param total Total space correctly formatted.
+       *@return free space size in bytes.
+       */
+      static double GetFreeSpace(const std::string& path, std::string& usedspace, std::string& freespace, std::string& total);
+
+      /*!
+       *@brief callOutputPlugins with a list of files
+       *@param list A files list.
+       *@param name Name of plugin.
+       *@param path Path to save (if applicable) the output file.
+       *@param callback For progress bar.
+       *@return true on success, false otherwise.
+       *@todo Implement errors code.
+       */
+      bool CallOutputPlugin(std::list<std::string>& list, std::string& name, const std::string& path, IProgressbar* callback);
+
+      //Accessors
+      std::map<std::string, Plugins::IInPlugin*>*  GetAvailableInputPlugs() { return fAvailableInputPlugs; }
+      unsigned int GetCount() { return fCount; }
+
+      /*!
+       *@brief Retrieve a pointer on selected plugins list.
+       *@param refresh Did engine need to refresh the list ?
+       */
+      std::map<std::string, Plugins::IInPlugin*>* GetSelectedInputPlugs(bool refresh = false);
+
+      void SetCount(unsigned int nb) { fCount = nb; }
+      void SetUnselectedInputPlugs(std::string name) { fUnselectedInputPlugs.push_back(name); }
+
+    private:
+      /*!
+       *@brief Replace wxDir usage.
+       *@param path Where retrieve file list.
+       *@param asroot Scan in root mode.
+       *@param rootplugin Root plugin.
+       *@param recursive If true, enter subfolders.
+       *@return true on success, false otherwise.
+       */
+      bool ScanDirectory(const std::string& path, bool asroot = false, Plugins::IInputPlugin* rootplugin = 0, bool recursive = true);
+
+      /*!
+       *@brief Callback : man ftw.
+       *@param fpath Directory.
+       *@param stat Where retrieve file list.
+       *@param tflag Flags.
+       *@param ftwbuf the TFW buffer.
+       *@return true on success, false otherwise.
+       */
+      static int FTWCallback(const char* fpath, const struct stat* statp, int tflag, struct FTW* ftwbuf);
+
+      /*!
+       * @brief Use scandir to scan a directory.
+       * @param filename Directory to scan.
+       */
+      void ScanDir(const std::string& filename);
+
       /*!
        *@brief Find a package on system.
        *@note Come from database.c & dpkg-db.h from dpkg package.
@@ -211,13 +227,6 @@ namespace Engine
       */
       int FindPackage(const std::string& name);
 
-      /*!
-       *@brief Retrieve a pointer on selected plugins list.
-       *@param refresh Did engine need to refresh the list ?
-       */
-      std::map<std::string, Plugins::IInPlugin*>* GetSelectedInputPlugs(bool refresh = false);
-
-    public:
       //For the FTW callback ... it sucks !!!
       Plugins::CPluginManager* GetPluginManager() { return fPFM; }
 
@@ -226,15 +235,6 @@ namespace Engine
       Plugins::IInputPlugin* RootPlugin() { return fRootPlugin; }
 
       IProgressbar* GetCallback() { return fCallback; }
-
-      //Accessors
-      std::map<std::string, Plugins::IInPlugin*>*  GetAvailableInputPlugs() { return fAvailableInputPlugs; }
-
-      void SetUnselectedInputPlugs(std::string name) { fUnselectedInputPlugs.push_back(name); }
-
-      unsigned int GetCount() { return fCount; }
-
-      void SetCount(unsigned int nb) { fCount = nb; }
 
     private:
       GUI::CMainInterface* fInterface;
