@@ -138,12 +138,12 @@ namespace GUI
     Sizer2->Add(fSplashScreen, 1, wxGROW | wxALL, 5);
 
     //Show toolbar ?
-    fToolbar = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show toolbar (need restart)"), wxDefaultPosition);
+    fToolbar = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show toolbar (need restart to rebuild UI)"), wxDefaultPosition);
     fToolbar->SetValue(fSettings->GetShowToolbar());
     Sizer2->Add(fToolbar, 1, wxGROW | wxALL, 5);
 
     //Show statusbar ?
-    fStatusbar = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show status bar (need restart)"), wxDefaultPosition);
+    fStatusbar = new wxCheckBox(PrefPanel, wxID_ANY, _T("Show status bar (need restart to rebuild UI)"), wxDefaultPosition);
     fStatusbar->SetValue(fSettings->GetShowStatusbar());
     Sizer2->Add(fStatusbar, 1, wxGROW | wxALL, 5);
 
@@ -162,7 +162,7 @@ namespace GUI
     Sizer2->Add(fSystemFiles, 1, wxGROW | wxALL, 5);
 
     //Recursive scan
-    fRecursiveScan = new wxCheckBox(PrefPanel, ID_PREFERENCES_RECURSIVE_SCAN, _T("Recursive scan"), wxDefaultPosition);
+    fRecursiveScan = new wxCheckBox(PrefPanel, ID_PREFERENCES_RECURSIVE_SCAN, _T("Recursive scan (need restart to rebuild UI)"), wxDefaultPosition);
     fRecursiveScan->SetValue(fSettings->GetRecursiveScan());
     Sizer2->Add(fRecursiveScan, 1, wxGROW | wxALL, 5);
 

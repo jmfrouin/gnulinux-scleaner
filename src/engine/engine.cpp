@@ -48,8 +48,7 @@
 namespace Engine
 {
   CEngine::CEngine():
-  fInterface(0), fAvailableInputPlugs(0), fOutputPlugs(0), fRootPlugin(0), fAsRoot(false),
-    fCallback(0), fCount(0), fSelInPlugins(false)
+  fInterface(0), fAvailableInputPlugs(0), fOutputPlugs(0), fCount(0), fSelInPlugins(false)
   {
     //Initialisation
     fAvailableInputPlugs = Plugins::CPluginManager::Instance()->GetInputListPtr();
@@ -169,7 +168,7 @@ namespace Engine
       Temp << ROUND(size / (1<<10)) << i8n("KB");
     else
     if(!size)
-      Temp << i8n("null size");
+      Temp << i8n("NULL");
     else
       Temp << size;
     str += Temp.str();
@@ -239,7 +238,6 @@ namespace Engine
   bool CEngine::ScanDisk(IProgressbar* callback)
   {
     bool Ret = false;
-    fCallback = callback;
 
     //First launch threadable plugin
     std::map<std::string, Plugins::IInPlugin*>* Input = GetSelectedInputPlugs(true);
@@ -257,92 +255,62 @@ namespace Engine
       }
     }
 
-    //Then launch eRootInput plugins
-    if(IsRoot())
+    Tools::CTimer Timer;
+    PrepareFilesList(callback);
+    Timer.Snap();
+
+    std::cout << "After PrepareFilesList \n";
+
+    int Total=0;
+    //Then give each files to plugins
+    std::list<std::string>::iterator It2;
+    int Size = fFilesList.size();
+    for(It2=fFilesList.begin(); It2!=fFilesList.end(); It2++)
     {
-      std::map<std::string, Plugins::IInPlugin*>* Input = GetSelectedInputPlugs(true);
+      //Update progress bar to show progression :
+      if(fCount > 9)
+      {
+       if(callback)
+       {
+         bool Continue = callback->UpdateProgress(*It2, false, (Total++*100)/Size);
+         if(!Continue)
+           break;
+       }
+       fCount=0;
+      }
+      else
+      {  
+       fCount++;
+       Total++;
+      }
+
+      //Give it to each plugins
+      std::map<std::string, Plugins::IInPlugin*>* Input = CEngine::Instance()->GetPluginManager()->GetInputListPtr();
       std::map<std::string, Plugins::IInPlugin*>::iterator It;
       for(It = Input->begin(); It != Input->end(); ++It)
       {
-        if(It->second->Type() == Plugins::IPlugin::eRootInput)
+        Plugins::IInputPlugin* Plug = (Plugins::IInputPlugin*)It->second;
+        if( Plug->Type() == Plugins::IPlugin::eUserInput)
         {
-          std::string Dir;
-          Plugins::IInputPlugin* Plug = (Plugins::IInputPlugin*)It->second;
-          Plug->GetDirectory(Dir);
-          bool Continue = callback->UpdateProgress(Dir, true);
-          if(!Continue)
-            break;
-          ScanDirectory(Dir, true, Plug);
+          struct stat Info;
+          //Try to stat file.
+          if(stat(It2->c_str(), &Info) == -1)
+            std::cout << i8n("[ERR] : Cannot stat ") << *It2 << '\n';
+          else
+          {
+            if(!Info.st_size)
+            {
+              if(Plug->GrabNullFile())
+                Plug->ProcessFile(*It2);
+            }
+            else
+              Plug->ProcessFile(*It2);
+          }
         }
       }
     }
-
-    //Then launch eUserInput
-    std::list<std::string>* FoldersList = fSettings->GetFoldersListPtr();
-    std::list<std::string>::iterator ItFolders;
-    for(ItFolders = FoldersList->begin(); ItFolders != FoldersList->end(); ++ItFolders)
-    {
-      if(callback != 0)
-      {
-        bool Continue = callback->UpdateProgress(*ItFolders, true);
-        if(!Continue)
-          break;
-      }
-      ScanDirectory(*ItFolders);
-    }
-
-    std::cout << ROUGE << "Waiting end of threadable plugins : \n" << STOP;
-    for(It = Input->begin(); It != Input->end(); ++It)
-    {
-      if(It->second->Type() == Plugins::IPlugin::eThreadableInput)
-      {
-        Plugins::IThreadPlugin* ThreadablePlugin = (Plugins::IThreadPlugin*)It->second;
-        std::cout << ThreadablePlugin->GetName() << ": ";
-        ThreadablePlugin->Join();
-        std::cout << VERT << "STOPPED" << '\n' << STOP;
-      }
-    }
-    return Ret;
-  }
-
-  int CEngine::FTWCallback(const char* fpath, const struct stat* statp, int tflag, struct FTW* ftwbuf)
-  {
-    int Ret = 0;
-    std::string Path(fpath);
-
-    CEngine* Engine = CEngine::Instance();
-
-    std::list<std::string>* ExcludeFoldersList = Engine->fSettings->GetExcludedFoldersListPtr();
-    std::list<std::string>::iterator ItExcludeFolders;
-
-    for(ItExcludeFolders = ExcludeFoldersList->begin(); ItExcludeFolders != ExcludeFoldersList->end(); ++ItExcludeFolders)
-    {
-      if(Path.find(*ItExcludeFolders) != std::string::npos)
-      {
-        #if defined DEBUG && defined VERBOSE
-        std::cout << "Skip " << Path << " because I found " << *ItExcludeFolders << '\n';
-        #endif
-        return Ret;              // To tell nftw() to continue
-      }
-    }
-
-    IProgressbar* Prog = Engine->GetCallback();
-
-    //Update progress bar to show progression :
-    if(Prog)
-    {
-      if(Engine->GetCount() > 9)
-      {
-        bool Continue = Prog->UpdateProgress(Path, true);
-        if(!Continue)
-          return !Ret;
-        Engine->SetCount(0);
-      }
-      else
-        Engine->SetCount(Engine->GetCount()+1);
-    }
-
-    if(Engine->AsRoot())
+    
+    /*if(Engine->AsRoot())
     {
       Plugins::IInputPlugin* Root = 0;
       Root = Engine->RootPlugin();
@@ -356,55 +324,20 @@ namespace Engine
         if(Info.st_size != 0)
           Root->ProcessFile(Path);
       }
-    }
-    else
+    }*/
+    
+    //Wait end of threadable plugins
+    std::cout << ROUGE << "Waiting end of threadable plugins : \n" << STOP;
+    for(It = Input->begin(); It != Input->end(); ++It)
     {
-      std::map<std::string, Plugins::IInPlugin*>* Input = CEngine::Instance()->GetPluginManager()->GetInputListPtr();
-      std::map<std::string, Plugins::IInPlugin*>::iterator It;
-      for(It = Input->begin(); It != Input->end(); ++It)
+      if(It->second->Type() == Plugins::IPlugin::eThreadableInput)
       {
-        Plugins::IInputPlugin* Plug = (Plugins::IInputPlugin*)It->second;
-        if( Plug->Type() == Plugins::IPlugin::eUserInput)
-        {
-          struct stat Info;
-          //Try to stat file.
-          if(stat(Path.c_str(), &Info) == -1)
-            std::cout << i8n("[ERR] : Cannot stat ") << Path << '\n';
-          else
-          {
-            if(!Info.st_size)
-            {
-              if(Plug->GrabNullFile())
-                Plug->ProcessFile(Path);
-            }
-            else
-              Plug->ProcessFile(Path);
-          }
-        }
+        Plugins::IThreadPlugin* ThreadablePlugin = (Plugins::IThreadPlugin*)It->second;
+        std::cout << ThreadablePlugin->GetName() << ": ";
+        ThreadablePlugin->Join();
+        std::cout << VERT << "STOPPED" << '\n' << STOP;
       }
     }
-    return Ret;                  // To tell nftw() to continue
-  }
-
-  bool CEngine::ScanDirectory(const std::string& path, bool asroot, Plugins::IInputPlugin* rootplugin, bool recursive)
-  {
-    bool Ret = false;
-    Tools::CTimer Timer;
-    std::cout << "ScanDirectory : " << path << '\n';
-
-    int Flags = FTW_PHYS;
-
-    if(asroot)
-    {
-      fAsRoot = true;
-      fRootPlugin = rootplugin;
-    }
-
-    if( nftw(path.c_str(), FTWCallback, 20, Flags) == 0)
-      Ret = true;
-
-    fAsRoot = false;
-    Timer.Snap();
     return Ret;
   }
 
@@ -618,33 +551,122 @@ namespace Engine
     }
   }
 
-  void CEngine::ScanDir(const std::string& filename)
+  bool CEngine::ScanDir(const std::string& filename, IProgressbar* callback)
   {
-      struct dirent** NameList;
-      int Nb = scandir(filename.c_str(), &NameList, 0, alphasort);
-      if(Nb != -1) //Fix Bug 4 : If no error append.
+    bool Stop = false;
+    struct dirent** NameList;
+    int Nb = scandir(filename.c_str(), &NameList, 0, alphasort);
+    if(Nb != -1) //Fix Bug 4 : If no error append.
+    {
+      while (Nb-- > 0)
       {
-          while (Nb-- > 0)
-          {
-              struct stat Stat;
-              std::string Temp(filename);
-              Temp += "/";
-              Temp += NameList[Nb]->d_name;
-              std::string Dir(NameList[Nb]->d_name);
-              if(Dir.length() <= 2)
-                  continue;
-              if(stat(Temp.c_str(), &Stat) == -1)
-                  std::cout << "[ERR] : Cannot stat " << Temp << '\n';
+        if(!Stop)
+        {
+          struct stat Stat;
+          std::string Temp(filename);
+          Temp += "/";
+          Temp += NameList[Nb]->d_name;
+          std::string Dir(NameList[Nb]->d_name);
+          if(Dir.length() <= 2)
+              continue;
+          if(stat(Temp.c_str(), &Stat) == -1)
+              std::cout << "[ERR] : Cannot stat " << Temp << '\n';
+          else
+              if(S_ISDIR(Stat.st_mode))
+              {      
+                if(fSettings->GetRecursiveScan())
+                {
+                  std::list<std::string>* ExcludeFoldersList = fSettings->GetExcludedFoldersListPtr();
+                  std::list<std::string>::iterator ItExcludeFolders;
+                  
+                  bool Ex = false;
+                  for(ItExcludeFolders = ExcludeFoldersList->begin(); ItExcludeFolders != ExcludeFoldersList->end(); ++ItExcludeFolders)
+                  {
+                    if(Temp.find(*ItExcludeFolders) != std::string::npos)
+                    {  
+                      Ex = true;
+                      break;
+                    }
+                  }
+
+                  if(!Ex)
+                  {
+                    if(fSettings->GetSystemFiles()) //Scan all
+                    {  
+                      if(!ScanDir(Temp.c_str(), callback))
+                        Stop = true;
+                    }
+                    else //Didn't scan folders
+                    {
+                      std::string Filename(Temp.substr(Temp.find_last_of('/')+1, Temp.length()));
+                      if(Filename.find('.',0))
+                        if(!ScanDir(Temp.c_str(), callback))
+                          Stop = true;
+                    }
+                  }
+                }
+              }
               else
-                  if(S_ISDIR(Stat.st_mode))
-                      ScanDir(Temp.c_str());
-              free(NameList[Nb]);
+              {
+                if(fSettings->GetSystemFiles()) //Add all
+                  fFilesList.push_back(Temp);
+                else //Exclude system files
+                {
+                  std::string Filename(Temp.substr(Temp.find_last_of('/')+1, Temp.length()));
+                  if(Filename.find('.',0))
+                    fFilesList.push_back(Temp);
+                }
+              }
+          if(callback && !Stop)
+          {  
+            bool Continue = callback->UpdateProgress(Temp, true);
+            if(!Continue)
+              Stop = true;
           }
-          free(NameList);
+        }
+        free(NameList[Nb]);
       }
+      free(NameList);
+    }
+    if(Stop)
+      return false;
+    else
+      return true;
   }
 
+  void CEngine::PrepareFilesList(IProgressbar* callback)
+  {
+    //Prepare folders list
+    fFilesList.clear();
+
+    //First add users' folders
+    std::list<std::string>* FoldersList = fSettings->GetFoldersListPtr();
+    std::list<std::string>::iterator ItFolders;
+    for(ItFolders = FoldersList->begin(); ItFolders != FoldersList->end(); ++ItFolders)
+    {
+      if(!ScanDir(*ItFolders, callback))
+        break;
+    } 
+
+    //Then launch eRootInput plugins 
+    /*if(IsRoot())
+    {
+      std::map<std::string, Plugins::IInPlugin*>* Input = GetSelectedInputPlugs(true);
+      std::map<std::string, Plugins::IInPlugin*>::iterator It;
+      for(It = Input->begin(); It != Input->end(); ++It)
+      {
+        if(It->second->Type() == Plugins::IPlugin::eRootInput)
+        {
+          std::string Dir;
+          Plugins::IInputPlugin* Plug = (Plugins::IInputPlugin*)It->second;
+          Plug->GetDirectory(Dir);
+          bool Continue = callback->UpdateProgress(Dir, true);
+          if(!Continue)
+            break;
+          ScanDirectory(Dir, true, Plug);
+        }
+      }
+    }*/
+  }
 }                                //namespace Engine
-
-
 /* vi:set ts=4: */

@@ -420,7 +420,7 @@ namespace GUI
       std::cout << "List : " << List.size() << '\n';
 
       #if defined DEBUG && defined VERBOSE
-      std::cout << CYAN << "For plugin : " << It->second->GetName() << " size = " << List.size() << STOP << '\n';
+      //std::cout << CYAN << "For plugin : " << It->second->GetName() << " size = " << List.size() << STOP << '\n';
       #endif
       ResultCheckListCtrl* FilesList = new ResultCheckListCtrl(fFoundFiles, ID_RESCHECKLIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
 
@@ -605,36 +605,40 @@ namespace GUI
 
       Sizer->Add(Sizer2, 0, wxGROW | wxALL, 5);
 
-      wxStaticLine* Line = new wxStaticLine(fFolders, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
-      Sizer->Add(Line, 0, wxGROW|wxALL, 5);
-
-      Sizer->Add(new wxStaticText(fFolders, -1, _T("Folders excluded from scan :")), 0, wxALIGN_LEFT | wxALL, 5);
-
-      if(!fExcludedFolders)
+      if(fSettings->GetRecursiveScan())
       {
-        fExcludedFolders = new GUI::wxCheckListCtrl(fFolders, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-        //Setting header:
-        wxListItem ItemCol;
-        ItemCol.SetText(wxString(i8n("Name"), wxConvUTF8));
-        ItemCol.SetImage(-1);
-        fExcludedFolders->InsertColumn(0, ItemCol);
+        wxStaticLine* Line = new wxStaticLine(fFolders, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
+        Sizer->Add(Line, 0, wxGROW|wxALL, 5);
+
+        Sizer->Add(new wxStaticText(fFolders, -1, _T("Folders excluded from scan :")), 0, wxALIGN_LEFT | wxALL, 5);
+
+        if(!fExcludedFolders)
+        {
+          fExcludedFolders = new GUI::wxCheckListCtrl(fFolders, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+          //Setting header:
+          wxListItem ItemCol;
+          ItemCol.SetText(wxString(i8n("Name"), wxConvUTF8));
+          ItemCol.SetImage(-1);
+          fExcludedFolders->InsertColumn(0, ItemCol);
+        }
+  
+        Sizer->Add(fExcludedFolders, 1, wxGROW | wxALL, 5);
+  
+        Sizer2 = new wxBoxSizer(wxHORIZONTAL);
+        Sizer2->Add(new wxButton(fFolders, ID_BUTTON_FOLDER_EX_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
+        Sizer2->Add(new wxButton(fFolders, ID_BUTTON_FOLDER_EX_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
+  
+        Sizer->Add(Sizer2, 0, wxGROW | wxALL, 5);
       }
-
-      Sizer->Add(fExcludedFolders, 1, wxGROW | wxALL, 5);
-
-      Sizer2 = new wxBoxSizer(wxHORIZONTAL);
-      Sizer2->Add(new wxButton(fFolders, ID_BUTTON_FOLDER_EX_ADD, _T("Add")), 0, wxALIGN_CENTER | wxALL, 2);
-      Sizer2->Add(new wxButton(fFolders, ID_BUTTON_FOLDER_EX_DEL, _T("Remove")), 0, wxALIGN_CENTER | wxALL, 2);
-
-      Sizer->Add(Sizer2, 0, wxGROW | wxALL, 5);
     }
 
     //First clear lists
     if(fAddedFolders)
       fAddedFolders->DeleteAllItems();
 
-    if(fExcludedFolders)
-      fExcludedFolders->DeleteAllItems();
+    if(fSettings->GetRecursiveScan())
+      if(fExcludedFolders)
+        fExcludedFolders->DeleteAllItems();
 
     //The, fill panel
 
@@ -651,14 +655,17 @@ namespace GUI
       fAddedFolders->SetColumnWidth(0, wxLIST_AUTOSIZE);
     }
 
-    FL = fSettings->GetExcludedFoldersListPtr();
-    for(It = FL->begin(); It !=FL->end(); ++It)
+    if(fSettings->GetRecursiveScan())
     {
-      //Maybe an alphabetic sort will be need here : algorithms :D
-      long LongTmp = fExcludedFolders->InsertItem(FL->size(), wxString((*It).c_str(), wxConvUTF8), 0);
-      fExcludedFolders->SetItemImage(LongTmp, 2);
-      fExcludedFolders->SetItemData(LongTmp, 0);
-      fExcludedFolders->SetColumnWidth(0, wxLIST_AUTOSIZE);
+      FL = fSettings->GetExcludedFoldersListPtr();
+      for(It = FL->begin(); It !=FL->end(); ++It)
+      {
+        //Maybe an alphabetic sort will be need here : algorithms :D
+        long LongTmp = fExcludedFolders->InsertItem(FL->size(), wxString((*It).c_str(), wxConvUTF8), 0);
+        fExcludedFolders->SetItemImage(LongTmp, 2);
+        fExcludedFolders->SetItemData(LongTmp, 0);
+        fExcludedFolders->SetColumnWidth(0, wxLIST_AUTOSIZE);
+      }
     }
   }
 

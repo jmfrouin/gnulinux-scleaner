@@ -26,7 +26,11 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 946
+#define BUILD 985
+
+//For i8n
+#include <libintl.h>
+#include <locale.h>
 
 //Bash Colors
 #define VERT "\e[0;32m"
@@ -41,6 +45,9 @@
 #define VERSION(M,m,B) t(M) "." t(m) "." t(B)
 #define VER VERSION(MAJOR,MINOR,BUILD)
 #define i8n(X) gettext(X)
+#define ROUND(x) ((x-(int)x>0)?(int)x+1:(int)x) //Mainly wrote for formatSize
+//CRC32 stuff
+#define CRC_POLY_REV 0xEDB98550
 
 //General app infos
 #define MAJOR 0
@@ -56,6 +63,7 @@
 #define LOGFILE "/tmp/scleaner.log"
 #define LEAKFILE "/tmp/scleaner_leaks.log"
 #define CONFFILE "/.scleaner/prefs.conf"
+#define FSTAB "/etc/fstab"
 
 //Controls identifiers
 //Main interface
@@ -117,12 +125,5 @@
 //Position
 #define SYMBOL_POSITION wxDefaultPosition
 #define SYMBOL_SASH_POS 400
-
-//For i8n
-#include <libintl.h>
-#include <locale.h>
-
-//CRC32 stuff
-#define CRC_POLY_REV 0xEDB94650
 #endif                           // __DEF_H__
 /* vi:set ts=4: */

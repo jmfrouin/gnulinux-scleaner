@@ -34,6 +34,7 @@
 #include <interface/maininterface.h>
 #include <log/log.h>
 #include "iprogress.h"
+#include <def.h>
 
 //forward declarations
 
@@ -44,12 +45,7 @@ namespace Plugins
   class IOutPlugin;
 }
 
-
 class CSettingsManager;
-
-#define FSTAB "/etc/fstab"
-                                 //Mainly wrote for formatSize
-#define ROUND(x) ((x-(int)x>0)?(int)x+1:(int)x)
 
 /*!
  *@brief Contain all scleaner core related stuff.
@@ -58,7 +54,7 @@ namespace Engine
 {
   /*!
    *@brief Manage all operations
-   *@version 15.11.2007
+   *@version 22.06.2008
    *@author Jean-Michel Frouin (jmfrouin@gmail.com)
    */
   class CEngine: public Tools::CSmartCpt, public Tools::TSingleton<CEngine>
@@ -103,7 +99,7 @@ namespace Engine
        *@brief Launch a scan and pass each file to input plugin, to allow them to build file list.
        *@param callback For progress bar.
        */
-      bool ScanDisk(IProgressbar* callback = 0);
+      bool ScanDisk(IProgressbar* callback);
 
       /*!
        *@brief Get a timestamp.
@@ -181,7 +177,7 @@ namespace Engine
 
       //Accessors
       std::map<std::string, Plugins::IInPlugin*>*  GetAvailableInputPlugs() { return fAvailableInputPlugs; }
-      unsigned int GetCount() { return fCount; }
+      //unsigned int GetCount() { return fCount; }
 
       /*!
        *@brief Retrieve a pointer on selected plugins list.
@@ -189,35 +185,22 @@ namespace Engine
        */
       std::map<std::string, Plugins::IInPlugin*>* GetSelectedInputPlugs(bool refresh = false);
 
-      void SetCount(unsigned int nb) { fCount = nb; }
+      //void SetCount(unsigned int nb) { fCount = nb; }
       void SetUnselectedInputPlugs(std::string name) { fUnselectedInputPlugs.push_back(name); }
 
     private:
       /*!
-       *@brief Replace wxDir usage.
-       *@param path Where retrieve file list.
-       *@param asroot Scan in root mode.
-       *@param rootplugin Root plugin.
-       *@param recursive If true, enter subfolders.
-       *@return true on success, false otherwise.
-       */
-      bool ScanDirectory(const std::string& path, bool asroot = false, Plugins::IInputPlugin* rootplugin = 0, bool recursive = true);
-
-      /*!
-       *@brief Callback : man ftw.
-       *@param fpath Directory.
-       *@param stat Where retrieve file list.
-       *@param tflag Flags.
-       *@param ftwbuf the TFW buffer.
-       *@return true on success, false otherwise.
-       */
-      static int FTWCallback(const char* fpath, const struct stat* statp, int tflag, struct FTW* ftwbuf);
-
-      /*!
        * @brief Use scandir to scan a directory.
        * @param filename Directory to scan.
+       * @param callback Progress bar callback.
+       * @return bool true on continue, false otherwise.
        */
-      void ScanDir(const std::string& filename);
+      bool ScanDir(const std::string& filename, IProgressbar* callback);
+
+      /*!
+       * @brief Prepare folders list to scan.
+       */
+      void PrepareFilesList(IProgressbar* callback);
 
       /*!
        *@brief Find a package on system.
@@ -227,15 +210,6 @@ namespace Engine
       */
       int FindPackage(const std::string& name);
 
-      //For the FTW callback ... it sucks !!!
-      Plugins::CPluginManager* GetPluginManager() { return fPFM; }
-
-      bool AsRoot() { return fAsRoot; }
-
-      Plugins::IInputPlugin* RootPlugin() { return fRootPlugin; }
-
-      IProgressbar* GetCallback() { return fCallback; }
-
     private:
       GUI::CMainInterface* fInterface;
       Tools::TSmartPtr<Plugins::CPluginManager>       fPFM;
@@ -243,22 +217,22 @@ namespace Engine
       //Input plugins
       std::map<std::string, Plugins::IInPlugin*>*     fAvailableInputPlugs;
       std::map<std::string, Plugins::IInPlugin*>      fSelectedInputPlugs;
-      std::list<std::string>                                       fUnselectedInputPlugs;
+      std::list<std::string>                          fUnselectedInputPlugs;
 
       //Output plugins
       std::map<std::string, Plugins::IOutPlugin*>*    fOutputPlugs;
 
-      //Due to this fuck*** callback
-      Plugins::IInputPlugin* fRootPlugin;
-      bool fAsRoot;
-      IProgressbar* fCallback;
-      unsigned int fCount;
+      //Faster progress bar.
+      unsigned int fCount; 
 
-      //Files infos
+      // Files infos 
       std::map<std::string, unsigned long>            fInfos;
 
       //Duplicates files list
       std::map<unsigned long, std::string>            fDuplicatesFilesList;
+
+      //Files list
+      std::list<std::string>                          fFilesList;
 
       //Settings manager
       Tools::TSmartPtr<CSettingsManager>              fSettings;
@@ -267,4 +241,4 @@ namespace Engine
       bool                                            fSelInPlugins;
   };
 }                                //namespace Engine
-#endif                           //_ENGINE_H_
+#endif                           //__ENGINE_H__
