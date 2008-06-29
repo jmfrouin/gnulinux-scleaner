@@ -102,6 +102,9 @@ namespace Engine
           case eRecursiveScan:
             File >> fRecursiveScan;
             break;
+          case ePerspective:
+            File >> fPerspective;
+            break;
           default:
             continue;
         }
@@ -180,6 +183,7 @@ namespace Engine
     File << eDelete << ' ' << fDelete << '\n';
     File << eSystemFiles << ' ' << fSystemFiles << '\n';
     File << eRecursiveScan << ' ' << fRecursiveScan << '\n';
+    File << ePerspective << ' ' << fPerspective << '\n';
   }
 
   bool CSettingsManager::AddFolder(std::string dir, std::string& parent, eFoldersType type)

@@ -26,6 +26,7 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <wx/aui/aui.h>
 #include <wx/frame.h>
 #include <wx/toolbar.h>
 #include <wx/notebook.h>
@@ -158,6 +159,9 @@ namespace GUI
 
       //Settings manager
       Engine::CSettingsManager*           fSettings;
+
+      //For perspectives
+      wxAuiManager fAUIManager;
   };
 }
 #endif

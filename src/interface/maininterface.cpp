@@ -140,6 +140,12 @@ namespace GUI
     if(fDockIcon)
       delete fDockIcon;
     #endif
+    wxString Perspective = fAUIManager.SavePerspective();
+    std::string Persp(Perspective.ToAscii());
+    fSettings->SetPerspective(Persp);
+    std::cout << Perspective.ToAscii() << '\n';
+    fAUIManager.Update();
+    fAUIManager.UnInit();
   }
 
   void CMainInterface::Init()
@@ -149,6 +155,9 @@ namespace GUI
 
     //Retrieve settings manager pointer
     fSettings = Engine::CSettingsManager::Instance();
+
+    //Tell wxAuiManager to manage this frame
+    fAUIManager.SetManagedWindow(this);
 
     //Tray icon !!
     fIcon = new CTrayIcon();
@@ -184,6 +193,12 @@ namespace GUI
     wxMenu* File = new wxMenu;
     wxMenu* Edit = new wxMenu;
     wxMenu* Misc = new wxMenu;
+
+    //Load perspective
+    wxString Pers(fSettings->GetPerspective().c_str(), wxConvUTF8);
+    std::cout << fSettings->GetPerspective() << '\n';
+    fAUIManager.LoadPerspective(Pers);
+    fAUIManager.Update();
 
     //File menu
     MenuBar->Append(File, wxString(i8n("File"), wxConvUTF8));
@@ -229,6 +244,7 @@ namespace GUI
     UpdateFolderList();
 
     fAui->AddPage(fFolders, wxString(i8n("Folders"), wxConvUTF8), false);
+    fAUIManager.AddPane(fFolders, wxLEFT, _("Folders"));
 
     //Input plugins
     fInputPlugins = new wxCheckListCtrl(fAui, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
@@ -258,6 +274,7 @@ namespace GUI
     fInputPlugins->SetColumnWidth(1, wxLIST_AUTOSIZE);
 
     fAui->AddPage(fInputPlugins, wxString(i8n("Input plugins"), wxConvUTF8), false);
+    fAUIManager.AddPane(fInputPlugins, wxLEFT, _("IPlugins"));
 
     //Output plugins
     wxString Output[1];
@@ -265,11 +282,13 @@ namespace GUI
     fOutputPlugins = new wxRadioBox(fAui, wxID_ANY, wxString(i8n("Output plugins :"), wxConvUTF8), wxDefaultPosition, wxDefaultSize, 1, Output);
 
     fAui->AddPage(fOutputPlugins, wxString(i8n("Output plugins"), wxConvUTF8), false);
+    fAUIManager.AddPane(fOutputPlugins, wxLEFT, _("OPlugins"));
 
     //Found files AuiNotebook page
     //FIXME: Display it only when "scan" has been launched
     fFoundFiles = new wxNotebook(fAui, ID_MAININTERFACE_NOTEBOOK, wxDefaultPosition, wxDefaultSize, Flags);
     fAui->AddPage(fFoundFiles, wxString(i8n("Founded files"), wxConvUTF8), false);
+    fAUIManager.AddPane(fFoundFiles, wxLEFT, _("FFiles"));
 
     if(fSettings->GetShowStatusbar() == true)
     {

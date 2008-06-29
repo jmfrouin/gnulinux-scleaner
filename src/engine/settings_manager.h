@@ -50,7 +50,8 @@ namespace Engine
         eShowStatusbar,
         eDelete,
         eSystemFiles,
-        eRecursiveScan
+        eRecursiveScan,
+        ePerspective
       };
 
       enum eFoldersType
@@ -108,6 +109,8 @@ namespace Engine
 
       bool GetRecursiveScan() { return fRecursiveScan; }
 
+      std::string GetPerspective() { return fPerspective; }
+      
       /*!
        * Mutators
        */
@@ -122,6 +125,8 @@ namespace Engine
       void SetSystemFiles(bool val) { fSystemFiles = val; }
 
       void SetRecursiveScan(bool val) { fRecursiveScan = val; }
+
+      void SetPerspective(const std::string& str) { fPerspective = str; }
 
     private:
                                  ///Display splash (only in GUI) ?
@@ -141,6 +146,8 @@ namespace Engine
       bool                    fSystemFiles;
                                  ///Recursive scan ?
       bool                    fRecursiveScan;
+
+      std::string         fPerspective;
   };
 }                                //namespace Engine
 #endif                           //__SETTINGS_MANAGER_H__
