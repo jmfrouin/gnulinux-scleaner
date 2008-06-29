@@ -30,6 +30,7 @@
 
 #include <config.h>
 #include <string>
+#include <set>
 #include <sstream>
 #include <sys/stat.h>
 #include <plugins/plugin_manager.h>
@@ -224,7 +225,7 @@ namespace GUI
     fAui = new wxAuiNotebook(Frame, ID_MAININTERFACE_AUI, wxDefaultPosition, wxDefaultSize, wxAUI_NB_TOP|wxAUI_NB_TAB_SPLIT|wxAUI_NB_TAB_MOVE|wxAUI_NB_SCROLL_BUTTONS);
 
     //Folder AuiNotebook page
-    int Flags = wxBK_TOP | wxNB_MULTILINE | wxDOUBLE_BORDER;
+    int Flags = wxBK_TOP | wxNB_MULTILINE | wxDOUBLE_BORDER | wxNB_LEFT;
     UpdateFolderList();
 
     fAui->AddPage(fFolders, wxString(i8n("Folders"), wxConvUTF8), false);
@@ -508,10 +509,54 @@ namespace GUI
       fTotalSizes.push_back(Totalsize);
     }
 
-    fFoundFiles->AdvanceSelection();
     fEngine->DetectDuplicates();
+    MarkDuplicatesFiles();
+    fFoundFiles->AdvanceSelection();    
     delete fProgress;
     fProgress = 0;
+  }
+
+  void CMainInterface::MarkDuplicatesFiles()
+  {
+    std::set<unsigned long>* DupCRC = fEngine->GetDuplicatesCRC();
+    std::set<unsigned long>::iterator It;
+    //For each dup CRC
+    for(It=DupCRC->begin(); It!=DupCRC->end(); ++It)
+    {
+      //For each Notebooks' page 
+      // 
+      unsigned int PagesNb = fFoundFiles->GetPageCount();
+  
+      for(unsigned int i = 0; i < PagesNb; ++i)
+      {
+        wxWindow* Win = fFoundFiles->GetPage(i);
+        wxCheckListCtrl* List = (wxCheckListCtrl*) Win;
+        int ItemsNb = List->GetItemCount();
+
+        for(int j = 0; j < ItemsNb; ++j)
+        {
+          wxListItem Item;
+          Item.SetId(j);
+
+          if(List->GetItem(Item))
+          {
+            if(!Item.GetImage())
+            {
+              wxString Temp = Item.m_text;
+              std::string File(Temp.ToAscii());
+              std::map<std::string, unsigned long>* FI = fEngine->GetFileInfos();
+              if((*FI)[File] == *It)
+              {
+                Item.SetBackgroundColour(0xFF);
+                List->SetItem(Item);
+              }
+            }
+          }
+          else
+            std::cerr << i8n("[ERR] CMainInterface::GetSelectedFiles GetItem !!") << '\n';
+        }
+      }
+    }
   }
 
   void CMainInterface::OnProcess(wxCommandEvent& WXUNUSED(event))

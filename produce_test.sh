@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # backupextension
-echo backupextension > bk.bak~
-echo backupextension > bk.bak
-echo backupextension > bk.$$$
-echo backupextension > bk.$db
-echo backupextension > bk.001
-echo backupextension > bk.001
-echo backupextension > bk.113
-echo backupextension > bk.abbu
-echo backupextension > bk.abk
-echo backupextension > bk.bac
+echo backupextension2 > bk.bak~
+echo backupextension3 > bk.bak
+echo backupextension4 > bk.$$$
+echo backupextension22 > bk.$db
+echo backupextension12 > bk.001
+echo backupextension11 > bk.001
+echo backupextension10 > bk.113
+echo backupextension09 > bk.abbu
+echo backupextension08 > bk.abk
+echo backupextension07 > bk.bac
 echo backupextension > bk.backupdb
 echo backupextension > bk.bak
 echo backupextension > bk.bck

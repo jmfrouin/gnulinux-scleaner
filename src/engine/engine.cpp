@@ -285,7 +285,7 @@ namespace Engine
       }
 
       //Give it to each plugins
-      std::map<std::string, Plugins::IInPlugin*>* Input = CEngine::Instance()->GetPluginManager()->GetInputListPtr();
+      std::map<std::string, Plugins::IInPlugin*>* Input = fPFM->GetInputListPtr();
       std::map<std::string, Plugins::IInPlugin*>::iterator It;
       for(It = Input->begin(); It != Input->end(); ++It)
       {
@@ -458,20 +458,22 @@ namespace Engine
         std::map<std::string, unsigned long>::iterator It2 = It;
         for(++It2; It2 != fInfos.end(); ++It2)
         {
-          if(It->second == It2->second)
-            if(fDuplicatesFilesList[It->second] == "")
+          if((It->second == It2->second))
           {
-            std::cout << It->second << " " << It->first << '\n';
-            fDuplicatesFilesList.insert(make_pair(It->second, It->first));
+            fDuplicatesCRC.insert(It->second);
             Ret++;
           }
         }
       }
     }
-    std::cout << "Founded " << fDuplicatesFilesList.size() << " duplicates files" << '\n';
-    std::map<unsigned long, std::string>::iterator It3;
-    for(It3 = fDuplicatesFilesList.begin(); It3 != fDuplicatesFilesList.end(); ++It3)
-      std::cout << It3->first << ", " << It3->second << '\n';
+    /*
+    Display duplicates
+    */
+    //std::cout << "Founded " << fDuplicatesCRC.size() << " duplicates CRC" << '\n';
+    //std::map<unsigned long, std::string>::iterator It3;
+    /*std::set<unsigned long>::iterator It3;
+    for(It3 = fDuplicatesCRC.begin(); It3 != fDuplicatesCRC.end(); ++It3)
+      std::cout << *It3 << '\n';*/
     return Ret;
   }
 

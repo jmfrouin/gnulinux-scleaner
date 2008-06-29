@@ -27,6 +27,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include <set>
 #include <vector>
 #include <tools/smart_pointer.h>
 #include <tools/singleton.h>
@@ -188,6 +189,16 @@ namespace Engine
       //void SetCount(unsigned int nb) { fCount = nb; }
       void SetUnselectedInputPlugs(std::string name) { fUnselectedInputPlugs.push_back(name); }
 
+      /*!
+       * @brief Retrieve a pointer on duplicates CRC
+       */
+      std::set<unsigned long>* GetDuplicatesCRC() { return &fDuplicatesCRC; }
+
+      /*! 
+        *@brief Retrieve pointer on CRC infos.
+       */
+        std::map<std::string, unsigned long>* GetFileInfos() { return &fInfos; }
+
     private:
       /*!
        * @brief Use scandir to scan a directory.
@@ -228,8 +239,8 @@ namespace Engine
       // Files infos 
       std::map<std::string, unsigned long>            fInfos;
 
-      //Duplicates files list
-      std::map<unsigned long, std::string>            fDuplicatesFilesList;
+      //Duplicates CRC
+      std::set<unsigned long> fDuplicatesCRC;
 
       //Files list
       std::list<std::string>                          fFilesList;

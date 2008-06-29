@@ -117,6 +117,11 @@ namespace GUI
        *@brief Update folder view :)
        */
       void UpdateFolderList();
+      
+      /*!
+       * @brief Mark duplicates files in Notebook
+       */
+      void MarkDuplicatesFiles();
 
       //From IProgressbar
       bool UpdateProgress(const std::string& mess, bool pulse, int nb);
