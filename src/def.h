@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 985
+#define BUILD 1002
 
 //For i8n
 #include <libintl.h>
@@ -47,7 +47,7 @@
 #define i8n(X) gettext(X)
 #define ROUND(x) ((x-(int)x>0)?(int)x+1:(int)x) //Mainly wrote for formatSize
 //CRC32 stuff
-#define CRC_POLY_REV 0xEDB98550
+#define CRC_POLY_REV 0xEDB10050
 
 //General app infos
 #define MAJOR 0
