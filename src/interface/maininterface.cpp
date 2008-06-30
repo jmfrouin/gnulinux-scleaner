@@ -194,12 +194,6 @@ namespace GUI
     wxMenu* Edit = new wxMenu;
     wxMenu* Misc = new wxMenu;
 
-    //Load perspective
-    wxString Pers(fSettings->GetPerspective().c_str(), wxConvUTF8);
-    std::cout << fSettings->GetPerspective() << '\n';
-    fAUIManager.LoadPerspective(Pers);
-    fAUIManager.Update();
-
     //File menu
     MenuBar->Append(File, wxString(i8n("File"), wxConvUTF8));
     wxMenuItem* Quit = new wxMenuItem(File, wxID_EXIT, wxString(i8n("Quit"), wxConvUTF8));
@@ -319,6 +313,12 @@ namespace GUI
       wxString UFreeSpace(FreeSpace.c_str(), wxConvUTF8);
       SetStatusText(UFreeSpace, 5);
     }
+
+    //Load perspective
+    wxString Pers(fSettings->GetPerspective().c_str(), wxConvUTF8);
+    std::cout << fSettings->GetPerspective() << '\n';
+    fAUIManager.LoadPerspective(Pers);
+    fAUIManager.Update();
   }
 
   bool CMainInterface::ShowToolTips()

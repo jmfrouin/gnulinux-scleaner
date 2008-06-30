@@ -26,7 +26,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#define BUILD 1026
+#define BUILD 1029
 
 //For i8n
 #include <libintl.h>
