@@ -566,7 +566,7 @@ namespace GUI
               std::map<std::string, unsigned long>* FI = fEngine->GetFileInfos();
               if((*FI)[File] == *It)
               {
-                Item.SetBackgroundColour(0xFF);
+                Item.SetBackgroundColour(0xFFCCCC);
                 List->SetItem(Item);
               }
             }
