@@ -159,9 +159,6 @@ namespace GUI
 
       //Settings manager
       Engine::CSettingsManager*           fSettings;
-
-      //For perspectives
-      wxAuiManager fAUIManager;
   };
 }
 #endif

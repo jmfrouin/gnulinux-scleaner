@@ -51,7 +51,7 @@ class CorphanPlugin : public Plugins::IThreadPlugin
      *@brief From IThreadablePlugin
      */
     virtual bool GetDefaultSelection() { return true; }
-    EType Type() { return eThreadableInput; }
+    EType Type() { return eRootThreadableInput; }
     std::string Description();
     virtual void Run();
 };

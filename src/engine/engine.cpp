@@ -309,23 +309,50 @@ namespace Engine
         }
       }
     }
-    
-    /*if(Engine->AsRoot())
+
+    //Then launch eRootInput plugins 
+    if(IsRoot())
     {
-      Plugins::IInputPlugin* Root = 0;
-      Root = Engine->RootPlugin();
-      if(Root)
+      std::map<std::string, Plugins::IInPlugin*>* Input = GetSelectedInputPlugs(true);
+      std::map<std::string, Plugins::IInPlugin*>::iterator It;
+      for(It = Input->begin(); It != Input->end(); ++It)
       {
-        struct stat Info;
-        //Try to stat file.
-        if(stat(Path.c_str(), &Info) == -1)
-          std::cout << i8n("[ERR] : Cannot stat ") << Path << '\n';
-        else
-        if(Info.st_size != 0)
-          Root->ProcessFile(Path);
+        if(It->second->Type() == Plugins::IPlugin::eRootInput)
+        {
+          std::string Dir;
+          Plugins::IInputPlugin* Plug = (Plugins::IInputPlugin*)It->second;
+          Plug->GetDirectory(Dir);
+          
+          struct stat Stat;
+          //Try to stat folder.
+          if(stat(Dir.c_str(), &Stat) == -1)
+            std::cout << i8n("[ERR] : Cannot stat ") << Dir << '\n';
+          else
+          {
+             if(S_ISDIR(Stat.st_mode))
+            {
+              struct dirent** NameList;
+              int Nb = scandir(Dir.c_str(), &NameList, 0, alphasort);
+              if(Nb != -1)               //Fix Bug 4 : If no error append.
+              {
+                while (Nb-- > 0)
+                {
+                  std::string File(Dir);
+                  File += NameList[Nb]->d_name;
+                  std::cout << File << std::endl;
+                  Plug->ProcessFile(File);
+                  bool Continue = callback->UpdateProgress(Dir, true);
+                  free(NameList[Nb]);
+                }
+                free(NameList);
+              }
+            }
+          }
+        }
       }
-    }*/
-    
+    }
+
+
     //Wait end of threadable plugins
     std::cout << ROUGE << "Waiting end of threadable plugins : \n" << STOP;
     for(It = Input->begin(); It != Input->end(); ++It)
@@ -649,26 +676,6 @@ namespace Engine
       if(!ScanDir(*ItFolders, callback))
         break;
     } 
-
-    //Then launch eRootInput plugins 
-    /*if(IsRoot())
-    {
-      std::map<std::string, Plugins::IInPlugin*>* Input = GetSelectedInputPlugs(true);
-      std::map<std::string, Plugins::IInPlugin*>::iterator It;
-      for(It = Input->begin(); It != Input->end(); ++It)
-      {
-        if(It->second->Type() == Plugins::IPlugin::eRootInput)
-        {
-          std::string Dir;
-          Plugins::IInputPlugin* Plug = (Plugins::IInputPlugin*)It->second;
-          Plug->GetDirectory(Dir);
-          bool Continue = callback->UpdateProgress(Dir, true);
-          if(!Continue)
-            break;
-          ScanDirectory(Dir, true, Plug);
-        }
-      }
-    }*/
   }
 }                                //namespace Engine
 /* vi:set ts=4: */

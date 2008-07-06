@@ -2,9 +2,10 @@
 Encoding=UTF-8
 Type=Application
 Name=scleaner (root)
-GenericName=
-Comment=Clean your system
+_Name=scleaner
+_Comment=simple GNU/Linux cleaner
 Icon=scleaner_root.xpm
 Exec=gksu scleaner
 Terminal=false
+StartupNotify=true
 Categories=Application;System;

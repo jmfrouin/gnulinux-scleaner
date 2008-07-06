@@ -463,6 +463,7 @@
 		<Folder
 			Name="Press"
 			Filters="">
+			<F N="Article linux/final.txt"/>
 			<F N="Article linux/Frouin-scleaner.html"/>
 			<F N="Article linux/Interface.jpg"/>
 			<F N="Article linux/Thumb_Interface.jpg"/>

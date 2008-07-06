@@ -140,12 +140,7 @@ namespace GUI
     if(fDockIcon)
       delete fDockIcon;
     #endif
-    wxString Perspective = fAUIManager.SavePerspective();
-    std::string Persp(Perspective.ToAscii());
-    fSettings->SetPerspective(Persp);
-    std::cout << Perspective.ToAscii() << '\n';
-    fAUIManager.Update();
-    fAUIManager.UnInit();
+    //Save perspective
   }
 
   void CMainInterface::Init()
@@ -155,9 +150,6 @@ namespace GUI
 
     //Retrieve settings manager pointer
     fSettings = Engine::CSettingsManager::Instance();
-
-    //Tell wxAuiManager to manage this frame
-    fAUIManager.SetManagedWindow(this);
 
     //Tray icon !!
     fIcon = new CTrayIcon();
@@ -238,7 +230,6 @@ namespace GUI
     UpdateFolderList();
 
     fAui->AddPage(fFolders, wxString(i8n("Folders"), wxConvUTF8), false);
-    fAUIManager.AddPane(fFolders, wxLEFT, _("Folders"));
 
     //Input plugins
     fInputPlugins = new wxCheckListCtrl(fAui, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxSUNKEN_BORDER | wxLC_VRULES | wxLC_HRULES);
@@ -268,7 +259,6 @@ namespace GUI
     fInputPlugins->SetColumnWidth(1, wxLIST_AUTOSIZE);
 
     fAui->AddPage(fInputPlugins, wxString(i8n("Input plugins"), wxConvUTF8), false);
-    fAUIManager.AddPane(fInputPlugins, wxLEFT, _("IPlugins"));
 
     //Output plugins
     wxString Output[1];
@@ -276,14 +266,12 @@ namespace GUI
     fOutputPlugins = new wxRadioBox(fAui, wxID_ANY, wxString(i8n("Output plugins :"), wxConvUTF8), wxDefaultPosition, wxDefaultSize, 1, Output);
 
     fAui->AddPage(fOutputPlugins, wxString(i8n("Output plugins"), wxConvUTF8), false);
-    fAUIManager.AddPane(fOutputPlugins, wxLEFT, _("OPlugins"));
 
     //Found files AuiNotebook page
     //FIXME: Display it only when "scan" has been launched
     fFoundFiles = new wxNotebook(fAui, ID_MAININTERFACE_NOTEBOOK, wxDefaultPosition, wxDefaultSize, Flags);
     fAui->AddPage(fFoundFiles, wxString(i8n("Founded files"), wxConvUTF8), false);
-    fAUIManager.AddPane(fFoundFiles, wxLEFT, _("FFiles"));
-
+    
     if(fSettings->GetShowStatusbar() == true)
     {
       fStatusBar = new wxStatusBar(Frame, ID_MAININTERFACE_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
@@ -315,10 +303,6 @@ namespace GUI
     }
 
     //Load perspective
-    wxString Pers(fSettings->GetPerspective().c_str(), wxConvUTF8);
-    std::cout << fSettings->GetPerspective() << '\n';
-    fAUIManager.LoadPerspective(Pers);
-    fAUIManager.Update();
   }
 
   bool CMainInterface::ShowToolTips()
@@ -566,7 +550,7 @@ namespace GUI
               std::map<std::string, unsigned long>* FI = fEngine->GetFileInfos();
               if((*FI)[File] == *It)
               {
-                Item.SetBackgroundColour(0xFFCCCC);
+                Item.SetBackgroundColour(0xCCCCFF);
                 List->SetItem(Item);
               }
             }
@@ -864,7 +848,7 @@ namespace GUI
 
     std::map<std::string, Plugins::IInPlugin*>::iterator It;
     for(It = fEngine->GetAvailableInputPlugs()->begin(); It != fEngine->GetAvailableInputPlugs()->end(); ++It)
-      PluginList.push_back((*It).first);
+    PluginList.push_back((*It).first);
 
     CSelectDialog SelectionDlg(wxString(i8n("Select input plugins to use"), wxConvUTF8), PluginList);
     SelectionDlg.Show(true);
@@ -899,3 +883,135 @@ namespace GUI
     }
   }
 }
+
+/*
+wxString wxAuiNotebook::SavePerspective() {
+   // Build list of panes/tabs
+   wxString tabs;
+   wxAuiPaneInfoArray& all_panes = m_mgr.GetAllPanes();
+    const size_t pane_count = all_panes.GetCount();
+
+    for (size_t i = 0; i < pane_count; ++i)
+    {
+      wxAuiPaneInfo& pane = all_panes.Item(i);
+      if (pane.name == wxT("dummy"))
+            continue;
+
+        wxTabFrame* tabframe = (wxTabFrame*)pane.window;
+      
+      if (!tabs.empty()) tabs += wxT("|");
+      tabs += pane.name;
+      tabs += wxT("=");
+      
+      // add tab id's
+      size_t page_count = tabframe->m_tabs->GetPageCount();
+      for (size_t p = 0; p < page_count; ++p)
+      {
+         wxAuiNotebookPage& page = tabframe->m_tabs->GetPage(p);
+         const size_t page_idx = m_tabs.GetIdxFromWindow(page.window);
+         
+         if (p) tabs += wxT(",");
+
+         if ((int)page_idx == m_curpage) tabs += wxT("*");
+         else if ((int)p == tabframe->m_tabs->GetActivePage()) tabs += wxT("+");
+         tabs += wxString::Format(wxT("%u"), page_idx);
+      }
+   }
+   tabs += wxT("@");
+
+   // Add frame perspective
+   tabs += m_mgr.SavePerspective();
+
+   return tabs;
+}
+
+bool wxAuiNotebook::LoadPerspective(const wxString& layout) {
+   // Remove all tab ctrls (but still keep them in main index)
+   const size_t tab_count = m_tabs.GetPageCount();
+   for (size_t i = 0; i < tab_count; ++i) {
+      wxWindow* wnd = m_tabs.GetWindowFromIdx(i);
+
+      // find out which onscreen tab ctrl owns this tab
+      wxAuiTabCtrl* ctrl;
+      int ctrl_idx;
+      if (!FindTab(wnd, &ctrl, &ctrl_idx))
+         return false;
+
+      // remove the tab from ctrl
+      if (!ctrl->RemovePage(wnd))
+         return false;
+   }
+   RemoveEmptyTabFrames();
+
+   size_t sel_page = 0;
+   
+   wxString tabs = layout.BeforeFirst(wxT('@'));
+   while (1)
+    {
+      const wxString tab_part = tabs.BeforeFirst(wxT('|'));
+      
+      // if the string is empty, we're done parsing
+        if (tab_part.empty())
+            break;
+
+      // Get pane name
+      const wxString pane_name = tab_part.BeforeFirst(wxT('='));
+
+      // create a new tab frame
+      wxTabFrame* new_tabs = new wxTabFrame;
+      new_tabs->m_tabs = new wxAuiTabCtrl(this,
+                                 m_tab_id_counter++,
+                                 wxDefaultPosition,
+                                 wxDefaultSize,
+                                 wxNO_BORDER|wxWANTS_CHARS);
+      new_tabs->m_tabs->SetArtProvider(m_tabs.GetArtProvider()->Clone());
+      new_tabs->SetTabCtrlHeight(m_tab_ctrl_height);
+      new_tabs->m_tabs->SetFlags(m_flags);
+      wxAuiTabCtrl *dest_tabs = new_tabs->m_tabs;
+
+      // create a pane info structure with the information
+      // about where the pane should be added
+      wxAuiPaneInfo pane_info = wxAuiPaneInfo().Name(pane_name).Bottom().CaptionVisible(false);
+      m_mgr.AddPane(new_tabs, pane_info);
+
+      // Get list of tab id's and move them to pane
+      wxString tab_list = tab_part.AfterFirst(wxT('='));
+      while(1) {
+         wxString tab = tab_list.BeforeFirst(wxT(','));
+         if (tab.empty()) break;
+         tab_list = tab_list.AfterFirst(wxT(','));
+
+         // Check if this page has an 'active' marker
+         const wxChar c = tab[0];
+         if (c == wxT('+') || c == wxT('*')) {
+            tab = tab.Mid(1);
+         }
+
+         const size_t tab_idx = wxAtoi(tab.c_str());
+         if (tab_idx >= GetPageCount()) continue;
+
+         // Move tab to pane
+         wxAuiNotebookPage& page = m_tabs.GetPage(tab_idx);
+         const size_t newpage_idx = dest_tabs->GetPageCount();
+         dest_tabs->InsertPage(page.window, page, newpage_idx);
+
+         if (c == wxT('+')) dest_tabs->SetActivePage(newpage_idx);
+         else if ( c == wxT('*')) sel_page = tab_idx;
+      }
+      dest_tabs->DoShowHide();
+
+      tabs = tabs.AfterFirst(wxT('|'));
+   }
+   
+   // Load the frame perspective
+   const wxString frames = layout.AfterFirst(wxT('@'));
+   m_mgr.LoadPerspective(frames);
+
+   // Force refresh of selection
+   m_curpage = -1;
+   SetSelection(sel_page);
+
+   return true;
+}
+
+*/
