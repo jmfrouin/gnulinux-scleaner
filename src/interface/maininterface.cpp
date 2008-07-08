@@ -348,12 +348,13 @@ namespace GUI
     wxAboutDialogInfo info;
 
     info.AddArtist(_T("Medina Bastien"));
-    info.AddDeveloper(_T("Source code: Jean-Michel Frouin"));
+    info.AddDeveloper(_T("Original & main developper: Jean-Michel Frouin"));
     info.AddDeveloper(_T("Website : Pierre Jacquier"));
     info.AddTranslator(_T("French: Jean-Michel Frouin"));
     info.AddTranslator(_T("German: Peer Voss"));
     info.AddTranslator(_T("Italian: David Paleino"));
     info.SetDescription(_T("simple GNU/Linux cleaner"));
+    info.AddDeveloper(_T("Portion code (c) ... to finish"));
     info.SetName(_T(NAME));
     info.SetLicence(wxString::FromAscii(
       "scleaner a simple GNU/Linux cleaner\n\n"

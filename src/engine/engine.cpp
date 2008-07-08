@@ -339,9 +339,8 @@ namespace Engine
                 {
                   std::string File(Dir);
                   File += NameList[Nb]->d_name;
-                  std::cout << File << std::endl;
                   Plug->ProcessFile(File);
-                  bool Continue = callback->UpdateProgress(Dir, true);
+                  /*bool Continue = */callback->UpdateProgress(Dir, true);
                   free(NameList[Nb]);
                 }
                 free(NameList);
@@ -508,12 +507,12 @@ namespace Engine
   {
     int Ret = 0;
 
-    //struct pkginfo** l_p = 0;
-    //pointerp= bins + (hash(name) % (BINS));
-    //while (*pointerp && strcasecmp((*pointerp)->name,name))
-    //  pointerp= &(*pointerp)->next;
-    //if (*pointerp) { free(name); return *pointerp; }
-
+    /*struct pkginfo** l_p = 0;
+    pointerp = bins + (hash(name) % (BINS));
+    while (*pointerp && strcasecmp((*pointerp)->name,name))
+      pointerp= &(*pointerp)->next;
+    if (*pointerp)// { std::cout //free(name); }//return *pointerp; }
+      std::cout << name << " founded ! \n";*/
     return Ret;
   }
 
