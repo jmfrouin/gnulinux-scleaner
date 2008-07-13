@@ -347,7 +347,8 @@ namespace GUI
   {
     wxAboutDialogInfo info;
 
-    info.AddArtist(_T("Medina Bastien"));
+    info.AddArtist(_T("Splash: Medina Bastien"));
+    info.AddArtist(_T("Icons: Marco Martin (mart@notmart.org), www.notmart.org"));
     info.AddDeveloper(_T("Original & main developper: Jean-Michel Frouin"));
     info.AddDeveloper(_T("Website : Pierre Jacquier"));
     info.AddTranslator(_T("French: Jean-Michel Frouin"));

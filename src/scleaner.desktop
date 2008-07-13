@@ -7,4 +7,4 @@ Icon=scleaner.xpm
 Exec=scleaner
 Terminal=false
 StartupNotify=true
-Categories=Application;System;Settings;
+Categories=Application;System;

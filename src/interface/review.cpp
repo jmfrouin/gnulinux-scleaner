@@ -98,7 +98,6 @@ namespace GUI
     for(; It != filelist->end(); It++)
     {
       wxString String(It->c_str(), wxConvUTF8);
-      //fList->InsertItem(fList->GetItemCount(), String);
       static int Count = 0;
       long Tmp = fList->InsertItem(Count++, String, 0);
       fList->SetItemData(Tmp, Count);
