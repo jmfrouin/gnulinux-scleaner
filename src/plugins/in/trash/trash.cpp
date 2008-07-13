@@ -57,7 +57,16 @@ void CtrashPlugin::GetFileList(std::list<std::string>& fl)
 
 void CtrashPlugin::Run()
 {
-  std::string Path("/home/snoogie/.local/share/Trash/files/");
+  std::string Path("/home/");
+  std::string User;
+  Engine::CEngine::Instance()->GetUsername(User);
+  Path+=User;
+  Path+="/.local/share/Trash/files/";
+
+  #if defined DEBUG
+  std::cout << "[DBG] CtrashPlugin::Run(),  Path = " << Path << '\n';
+  #endif
+
   while(fRunning)
   {
     struct dirent** NameList;
