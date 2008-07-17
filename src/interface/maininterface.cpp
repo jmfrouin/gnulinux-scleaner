@@ -814,7 +814,7 @@ namespace GUI
 
   void CMainInterface::OnPrefs(wxCommandEvent& WXUNUSED(event))
   {
-    CPreferences(this, wxID_ANY, wxString(i8n("Preferences"), wxConvUTF8), wxDefaultPosition, wxSize(600,300)).ShowModal();
+    CPreferences(this, wxID_ANY, wxString(i8n("Preferences"), wxConvUTF8), wxDefaultPosition, wxSize(600,500)).ShowModal();
   }
 
   bool CMainInterface::UpdateProgress(const std::string& mess, bool pulse, int nb)
