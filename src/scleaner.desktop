@@ -1,9 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
+Name=scleaner
 _Name=scleaner
 _Comment=simple GNU/Linux cleaner
-Icon=scleaner.xpm
+Icon=scleaner_root.xpm
 Exec=scleaner
 Terminal=false
 StartupNotify=true
