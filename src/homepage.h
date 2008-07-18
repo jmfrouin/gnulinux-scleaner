@@ -39,11 +39,17 @@
  *
  * It used this https://wiki.ubuntu.com/SystemCleanUpTool as guidelines for developpement and add some others ideas.
  *
- * Others ressources :
+ * Others very usefull ressources :
  *
  * http://www.commentcamarche.net/faq/sujet-7214-faire-le-menage-dans-ubuntu-residus-de-configuration-paquets
  *
  * http://doc.ubuntu-fr.org/maintenir_systeme
+ * 
+ * Kleansweep : http://linux.bydg.org/~yogin/
+ * 
+ * fslint : http://www.pixelbeat.org/fslint/
+ * 
+ * gtkorphan : http://www.pixelbeat.org/fslint/
  *
  * @section install Installation
  *
