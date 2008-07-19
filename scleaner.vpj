@@ -452,6 +452,7 @@
 			<F N="src/config.h.cmake"/>
 			<F N="src/def.h"/>
 			<F N="src/homepage.h"/>
+			<F N="packaging.deb"/>
 			<F N="produce_test.sh"/>
 			<F N="scleaner.dox"/>
 			<F N="src/scleaner_wx.cpp"/>

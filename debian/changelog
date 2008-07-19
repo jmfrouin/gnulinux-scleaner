@@ -1,6 +1,19 @@
-scleaner (0.32.0-1) unstable; urgency=low
+scleaner (0.70.1077-1ubuntu2) hardy; urgency=low
+
+  * Test make_deb.sh
+  * Fix lintian warning. 
+
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat, 19 Jul 2008 20:00:12 +0200
+
+scleaner (0.70.1076-1ubuntu1) hardy; urgency=low
+
+  * Fixing lintian errors & warnings.
+
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Sat, 19 Jul 2008 19:38:51 +0200
+
+scleaner (0.70.1074-1) unstable; urgency=low
 
   * Initial release
 
- -- Jean-Michel Frouin <jmfrouin@gnu.org>  Tue, 2 Oct 2007 00:13:55 +0200
+ -- Jean-Michel Frouin <jmfrouin@gmail.com>  Tue, 19 Jul 2008 18:37:23 +0200
 

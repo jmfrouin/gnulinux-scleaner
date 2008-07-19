@@ -1,0 +1,10 @@
+1 - clean build folder
+2 - If possible save snapshot from git
+2' - If not, cp scleaner ../scleaner-X.XX.XX 
+2'1 - clean this folder from all .git folders (using scleaner for that is highly recommanded)
+3 - we want to build debian package for version 0.70.1075 (1074 is in def.h) 
+4 - cd scleaner-X.X.XX
+5 - dch -i 
+6 - cp debian/changelog /home/snoogie/dev/scleaner/debian/
+7 - dpkg-buildpackage -rfakeroot
+

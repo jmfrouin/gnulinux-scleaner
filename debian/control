@@ -1,11 +1,11 @@
 Source: scleaner
 Section: misc
 Priority: optional
-Maintainer: Jean-Michel Frouin <jmfrouin@gmail.org>, David Paleino <d.paleino@gmail.com>
+Maintainer: Jean-Michel Frouin <jmfrouin@gmail.com>
 Homepage: http://www.scleaner.org
-Build-Depends: debhelper (>= 5), libwxbase2.8-0-dev,  libwxgtk2.8-0-dev, cmake
+Build-Depends: debhelper (>= 5), libwxbase2.8-dev,  libwxgtk2.8-dev, libnotify-dev, libbz2-dev, cmake
 Standards-Version: 3.7.2
-XS-Vcs-Browser: http://svn.savannah.nongnu.org/viewvc/trunk/?root=scleaner
+XS-Vcs-Browser: http://git.savannah.gnu.org/gitweb/?p=scleaner.git
 XS-Vcs-SVN: svn://svn.savannah.nongnu.org/project/scleaner
 
 Package: scleaner
