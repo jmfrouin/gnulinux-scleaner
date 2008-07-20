@@ -109,3 +109,25 @@
  * Please check INSTALL file for test scleaner.
  *
  */
+
+
+/*! @page page4 Build & Installation
+ *
+ * Please check INSTALL file for test scleaner.
+ *
+ */
+
+ /*! @page page5 Packaging
+ * 
+ * @section In order to package scleaner for debian distributions : 
+ * 1 - clean build folder
+ * 2 - If possible save snapshot from git
+ * 2' - If not, cp scleaner ../scleaner-X.XX.XX 
+ * 2'1 - clean this folder from all .git folders (using scleaner for that is highly recommanded)
+ * 3 - we want to build debian package for version 0.70.1076 (Need to desactivate update_build.sh in CMakeLists.txt) 
+ * 4 - cd scleaner-X.X.XX
+ * 5 - dch -i 
+ * 6 - cp debian/changelog /home/snoogie/dev/scleaner/debian/
+ * 7 - dpkg-buildpackage -rfakeroot
+ *
+ */
