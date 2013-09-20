@@ -27,6 +27,7 @@
 #include <config.h>
 #include <def.h>
 #include <log/log.h>
+#include <cstdlib>
 
 #include "memory_manager.h"
 

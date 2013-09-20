@@ -1,7 +1,7 @@
 #
 # This file is part of scleaner project.
 #
-# Copyright (C) 2007 FROUIN Jean-Michel
+# Copyright (C) 2007-2013 FROUIN Jean-Michel
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,11 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+# 20/09/13 : Conforming with CMake 2.8.10.1
 # 02/11/07 : Adding a build counter
 # 04/09/07 : Adding a cscope rule
 # 17/05/08 : Adding profiling code
 # 28/05/08 : Adding FindAPT.cmake
 
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(scleaner)
 
 #Others dependencies for scleaner
@@ -68,7 +70,8 @@ SET(scleaner_src scleaner_wx.cpp)
 
 ADD_EXECUTABLE(scleaner ${scleaner_src})
 SET_TARGET_PROPERTIES(scleaner PROPERTIES LINK_FLAGS "-pg" COMPILE_FLAGS "-pg")
-TARGET_LINK_LIBRARIES(scleaner pthread dl engine interface leaks log plugins tools `wx-config --libs`)
+#TARGET_LINK_LIBRARIES(scleaner pthread dl engine interface leaks log plugins tools `wx-config --libs`)
+TARGET_LINK_LIBRARIES(scleaner pthread dl engine interface leaks log plugins tools -L/usr/lib/x86_64-linux-gnu -pthread   -L/usr/lib/x86_64-linux-gnu   -lwx_gtk2u_richtext-2.8 -lwx_gtk2u_aui-2.8 -lwx_gtk2u_xrc-2.8 -lwx_gtk2u_qa-2.8 -lwx_gtk2u_html-2.8 -lwx_gtk2u_adv-2.8 -lwx_gtk2u_core-2.8 -lwx_baseu_xml-2.8 -lwx_baseu_net-2.8 -lwx_baseu-2.8)
 
 # Valgrind test
 ADD_CUSTOM_TARGET(valgrind COMMAND  valgrind -v --show-reachable=yes --leak-check=full scleaner)

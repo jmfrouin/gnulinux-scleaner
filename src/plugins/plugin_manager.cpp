@@ -25,7 +25,7 @@
 #include <dirent.h>              ///For path manipulation.
 #include <iostream>
 #include <string>
-
+#include <cstdlib>
 #include <leak/leak_detector.h>
 
 namespace Plugins
