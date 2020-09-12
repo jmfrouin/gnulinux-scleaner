@@ -37,7 +37,10 @@ CMemoryManager::CMemoryManager()
 {
   fFile.open(LEAKFILE);
   if (!fFile)
-    std::cout << i8n("[ERR] : Cannot open ") << fFile << '\n';
+  {
+	//@TODO : Fix that
+    //std::cout << i8n("[ERR] : Cannot open ") << fFile << '\n';
+  }
   //    throw CLoadingFailed("Memory leaks.log", "Impossible d'accder en criture");
   fFile << " MemoryManager v" << VERSION_MEMORY_MANAGER << i8n(" - Report (Compiled on ") << __DATE__ << " @ " << __TIME__ << ")" << '\n';
 }
