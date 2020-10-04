@@ -17,7 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(folder apt-cache backupextensions coders coredump emptyfolders iso kernels latex logs mac nullfiles orphan repos thumbnails trash wma)
+# @TODO : Reenable kernels logs
+
+SET(folder apt-cache backupextensions coders coredump emptyfolders iso  latex  mac nullfiles orphan repos thumbnails trash wma)
 
 FOREACH(fold ${folder})
         ADD_SUBDIRECTORY(${fold})

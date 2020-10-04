@@ -71,7 +71,7 @@ SET(scleaner_src scleaner_wx.cpp)
 ADD_EXECUTABLE(scleaner ${scleaner_src})
 SET_TARGET_PROPERTIES(scleaner PROPERTIES LINK_FLAGS "-pg" COMPILE_FLAGS "-pg")
 #TARGET_LINK_LIBRARIES(scleaner pthread dl engine interface leaks log plugins tools `wx-config --libs`)
-TARGET_LINK_LIBRARIES(scleaner pthread dl engine interface leaks log plugins tools -L/usr/lib/x86_64-linux-gnu -pthread   -lwx_gtk3u_xrc-3.0 -lwx_gtk3u_html-3.0 -lwx_gtk3u_qa-3.0 -lwx_gtk3u_adv-3.0 -lwx_gtk3u_core-3.0 -lwx_baseu_xml-3.0 -lwx_baseu_net-3.0 -lwx_baseu-3.0 dl)
+TARGET_LINK_LIBRARIES(scleaner pthread dl engine interface leaks log plugins tools -L/usr/lib/x86_64-linux-gnu -pthread   -lwx_gtk3u_xrc-3.0 -lwx_gtk3u_html-3.0 -lwx_gtk3u_qa-3.0 -lwx_gtk3u_adv-3.0 -lwx_gtk3u_core-3.0 -lwx_baseu_xml-3.0 -lwx_baseu_net-3.0 -lwx_baseu-3.0 -lwx_gtk3u_aui-3.0 dl)
 
 # Valgrind test
 ADD_CUSTOM_TARGET(valgrind COMMAND  valgrind -v --show-reachable=yes --leak-check=full scleaner)
@@ -80,7 +80,8 @@ ADD_CUSTOM_TARGET(valgrind COMMAND  valgrind -v --show-reachable=yes --leak-chec
 #ADD_CUSTOM_TARGET(cscope ALL COMMAND find ${CMAKE_SOURCE_DIR} -name "*.h" -o -name "*.cpp" > ${CMAKE_SOURCE_DIR}/cscope.files && cscope -b -f${CMAKE_SOURCE_DIR}/cscope.out)
 
 #build counter
-ADD_CUSTOM_TARGET(update_counter ALL COMMAND bash ${CMAKE_SOURCE_DIR}/update_build.sh ${CMAKE_SOURCE_DIR}/def.h)
+# @TODO : Reenable after fix compilation / links problems
+#ADD_CUSTOM_TARGET(update_counter ALL COMMAND bash ${CMAKE_SOURCE_DIR}/update_build.sh ${CMAKE_SOURCE_DIR}/def.h)
 
 #Install
 INSTALL(TARGETS scleaner DESTINATION ${BINDIR} PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
